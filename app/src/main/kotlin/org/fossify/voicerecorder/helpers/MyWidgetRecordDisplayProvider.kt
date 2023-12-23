@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.widget.RemoteViews
 import org.fossify.commons.extensions.getColoredDrawableWithColor
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.BackgroundRecordActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.drawableToBitmap
 
@@ -47,8 +48,8 @@ class MyWidgetRecordDisplayProvider : AppWidgetProvider() {
     private fun getComponentName(context: Context) = ComponentName(context, MyWidgetRecordDisplayProvider::class.java)
 
     private fun setupAppOpenIntent(context: Context, views: RemoteViews) {
-        Intent(context, org.fossify.voicerecorder.activities.BackgroundRecordActivity::class.java).apply {
-            action = org.fossify.voicerecorder.activities.BackgroundRecordActivity.RECORD_INTENT_ACTION
+        Intent(context, BackgroundRecordActivity::class.java).apply {
+            action = BackgroundRecordActivity.RECORD_INTENT_ACTION
             val pendingIntent =
                 PendingIntent.getActivity(context, OPEN_APP_INTENT_ID, this, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             views.setOnClickPendingIntent(R.id.record_display_btn, pendingIntent)
