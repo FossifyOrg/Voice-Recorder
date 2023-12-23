@@ -37,6 +37,6 @@
     <string name="faq_1_text">Bé, depèn. Mentre feu servir el dispositiu, ja no és possible amagar completament les notificacions d\'aplicacions com aquesta. Si activeu l\'element de configuració adequat, l\'aplicació farà tot el possible per ocultar-la. Tanmateix, podeu ocultar-la a la pantalla de bloqueig si desactiveu la visualització de notificacions confidencials a la configuració del dispositiu.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

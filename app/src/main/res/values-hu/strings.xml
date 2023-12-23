@@ -37,6 +37,6 @@
     <string name="faq_1_text">Az attól függ. Amíg használja az eszközt, addig nem lehetséges az ehhez hasonló alkalmazások értesítéseinek elrejtése. Ha bekapcsolja a megfelelő beállítást, akkor az alkalmazás megpróbálja elrejteni őket. A zárképernyőn viszont elrejtheti őket, ha letiltja az érzékeny értesítéseket az eszköz beállításaiban.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

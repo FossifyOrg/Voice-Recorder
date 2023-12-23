@@ -21,7 +21,7 @@
         tools:node="remove" />
 
     <application
-        android:name=".App"
+        android:name="org.fossify.voicerecorder.App"
         android:allowBackup="true"
         android:appCategory="audio"
         android:icon="@mipmap/ic_launcher"
@@ -57,7 +57,7 @@
         </receiver>
 
         <activity
-            android:name=".activities.BackgroundRecordActivity"
+            android:name="org.fossify.voicerecorder.activities.BackgroundRecordActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoDisplay" />
 
@@ -91,14 +91,14 @@
         </activity>
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.AboutActivity"
+            android:name="org.fossify.commons.activities.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/about"
             android:parentActivityName=".activities.MainActivity" />
 
         <activity
-            android:name="com.simplemobiletools.commons.activities.CustomizationActivity"
+            android:name="org.fossify.commons.activities.CustomizationActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/customize_colors"
@@ -106,12 +106,12 @@
 
         <service
             android:name=".services.RecorderService"
-            android:foregroundServiceType="microphone"
-            android:exported="false">
+            android:exported="false"
+            android:foregroundServiceType="microphone">
             <intent-filter>
-                <action android:name="com.simplemobiletools.voicerecorder.action.GET_RECORDER_INFO" />
-                <action android:name="com.simplemobiletools.voicerecorder.action.STOP_AMPLITUDE_UPDATE" />
-                <action android:name="com.simplemobiletools.voicerecorder.action.TOGGLE_PAUSE" />
+                <action android:name="org.fossify.voicerecorder.action.GET_RECORDER_INFO" />
+                <action android:name="org.fossify.voicerecorder.action.STOP_AMPLITUDE_UPDATE" />
+                <action android:name="org.fossify.voicerecorder.action.TOGGLE_PAUSE" />
             </intent-filter>
         </service>
 
@@ -243,10 +243,10 @@
 
         <activity-alias
             android:name=".activities.SplashActivity.Green"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher_green"
-            android:roundIcon="@mipmap/ic_launcher_green"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher"
             android:targetActivity=".activities.SplashActivity">
 
             <intent-filter>
@@ -313,10 +313,10 @@
 
         <activity-alias
             android:name=".activities.SplashActivity.Orange"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true"
-            android:icon="@mipmap/ic_launcher"
-            android:roundIcon="@mipmap/ic_launcher"
+            android:icon="@mipmap/ic_launcher_orange"
+            android:roundIcon="@mipmap/ic_launcher_orange"
             android:targetActivity=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

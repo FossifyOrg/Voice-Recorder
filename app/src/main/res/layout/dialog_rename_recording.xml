@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingTop="@dimen/medium_margin">
 
-    <com.simplemobiletools.commons.views.MyTextInputLayout
+    <org.fossify.commons.views.MyTextInputLayout
         android:id="@+id/rename_recording_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,5 +25,5 @@
             android:textCursorDrawable="@null"
             android:textSize="@dimen/bigger_text_size" />
 
-    </com.simplemobiletools.commons.views.MyTextInputLayout>
+    </org.fossify.commons.views.MyTextInputLayout>
 </LinearLayout>

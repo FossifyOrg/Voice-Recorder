@@ -93,7 +93,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.simple.tools.commons)
+    implementation(libs.fossify.commons)
     implementation(libs.eventbus)
     implementation(libs.audiorecordview)
     implementation(libs.androidx.documentfile)

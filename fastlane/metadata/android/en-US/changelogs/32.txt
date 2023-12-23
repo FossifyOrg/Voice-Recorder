@@ -1,2 +1,0 @@
- * Require Simple Thank You for customizing the save folder
- * Added some stability, translation and UX improvements

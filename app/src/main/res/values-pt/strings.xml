@@ -38,6 +38,6 @@
     <string name="faq_1_text">Depende. Actuamente, já não possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a alinea correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

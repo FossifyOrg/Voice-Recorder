@@ -39,6 +39,6 @@
     <string name="faq_1_text">ובכן, זה תלוי. בזמן שאתה משתמש במכשיר שלך, לא ניתן עוד להסתיר באופן מלא את ההתראות של אפליקציות כמו זו. אם תבדוק את פריט ההגדרה המתאים, האפליקציה תעשה כמיטב יכולתה להסתיר אותו. עם זאת, אתה יכול להסתיר אותו במסך הנעילה, אם אתה משבית את הצגת ההתראות הרגישות בהגדרות המכשיר שלך.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

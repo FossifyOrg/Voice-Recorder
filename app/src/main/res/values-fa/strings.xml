@@ -37,6 +37,6 @@
     <string name="faq_1_text">خب، بستگی دارد. هنگامی که از دستگاه خود استفاده می کنید، دیگر نمی توان اعلان های برنامه هایی مانند این را به طور کامل مخفی کرد. اگر آیتم تنظیم مناسب را بررسی کنید، برنامه تمام تلاش خود را می کند تا آن را پنهان کند. اگر نمایش اعلان‌های حساس را در تنظیمات دستگاه خود غیرفعال کنید، می‌توانید آن را روی صفحه قفل پنهان کنید.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

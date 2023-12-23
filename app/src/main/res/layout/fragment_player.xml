@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.voicerecorder.fragments.PlayerFragment xmlns:android="http://schemas.android.com/apk/res/android"
+<org.fossify.voicerecorder.fragments.PlayerFragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/recordings_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,14 +26,14 @@
         app:layout_constraintBottom_toTopOf="@+id/player_controls_wrapper"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <org.fossify.commons.views.MyRecyclerView
             android:id="@+id/recordings_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation"
             android:scrollbars="none"
-            app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+            app:layoutManager="org.fossify.commons.views.MyLinearLayoutManager" />
 
     </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
 
@@ -52,7 +52,7 @@
             android:background="@color/divider_grey"
             android:importantForAccessibility="no" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/player_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:textSize="@dimen/big_text_size"
             tools:text="Recording title" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/player_progress_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:paddingEnd="@dimen/medium_margin"
             android:text="00:00" />
 
-        <com.simplemobiletools.commons.views.MySeekBar
+        <org.fossify.commons.views.MySeekBar
             android:id="@+id/player_progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:paddingTop="@dimen/normal_margin"
             android:paddingBottom="@dimen/normal_margin" />
 
-        <com.simplemobiletools.commons.views.MyTextView
+        <org.fossify.commons.views.MyTextView
             android:id="@+id/player_progress_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,4 +153,4 @@
 
         </RelativeLayout>
     </RelativeLayout>
-</com.simplemobiletools.voicerecorder.fragments.PlayerFragment>
+</org.fossify.voicerecorder.fragments.PlayerFragment>

@@ -38,6 +38,6 @@
     <string name="faq_1_text">Ovisi. Dok koristiš svoj uređaj više nije moguće u potpunosti sakriti obavijesti ovakvih aplikacija. Ako označiš ispravnu stavku postavke, aplikacija će je pokušati sakriti. Možeš je sakriti na zaključanom ekranu, ako isključiš prikaz osobnih obavijesti u postavkama uređaja.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

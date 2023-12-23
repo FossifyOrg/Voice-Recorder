@@ -37,6 +37,6 @@
     <string name="faq_1_text">To zależy. Podczas korzystania z urządzenia nie da się już całkowicie ukryć powiadomień aplikacji takich jak ta. Jeśli zaznaczysz odpowiednie ustawienie, aplikacja spróbuje to zrobić. Możesz jednak ukryć ikonę powiadomienia na ekranie blokady w ustawieniach bezpieczeństwa z ustawień urządzenia.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

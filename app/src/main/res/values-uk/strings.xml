@@ -39,6 +39,6 @@
     <string name="faq_1_text">Ну, це залежить від обставин. Доки ви використовуєте свій пристрій, повністю приховати сповіщення з таких застосунків неможливо. Якщо ви встановите відповідний пункт в настройках, застосунок зробить все можливе, щоб приховати сповіщення. Також можна приховати його на екрані блокування, якщо відключити відображення конфіденційних сповіщень в налаштуваннях пристрою.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>
