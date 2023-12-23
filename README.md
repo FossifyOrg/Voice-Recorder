@@ -1,5 +1,5 @@
 # Simple Voice Recorder
-<img alt="Logo" src="graphics/icon.png" width="120" />
+<img alt="Logo" src="graphics/icon.webp" width="120" />
 
 🎙 Ever wished you remember what the other person said? Your wish is now a reality! With this simple voice recorder and audio recorder, you can record any high quality audio and other voice memos really easily! 
 
