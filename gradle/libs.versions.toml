@@ -11,8 +11,8 @@ androidx-swiperefreshlayout = "1.1.0"
 eventbus = "3.3.1"
 #Room
 room = "2.6.0-alpha02"
-#Simple tools
-simple-commons = "8e7dd4508e"
+#Fossify
+commons = "8d12b39e48"
 #AudioRecordView
 audiorecordview = "1.0.4"
 #TAndroidLame
@@ -20,7 +20,7 @@ tandroidlame = "1.1"
 #AutofitTextView
 autofittextview = "0.2.1"
 #Gradle
-gradlePlugins-agp = "8.1.1"
+gradlePlugins-agp = "8.2.0"
 #build
 app-build-compileSDKVersion = "34"
 app-build-targetSDK = "34"
@@ -29,8 +29,8 @@ app-build-javaVersion = "VERSION_17"
 app-build-kotlinJVMTarget = "17"
 #versioning
 app-version-appId = "com.simplemobiletools.voicerecorder"
-app-version-versionCode = "41"
-app-version-versionName = "5.12.3"
+app-version-versionCode = "1"
+app-version-versionName = "1.0.0"
 [libraries]
 #AndroidX
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
@@ -40,8 +40,8 @@ androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefre
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-#Simple Mobile Tools
-simple-tools-commons = { module = "com.github.SimpleMobileTools:Simple-Commons", version.ref = "simple-commons" }
+#Fossify
+fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 #EventBus
 eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 #AudioRecordView
