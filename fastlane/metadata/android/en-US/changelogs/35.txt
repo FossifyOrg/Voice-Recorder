@@ -1,2 +1,0 @@
- * Add handling for third party recording intents
- * Added some UI and translation improvements
