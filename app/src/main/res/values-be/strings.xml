@@ -39,6 +39,6 @@
     <string name="faq_1_text">Ну, гэта залежыць ад абставін. Пакуль вы выкарыстоўваеце сваю прыладу, цалкам схаваць апавяшчэнні аб такіх прыкладаннях немагчыма. Калі вы адзначыце адпаведны пункт у наладах, прыкладанне зробіць усё магчымае, каб схаваць апавяшчэнне. Таксама магчыма схаваць яго на экране блакавання, калі адключыць паказ канфідэнцыйных апавяшчэнняў у наладах прылады.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

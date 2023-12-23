@@ -37,6 +37,6 @@
     <string name="faq_1_text">Mens du bruger din enhed, er det ikke længere muligt at skjule meddelelser fra apps som denne fuldt ud. Hvis du aktiverer \"Forsøg at skjule notifikation om optagelse\" i Indstillinger, gør appen sit bedste for at skjule det. Du kan dog skjule det på låseskærmen, hvis du deaktiverer visning af følsomme meddelelser i dine enhedsindstillinger.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

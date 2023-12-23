@@ -17,7 +17,7 @@
     <plurals name="delete_recordings">
         <item quantity="one">%d įrašą</item>
         <item quantity="few">%d įrašus</item>
-        <item quantity="other"/>
+        <item quantity="other" />
     </plurals>
     <!-- Settings -->
     <string name="try_hiding_notification">Pabandyti paslėpti įrašymo pranešimą</string>
@@ -38,6 +38,6 @@
     <string name="faq_1_text">Na, tai priklauso nuo to. Kol naudojatės įrenginiu, visiškai paslėpti tokių programų pranešimų nebeįmanoma. Jei pažymėsite tinkamą nustatymo elementą, programa padarys viską, kad jį paslėptų. Tačiau galite jį paslėpti užrakintame ekrane, jei prietaiso nustatymuose išjungsite jautrių pranešimų rodymą.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

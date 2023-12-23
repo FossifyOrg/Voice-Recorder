@@ -37,6 +37,6 @@
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

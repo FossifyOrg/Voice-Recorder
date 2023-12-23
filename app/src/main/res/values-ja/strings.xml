@@ -36,6 +36,6 @@
     <string name="faq_1_text">場合によります。デバイスの使用中は、このようなアプリの通知を完全に非表示にすることはできなくなりました。適切な設定項目にチェックを入れれば、通知を可能な限り隠せます。ロック画面上での非表示は、デバイスの設定から通知の表示を無効にすることで可能です。</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

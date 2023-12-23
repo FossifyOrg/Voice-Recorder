@@ -36,6 +36,6 @@
     <string name="faq_1_text">Det spørs. Mens du bruker enheten er det ikke lenger mulig å skjule merknader for programmer på denne måten. Hvis du velger det i programmet vil det gjøre sitt beste for å skjule det. Du kan dog skjule det på låseskjermen, hvis du skrur av visning av sensitive merknader i enhetsinnstillingene dine.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

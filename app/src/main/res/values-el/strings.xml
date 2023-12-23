@@ -37,6 +37,6 @@
     <string name="faq_1_text">Εξαρτάται. Ενώ χρησιμοποιείτε τη συσκευή σας, δεν είναι πλέον δυνατή η πλήρης απόκρυψη των ειδοποιήσεων εφαρμογών όπως αυτή. Εάν ελέγξετε το κατάλληλο στοιχείο ρύθμισης, η εφαρμογή θα κάνει ό,τι μπορεί για να το αποκρύψει. Ωστόσο, μπορείτε να την αποκρύψετε στην οθόνη κλειδώματος, αν απενεργοποιήσετε την εμφάνιση ευαίσθητων ειδοποιήσεων στις ρυθμίσεις της συσκευής σας.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

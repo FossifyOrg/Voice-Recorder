@@ -37,6 +37,6 @@
     <string name="faq_1_text">Е, зависи. Докато използвате устройството си, вече не е възможно да скриете напълно известията на подобни приложения. Ако поставите отметка на съответния елемент от настройката, приложението ще направи всичко възможно да го скрие. Все пак можете да го скриете на заключения екран, ако забраните показването на чувствителни известия в настройките на устройството си.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

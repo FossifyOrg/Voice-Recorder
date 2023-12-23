@@ -37,6 +37,6 @@
     <string name="faq_1_text">Ben, depende. Mentres uses o teu dispositivo, non será posible agochar enteiramente as notificacións como as deste aplicativo. Se revisas os axustes deste elemento, o aplicativo intentará agochalo. Si que o podes agochar da pantalla de bloqueo, se o desactivas o amosador das notificacións sensibles nos axustes do teu dispositivo.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

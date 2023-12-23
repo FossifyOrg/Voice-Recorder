@@ -37,6 +37,6 @@
     <string name="faq_1_text">Det beror på. När du använder din enhet är det inte längre möjligt att helt dölja meddelanden från appar som dessa. Om du markerar rätt inställningsobjekt gör appen sitt bästa för att dölja den. Du kan dock dölja den på låsskärmen om du inaktiverar visning av känsliga meddelanden i enhetens inställningar.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

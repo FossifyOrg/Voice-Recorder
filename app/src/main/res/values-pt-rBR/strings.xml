@@ -37,6 +37,6 @@
     <string name="faq_1_text">Bem, depende. Enquanto você usa seu dispositivo, não é mais possível ocultar totalmente as notificações de aplicativos como este. Se você verificar o item de configuração adequado, o aplicativo fará o seu melhor para escondê-lo. Você pode escondê-lo na tela de bloqueio desativando a exibição de notificações confidenciais nas configurações do dispositivo.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

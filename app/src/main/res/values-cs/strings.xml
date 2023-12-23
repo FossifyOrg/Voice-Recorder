@@ -38,6 +38,6 @@
     <string name="faq_1_text">No, přijde na to. Při používání vašeho zařízení již není možné plně skrýt oznámení o takových aplikacích. Pokud zkontrolujete příslušnou položku nastavení, aplikace udělá vše pro to, aby ji skryla. Můžete jí však skrýt na zamykací obrazovce, pokud v nastavení vašeho zařízení deaktivujete zobrazování citlivých oznámení.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

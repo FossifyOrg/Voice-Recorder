@@ -41,6 +41,6 @@
     <string name="faq_1_text">حسنًا ، هذا يعتمد. أثناء استخدامك لجهازك ، لم يعد من الممكن إخفاء إشعارات تطبيقات كهذه تمامًا. إذا قمت بالتحقق من عنصر الإعداد المناسب ، فسيبذل التطبيق قصارى جهده لإخفائه. ومع ذلك ، يمكنك إخفائه على شاشة القفل ، إذا قمت بتعطيل عرض الإشعارات الحساسة في إعدادات جهازك.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

@@ -36,6 +36,6 @@
         If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>

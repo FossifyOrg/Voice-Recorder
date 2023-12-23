@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simplemobiletools.voicerecorder.fragments.RecorderFragment xmlns:android="http://schemas.android.com/apk/res/android"
+<org.fossify.voicerecorder.fragments.RecorderFragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recorder_holder"
@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@+id/recording_duration"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.simplemobiletools.commons.views.MyTextView
+    <org.fossify.commons.views.MyTextView
         android:id="@+id/recording_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,4 +58,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/toggle_recording_button" />
 
-</com.simplemobiletools.voicerecorder.fragments.RecorderFragment>
+</org.fossify.voicerecorder.fragments.RecorderFragment>

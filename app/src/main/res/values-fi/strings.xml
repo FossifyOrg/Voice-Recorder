@@ -37,6 +37,6 @@
     <string name="faq_1_text">No, se riippuu. Laitetta käytettäessä tällaisten sovellusten ilmoituksia ei ole enää mahdollista piilottaa täysin. Jos valitset kyseiseisen asetuksen, sovellus pyrkii parhaansa mukaan piilottamaan sen. Voit tosin piilottaa sen lukitusnäytöstä, jos poistat arkaluontoisten ilmoitusten näytön käytöstä laitteen asetuksista.</string>
     <!--
         Haven't found some strings? There's more at
-        https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
+        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
     -->
 </resources>
