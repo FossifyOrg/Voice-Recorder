@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">簡易錄音機</string>
     <string name="app_launcher_name">錄音機</string>
     <string name="recording_saved_successfully">成功儲存錄音</string>
     <string name="recording">錄音中</string>

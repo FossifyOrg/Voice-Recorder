@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Једноставан диктафон</string>
     <string name="app_launcher_name">Диктафон</string>
     <string name="recording_saved_successfully">Снимак је успешно сачуван</string>
     <string name="recording">Снимање</string>

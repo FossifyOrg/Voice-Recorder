@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Enkel stemmeopptaker</string>
     <string name="app_launcher_name">Stemmeopptaker</string>
     <string name="recording_saved_successfully">Opptaket ble lagret</string>
     <string name="recording">Tar opp …</string>

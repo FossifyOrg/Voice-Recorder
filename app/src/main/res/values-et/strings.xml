@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Lihtne helisalvestaja</string>
     <string name="app_launcher_name">Helisalvestaja</string>
     <string name="recording_saved_successfully">Salvestamine õnnestus</string>
     <string name="recording">Salvestus</string>

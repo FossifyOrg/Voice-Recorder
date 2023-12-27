@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simple Voice Recorder</string>
     <string name="app_launcher_name">Enregistrador de veu</string>
     <string name="recording_saved_successfully">L\'enregistrament s\'ha desat correctament</string>
     <string name="recording">Enregistrament</string>

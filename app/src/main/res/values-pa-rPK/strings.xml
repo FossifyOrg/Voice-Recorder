@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">سادہ ریکارڈ</string>
     <string name="app_launcher_name">ریکارڈ</string>
     <string name="recording_saved_successfully">ریکارڈ سامبھیا گیا</string>
     <string name="recording">ریکارڈ</string>

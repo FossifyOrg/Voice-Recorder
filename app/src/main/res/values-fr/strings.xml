@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Enregistreur vocal simple</string>
     <string name="app_launcher_name">Enregistreur vocal</string>
     <string name="recording_saved_successfully">Sauvegarde de l\'enregistrement réussie</string>
     <string name="recording">Enregistrement</string>

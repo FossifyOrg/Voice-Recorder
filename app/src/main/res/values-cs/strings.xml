@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Jednoduchý hlasový záznamník</string>
     <string name="app_launcher_name">Hlasový záznamník</string>
     <string name="recording_saved_successfully">Nahrávka se úspěšně uložila</string>
     <string name="recording">Nahrávám</string>

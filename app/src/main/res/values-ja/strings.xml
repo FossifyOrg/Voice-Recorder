@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Simpleボイスレコーダー</string>
     <string name="app_launcher_name">ボイスレコーダー</string>
     <string name="recording_saved_successfully">録音の保存に成功しました</string>
     <string name="recording">録音</string>

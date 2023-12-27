@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Простой диктофон</string>
     <string name="app_launcher_name">Диктофон</string>
     <string name="recording_saved_successfully">Запись успешно сохранена</string>
     <string name="recording">Запись</string>

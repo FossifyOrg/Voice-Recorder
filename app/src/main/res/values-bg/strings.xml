@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Обикновен диктофон</string>
     <string name="app_launcher_name">Диктофон</string>
     <string name="recording_saved_successfully">Записът е запазен успешно</string>
     <string name="recording">Записване</string>

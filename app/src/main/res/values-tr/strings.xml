@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Basit Ses Kaydedici</string>
     <string name="app_launcher_name">Ses Kaydedici</string>
     <string name="recording_saved_successfully">Kayıt başarıyla kaydedildi</string>
     <string name="recording">Kaydediliyor</string>

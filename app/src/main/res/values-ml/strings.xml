@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ലളിതമായ സ്വനഗ്രാഹിയന്ത്രം</string>
     <string name="app_launcher_name">സ്വനഗ്രാഹിയന്ത്രം</string>
     <string name="recording_saved_successfully">ശബ്‌ദലേഖനം വിജയകരമായി സംരക്ഷിച്ചു</string>
     <string name="recording">Recording</string>
