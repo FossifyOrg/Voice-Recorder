@@ -3,7 +3,7 @@
     <string name="app_launcher_name">Diktiergerät</string>
     <string name="recording_saved_successfully">Aufnahme erfolgreich gespeichert</string>
     <string name="recording">Aufnahme</string>
-    <string name="no_recordings_found">Es wurden keine von dieser Anwendung
+    <string name="no_recordings_found">Es wurden keine von dieser App
 \nerstellten Aufnahmen gefunden</string>
     <string name="no_recordings_in_folder_found">Es wurden keine Aufnahmen
 \nim ausgewählten Ordner gefunden</string>
@@ -22,7 +22,7 @@
     <string name="save_recordings_in">Aufnahme speichern in</string>
     <string name="audio_source">Tonquelle</string>
     <string name="bitrate">Bitrate</string>
-    <string name="record_after_launch">Aufnahme startet automatisch beim Öffnen der Anwendung</string>
+    <string name="record_after_launch">Aufnahme startet automatisch beim Öffnen der App</string>
     <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_default">Android-Standard</string>
