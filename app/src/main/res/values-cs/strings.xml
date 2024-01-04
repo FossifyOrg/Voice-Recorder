@@ -31,7 +31,7 @@
     <string name="audio_source_microphone">Mikrofon</string>
     <string name="audio_source_voice_recognition">Rozpoznání řeči</string>
     <string name="audio_source_voice_communication">Hlasová komunikace</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
+    <string name="audio_source_voice_performance">Hlasový výkon</string>
     <!-- FAQ -->
     <string name="faq_1_title">Mohu během nahrávání skrýt ikonu oznámení\?</string>
     <string name="faq_1_text">No, přijde na to. Při používání vašeho zařízení již není možné plně skrýt oznámení o takových aplikacích. Pokud zkontrolujete příslušnou položku nastavení, aplikace udělá vše pro to, aby ji skryla. Můžete jí však skrýt na zamykací obrazovce, pokud v nastavení vašeho zařízení deaktivujete zobrazování citlivých oznámení.</string>
