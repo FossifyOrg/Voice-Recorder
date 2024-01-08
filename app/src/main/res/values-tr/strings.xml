@@ -17,13 +17,16 @@
     </plurals>
     <string name="try_hiding_notification">Kayıt bildirimini gizlemeyi dene</string>
     <string name="save_recordings_in">Kayıt klasörü:</string>
+    <string name="audio_source">Ses kaynağı</string>
     <string name="bitrate">Bit hızı</string>
     <string name="record_after_launch">Uygulama başladıktan sonra otomatik olarak kaydetmeye başla</string>
     <string name="audio_source_camcorder">Kamera</string>
+    <string name="audio_source_default">Android öntanımlı değeri</string>
     <string name="audio_source_unprocessed">İşlenmemiş</string>
     <string name="audio_source_microphone">Mikrofon</string>
     <string name="audio_source_voice_recognition">Ses tanıma</string>
     <string name="audio_source_voice_communication">Sesli iletişim</string>
+    <string name="audio_source_voice_performance">Ses performansı</string>
     <string name="faq_1_title">Kayıt sırasında bildirim simgesini gizleyebilir miyim\?</string>
     <string name="faq_1_text">Duruma göre değişir. Aygıtınızı kullanırken, bunun gibi uygulamaların bildirimlerini tamamen gizlemek artık mümkün değildir. Doğru ayar ögesini seçerseniz, uygulama onu gizlemek için elinden geleni yapacaktır. Aygıt ayarlarınızda hassas bildirimlerin görüntülenmesini devre dışı bırakırsanız, bunu kilit ekranında gizleyebilirsiniz.</string>
 </resources>

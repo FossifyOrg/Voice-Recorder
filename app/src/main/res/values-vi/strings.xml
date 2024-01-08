@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Máy thu âm</string>
+    <string name="app_launcher_name">Ghi âm</string>
     <string name="recording_saved_successfully">Đã lưu bản ghi thành công</string>
     <string name="recording">Đang ghi âm</string>
     <string name="no_recordings_found">Không có bản ghi nào được tạo bởi ứng dụng này
