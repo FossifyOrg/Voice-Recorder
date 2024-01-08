@@ -10,33 +10,23 @@
     <string name="paused">Pozastaveno</string>
     <string name="recorder">Záznamník</string>
     <string name="player">Přehrávač</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Odstranit %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d nahrávka</item>
         <item quantity="few">%d nahrávky</item>
         <item quantity="other">%d nahrávek</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Zkusit skrýt oznámení o nahrávání</string>
     <string name="save_recordings_in">Uložit nahrávky v</string>
     <string name="audio_source">Zdroj zvuku</string>
     <string name="bitrate">Bitový tok</string>
     <string name="record_after_launch">Začít nahrávat automaticky při spuštění aplikace</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_default">Výchozí Androidu</string>
     <string name="audio_source_unprocessed">Nezpracovaný</string>
     <string name="audio_source_microphone">Mikrofon</string>
     <string name="audio_source_voice_recognition">Rozpoznání řeči</string>
     <string name="audio_source_voice_communication">Hlasová komunikace</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Mohu během nahrávání skrýt ikonu oznámení\?</string>
     <string name="faq_1_text">No, přijde na to. Při používání vašeho zařízení již není možné plně skrýt oznámení o takových aplikacích. Pokud zkontrolujete příslušnou položku nastavení, aplikace udělá vše pro to, aby ji skryla. Můžete jí však skrýt na zamykací obrazovce, pokud v nastavení vašeho zařízení deaktivujete zobrazování citlivých oznámení.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

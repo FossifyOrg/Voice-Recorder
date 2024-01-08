@@ -10,8 +10,6 @@
     <string name="paused">Паўза</string>
     <string name="recorder">Дыктафон</string>
     <string name="player">Прайгравальнік</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Выдаліць %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d запіс</item>
@@ -19,13 +17,11 @@
         <item quantity="many">%d запісаў</item>
         <item quantity="other">%d запісаў</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Спрабаваць схаваць апавяшчэнне пры запісу</string>
     <string name="save_recordings_in">Месца захавання запісаў</string>
     <string name="audio_source">Крыніца гуку</string>
     <string name="bitrate">Бітрэйт</string>
     <string name="record_after_launch">Аўтаматычна пачынаць запіс пры запуску</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Камера</string>
     <string name="audio_source_default">Android па змаўчанні</string>
     <string name="audio_source_unprocessed">Неапрацаваны</string>
@@ -33,11 +29,6 @@
     <string name="audio_source_voice_recognition">Распазнаванне голасу</string>
     <string name="audio_source_voice_communication">Галасавая сувязь</string>
     <string name="audio_source_voice_performance">Галасавое выкананне</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Ці магчыма схаваць значок апавяшчэння падчас запісу\?</string>
     <string name="faq_1_text">Ну, гэта залежыць ад абставін. Пакуль вы выкарыстоўваеце сваю прыладу, цалкам схаваць апавяшчэнні аб такіх прыкладаннях немагчыма. Калі вы адзначыце адпаведны пункт у наладах, прыкладанне зробіць усё магчымае, каб схаваць апавяшчэнне. Таксама магчыма схаваць яго на экране блакавання, калі адключыць паказ канфідэнцыйных апавяшчэнняў у наладах прылады.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

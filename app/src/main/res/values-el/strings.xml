@@ -9,21 +9,16 @@
 \nστον επιλεγμένο φάκελο</string>
     <string name="paused">Σε Παύση</string>
     <string name="recorder">Εγγραφέας</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">Είστε βέβαιοι ότι θέλετε να διαγράψετε τις %s;</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="one">%d εγγραφή</item>
         <item quantity="other">%d εγγραφές</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Δοκιμάστε να αποκρύψετε την ειδοποίηση εγγραφής</string>
     <string name="save_recordings_in">Αποθήκευση εγγραφών σε</string>
     <string name="audio_source">Πηγή ήχου</string>
     <string name="bitrate">Ρυθμός bit</string>
     <string name="record_after_launch">Αυτόματη έναρξη εγγραφής μετά την εκκίνηση της</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Κάμερα</string>
     <string name="audio_source_default">Android προεπιλογή</string>
     <string name="audio_source_unprocessed">Μη επεξεργάσιμος</string>
@@ -31,11 +26,6 @@
     <string name="audio_source_voice_recognition">Αναγνώριση φωνής</string>
     <string name="audio_source_voice_communication">Φωνητική επικοινωνία</string>
     <string name="audio_source_voice_performance">Απόδοση φωνής</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Μπορώ να αποκρύψω το εικονίδιο ειδοποίησης κατά την εγγραφή;</string>
     <string name="faq_1_text">Εξαρτάται. Ενώ χρησιμοποιείτε τη συσκευή σας, δεν είναι πλέον δυνατή η πλήρης απόκρυψη των ειδοποιήσεων εφαρμογών όπως αυτή. Εάν ελέγξετε το κατάλληλο στοιχείο ρύθμισης, η εφαρμογή θα κάνει ό,τι μπορεί για να το αποκρύψει. Ωστόσο, μπορείτε να την αποκρύψετε στην οθόνη κλειδώματος, αν απενεργοποιήσετε την εμφάνιση ευαίσθητων ειδοποιήσεων στις ρυθμίσεις της συσκευής σας.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

@@ -8,21 +8,17 @@
     <string name="paused">Паузирано</string>
     <string name="recorder">Снимач</string>
     <string name="player">Играч</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Избриши %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d снимање</item>
         <item quantity="few">%d снимањa</item>
         <item quantity="other">%d снимањa</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Покушајте да сакријете обавештење о снимању</string>
     <string name="save_recordings_in">Сачувајте снимке у</string>
     <string name="audio_source">Аудио извор</string>
     <string name="bitrate">Битна брзина</string>
     <string name="record_after_launch">Почните да снимате аутоматски након покретања апликације</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Камера</string>
     <string name="audio_source_default">Андроид подразумевано</string>
     <string name="audio_source_unprocessed">Необрађено</string>
@@ -30,7 +26,6 @@
     <string name="audio_source_voice_recognition">Препознавање гласа</string>
     <string name="audio_source_voice_communication">Гласовна комуникација</string>
     <string name="audio_source_voice_performance">Гласовне перформансе</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Могу ли да сакријем икону обавештења током снимања\?</string>
     <string name="faq_1_text">Добро то зависи. Док користите свој уређај, више није могуће у потпуности сакрити обавештења оваквих апликација. Ако означите одговарајућу ставку подешавања, апликација ће дати све од себе да је сакрије. Међутим, можете га сакрити на закључаном екрану ако онемогућите приказивање осетљивих обавештења у подешавањима уређаја.</string>
 </resources>

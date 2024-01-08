@@ -8,21 +8,15 @@
     <string name="no_recordings_in_folder_found">在所選的資料夾內
 \n未找到錄音</string>
     <string name="paused">已暫停</string>
-    <string name="recorder">Recorder</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">要刪除 %s 嗎？</string>
     <plurals name="delete_recordings">
         <item quantity="other">%d 段錄音</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">儘量隱藏錄音通知</string>
     <string name="save_recordings_in">錄音儲存至</string>
     <string name="audio_source">音訊來源</string>
     <string name="bitrate">位元率</string>
     <string name="record_after_launch">啟動 app 後自動開始錄音</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">相機</string>
     <string name="audio_source_default">Android 預設</string>
     <string name="audio_source_unprocessed">未經處理</string>
@@ -30,11 +24,6 @@
     <string name="audio_source_voice_recognition">語音辨識</string>
     <string name="audio_source_voice_communication">語音通訊</string>
     <string name="audio_source_voice_performance">聲音表現</string>
-    <!-- FAQ -->
     <string name="faq_1_title">有辦法隱藏錄音時出現的通知圖示嗎？</string>
     <string name="faq_1_text">嗯……看情況。當您正在使用裝置時，沒辦法完全隱藏這類 app 的通知。若您有開啟相應的選項，本 app 會盡其所能來隱藏。不過鎖定畫面上的可以隱藏，只要在裝置的設定中停用「敏感通知」即可。</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

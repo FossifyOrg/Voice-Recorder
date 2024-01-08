@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Voice Recorder</string>
     <string name="recording_saved_successfully">تم حفظ التسجيل بنجاح</string>
     <string name="recording">تسجيل</string>
     <string name="no_recordings_found">لا توجد تسجيلات تم إنشاؤها بواسطة هذا التطبيق
@@ -8,11 +7,7 @@
     <string name="no_recordings_in_folder_found">لم يتم العثور على تسجيلات
 \nفي المجلد المحدد</string>
     <string name="paused">متوقف مؤقتًا</string>
-    <string name="recorder">Recorder</string>
     <string name="player">المشغل</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
-    <string name="delete_recordings_confirmation">Delete %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="zero">تسجيل %d</item>
         <item quantity="one">تسجيل %d</item>
@@ -21,13 +16,10 @@
         <item quantity="many">تسجيل %d</item>
         <item quantity="other">تسجيل %d</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">حاول إخفاء إشعار التسجيل</string>
     <string name="save_recordings_in">حفظ التسجيلات في</string>
     <string name="audio_source">مصدر الصوت</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">ابدأ التسجيل تلقائيًا بعد تشغيل التطبيق</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">الكاميرا</string>
     <string name="audio_source_default">الافتراضي</string>
     <string name="audio_source_unprocessed">غير معالج</string>
@@ -35,11 +27,6 @@
     <string name="audio_source_voice_recognition">التعرف على الصوت</string>
     <string name="audio_source_voice_communication">التواصل الصوتي</string>
     <string name="audio_source_voice_performance">الأداء الصوتي</string>
-    <!-- FAQ -->
     <string name="faq_1_title">هل يمكنني إخفاء رمز الإشعار أثناء التسجيل؟</string>
     <string name="faq_1_text">حسنًا ، هذا يعتمد. أثناء استخدامك لجهازك ، لم يعد من الممكن إخفاء إشعارات تطبيقات كهذه تمامًا. إذا قمت بالتحقق من عنصر الإعداد المناسب ، فسيبذل التطبيق قصارى جهده لإخفائه. ومع ذلك ، يمكنك إخفائه على شاشة القفل ، إذا قمت بتعطيل عرض الإشعارات الحساسة في إعدادات جهازك.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

@@ -10,21 +10,16 @@
     <string name="paused">Pauznuté</string>
     <string name="recorder">Nahrávač</string>
     <string name="player">Prehrávač</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">Ste si istý, že chcete odstrániť %s\?</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="one">%d nahrávku</item>
         <item quantity="few">%d nahrávky</item>
         <item quantity="other">%d nahrávok</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Skúsiť ukryť nahrávaciu notifikáciu</string>
     <string name="save_recordings_in">Ukladať nahrávky do</string>
     <string name="audio_source">Zdroj audia</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Zapnúť nahrávanie automaticky po spustení apky</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Fotoaparát</string>
     <string name="audio_source_default">Predvolený zdroj</string>
     <string name="audio_source_unprocessed">Nespracovaný</string>
@@ -32,11 +27,6 @@
     <string name="audio_source_voice_recognition">Rozpoznávanie hlasu</string>
     <string name="audio_source_voice_communication">Hlasová komunikácia</string>
     <string name="audio_source_voice_performance">Hlasový výkon</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Viem nejakým spôsobom ukryť notifikačnú ikonku počas nahrávania\?</string>
     <string name="faq_1_text">Kedy ako. Ak používate vaše zariadenie, úplné ukrytie ikonky pri takých apkách nie je možné. Ak ale zapnete príslušnú položku v nastaveniach apky, posnaží sa notifikáciu čím lepšie ukryť. Viete ju ukryť aj na uzamknutej obrazovke ak vypnete zobrazovanie citlivých pripomienok v nastaveniach zariadenia.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

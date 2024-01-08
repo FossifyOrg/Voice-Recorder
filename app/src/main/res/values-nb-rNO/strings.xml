@@ -8,33 +8,14 @@
     <string name="no_recordings_in_folder_found">Fant ingen opptak
 \ni denne mappen</string>
     <string name="paused">På pause</string>
-    <string name="recorder">Recorder</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">Slett %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d opptak</item>
         <item quantity="other">%d opptak</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Prøv å skjule opptaksmerknaden</string>
     <string name="save_recordings_in">Lagre opptak i</string>
-    <string name="audio_source">Audio source</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Start opptak automatisk når programmet startes</string>
-    <!-- Settings Audio source selection -->
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Android default</string>
-    <string name="audio_source_unprocessed">Unprocessed</string>
-    <string name="audio_source_microphone">Microphone</string>
-    <string name="audio_source_voice_recognition">Voice recognition</string>
-    <string name="audio_source_voice_communication">Voice communication</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Kan jeg skjule merknadsikonet under opptak\?</string>
     <string name="faq_1_text">Det spørs. Mens du bruker enheten er det ikke lenger mulig å skjule merknader for programmer på denne måten. Hvis du velger det i programmet vil det gjøre sitt beste for å skjule det. Du kan dog skjule det på låseskjermen, hvis du skrur av visning av sensitive merknader i enhetsinnstillingene dine.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

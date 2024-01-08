@@ -1,40 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Voice Recorder</string>
-    <string name="recording_saved_successfully">Recording saved successfully</string>
-    <string name="recording">Recording</string>
     <string name="no_recordings_found">No recordings created by this app
 \nhave been found</string>
     <string name="no_recordings_in_folder_found">No recordings have been found
 \nin the selected folder</string>
-    <string name="paused">Paused</string>
-    <string name="recorder">Recorder</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
-    <string name="delete_recordings_confirmation">Delete %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="other">%d recording</item>
     </plurals>
-    <!-- Settings -->
-    <string name="try_hiding_notification">Try hiding the recording notification</string>
-    <string name="save_recordings_in">Save recordings in</string>
-    <string name="audio_source">Audio source</string>
-    <string name="bitrate">Bitrate</string>
-    <string name="record_after_launch">Start recording automatically after launching the app</string>
-    <!-- Settings Audio source selection -->
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Android default</string>
-    <string name="audio_source_unprocessed">Unprocessed</string>
-    <string name="audio_source_microphone">Microphone</string>
-    <string name="audio_source_voice_recognition">Voice recognition</string>
-    <string name="audio_source_voice_communication">Voice communication</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Can I hide the notification icon during recording\?</string>
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>
