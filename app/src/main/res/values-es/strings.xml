@@ -26,4 +26,7 @@
     <string name="audio_source_voice_communication">Comunicación por voz</string>
     <string name="faq_1_title">¿Puedo ocultar el icono de las notificaciones durante la grabación\?</string>
     <string name="faq_1_text">Bueno, eso depende. Mientras usa su dispositivo, ya no es posible ocultar completamente las notificaciones de aplicaciones como esta. Si marca el elemento de configuración adecuado, la aplicación hará todo lo posible para ocultarlo. Sin embargo, puede ocultarlo en la pantalla de bloqueo si deshabilita la visualización de notificaciones confidenciales en la configuración de su dispositivo.</string>
+    <string name="audio_source">Fuente de audio</string>
+    <string name="audio_source_default">Por defecto en Android</string>
+    <string name="audio_source_voice_performance">Interpretación de la voz</string>
 </resources>
