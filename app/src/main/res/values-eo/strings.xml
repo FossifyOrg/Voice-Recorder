@@ -10,6 +10,4 @@
         <item quantity="one">%d registraĵon</item>
         <item quantity="other">%d registraĵojn</item>
     </plurals>
-    <string name="faq_1_title">Can I hide the notification icon during recording\?</string>
-    <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
-</resources>
+    </resources>

@@ -17,7 +17,6 @@
     <string name="try_hiding_notification">Versuche, die Aufnahmebenachrichtigung auszublenden</string>
     <string name="save_recordings_in">Aufnahme speichern in</string>
     <string name="audio_source">Tonquelle</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Aufnahme startet automatisch beim Öffnen der App</string>
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_default">Android-Standard</string>
