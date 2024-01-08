@@ -10,19 +10,14 @@
     <string name="paused">Đã tạm dừng</string>
     <string name="recorder">Máy ghi âm</string>
     <string name="player">Máy phát</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Xóa %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="other">%d đang ghi âm</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Hãy thử ẩn thông báo ghi âm</string>
     <string name="save_recordings_in">Lưu bản ghi trong</string>
     <string name="audio_source">Nguồn âm thanh</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Bắt đầu ghi âm tự động sau khi khởi chạy ứng dụng</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Máy ảnh</string>
     <string name="audio_source_default">Android mặc định</string>
     <string name="audio_source_unprocessed">Chưa qua xử lý</string>
@@ -30,7 +25,6 @@
     <string name="audio_source_voice_recognition">Nhận diện giọng nói</string>
     <string name="audio_source_voice_communication">Âm thanh giao tiếp</string>
     <string name="audio_source_voice_performance">Hiệu suất giọng nói</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Tôi có thể ẩn biểu tượng thông báo trong khi ghi không\?</string>
     <string name="faq_1_text">Dạ, nó phụ thuộc. Khi bạn sử dụng thiết bị của mình, bạn không thể ẩn hoàn toàn thông báo của các ứng dụng như thế này nữa. Nếu bạn chọn mục cài đặt phù hợp, ứng dụng sẽ cố gắng hết sức để ẩn mục đó. Tuy nhiên, bạn có thể ẩn nó trên màn hình khóa nếu bạn tắt hiển thị các thông báo nhạy cảm trong cài đặt thiết bị của mình.</string>
 </resources>

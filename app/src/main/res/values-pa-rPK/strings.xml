@@ -8,28 +8,15 @@
     <string name="paused">روکھیا جا رہا اے</string>
     <string name="recorder">ریکارڈ والا</string>
     <string name="player">پلیئر</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">%s مٹاؤ؟</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d ریکارڈ</item>
         <item quantity="other">%d ریکارڈ</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">ریکارڈ دی خبر دا نوٹ لُکایو</string>
     <string name="save_recordings_in">فولڈر وچ ریکارڈ سامبھو</string>
-    <string name="audio_source">Audio source</string>
     <string name="bitrate">بِٹ‌ریٹ</string>
     <string name="record_after_launch">جدوں اَیپ کھُلھاؤݨ ریکارڈ شروع کرو</string>
-    <!-- Settings Audio source selection -->
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Android default</string>
-    <string name="audio_source_unprocessed">Unprocessed</string>
-    <string name="audio_source_microphone">Microphone</string>
-    <string name="audio_source_voice_recognition">Voice recognition</string>
-    <string name="audio_source_voice_communication">Voice communication</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Can I hide the notification icon during recording\?</string>
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
 </resources>

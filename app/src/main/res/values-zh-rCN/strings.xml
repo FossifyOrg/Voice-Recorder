@@ -10,19 +10,15 @@
     <string name="paused">暂停</string>
     <string name="recorder">录音机</string>
     <string name="player">播放器</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">删除 %s？</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="other">%d 个录音</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">尝试隐藏录音通知提示</string>
     <string name="save_recordings_in">保存录音至</string>
     <string name="audio_source">音频来源</string>
     <string name="bitrate">比特率</string>
     <string name="record_after_launch">启动应用程序后自动开始录制</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">相机</string>
     <string name="audio_source_default">安卓默认</string>
     <string name="audio_source_unprocessed">未处理的</string>
@@ -30,11 +26,6 @@
     <string name="audio_source_voice_recognition">语音识别</string>
     <string name="audio_source_voice_communication">语音通讯</string>
     <string name="audio_source_voice_performance">语音性能</string>
-    <!-- FAQ -->
     <string name="faq_1_title">在录音过程中我可以隐藏通知提示图标么？</string>
     <string name="faq_1_text">这个，视情况而定。当您正在使用设备的时候，现在已经不可能完全隐藏像此类应用程序的通知图标了。 如果您勾选恰当的设定条目，应用程序将秦可能的隐藏自身。您仍可以在锁屏界面隐藏它，如果您在您设备设定中禁用显示敏感内容的通知提示的话。</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

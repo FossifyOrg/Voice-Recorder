@@ -10,20 +10,16 @@
     <string name="paused">На Пауза</string>
     <string name="recorder">Рекордер</string>
     <string name="player">Плейър</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Изтрий %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d запис</item>
         <item quantity="other">%d записи</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Опитайте да скриете известието за запис</string>
     <string name="save_recordings_in">Запазете записите в</string>
     <string name="audio_source">Аудио източник</string>
     <string name="bitrate">Битрейт</string>
     <string name="record_after_launch">Започнете да записвате автоматично след стартиране на приложението</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Камера</string>
     <string name="audio_source_default">Android по подразбиране</string>
     <string name="audio_source_unprocessed">Необработени</string>
@@ -31,11 +27,6 @@
     <string name="audio_source_voice_recognition">Гласово разпознаване</string>
     <string name="audio_source_voice_communication">Гласова комуникация</string>
     <string name="audio_source_voice_performance">Гласово изпълнение</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Мога ли да скрия иконата за уведомяване по време на запис\?</string>
     <string name="faq_1_text">Е, зависи. Докато използвате устройството си, вече не е възможно да скриете напълно известията на подобни приложения. Ако поставите отметка на съответния елемент от настройката, приложението ще направи всичко възможно да го скрие. Все пак можете да го скриете на заключения екран, ако забраните показването на чувствителни известия в настройките на устройството си.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

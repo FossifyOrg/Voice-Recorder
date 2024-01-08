@@ -8,34 +8,15 @@
     <string name="no_recordings_in_folder_found">هیچ ضبطی یافت نشد
 \n در پوشه انتخاب شده</string>
     <string name="paused">مکث کرد</string>
-    <string name="recorder">Recorder</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">آیا مطمئنید که میخواهید حذف کنید %s\?</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="one">%d ضبط کردن</item>
         <item quantity="other">%d ضبط شده</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">اعلان ضبط را پنهان کنید</string>
     <string name="save_recordings_in">ذخیره ضبط در</string>
-    <string name="audio_source">Audio source</string>
     <string name="bitrate">میزان بیت</string>
     <string name="record_after_launch">پس از راه اندازی برنامه، ضبط را به صورت خودکار شروع کنید</string>
-    <!-- Settings Audio source selection -->
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Android default</string>
-    <string name="audio_source_unprocessed">Unprocessed</string>
-    <string name="audio_source_microphone">Microphone</string>
-    <string name="audio_source_voice_recognition">Voice recognition</string>
-    <string name="audio_source_voice_communication">Voice communication</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">آیا می توانم نماد اعلان را در حین ضبط مخفی کنم؟</string>
     <string name="faq_1_text">خب، بستگی دارد. هنگامی که از دستگاه خود استفاده می کنید، دیگر نمی توان اعلان های برنامه هایی مانند این را به طور کامل مخفی کرد. اگر آیتم تنظیم مناسب را بررسی کنید، برنامه تمام تلاش خود را می کند تا آن را پنهان کند. اگر نمایش اعلان‌های حساس را در تنظیمات دستگاه خود غیرفعال کنید، می‌توانید آن را روی صفحه قفل پنهان کنید.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

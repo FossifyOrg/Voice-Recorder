@@ -10,19 +10,15 @@
     <string name="paused">停止</string>
     <string name="recorder">レコーダー</string>
     <string name="player">プレーヤー</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">%sを削除しますか？</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="other">%d 件の録音</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">録音通知を隠す</string>
     <string name="save_recordings_in">録音の保存場所</string>
     <string name="audio_source">オーディオソース (AudioSource)</string>
     <string name="bitrate">ビットレート</string>
     <string name="record_after_launch">アプリ起動後に自動で録音を開始</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">カメラ</string>
     <string name="audio_source_default">Androidのデフォルト</string>
     <string name="audio_source_unprocessed">未加工 (生)</string>
@@ -30,11 +26,6 @@
     <string name="audio_source_voice_recognition">音声認識</string>
     <string name="audio_source_voice_communication">音声通話</string>
     <string name="audio_source_voice_performance">ボイスパフォーマンス</string>
-    <!-- FAQ -->
     <string name="faq_1_title">録音中に通知を非表示にすることは出来ますか？</string>
     <string name="faq_1_text">場合によります。デバイスの使用中は、このようなアプリの通知を完全に非表示にすることはできなくなりました。適切な設定項目にチェックを入れれば、通知を可能な限り隠せます。ロック画面上での非表示は、デバイスの設定から通知の表示を無効にすることで可能です。</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

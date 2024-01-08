@@ -8,8 +8,6 @@
     <string name="paused">Wstrzymane</string>
     <string name="recorder">Rejestrator</string>
     <string name="player">Odtwarzacz</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Czy usunąć %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d nagranie</item>
@@ -17,13 +15,11 @@
         <item quantity="many">%d nagrań</item>
         <item quantity="other">%d nagrań</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Próbuj ukrywać powiadomienie o nagrywaniu</string>
     <string name="save_recordings_in">Zapisuj nagrania w</string>
     <string name="audio_source">Źródło dźwięku</string>
     <string name="bitrate">Przepływność</string>
     <string name="record_after_launch">Rozpoczynaj nagrywanie automatycznie przy uruchomieniu aplikacji</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Aparat</string>
     <string name="audio_source_default">Domyślne systemowe</string>
     <string name="audio_source_unprocessed">Nieprzetworzone</string>
@@ -31,11 +27,6 @@
     <string name="audio_source_voice_recognition">Rozpoznawanie głosu</string>
     <string name="audio_source_voice_communication">Komunikacja głosowa</string>
     <string name="audio_source_voice_performance">Wydajność głosu</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Czy mogę ukryć ikonę powiadomienia podczas nagrywania?</string>
     <string name="faq_1_text">To zależy. Podczas korzystania z urządzenia nie da się już całkowicie ukryć powiadomień aplikacji takich jak ta. Jeśli zaznaczysz odpowiednie ustawienie, aplikacja spróbuje to zrobić. Możesz jednak ukryć ikonę powiadomienia na ekranie blokady w ustawieniach bezpieczeństwa z ustawień urządzenia.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

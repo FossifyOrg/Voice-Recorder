@@ -8,34 +8,21 @@
     <string name="no_recordings_in_folder_found">No s\'ha trobat cap enregistrament
 \na la carpeta seleccionada</string>
     <string name="paused">En pausa</string>
-    <string name="recorder">Recorder</string>
     <string name="player">Reproductor</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Suprimeixo %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d enregistrament</item>
         <item quantity="other">%d enregistraments</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Prova d\'ocultar la notificació d\'enregistrament</string>
     <string name="save_recordings_in">Desa els enregistraments a</string>
-    <string name="audio_source">Audio source</string>
     <string name="bitrate">Taxa de bits</string>
     <string name="record_after_launch">Inicia automàticament l\'enregistrament després d\'iniciar l\'aplicació</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Càmera</string>
-    <string name="audio_source_default">Android default</string>
     <string name="audio_source_unprocessed">Sense processar</string>
     <string name="audio_source_microphone">Micròfon</string>
     <string name="audio_source_voice_recognition">Reconeixement de veu</string>
     <string name="audio_source_voice_communication">Comunicació de veu</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Puc ocultar la icona de notificació durant l\'enregistrament\?</string>
     <string name="faq_1_text">Bé, depèn. Mentre feu servir el dispositiu, ja no és possible amagar completament les notificacions d\'aplicacions com aquesta. Si activeu l\'element de configuració adequat, l\'aplicació farà tot el possible per ocultar-la. Tanmateix, podeu ocultar-la a la pantalla de bloqueig si desactiveu la visualització de notificacions confidencials a la configuració del dispositiu.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

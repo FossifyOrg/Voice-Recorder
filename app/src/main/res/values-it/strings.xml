@@ -10,21 +10,16 @@
     <string name="paused">In pausa</string>
     <string name="recorder">Registratore</string>
     <string name="player">Lettore</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">Eliminare %s\?</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="one">%d registrazione</item>
         <item quantity="many">%d registrazioni</item>
         <item quantity="other">%d registrazioni</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Prova a nascondere la notifica di registrazione</string>
     <string name="save_recordings_in">Salva le registrazioni in</string>
     <string name="audio_source">Fonte audio</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Inizia a registrare automaticamente dopo aver lanciato l\'app</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Telecamera</string>
     <string name="audio_source_default">Impostazione predefinita Android</string>
     <string name="audio_source_unprocessed">Non elaborato</string>
@@ -32,11 +27,6 @@
     <string name="audio_source_voice_recognition">Riconoscimento vocale</string>
     <string name="audio_source_voice_communication">Comunicazione vocale</string>
     <string name="audio_source_voice_performance">Prestazione vocale</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Posso nascondere la notifica durante la registrazione\?</string>
     <string name="faq_1_text">Dipende. Mentre usi il tuo dispositivo non è più possibile nascondere completamente le notifiche di app come questa. Se selezioni l\'impostazione appropriata, la app farà del suo meglio per nasconderla. Comunque, puoi nasconderla nella schermata di blocco, se disabiliti la visualizzazione di notifiche sensibili nelle impostazioni del tuo dispositivo.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

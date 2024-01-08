@@ -8,34 +8,14 @@
     <string name="no_recordings_in_folder_found">Ingen optagelser er fundet
 \ni den valgte mappe</string>
     <string name="paused">Pauset</string>
-    <string name="recorder">Recorder</string>
-    <string name="player">Player</string>
-    <!-- Confirmation dialog -->
     <string name="delete_recordings_confirmation">Slet %s\?</string>
-    <!-- Are you sure you want to delete 5 recordings? -->
     <plurals name="delete_recordings">
         <item quantity="one">%d optagelse</item>
         <item quantity="other">%d optagelser</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Forsøg at skjule notifikation under optagelse</string>
     <string name="save_recordings_in">Gem optagelser i</string>
-    <string name="audio_source">Audio source</string>
-    <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Start optagelsen automatisk efter start af appen</string>
-    <!-- Settings Audio source selection -->
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Android default</string>
-    <string name="audio_source_unprocessed">Unprocessed</string>
-    <string name="audio_source_microphone">Microphone</string>
-    <string name="audio_source_voice_recognition">Voice recognition</string>
-    <string name="audio_source_voice_communication">Voice communication</string>
-    <string name="audio_source_voice_performance">Voice performance</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Kan jeg skjule notifikationsikonet under optagelse\?</string>
     <string name="faq_1_text">Mens du bruger din enhed, er det ikke længere muligt at skjule meddelelser fra apps som denne fuldt ud. Hvis du aktiverer \"Forsøg at skjule notifikation om optagelse\" i Indstillinger, gør appen sit bedste for at skjule det. Du kan dog skjule det på låseskærmen, hvis du deaktiverer visning af følsomme meddelelser i dine enhedsindstillinger.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>

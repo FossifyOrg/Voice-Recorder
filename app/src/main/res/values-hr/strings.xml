@@ -10,21 +10,17 @@
     <string name="paused">Pauzirano</string>
     <string name="recorder">Snimač</string>
     <string name="player">Izvođač</string>
-    <!-- Confirmation dialog -->
-    <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Izbrisati %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d snimka</item>
         <item quantity="few">%d snimke</item>
         <item quantity="other">%d snimki</item>
     </plurals>
-    <!-- Settings -->
     <string name="try_hiding_notification">Pokušaj sakriti obavijesti snimanja</string>
     <string name="save_recordings_in">Spremi snimanja u</string>
     <string name="audio_source">Izvor zvuka</string>
     <string name="bitrate">Brzina prijenosa</string>
     <string name="record_after_launch">Započni automatsko snimanje nakon pokretanja aplikacije</string>
-    <!-- Settings Audio source selection -->
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_default">Zadano Android</string>
     <string name="audio_source_unprocessed">Neobrađeno</string>
@@ -32,11 +28,6 @@
     <string name="audio_source_voice_recognition">Prepoznavanje glasa</string>
     <string name="audio_source_voice_communication">Glasovna komunikacija</string>
     <string name="audio_source_voice_performance">Glasovna izvedba</string>
-    <!-- FAQ -->
     <string name="faq_1_title">Mogu li sakriti ikonu obavijesti tijekom snimanja\?</string>
     <string name="faq_1_text">Ovisi. Dok koristiš svoj uređaj više nije moguće u potpunosti sakriti obavijesti ovakvih aplikacija. Ako označiš ispravnu stavku postavke, aplikacija će je pokušati sakriti. Možeš je sakriti na zaključanom ekranu, ako isključiš prikaz osobnih obavijesti u postavkama uređaja.</string>
-    <!--
-        Haven't found some strings? There's more at
-        https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
-    -->
 </resources>
