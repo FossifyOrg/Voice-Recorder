@@ -29,4 +29,5 @@
     <string name="audio_source_voice_performance">Prestazione vocale</string>
     <string name="faq_1_title">Posso nascondere la notifica durante la registrazione\?</string>
     <string name="faq_1_text">Dipende. Mentre usi il tuo dispositivo non è più possibile nascondere completamente le notifiche di app come questa. Se selezioni l\'impostazione appropriata, la app farà del suo meglio per nasconderla. Comunque, puoi nasconderla nella schermata di blocco, se disabiliti la visualizzazione di notifiche sensibili nelle impostazioni del tuo dispositivo.</string>
+    <string name="bitrate">Bitrate</string>
 </resources>
