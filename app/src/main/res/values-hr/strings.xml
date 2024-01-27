@@ -9,7 +9,7 @@
 \nu odabranoj mapi</string>
     <string name="paused">Pauzirano</string>
     <string name="recorder">Snimač</string>
-    <string name="player">Izvođač</string>
+    <string name="player">Player</string>
     <string name="delete_recordings_confirmation">Izbrisati %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d snimka</item>
@@ -22,7 +22,7 @@
     <string name="bitrate">Brzina prijenosa</string>
     <string name="record_after_launch">Započni automatsko snimanje nakon pokretanja aplikacije</string>
     <string name="audio_source_camcorder">Kamera</string>
-    <string name="audio_source_default">Zadano Android</string>
+    <string name="audio_source_default">Standard Androida</string>
     <string name="audio_source_unprocessed">Neobrađeno</string>
     <string name="audio_source_microphone">Mikrofon</string>
     <string name="audio_source_voice_recognition">Prepoznavanje glasa</string>
