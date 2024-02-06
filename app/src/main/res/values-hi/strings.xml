@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="no_recordings_in_folder_found">कोई रिकॉर्डिंग नहीं मिली
+\nचयनित फ़ोल्डर में</string>
+    <string name="audio_source">ऑडियो स्रोत</string>
+    <string name="faq_1_text">खैर यह निर्भर करता है। जब आप अपने डिवाइस का उपयोग करते हैं तो इस तरह के ऐप्स की सूचनाओं को पूरी तरह छिपाना संभव नहीं है। यदि आप उचित सेटिंग आइटम की जांच करते हैं, तो ऐप इसे छिपाने की पूरी कोशिश करेगा। हालाँकि, यदि आप अपनी डिवाइस सेटिंग्स में संवेदनशील सूचनाओं को प्रदर्शित करना अक्षम करते हैं, तो आप इसे लॉकस्क्रीन पर छिपा सकते हैं।</string>
+    <string name="app_launcher_name">वोईस रिकॉर्डर</string>
+    <string name="recording_saved_successfully">रिकॉर्डिंग सफलतापूर्वक सहेजी गई</string>
+    <string name="recording">रिकॉर्डिंग</string>
+    <string name="no_recordings_found">इस ऐप द्वारा कोई रिकॉर्डिंग नहीं बनाई गई
+\nमिला है</string>
+    <string name="paused">रुका हुआ</string>
+    <string name="recorder">रिकॉर्डर</string>
+    <string name="player">प्लेयर</string>
+    <string name="delete_recordings_confirmation">%s हटाएँ?</string>
+    <plurals name="delete_recordings">
+        <item quantity="one">%d रिकॉर्डिंग</item>
+        <item quantity="other">%d रिकॉर्डिंग्स</item>
+    </plurals>
+    <string name="try_hiding_notification">रिकॉर्डिंग सूचना को छिपाने का प्रयास करें</string>
+    <string name="save_recordings_in">रिकॉर्डिंग्स को इसमें सहेजें</string>
+    <string name="bitrate">बिटरेट</string>
+    <string name="record_after_launch">ऐप लॉन्च करने के बाद स्वचालित रूप से रिकॉर्डिंग शुरू करें</string>
+    <string name="audio_source_camcorder">कैमरा</string>
+    <string name="audio_source_unprocessed">असंसाधित</string>
+    <string name="audio_source_default">Android डिफॉल्ट</string>
+    <string name="audio_source_microphone">माइक्रोफ़ोन</string>
+    <string name="audio_source_voice_recognition">आवाज की पहचान</string>
+    <string name="audio_source_voice_communication">आवाज संचार</string>
+    <string name="audio_source_voice_performance">आवाज़ का प्रदर्शन</string>
+    <string name="faq_1_title">क्या मैं रिकॉर्डिंग के दौरान अधिसूचना आइकन छुपा सकता हूँ?</string>
+</resources>
