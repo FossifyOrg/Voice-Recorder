@@ -12,6 +12,7 @@
     <string name="delete_recordings_confirmation">Suprimeixo %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d enregistrament</item>
+        <item quantity="many">%d enregistraments</item>
         <item quantity="other">%d enregistraments</item>
     </plurals>
     <string name="try_hiding_notification">Prova d\'ocultar la notificació d\'enregistrament</string>
@@ -25,4 +26,8 @@
     <string name="audio_source_voice_communication">Comunicació de veu</string>
     <string name="faq_1_title">Puc ocultar la icona de notificació durant l\'enregistrament\?</string>
     <string name="faq_1_text">Bé, depèn. Mentre feu servir el dispositiu, ja no és possible amagar completament les notificacions d\'aplicacions com aquesta. Si activeu l\'element de configuració adequat, l\'aplicació farà tot el possible per ocultar-la. Tanmateix, podeu ocultar-la a la pantalla de bloqueig si desactiveu la visualització de notificacions confidencials a la configuració del dispositiu.</string>
+    <string name="recorder">Enregistrador</string>
+    <string name="audio_source">Font d\'àudio</string>
+    <string name="audio_source_default">Predeterminat de l\'Android</string>
+    <string name="audio_source_voice_performance">Actuació de veu</string>
 </resources>
