@@ -28,4 +28,6 @@
     <string name="audio_source_voice_communication">Comunicação por voz</string>
     <string name="faq_1_title">Posso ocultar o ícone de notificação durante a gravação\?</string>
     <string name="faq_1_text">Depende. Actuamente, já não possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a alinea correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
+    <string name="audio_source_voice_performance">Desempenho de voz</string>
+    <string name="audio_source">Fonte de áudio</string>
 </resources>
