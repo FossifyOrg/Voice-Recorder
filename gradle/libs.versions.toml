@@ -9,8 +9,6 @@ androidx-documentfile = "1.0.1"
 androidx-swiperefreshlayout = "1.1.0"
 #Eventbus
 eventbus = "3.3.1"
-#Room
-room = "2.6.1"
 #Fossify
 commons = "7a3870e42b"
 #AudioRecordView
@@ -36,10 +34,6 @@ app-version-versionName = "1.0.0"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidx-documentfile" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
-#Room
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 #Fossify
 fossify-commons = { module = "org.fossify:commons", version.ref = "commons" }
 #EventBus
@@ -50,11 +44,6 @@ audiorecordview = { module = "com.github.Armen101:AudioRecordView", version.ref 
 tandroidlame = { module = "com.github.naman14:TAndroidLame", version.ref = "tandroidlame" }
 #AutofitTextView
 autofittextview = { module = "me.grantland:autofittextview", version.ref = "autofittextview" }
-[bundles]
-room = [
-    "androidx-room-ktx",
-    "androidx-room-runtime",
-]
 [plugins]
 android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
