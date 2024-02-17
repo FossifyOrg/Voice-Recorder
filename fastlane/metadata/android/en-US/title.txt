@@ -1,1 +1,1 @@
-Simple Voice Recorder
+Fossify Voice Recorder

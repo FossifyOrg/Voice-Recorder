@@ -1,1 +1,0 @@
-Einfacher Audiorecorder zum Aufnehmen von Audio oder Erstellen von Memos
