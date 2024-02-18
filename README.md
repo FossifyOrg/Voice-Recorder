@@ -2,6 +2,8 @@
 
 <img alt="Logo" src="graphics/icon.webp" width="120" />
 
+<a href="https://apt.izzysoft.de/fdroid/index/apk/org.fossify.musicplayer"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height=80/></a>
+
 Introducing Fossify Voice Recorder – where capturing crystal-clear audio and preserving precious moments is effortless and enjoyable. Seamlessly blend
 simplicity with functionality as you embark on a journey of seamless recording experiences tailored to your needs.
 
