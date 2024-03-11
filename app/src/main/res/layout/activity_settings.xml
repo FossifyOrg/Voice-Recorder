@@ -220,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/settings_extension_label"
-                    tools:text="@string/m4a" />
+                    tools:text="@string/mp3" />
 
             </RelativeLayout>
 
@@ -265,7 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/settings_bitrate_label"
-                    tools:text="128 kbps" />
+                    tools:text="192 kbps" />
 
             </RelativeLayout>
 
