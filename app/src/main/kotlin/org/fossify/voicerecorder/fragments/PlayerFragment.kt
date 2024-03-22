@@ -293,7 +293,7 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
+        val filtered = itemsIgnoringSearch.filter { it.titleWithExtension.contains(text, true) }.toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 

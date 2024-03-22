@@ -42,7 +42,6 @@
             android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/normal_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/recording_size"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recording_title"
             app:layout_constraintVertical_bias="0.5"
@@ -59,6 +58,20 @@
             app:layout_constraintEnd_toStartOf="@+id/overflow_menu_icon"
             app:layout_constraintTop_toTopOf="@+id/recording_title"
             tools:text="00:05" />
+
+        <TextView
+            android:id="@+id/recording_extension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:alpha="0.6"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/normal_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/recording_date"
+            app:layout_constraintEnd_toStartOf="@+id/recording_size"
+            app:layout_constraintTop_toTopOf="@+id/recording_date"
+            tools:text="m4a" />
 
         <TextView
             android:id="@+id/recording_size"

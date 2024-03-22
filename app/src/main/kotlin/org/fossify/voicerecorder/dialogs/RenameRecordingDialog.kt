@@ -18,7 +18,7 @@ import java.io.File
 class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Recording, val callback: () -> Unit) {
     init {
         val binding = DialogRenameRecordingBinding.inflate(activity.layoutInflater).apply {
-            renameRecordingTitle.setText(recording.title.substringBeforeLast('.'))
+            renameRecordingTitle.setText(recording.title)
         }
         val view = binding.root
 
@@ -58,7 +58,7 @@ class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Rec
     }
 
     private fun updateMediaStoreTitle(recording: Recording, newTitle: String) {
-        val oldExtension = recording.title.getFilenameExtension()
+        val oldExtension = recording.titleWithExtension.getFilenameExtension()
         val newDisplayName = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
 
         val values = ContentValues().apply {
@@ -71,7 +71,7 @@ class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Rec
             activity.contentResolver.update(getAudioFileContentUri(recording.id.toLong()), values, null, null)
         } catch (e: Exception) {
             try {
-                val path = "${activity.config.saveRecordingsFolder}/${recording.title}"
+                val path = "${activity.config.saveRecordingsFolder}/${recording.titleWithExtension}"
                 val newPath = "${path.getParentPath()}/$newDisplayName"
                 activity.handleSAFDialogSdk30(path) {
                     val success = activity.renameDocumentSdk30(path, newPath)
@@ -86,7 +86,7 @@ class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Rec
     }
 
     private fun updateLegacyFilename(recording: Recording, newTitle: String) {
-        val oldExtension = recording.title.getFilenameExtension()
+        val oldExtension = recording.extension
         val oldPath = recording.path
         val newFilename = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
         val newPath = File(oldPath.getParentPath(), newFilename).absolutePath

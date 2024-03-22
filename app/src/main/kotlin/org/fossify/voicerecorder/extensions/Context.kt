@@ -134,12 +134,12 @@ fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Recording> 
 
     files.filter { it.isAudioFast() }.forEach {
         val id = it.hashCode()
-        val title = it.name
+        val (title, extension) = it.name.split('.', limit = 2)
         val path = it.absolutePath
         val timestamp = (it.lastModified() / 1000).toInt()
         val duration = getDuration(it.absolutePath) ?: 0
         val size = it.length().toInt()
-        val recording = Recording(id, title, path, timestamp, duration, size)
+        val recording = Recording(id, title, extension, path, timestamp, duration, size)
         recordings.add(recording)
     }
     return recordings
@@ -156,12 +156,12 @@ fun Context.getSAFRecordings(trashed: Boolean = false): ArrayList<Recording> {
 
     files.filter { it.type?.startsWith("audio") == true && !it.name.isNullOrEmpty() }.forEach {
         val id = it.hashCode()
-        val title = it.name!!
+        val (title, extension) = it.name!!.split('.', limit = 2)
         val path = it.uri.toString()
         val timestamp = (it.lastModified() / 1000).toInt()
         val duration = getDurationFromUri(it.uri)
         val size = it.length().toInt()
-        val recording = Recording(id, title, path, timestamp, duration.toInt(), size)
+        val recording = Recording(id, title, extension, path, timestamp, duration.toInt(), size)
         recordings.add(recording)
     }
 
@@ -204,7 +204,7 @@ fun Context.getOrCreateTrashFolder(): String {
 
 private fun Context.readRecordingFromCursor(cursor: Cursor): Recording {
     val id = cursor.getIntValue(Media._ID)
-    val title = cursor.getStringValue(Media.DISPLAY_NAME)
+    val (title, extension) = cursor.getStringValue(Media.DISPLAY_NAME).split('.', limit = 2)
     val timestamp = cursor.getIntValue(Media.DATE_ADDED)
     var duration = cursor.getLongValue(Media.DURATION) / 1000
     var size = cursor.getIntValue(Media.SIZE)
@@ -217,7 +217,7 @@ private fun Context.readRecordingFromCursor(cursor: Cursor): Recording {
         size = getSizeFromUri(id.toLong())
     }
 
-    return Recording(id, title, "", timestamp, duration.toInt(), size)
+    return Recording(id, title, extension,"", timestamp, duration.toInt(), size)
 }
 
 private fun Context.getSizeFromUri(id: Long): Int {
