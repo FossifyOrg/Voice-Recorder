@@ -26,4 +26,6 @@
     <string name="audio_source_voice_performance">Performa suara</string>
     <string name="faq_1_title">Bisakah saya menyembunyikan ikon notifikasi selama merekam\?</string>
     <string name="faq_1_text">Tergantung. Saat Anda menggunakan perangkat, tidak mungkin lagi untuk menyembunyikan sepenuhnya pemberitahuan aplikasi seperti ini. Jika Anda memeriksa item pengaturan yang tepat, aplikasi akan melakukan yang terbaik untuk menyembunyikannya. Anda dapat menyembunyikannya di layar kunci, jika Anda menonaktifkan tampilan pemberitahuan sensitif di pengaturan perangkat Anda.</string>
+    <string name="bitrate">Laju bit</string>
+    <string name="recorder">Perekam</string>
 </resources>

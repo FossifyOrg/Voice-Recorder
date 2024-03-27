@@ -16,7 +16,7 @@
         <item quantity="other">%d äänitettä</item>
     </plurals>
     <string name="try_hiding_notification">Pyri piilottamaan äänitysilmoitus</string>
-    <string name="save_recordings_in">Tallenna äänktteet kohterseen</string>
+    <string name="save_recordings_in">Tallenna äänitteet kohteeseen</string>
     <string name="audio_source">Äänilähde</string>
     <string name="bitrate">Bittinopeus</string>
     <string name="record_after_launch">Käynnistä äänitys automaattisesti sovelluksen käynnistyessä</string>

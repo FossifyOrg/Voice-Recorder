@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">Ahots grabagailua</string>
+    <string name="recording_saved_successfully">Grabaketa ongi gorde da</string>
+    <string name="recording">Grabatzen</string>
+    <string name="no_recordings_found">Ez da aplikazio honek sorturiko grabaziorik
+\naurkitu</string>
+    <string name="no_recordings_in_folder_found">Ez da grabaziorik aurkitu
+\nhautatutako karpetan</string>
+    <string name="paused">Pausatuta</string>
+    <string name="recorder">Grabagailua</string>
+    <string name="player">Erreproduzigailua</string>
+    <string name="delete_recordings_confirmation">%s ezabatu?</string>
+    <plurals name="delete_recordings">
+        <item quantity="one">Grabazio %d</item>
+        <item quantity="other">%d grabazio</item>
+    </plurals>
+    <string name="try_hiding_notification">Saiatu grabazioaren jakinarazpena ezkutatzen</string>
+    <string name="save_recordings_in">Gorde grabaketak hemen</string>
+    <string name="audio_source">Audio iturria</string>
+    <string name="bitrate">Bit-tasa</string>
+    <string name="record_after_launch">Hasi automatikoki grabatzen aplikazioa abiarazi ondoren</string>
+    <string name="audio_source_camcorder">Kamera</string>
+    <string name="audio_source_default">Androiden lehenetsia</string>
+    <string name="audio_source_unprocessed">Prozesatu gabea</string>
+    <string name="audio_source_microphone">Mikrofonoa</string>
+    <string name="audio_source_voice_recognition">Ahots-ezagutza</string>
+    <string name="audio_source_voice_communication">Ahots komunikazioa</string>
+    <string name="audio_source_voice_performance">ahotsaren interpretazioa</string>
+    <string name="faq_1_title">Ezkutatu al dezaket jakinarazpenen ikonoa grabatzean?</string>
+    <string name="faq_1_text">Beno, zenbait kasutan bai. Zure gailua erabiltzen duzun bitartean ez da posible horrelako aplikazioen jakinarazpenak guztiz ezkutatu. Ezarpen-elementu egokia markatuz gero, aplikazioak ahal duen guztia egingo du ezkutatzeko. Hala ere, blokeo-pantailan ezkutatu dezakezu, zure gailuaren ezarpenetan jakinarazpen sentikorren bistaratzea desgaitzen baduzu.</string>
+</resources>
