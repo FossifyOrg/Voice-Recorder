@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Voicerecorder</string>
-    <string name="recording_saved_successfully">Opname is opgeslagen</string>
+    <string name="app_launcher_name">Spraak recorder</string>
+    <string name="recording_saved_successfully">Opname succesvol opgeslagen</string>
     <string name="recording">Opnemen</string>
     <string name="no_recordings_found">Geen opnames gevonden
 \ndie zijn gemaakt door deze app</string>
     <string name="no_recordings_in_folder_found">Geen opnames gevonden
-\nin de gekozen map</string>
+\nin de geselecteerde map</string>
     <string name="paused">Gepauzeerd</string>
     <string name="recorder">Opnemen</string>
     <string name="player">Afspelen</string>
-    <string name="delete_recordings_confirmation">%s verwijderen\?</string>
+    <string name="delete_recordings_confirmation">Bestand %s verwijderen?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d opname</item>
         <item quantity="other">%d opnames</item>
     </plurals>
-    <string name="try_hiding_notification">Tijdens opnames proberen de notificatie te verbergen</string>
-    <string name="save_recordings_in">Opnames opslaan in</string>
+    <string name="try_hiding_notification">Probeer de opnamemelding te verbergen</string>
+    <string name="save_recordings_in">Bewaar opnames in</string>
     <string name="audio_source">Geluidsbron</string>
-    <string name="record_after_launch">Bij het starten van de app direct een opname beginnen</string>
-    <string name="audio_source_default">Android-standaard</string>
-    <string name="audio_source_unprocessed">Onverwerkt</string>
+    <string name="record_after_launch">Start automatisch met opnemen na het starten van de app</string>
+    <string name="audio_source_default">Android standaard</string>
+    <string name="audio_source_unprocessed">Onbewerkt</string>
     <string name="audio_source_microphone">Microfoon</string>
     <string name="audio_source_voice_recognition">Spraakherkenning</string>
-    <string name="audio_source_voice_communication">Gesproken communicatie</string>
-    <string name="audio_source_voice_performance">Optreden</string>
-    <string name="faq_1_title">Kan ik de notificatie tijdens het opnemen verbergen\?</string>
-    <string name="faq_1_text">Dat ligt eraan. Tijdens het gebruik is het niet langer mogelijk in Android om meldingen van dit soort apps volledig te verbergen. De app bevat wel een instelling waarmee er toch zal worden geprobeerd om dit te bewerkstelligen. In de schermvergrendeling kan de melding wél worden verborgen door het tonen van gevoelige notificaties in de systeeminstellingen uit te schakelen.</string>
+    <string name="audio_source_voice_communication">Spraakcommunicatie</string>
+    <string name="audio_source_voice_performance">Spraak prestaties</string>
+    <string name="faq_1_title">Kan ik het meldingsicoon verbergen tijdens het opnemen?</string>
+    <string name="faq_1_text">Niet helemaal. Terwijl u het apparaat gebruikt is het niet langer mogelijk om meldingen van apps zoals deze volledig te verbergen. Met de juiste instelling aangevinkt zal de app ze proberen ze te verbergen. U kunt ze wel verbergen op het vergrendelscherm, als u het weergeven van gevoelige meldingen uitschakelt in de instellingen van uw apparaat.</string>
     <string name="bitrate">Bitrate</string>
     <string name="audio_source_camcorder">Camera</string>
 </resources>
