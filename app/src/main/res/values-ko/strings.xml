@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">음성 녹음</string>
+    <string name="recording_saved_successfully">녹음 저장 성공</string>
+    <string name="recording">녹음</string>
+    <string name="no_recordings_found">이 앱에서 생성된 녹음을
+\n찾을 수 없습니다</string>
+    <string name="no_recordings_in_folder_found">해당 폴더에서 녹음을
+\n찾을 수 없습니다</string>
+    <string name="paused">일시 중지</string>
+    <string name="recorder">녹음기</string>
+    <string name="player">재생</string>
+    <string name="delete_recordings_confirmation">%s를 삭제하시겠습니까?</string>
+    <plurals name="delete_recordings">
+        <item quantity="other">%d 개</item>
+    </plurals>
+    <string name="try_hiding_notification">녹음 알림 숨기기</string>
+    <string name="save_recordings_in">녹음 저장 위치</string>
+    <string name="audio_source">오디오 소스</string>
+    <string name="bitrate">비트레이트</string>
+    <string name="record_after_launch">앱 시작 시 녹음 시작</string>
+    <string name="audio_source_camcorder">카메라</string>
+    <string name="audio_source_default">안드로이드 기본값</string>
+    <string name="audio_source_unprocessed">처리되지 않음</string>
+    <string name="audio_source_microphone">마이크</string>
+    <string name="audio_source_voice_recognition">음성 인식</string>
+    <string name="audio_source_voice_performance">음성 품질</string>
+    <string name="faq_1_title">녹음 중에 알림 아이콘을 숨길 수 있나요?</string>
+    <string name="faq_1_text">글쎄요, 상황에 따라 다릅니다. 기기를 사용하는 도중에 앱의 알림을 완전히 숨길 수 없습니다. 설정에서 적절한 항목을 선택하면 앱이 알림을 최대한 숨길 것입니다. 기기 설정에서 알림 내용 숨기기를 설정하면 적어도 잠금 화면에서 숨길 수 있습니다.</string>
+    <string name="audio_source_voice_communication">음성 통신</string>
+</resources>
