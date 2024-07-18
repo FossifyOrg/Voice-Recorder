@@ -23,8 +23,8 @@
     <string name="audio_source_unprocessed">Unverarbeitet</string>
     <string name="audio_source_microphone">Mikrofon</string>
     <string name="audio_source_voice_recognition">Stimmerkennung</string>
-    <string name="audio_source_voice_communication">Sprachliche Kommunikation</string>
-    <string name="audio_source_voice_performance">Sprachliche Leistung</string>
+    <string name="audio_source_voice_communication">Sprachkommunikation</string>
+    <string name="audio_source_voice_performance">Sprachleistung</string>
     <string name="faq_1_title">Kann ich das Benachrichtigungssymbol während der Aufnahme ausblenden\?</string>
     <string name="faq_1_text">Naja, das kommt darauf an. Während der Nutzung des Geräts ist es nicht mehr möglich, die Benachrichtigungen von Apps wie dieser vollständig auszublenden. Wenn du die Option in den Einstellungen aktivierst, wird die App ihr Bestes tun, es auszublenden. Du kannst es jedoch auf dem Sperrbildschirm ausblenden, indem du die Anzeige vertraulicher Benachrichtigungen in den Geräteeinstellungen verbietest.</string>
     <string name="player">Player</string>

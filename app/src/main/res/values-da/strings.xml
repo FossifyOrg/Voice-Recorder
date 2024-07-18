@@ -5,27 +5,28 @@
     <string name="recording">Optager</string>
     <string name="no_recordings_found">Ingen optagelser lavet af denne app
 \ner blevet fundet</string>
-    <string name="no_recordings_in_folder_found">Ingen optagelser er fundet
+    <string name="no_recordings_in_folder_found">Ingen optagelser er blevet fundet
 \ni den valgte mappe</string>
-    <string name="paused">Pauset</string>
+    <string name="paused">Sat på pause</string>
     <string name="delete_recordings_confirmation">Slet %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d optagelse</item>
         <item quantity="other">%d optagelser</item>
     </plurals>
-    <string name="try_hiding_notification">Forsøg at skjule notifikation under optagelse</string>
+    <string name="try_hiding_notification">Prøv at skjule optagelsesmeddelelsen</string>
     <string name="save_recordings_in">Gem optagelser i</string>
     <string name="record_after_launch">Start optagelsen automatisk efter start af appen</string>
     <string name="faq_1_title">Kan jeg skjule notifikationsikonet under optagelse\?</string>
-    <string name="faq_1_text">Mens du bruger din enhed, er det ikke længere muligt at skjule meddelelser fra apps som denne fuldt ud. Hvis du aktiverer \"Forsøg at skjule notifikation om optagelse\" i Indstillinger, gør appen sit bedste for at skjule det. Du kan dog skjule det på låseskærmen, hvis du deaktiverer visning af følsomme meddelelser i dine enhedsindstillinger.</string>
+    <string name="faq_1_text">Mens du bruger din enhed, er det ikke længere muligt helt at skjule notifikationer fra apps som denne. Hvis du markerer det rigtige indstillingselement, gør appen sit bedste for at skjule den. Du kan dog skjule den på låseskærmen, hvis du deaktiverer visning af følsomme meddelelser i enhedens indstillinger.</string>
     <string name="recorder">Optager</string>
     <string name="player">Afspiller</string>
     <string name="bitrate">Bitrate</string>
     <string name="audio_source_default">Android standard</string>
     <string name="audio_source_unprocessed">Ubehandlet</string>
     <string name="audio_source_microphone">Mikrofon</string>
-    <string name="audio_source_voice_recognition">Stemmegendkendelse</string>
+    <string name="audio_source_voice_recognition">Stemmegenkendelse</string>
     <string name="audio_source_voice_communication">Stemmekommunikation</string>
     <string name="audio_source">Lydkilde</string>
     <string name="audio_source_camcorder">Kamera</string>
+    <string name="audio_source_voice_performance">Stemmepræstation</string>
 </resources>
