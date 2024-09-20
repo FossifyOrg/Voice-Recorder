@@ -20,7 +20,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder).apply()
 
     var extension: Int
-        get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
+        get() = prefs.getInt(EXTENSION, EXTENSION_MP3)
         set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
 
     var audioSource: Int
