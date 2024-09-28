@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EmptyCatchBlock:Activity.kt${ }</ID>
+    <ID>EmptyCatchBlock:RecorderFragment.kt$RecorderFragment${ }</ID>
+    <ID>EmptyFunctionBlock:Mp3Recorder.kt$Mp3Recorder${}</ID>
+    <ID>EmptyFunctionBlock:PlayerFragment.kt$PlayerFragment.&lt;no name provided&gt;${}</ID>
+    <ID>EmptyFunctionBlock:RecordingsAdapter.kt$RecordingsAdapter${}</ID>
+    <ID>EmptyFunctionBlock:TrashAdapter.kt$TrashAdapter${}</ID>
+    <ID>EmptyFunctionBlock:TrashFragment.kt$TrashFragment${}</ID>
+    <ID>EmptyFunctionBlock:WidgetRecordDisplayConfigureActivity.kt$WidgetRecordDisplayConfigureActivity.&lt;no name provided&gt;${}</ID>
+    <ID>FunctionParameterNaming:Config.kt$Config$audio_source: Int</ID>
+    <ID>MagicNumber:Activity.kt$1000</ID>
+    <ID>MagicNumber:Activity.kt$1000L</ID>
+    <ID>MagicNumber:Constants.kt$128000</ID>
+    <ID>MagicNumber:Constants.kt$160000</ID>
+    <ID>MagicNumber:Constants.kt$192000</ID>
+    <ID>MagicNumber:Constants.kt$256000</ID>
+    <ID>MagicNumber:Constants.kt$32000</ID>
+    <ID>MagicNumber:Constants.kt$320000</ID>
+    <ID>MagicNumber:Constants.kt$64000</ID>
+    <ID>MagicNumber:Constants.kt$96000</ID>
+    <ID>MagicNumber:Context.kt$1000</ID>
+    <ID>MagicNumber:Context.kt$60</ID>
+    <ID>MagicNumber:Mp3Recorder.kt$Mp3Recorder$1.25</ID>
+    <ID>MagicNumber:Mp3Recorder.kt$Mp3Recorder$1000</ID>
+    <ID>MagicNumber:Mp3Recorder.kt$Mp3Recorder$7200</ID>
+    <ID>MagicNumber:Mp3Recorder.kt$Mp3Recorder$8</ID>
+    <ID>MagicNumber:PlayerFragment.kt$PlayerFragment$1000</ID>
+    <ID>MagicNumber:PlayerFragment.kt$PlayerFragment$10000</ID>
+    <ID>MagicNumber:PlayerFragment.kt$PlayerFragment.&lt;no name provided&gt;$1000</ID>
+    <ID>MagicNumber:RecorderFragment.kt$RecorderFragment$500</ID>
+    <ID>MagicNumber:RecorderService.kt$RecorderService$1000</ID>
+    <ID>MagicNumber:RecorderService.kt$RecorderService$75L</ID>
+    <ID>MagicNumber:SettingsActivity.kt$SettingsActivity$1000</ID>
+    <ID>MagicNumber:ViewPagerAdapter.kt$ViewPagerAdapter$3</ID>
+    <ID>MagicNumber:WidgetRecordDisplayConfigureActivity.kt$WidgetRecordDisplayConfigureActivity$100</ID>
+    <ID>MaxLineLength:Activity.kt$fileDirItems = recordingsToMove.map { File(it.path).toFileDirItem(this) }.toMutableList() as ArrayList&lt;FileDirItem&gt;</ID>
+    <ID>MaxLineLength:Activity.kt$fileDirItems = recordingsToRestore.map { File(it.path).toFileDirItem(this) }.toMutableList() as ArrayList&lt;FileDirItem&gt;</ID>
+    <ID>MaxLineLength:Activity.kt$fun</ID>
+    <ID>MaxLineLength:Activity.kt$val recordingsToRemove = getLegacyRecordings(trashed = true).filter { it.timestamp &lt; System.currentTimeMillis() - MONTH_SECONDS * 1000L }</ID>
+    <ID>MaxLineLength:BackgroundRecordActivity.kt$BackgroundRecordActivity$PermissionRequiredDialog(this, org.fossify.commons.R.string.allow_notifications_voice_recorder, { openNotificationSettings() })</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$customView?.findViewById&lt;ImageView&gt;(org.fossify.commons.R.id.tab_item_icon)?.setImageDrawable(getDrawable(drawableId))</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$faqItems.add(FAQItem(org.fossify.commons.R.string.faq_2_title_commons, org.fossify.commons.R.string.faq_2_text_commons))</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$faqItems.add(FAQItem(org.fossify.commons.R.string.faq_6_title_commons, org.fossify.commons.R.string.faq_6_text_commons))</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(org.fossify.commons.R.bool.hide_google_relations)</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$updateMaterialActivityViews(binding.mainCoordinator, binding.mainHolder, useTransparentNavigation = false, useTopSearchMenu = true)</ID>
+    <ID>MaxLineLength:MyViewPagerFragment.kt$MyViewPagerFragment$abstract</ID>
+    <ID>MaxLineLength:MyWidgetRecordDisplayProvider.kt$MyWidgetRecordDisplayProvider$PendingIntent.getActivity(context, OPEN_APP_INTENT_ID, this, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)</ID>
+    <ID>MaxLineLength:MyWidgetRecordDisplayProvider.kt$MyWidgetRecordDisplayProvider$val drawable = context.resources.getColoredDrawableWithColor(org.fossify.commons.R.drawable.ic_microphone_vector, color, alpha)</ID>
+    <ID>MaxLineLength:PlayerFragment.kt$PlayerFragment$class</ID>
+    <ID>MaxLineLength:PlayerFragment.kt$PlayerFragment$if</ID>
+    <ID>MaxLineLength:PlayerFragment.kt$PlayerFragment$val drawable = if (isPlaying) org.fossify.commons.R.drawable.ic_pause_vector else org.fossify.commons.R.drawable.ic_play_vector</ID>
+    <ID>MaxLineLength:PlayerFragment.kt$PlayerFragment$val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList&lt;Recording&gt;</ID>
+    <ID>MaxLineLength:RecorderFragment.kt$RecorderFragment$PermissionRequiredDialog</ID>
+    <ID>MaxLineLength:RecorderFragment.kt$RecorderFragment$if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) org.fossify.commons.R.drawable.ic_stop_vector else org.fossify.commons.R.drawable.ic_microphone_vector</ID>
+    <ID>MaxLineLength:RecorderFragment.kt$RecorderFragment$setImageDrawable(resources.getColoredDrawableWithColor(org.fossify.commons.R.drawable.ic_pause_vector, properPrimaryColor.getContrastColor()))</ID>
+    <ID>MaxLineLength:RecorderService.kt$RecorderService$return PendingIntent.getActivity(this, RECORDER_RUNNING_NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)</ID>
+    <ID>MaxLineLength:RecorderService.kt$RecorderService$val importance = if (hideNotification) NotificationManager.IMPORTANCE_MIN else NotificationManager.IMPORTANCE_DEFAULT</ID>
+    <ID>MaxLineLength:Recording.kt$Recording</ID>
+    <ID>MaxLineLength:RecordingsAdapter.kt$RecordingsAdapter$private</ID>
+    <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$arrayOf(binding.settingsColorCustomizationSectionLabel, binding.settingsGeneralSettingsLabel, binding.settingsRecycleBinLabel)</ID>
+    <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$binding.settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") &amp;&amp; !isTiramisuPlus())</ID>
+    <ID>MaxLineLength:SettingsActivity.kt$SettingsActivity$updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)</ID>
+    <ID>MaxLineLength:TrashFragment.kt$TrashFragment$class</ID>
+    <ID>MaxLineLength:TrashFragment.kt$TrashFragment$val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList&lt;Recording&gt;</ID>
+    <ID>MaxLineLength:WidgetRecordDisplayConfigureActivity.kt$WidgetRecordDisplayConfigureActivity$mWidgetColorWithoutTransparency = Color.rgb(Color.red(mWidgetColor), Color.green(mWidgetColor), Color.blue(mWidgetColor))</ID>
+    <ID>PrintStackTrace:Mp3Recorder.kt$Mp3Recorder$e</ID>
+    <ID>SwallowedException:Activity.kt$e: Exception</ID>
+    <ID>SwallowedException:Context.kt$e: Exception</ID>
+    <ID>SwallowedException:RecorderFragment.kt$RecorderFragment$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Activity.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Context.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:Mp3Recorder.kt$Mp3Recorder$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PlayerFragment.kt$PlayerFragment$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RecorderFragment.kt$RecorderFragment$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RecorderService.kt$RecorderService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RenameRecordingDialog.kt$RenameRecordingDialog$e: Exception</ID>
+    <ID>TooManyFunctions:Context.kt$org.fossify.voicerecorder.extensions.Context.kt</ID>
+    <ID>TooManyFunctions:MainActivity.kt$MainActivity : SimpleActivity</ID>
+    <ID>TooManyFunctions:PlayerFragment.kt$PlayerFragment : MyViewPagerFragmentRefreshRecordingsListener</ID>
+    <ID>TooManyFunctions:RecorderFragment.kt$RecorderFragment : MyViewPagerFragment</ID>
+    <ID>TooManyFunctions:RecorderService.kt$RecorderService : Service</ID>
+    <ID>TooManyFunctions:RecordingsAdapter.kt$RecordingsAdapter : MyRecyclerViewAdapterOnPopupTextUpdate</ID>
+    <ID>TooManyFunctions:SettingsActivity.kt$SettingsActivity : SimpleActivity</ID>
+    <ID>TooManyFunctions:TrashAdapter.kt$TrashAdapter : MyRecyclerViewAdapterOnPopupTextUpdate</ID>
+    <ID>TooManyFunctions:TrashFragment.kt$TrashFragment : MyViewPagerFragmentRefreshRecordingsListener</ID>
+    <ID>UnusedParameter:PlayerFragment.kt$PlayerFragment$event: Events.RecordingCompleted</ID>
+    <ID>UnusedParameter:PlayerFragment.kt$PlayerFragment$event: Events.RecordingTrashUpdated</ID>
+    <ID>UnusedParameter:TrashFragment.kt$TrashFragment$event: Events.RecordingTrashUpdated</ID>
+    <ID>UnusedPrivateMember:TrashAdapter.kt$TrashAdapter$private fun getItemWithKey(key: Int): Recording?</ID>
+    <ID>VariableNaming:MyWidgetRecordDisplayProvider.kt$MyWidgetRecordDisplayProvider$private val OPEN_APP_INTENT_ID = 1</ID>
+    <ID>VariableNaming:PlayerFragment.kt$PlayerFragment$private val FAST_FORWARD_SKIP_MS = 10000</ID>
+    <ID>VariableNaming:RecorderService.kt$RecorderService$private val AMPLITUDE_UPDATE_MS = 75L</ID>
+    <ID>WildcardImport:Activity.kt$import org.fossify.commons.helpers.*</ID>
+    <ID>WildcardImport:Context.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:Context.kt$import org.fossify.voicerecorder.helpers.*</ID>
+    <ID>WildcardImport:MainActivity.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:MainActivity.kt$import org.fossify.commons.helpers.*</ID>
+    <ID>WildcardImport:Mp3Recorder.kt$import java.io.*</ID>
+    <ID>WildcardImport:PlayerFragment.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:RecorderFragment.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:RecorderFragment.kt$import org.fossify.voicerecorder.helpers.*</ID>
+    <ID>WildcardImport:RecorderService.kt$import android.app.*</ID>
+    <ID>WildcardImport:RecorderService.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:RecorderService.kt$import org.fossify.voicerecorder.helpers.*</ID>
+    <ID>WildcardImport:RecordingsAdapter.kt$import android.view.*</ID>
+    <ID>WildcardImport:RecordingsAdapter.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:RenameRecordingDialog.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:SettingsActivity.kt$import org.fossify.commons.dialogs.*</ID>
+    <ID>WildcardImport:SettingsActivity.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:SettingsActivity.kt$import org.fossify.commons.helpers.*</ID>
+    <ID>WildcardImport:TrashAdapter.kt$import android.view.*</ID>
+    <ID>WildcardImport:TrashAdapter.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:TrashFragment.kt$import org.fossify.commons.extensions.*</ID>
+    <ID>WildcardImport:WidgetRecordDisplayConfigureActivity.kt$import org.fossify.commons.extensions.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
