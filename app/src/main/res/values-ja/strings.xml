@@ -26,6 +26,6 @@
     <string name="audio_source_voice_recognition">音声認識</string>
     <string name="audio_source_voice_communication">音声通話</string>
     <string name="audio_source_voice_performance">ボイスパフォーマンス</string>
-    <string name="faq_1_title">録音中に通知を非表示にすることは出来ますか？</string>
+    <string name="faq_1_title">録音中に通知を非表示にすることはできますか？</string>
     <string name="faq_1_text">場合によります。デバイスの使用中は、このようなアプリの通知を完全に非表示にすることはできなくなりました。適切な設定項目にチェックを入れれば、通知を可能な限り隠せます。ロック画面上での非表示は、デバイスの設定から通知の表示を無効にすることで可能です。</string>
 </resources>
