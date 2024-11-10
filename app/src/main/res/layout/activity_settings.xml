@@ -179,6 +179,21 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_keep_screen_on_holder"
+                style="@style/SettingsHolderCheckboxStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyAppCompatCheckbox
+                    android:id="@+id/settings_keep_screen_on"
+                    style="@style/SettingsCheckboxStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/keep_screen_on" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_save_recordings_holder"
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"
