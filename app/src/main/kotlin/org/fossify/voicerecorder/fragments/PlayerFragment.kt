@@ -357,7 +357,7 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         }
 
         binding.playPauseBtn.background.applyColorFilter(properPrimaryColor)
-        binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(false))
+        binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(getIsPlaying()))
     }
 
     fun finishActMode() = getRecordingsAdapter()?.finishActMode()
