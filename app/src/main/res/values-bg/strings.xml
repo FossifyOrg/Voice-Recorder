@@ -10,7 +10,7 @@
     <string name="paused">На Пауза</string>
     <string name="recorder">Рекордер</string>
     <string name="player">Плейър</string>
-    <string name="delete_recordings_confirmation">Изтрий %s\?</string>
+    <string name="delete_recordings_confirmation">Премахване на %s?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d запис</item>
         <item quantity="other">%d записи</item>
