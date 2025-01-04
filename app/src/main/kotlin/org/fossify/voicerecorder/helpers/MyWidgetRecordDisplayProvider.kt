@@ -16,16 +16,27 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.drawableToBitmap
 
 class MyWidgetRecordDisplayProvider : AppWidgetProvider() {
-    private val OPEN_APP_INTENT_ID = 1
+    companion object {
+        private const val OPEN_APP_INTENT_ID = 1
+    }
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         changeWidgetIcon(appWidgetManager, context, Color.WHITE)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == TOGGLE_WIDGET_UI && intent.extras?.containsKey(IS_RECORDING) == true) {
             val appWidgetManager = AppWidgetManager.getInstance(context) ?: return
-            val color = if (intent.extras!!.getBoolean(IS_RECORDING)) context.config.widgetBgColor else Color.WHITE
+            val color = if (intent.extras!!.getBoolean(IS_RECORDING)) {
+                context.config.widgetBgColor
+            } else {
+                Color.WHITE
+            }
+
             changeWidgetIcon(appWidgetManager, context, color)
         } else {
             super.onReceive(context, intent)
@@ -45,19 +56,29 @@ class MyWidgetRecordDisplayProvider : AppWidgetProvider() {
         }
     }
 
-    private fun getComponentName(context: Context) = ComponentName(context, MyWidgetRecordDisplayProvider::class.java)
+    private fun getComponentName(context: Context): ComponentName {
+        return ComponentName(context, MyWidgetRecordDisplayProvider::class.java)
+    }
 
     private fun setupAppOpenIntent(context: Context, views: RemoteViews) {
         Intent(context, BackgroundRecordActivity::class.java).apply {
             action = BackgroundRecordActivity.RECORD_INTENT_ACTION
-            val pendingIntent =
-                PendingIntent.getActivity(context, OPEN_APP_INTENT_ID, this, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                OPEN_APP_INTENT_ID,
+                this,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
             views.setOnClickPendingIntent(R.id.record_display_btn, pendingIntent)
         }
     }
 
     private fun getColoredIcon(context: Context, color: Int, alpha: Int): Bitmap {
-        val drawable = context.resources.getColoredDrawableWithColor(org.fossify.commons.R.drawable.ic_microphone_vector, color, alpha)
+        val drawable = context.resources.getColoredDrawableWithColor(
+            drawableId = org.fossify.commons.R.drawable.ic_microphone_vector,
+            color = color,
+            alpha = alpha
+        )
         return context.drawableToBitmap(drawable)
     }
 }

@@ -14,6 +14,7 @@ import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.isNougatPlus
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.extensions.setDebouncedClickListener
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -56,7 +57,7 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
         bus!!.register(this)
 
         updateRecordingDuration(0)
-        binding.toggleRecordingButton.setOnClickListener {
+        binding.toggleRecordingButton.setDebouncedClickListener {
             (context as? BaseSimpleActivity)?.handleNotificationPermission { granted ->
                 if (granted) {
                     toggleRecording()

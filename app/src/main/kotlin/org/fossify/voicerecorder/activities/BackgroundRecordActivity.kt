@@ -26,7 +26,11 @@ class BackgroundRecordActivity : SimpleActivity() {
                         }
                     }
                 } else {
-                    PermissionRequiredDialog(this, org.fossify.commons.R.string.allow_notifications_voice_recorder, { openNotificationSettings() })
+                    PermissionRequiredDialog(
+                        activity = this,
+                        textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
+                        positiveActionCallback = { openNotificationSettings() }
+                    )
                 }
             }
         }
