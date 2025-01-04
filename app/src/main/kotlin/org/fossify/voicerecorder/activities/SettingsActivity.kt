@@ -9,7 +9,9 @@ import org.fossify.commons.dialogs.FeatureLockedDialog
 import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
 import org.fossify.commons.extensions.addLockedLabelIfNeeded
+import org.fossify.commons.extensions.beGone
 import org.fossify.commons.extensions.beGoneIf
+import org.fossify.commons.extensions.beVisible
 import org.fossify.commons.extensions.beVisibleIf
 import org.fossify.commons.extensions.formatSize
 import org.fossify.commons.extensions.getCustomizeColorsString
@@ -114,7 +116,10 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupUseEnglish() {
-        binding.settingsUseEnglishHolder.beVisibleIf((config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus())
+        binding.settingsUseEnglishHolder.beVisibleIf(
+            (config.wasUseEnglishToggled || Locale.getDefault().language != "en")
+                    && !isTiramisuPlus()
+        )
         binding.settingsUseEnglish.isChecked = config.useEnglish
         binding.settingsUseEnglishHolder.setOnClickListener {
             binding.settingsUseEnglish.toggle()
@@ -125,9 +130,13 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupLanguage() {
         binding.settingsLanguage.text = Locale.getDefault().displayLanguage
-        binding.settingsLanguageHolder.beVisibleIf(isTiramisuPlus())
-        binding.settingsLanguageHolder.setOnClickListener {
-            launchChangeAppLanguageIntent()
+        if (isTiramisuPlus()) {
+            binding.settingsLanguageHolder.beVisible()
+            binding.settingsLanguageHolder.setOnClickListener {
+                launchChangeAppLanguageIntent()
+            }
+        } else {
+            binding.settingsLanguageHolder.beGone()
         }
     }
 
@@ -280,9 +289,18 @@ class SettingsActivity : SimpleActivity() {
         binding.settingsAudioSource.text = config.getAudioSourceText(config.audioSource)
         binding.settingsAudioSourceHolder.setOnClickListener {
             val items = getAudioSources()
-                .map { RadioItem(it, config.getAudioSourceText(it)) } as ArrayList
+                .map {
+                    RadioItem(
+                        id = it,
+                        title = config.getAudioSourceText(it)
+                    )
+                } as ArrayList
 
-            RadioGroupDialog(this@SettingsActivity, items, config.audioSource) {
+            RadioGroupDialog(
+                activity = this@SettingsActivity,
+                items = items,
+                checkedItemId = config.audioSource
+            ) {
                 config.audioSource = it as Int
                 binding.settingsAudioSource.text = config.getAudioSourceText(config.audioSource)
             }
