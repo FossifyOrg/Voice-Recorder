@@ -29,4 +29,6 @@
     <string name="audio_source_voice_performance">Häälte esitus</string>
     <string name="faq_1_title">Kas salvestamise ajal saan peita vastavat teavitust\?</string>
     <string name="faq_1_text">Eks see nüüd sõltub… Selliste rakenduste täiesti peitmine kasutamise ajal ei ole enam võimalik. Seadistustest vastava sätte valimisel annab see rakendus endast parima, et teavitusi peita. Lisaks saad üldistest seadistustest keelata privaatsete teavituste näitamise lukustuskuval ning siis ka seda rakendust pole seal näha.</string>
+    <string name="recording_too_short">Salvestise kestus oli liiga napp, et seda jäädvustada!</string>
+    <string name="keep_screen_on">Salvestuse ajal hoia ekraan sisselülitatuna</string>
 </resources>
