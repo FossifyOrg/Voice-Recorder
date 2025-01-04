@@ -20,4 +20,11 @@
     <string name="record_after_launch">Începeți înregistrarea în mod automat după lansarea aplicației</string>
     <string name="faq_1_title">Pot să ascund pictograma de notificare în timpul înregistrării\?</string>
     <string name="faq_1_text">Ei bine, depinde. În timp ce vă utilizați dispozitivul, nu mai este posibil să ascundeți complet notificările unor astfel de aplicații. Dacă bifați setarea corespunzătoare, aplicația va face tot posibilul să o ascundă. Totuși, o puteți ascunde pe ecranul de blocare, dacă dezactivați afișarea conţinutului sensibil al notificărilor în setările dispozitivului.</string>
+    <string name="audio_source">Sursă audio</string>
+    <string name="audio_source_camcorder">Cameră</string>
+    <string name="audio_source_unprocessed">Neprocesat</string>
+    <string name="audio_source_microphone">Microfon</string>
+    <string name="audio_source_voice_recognition">Recunoaștere vocală</string>
+    <string name="audio_source_voice_communication">Comunicare vocală</string>
+    <string name="audio_source_voice_performance">Performanță vocală</string>
 </resources>
