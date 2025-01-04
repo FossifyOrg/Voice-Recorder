@@ -19,7 +19,7 @@ const val EXTENSION_MP3 = 1
 const val EXTENSION_OGG = 2
 
 val BITRATES = arrayListOf(32000, 64000, 96000, 128000, 160000, 192000, 256000, 320000)
-const val DEFAULT_BITRATE = 128000
+const val DEFAULT_BITRATE = 192000
 const val SAMPLE_RATE = 48000
 
 const val RECORDING_RUNNING = 0
@@ -38,6 +38,7 @@ const val BITRATE = "bitrate"
 const val RECORD_AFTER_LAUNCH = "record_after_launch"
 const val USE_RECYCLE_BIN = "use_recycle_bin"
 const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
+const val KEEP_SCREEN_ON = "keep_screen_on"
 
 @SuppressLint("InlinedApi")
 fun getAudioFileContentUri(id: Long): Uri {

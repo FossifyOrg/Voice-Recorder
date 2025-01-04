@@ -51,6 +51,7 @@ class SettingsActivity : SimpleActivity() {
         setupBitrate()
         setupAudioSource()
         setupRecordAfterLaunch()
+        setupKeepScreenOn()
         setupUseRecycleBin()
         setupEmptyRecycleBin()
         updateTextColors(binding.settingsNestedScrollview)
@@ -147,8 +148,8 @@ class SettingsActivity : SimpleActivity() {
         binding.settingsExtension.text = config.getExtensionText()
         binding.settingsExtensionHolder.setOnClickListener {
             val items = arrayListOf(
-                RadioItem(EXTENSION_M4A, getString(R.string.m4a)),
-                RadioItem(EXTENSION_MP3, getString(R.string.mp3))
+                RadioItem(EXTENSION_MP3, getString(R.string.mp3)),
+                RadioItem(EXTENSION_M4A, getString(R.string.m4a))
             )
 
             if (isQPlus()) {
@@ -181,6 +182,14 @@ class SettingsActivity : SimpleActivity() {
         binding.settingsRecordAfterLaunchHolder.setOnClickListener {
             binding.settingsRecordAfterLaunch.toggle()
             config.recordAfterLaunch = binding.settingsRecordAfterLaunch.isChecked
+        }
+    }
+
+    private fun setupKeepScreenOn() {
+        binding.settingsKeepScreenOn.isChecked = config.keepScreenOn
+        binding.settingsKeepScreenOnHolder.setOnClickListener {
+            binding.settingsKeepScreenOn.toggle()
+            config.keepScreenOn = binding.settingsKeepScreenOn.isChecked
         }
     }
 

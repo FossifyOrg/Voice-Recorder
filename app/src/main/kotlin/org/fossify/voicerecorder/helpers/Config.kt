@@ -20,7 +20,7 @@ class Config(context: Context) : BaseConfig(context) {
         set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder).apply()
 
     var extension: Int
-        get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
+        get() = prefs.getInt(EXTENSION, EXTENSION_MP3)
         set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
 
     var audioSource: Int
@@ -80,4 +80,8 @@ class Config(context: Context) : BaseConfig(context) {
     var lastRecycleBinCheck: Long
         get() = prefs.getLong(LAST_RECYCLE_BIN_CHECK, 0L)
         set(lastRecycleBinCheck) = prefs.edit().putLong(LAST_RECYCLE_BIN_CHECK, lastRecycleBinCheck).apply()
+
+    var keepScreenOn: Boolean
+        get() = prefs.getBoolean(KEEP_SCREEN_ON, true)
+        set(keepScreenOn) = prefs.edit().putBoolean(KEEP_SCREEN_ON, keepScreenOn).apply()
 }

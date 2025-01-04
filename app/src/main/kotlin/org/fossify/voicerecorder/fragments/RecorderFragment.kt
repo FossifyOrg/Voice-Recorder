@@ -6,11 +6,14 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
+import org.fossify.commons.compose.extensions.getActivity
 import org.fossify.commons.dialogs.PermissionRequiredDialog
 import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.isNougatPlus
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
+import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -135,6 +138,7 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
         Intent(context, RecorderService::class.java).apply {
             context.stopService(this)
         }
+        context.getActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     private fun getPauseBlinkTask() = object : TimerTask() {
@@ -160,6 +164,9 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
 
         if (status == RECORDING_RUNNING) {
             binding.togglePauseButton.alpha = 1f
+            if (context.config.keepScreenOn) {
+                context.getActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            }
         }
     }
 
