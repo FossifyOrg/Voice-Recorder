@@ -11,14 +11,24 @@ import android.os.PowerManager
 import android.provider.DocumentsContract
 import android.util.AttributeSet
 import android.widget.SeekBar
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.applyColorFilter
+import org.fossify.commons.extensions.areSystemAnimationsEnabled
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.copyToClipboard
+import org.fossify.commons.extensions.getColoredDrawableWithColor
+import org.fossify.commons.extensions.getContrastColor
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.showErrorToast
+import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.getAllRecordings
 import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
@@ -30,8 +40,14 @@ import java.util.Stack
 import java.util.Timer
 import java.util.TimerTask
 
-class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
-    private val FAST_FORWARD_SKIP_MS = 10000
+class PlayerFragment(
+    context: Context,
+    attributeSet: AttributeSet
+) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
+
+    companion object {
+        private const val FAST_FORWARD_SKIP_MS = 10000
+    }
 
     private var player: MediaPlayer? = null
     private var progressTimer = Timer()
@@ -52,8 +68,7 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     override fun onResume() {
         setupColors()
         if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath || context.config.useRecycleBin != prevRecycleBinState) {
-            itemsIgnoringSearch = getRecordings()
-            setupAdapter(itemsIgnoringSearch)
+            loadRecordings()
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
         }
@@ -76,11 +91,25 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupColors()
-        itemsIgnoringSearch = getRecordings()
-        setupAdapter(itemsIgnoringSearch)
+        loadRecordings()
         initMediaPlayer()
         setupViews()
         storePrevState()
+    }
+
+    override fun onLoadingStart() {
+        if (itemsIgnoringSearch.isEmpty()) {
+            binding.loadingIndicator.show()
+        } else {
+            binding.loadingIndicator.hide()
+        }
+    }
+
+    override fun onLoadingEnd(recordings: ArrayList<Recording>) {
+        binding.loadingIndicator.hide()
+        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
+        itemsIgnoringSearch = recordings
+        setupAdapter(itemsIgnoringSearch)
     }
 
     private fun setupViews() {
@@ -112,7 +141,8 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             }
 
             val prevRecordingIndex = adapter.recordings.indexOfFirst { it.id == wantedRecordingID }
-            val prevRecording = adapter.recordings.getOrNull(prevRecordingIndex) ?: return@setOnClickListener
+            val prevRecording = adapter.recordings
+                .getOrNull(prevRecordingIndex) ?: return@setOnClickListener
             playRecording(prevRecording, true)
         }
 
@@ -129,22 +159,20 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
                 return@setOnClickListener
             }
 
-            val oldRecordingIndex = adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
+            val oldRecordingIndex =
+                adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
             val newRecordingIndex = (oldRecordingIndex + 1) % adapter.recordings.size
-            val newRecording = adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
+            val newRecording =
+                adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
             playRecording(newRecording, true)
             playedRecordingIDs.push(newRecording.id)
         }
     }
 
-    override fun refreshRecordings() {
-        itemsIgnoringSearch = getRecordings()
-        setupAdapter(itemsIgnoringSearch)
-    }
+    override fun refreshRecordings() = loadRecordings()
 
     private fun setupAdapter(recordings: ArrayList<Recording>) {
         binding.recordingsFastscroller.beVisibleIf(recordings.isNotEmpty())
-        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
         if (recordings.isEmpty()) {
             val stringId = if (lastSearchQuery.isEmpty()) {
                 if (isQPlus()) {
@@ -177,12 +205,6 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
             }
         } else {
             adapter.updateItems(recordings)
-        }
-    }
-
-    private fun getRecordings(): ArrayList<Recording> {
-        return context.getAllRecordings().apply {
-            sortByDescending { it.timestamp }
         }
     }
 
@@ -246,7 +268,8 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
         }
 
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(playOnPreparation))
-        binding.playerProgressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.playerProgressbar.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser && !playedRecordingIDs.isEmpty()) {
                     player?.seekTo(progress * 1000)
@@ -293,7 +316,9 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
+        val filtered = itemsIgnoringSearch
+            .filter { it.title.contains(text, true) }
+            .toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 
@@ -318,8 +343,16 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
     }
 
     private fun getToggleButtonIcon(isPlaying: Boolean): Drawable {
-        val drawable = if (isPlaying) org.fossify.commons.R.drawable.ic_pause_vector else org.fossify.commons.R.drawable.ic_play_vector
-        return resources.getColoredDrawableWithColor(drawable, context.getProperPrimaryColor().getContrastColor())
+        val drawable = if (isPlaying) {
+            org.fossify.commons.R.drawable.ic_pause_vector
+        } else {
+            org.fossify.commons.R.drawable.ic_play_vector
+        }
+
+        return resources.getColoredDrawableWithColor(
+            drawableId = drawable,
+            color = context.getProperPrimaryColor().getContrastColor()
+        )
     }
 
     private fun skip(forward: Boolean) {
@@ -358,17 +391,21 @@ class PlayerFragment(context: Context, attributeSet: AttributeSet) : MyViewPager
 
         binding.playPauseBtn.background.applyColorFilter(properPrimaryColor)
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(getIsPlaying()))
+
+        binding.loadingIndicator.setIndicatorColor(properPrimaryColor)
     }
 
     fun finishActMode() = getRecordingsAdapter()?.finishActMode()
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun recordingCompleted(event: Events.RecordingCompleted) {
+    fun recordingCompleted(@Suppress("UNUSED_PARAMETER") event: Events.RecordingCompleted) {
         refreshRecordings()
     }
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun recordingMovedToRecycleBin(event: Events.RecordingTrashUpdated) {
+    fun recordingMovedToRecycleBin(@Suppress("UNUSED_PARAMETER") event: Events.RecordingTrashUpdated) {
         refreshRecordings()
     }
 }

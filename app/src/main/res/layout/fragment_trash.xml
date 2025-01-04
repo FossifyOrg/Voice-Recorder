@@ -16,7 +16,17 @@
         android:text="@string/recycle_bin_empty"
         android:textSize="@dimen/bigger_text_size"
         android:textStyle="italic"
-        android:visibility="visible" />
+        android:visibility="gone" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
         android:id="@+id/trash_fastscroller"

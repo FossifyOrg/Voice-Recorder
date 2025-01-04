@@ -3,9 +3,29 @@ package org.fossify.voicerecorder.activities
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Bundle
-import org.fossify.commons.dialogs.*
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.*
+import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
+import org.fossify.commons.dialogs.ConfirmationDialog
+import org.fossify.commons.dialogs.FeatureLockedDialog
+import org.fossify.commons.dialogs.FilePickerDialog
+import org.fossify.commons.dialogs.RadioGroupDialog
+import org.fossify.commons.extensions.addLockedLabelIfNeeded
+import org.fossify.commons.extensions.beGoneIf
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getCustomizeColorsString
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.humanizePath
+import org.fossify.commons.extensions.isOrWasThankYouInstalled
+import org.fossify.commons.extensions.launchPurchaseThankYouIntent
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
+import org.fossify.commons.helpers.NavigationIcon
+import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.isNougatPlus
+import org.fossify.commons.helpers.isQPlus
+import org.fossify.commons.helpers.isTiramisuPlus
+import org.fossify.commons.helpers.sumByInt
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
@@ -31,7 +51,12 @@ class SettingsActivity : SimpleActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        updateMaterialActivityViews(binding.settingsCoordinator, binding.settingsHolder, useTransparentNavigation = true, useTopSearchMenu = false)
+        updateMaterialActivityViews(
+            mainCoordinatorLayout = binding.settingsCoordinator,
+            nestedView = binding.settingsHolder,
+            useTransparentNavigation = true,
+            useTopSearchMenu = false
+        )
         setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsToolbar)
     }
 
@@ -56,7 +81,11 @@ class SettingsActivity : SimpleActivity() {
         setupEmptyRecycleBin()
         updateTextColors(binding.settingsNestedScrollview)
 
-        arrayOf(binding.settingsColorCustomizationSectionLabel, binding.settingsGeneralSettingsLabel, binding.settingsRecycleBinLabel).forEach {
+        arrayOf(
+            binding.settingsColorCustomizationSectionLabel,
+            binding.settingsGeneralSettingsLabel,
+            binding.settingsRecycleBinLabel
+        ).forEach {
             it.setTextColor(getProperPrimaryColor())
         }
     }
@@ -117,7 +146,8 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupSaveRecordingsFolder() {
-        binding.settingsSaveRecordingsLabel.text = addLockedLabelIfNeeded(R.string.save_recordings_in)
+        binding.settingsSaveRecordingsLabel.text =
+            addLockedLabelIfNeeded(R.string.save_recordings_in)
         binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
         binding.settingsSaveRecordingsHolder.setOnClickListener {
             if (isOrWasThankYouInstalled()) {
@@ -134,7 +164,8 @@ class SettingsActivity : SimpleActivity() {
                             }
 
                             config.saveRecordingsFolder = path
-                            binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
+                            binding.settingsSaveRecordings.text =
+                                humanizePath(config.saveRecordingsFolder)
                         }
                     }
                 }
@@ -175,7 +206,9 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun getBitrateText(value: Int): String = getString(R.string.bitrate_value).format(value / 1000)
+    private fun getBitrateText(value: Int): String {
+        return getString(R.string.bitrate_value).format(value / 1000)
+    }
 
     private fun setupRecordAfterLaunch() {
         binding.settingsRecordAfterLaunch.isChecked = config.recordAfterLaunch
@@ -210,9 +243,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupEmptyRecycleBin() {
         ensureBackgroundThread {
             try {
-                recycleBinContentSize = getAllRecordings(trashed = true).sumByInt {
-                    it.size
-                }
+                recycleBinContentSize = getAllRecordings(trashed = true).sumByInt { it.size }
             } catch (ignored: Exception) {
             }
 
@@ -226,16 +257,20 @@ class SettingsActivity : SimpleActivity() {
                 toast(org.fossify.commons.R.string.recycle_bin_empty)
             } else {
                 ConfirmationDialog(
-                    this,
-                    "",
-                    org.fossify.commons.R.string.empty_recycle_bin_confirmation,
-                    org.fossify.commons.R.string.yes,
-                    org.fossify.commons.R.string.no
+                    activity = this,
+                    message = "",
+                    messageId = org.fossify.commons.R.string.empty_recycle_bin_confirmation,
+                    positive = org.fossify.commons.R.string.yes,
+                    negative = org.fossify.commons.R.string.no
                 ) {
-                    emptyTheRecycleBin()
-                    recycleBinContentSize = 0
-                    binding.settingsEmptyRecycleBinSize.text = 0.formatSize()
-                    EventBus.getDefault().post(Events.RecordingTrashUpdated())
+                    ensureBackgroundThread {
+                        emptyTheRecycleBin()
+                        runOnUiThread {
+                            recycleBinContentSize = 0
+                            binding.settingsEmptyRecycleBinSize.text = 0.formatSize()
+                            EventBus.getDefault().post(Events.RecordingTrashUpdated())
+                        }
+                    }
                 }
             }
         }
@@ -244,7 +279,8 @@ class SettingsActivity : SimpleActivity() {
     private fun setupAudioSource() {
         binding.settingsAudioSource.text = config.getAudioSourceText(config.audioSource)
         binding.settingsAudioSourceHolder.setOnClickListener {
-            val items = getAudioSources().map { RadioItem(it, config.getAudioSourceText(it)) } as ArrayList
+            val items = getAudioSources()
+                .map { RadioItem(it, config.getAudioSourceText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.audioSource) {
                 config.audioSource = it as Int

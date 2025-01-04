@@ -2,12 +2,15 @@ package org.fossify.voicerecorder.fragments
 
 import android.content.Context
 import android.util.AttributeSet
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.areSystemAnimationsEnabled
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.updateTextColors
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.TrashAdapter
 import org.fossify.voicerecorder.databinding.FragmentTrashBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.getAllRecordings
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
@@ -15,7 +18,11 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class TrashFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
+class TrashFragment(
+    context: Context,
+    attributeSet: AttributeSet
+) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
+
     private var itemsIgnoringSearch = ArrayList<Recording>()
     private var lastSearchQuery = ""
     private var bus: EventBus? = null
@@ -30,8 +37,7 @@ class TrashFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
     override fun onResume() {
         setupColors()
         if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath) {
-            itemsIgnoringSearch = getRecordings()
-            setupAdapter(itemsIgnoringSearch)
+            loadRecordings(trashed = true)
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
         }
@@ -49,21 +55,31 @@ class TrashFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         bus = EventBus.getDefault()
         bus!!.register(this)
         setupColors()
-        itemsIgnoringSearch = getRecordings()
-        setupAdapter(itemsIgnoringSearch)
+        loadRecordings(trashed = true)
         storePrevPath()
     }
 
-    override fun refreshRecordings() {
-        itemsIgnoringSearch = getRecordings()
-        setupAdapter(itemsIgnoringSearch)
-    }
+    override fun refreshRecordings() = loadRecordings(trashed = true)
 
     override fun playRecording(recording: Recording, playOnPrepared: Boolean) {}
 
+    override fun onLoadingStart() {
+        if (itemsIgnoringSearch.isEmpty()) {
+            binding.loadingIndicator.show()
+        } else {
+            binding.loadingIndicator.hide()
+        }
+    }
+
+    override fun onLoadingEnd(recordings: ArrayList<Recording>) {
+        binding.loadingIndicator.hide()
+        binding.trashPlaceholder.beVisibleIf(recordings.isEmpty())
+        itemsIgnoringSearch = recordings
+        setupAdapter(itemsIgnoringSearch)
+    }
+
     private fun setupAdapter(recordings: ArrayList<Recording>) {
         binding.trashFastscroller.beVisibleIf(recordings.isNotEmpty())
-        binding.trashPlaceholder.beVisibleIf(recordings.isEmpty())
         if (recordings.isEmpty()) {
             val stringId = if (lastSearchQuery.isEmpty()) {
                 org.fossify.commons.R.string.recycle_bin_empty
@@ -88,15 +104,10 @@ class TrashFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
         }
     }
 
-    private fun getRecordings(): ArrayList<Recording> {
-        return context.getAllRecordings(trashed = true).apply {
-            sortByDescending { it.timestamp }
-        }
-    }
-
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
+        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }
+            .toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 
@@ -114,8 +125,9 @@ class TrashFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerF
 
     fun finishActMode() = getRecordingsAdapter()?.finishActMode()
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun recordingMovedToRecycleBin(event: Events.RecordingTrashUpdated) {
+    fun recordingMovedToRecycleBin(@Suppress("UNUSED_PARAMETER") event: Events.RecordingTrashUpdated) {
         refreshRecordings()
     }
 }
