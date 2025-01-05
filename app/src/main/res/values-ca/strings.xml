@@ -30,4 +30,6 @@
     <string name="audio_source">Font d\'àudio</string>
     <string name="audio_source_default">Predeterminat de l\'Android</string>
     <string name="audio_source_voice_performance">Actuació de veu</string>
+    <string name="keep_screen_on">Mantén la pantalla activada durant l\'enregistrament</string>
+    <string name="recording_too_short">L\'enregistrament ha estat massa curt per a gravar!</string>
 </resources>
