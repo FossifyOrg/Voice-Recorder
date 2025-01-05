@@ -19,7 +19,7 @@
     <string name="save_recordings_in">Spara inspelningar i</string>
     <string name="audio_source">Ljudkälla</string>
     <string name="bitrate">Bithastighet</string>
-    <string name="record_after_launch">Börja spela in automatiskt när du startar appen</string>
+    <string name="record_after_launch">Börja spela in automatiskt när appen startas</string>
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_default">Standardljudkälla</string>
     <string name="audio_source_unprocessed">Obearbetat ljud</string>
@@ -29,4 +29,6 @@
     <string name="audio_source_voice_performance">Röstframförande</string>
     <string name="faq_1_title">Kan jag dölja aviseringsikonen under inspelningen\?</string>
     <string name="faq_1_text">Det beror på. När du använder din enhet är det inte längre möjligt att helt dölja meddelanden från appar som dessa. Om du markerar rätt inställningsobjekt gör appen sitt bästa för att dölja den. Du kan dock dölja den på låsskärmen om du inaktiverar visning av känsliga meddelanden i enhetens inställningar.</string>
+    <string name="recording_too_short">Inspelningen var för kort för att spela in!</string>
+    <string name="keep_screen_on">Låt skärmen vara på under inspelning</string>
 </resources>
