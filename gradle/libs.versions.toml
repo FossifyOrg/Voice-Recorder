@@ -1,12 +1,12 @@
 [versions]
 #jetbrains
-kotlin = "1.9.21"
+kotlin = "1.9.25"
 #KSP
-ksp = "1.9.21-1.0.16"
+ksp = "1.9.25-1.0.20"
 #Detekt
 detekt = "1.23.3"
 #AndroidX
-androidx-constraintlayout = "2.1.4"
+androidx-constraintlayout = "2.2.0"
 androidx-documentfile = "1.0.1"
 androidx-swiperefreshlayout = "1.1.0"
 #Eventbus
