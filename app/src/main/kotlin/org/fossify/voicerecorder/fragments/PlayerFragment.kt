@@ -1,8 +1,9 @@
 package org.fossify.voicerecorder.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.media.AudioManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Handler
@@ -211,7 +212,12 @@ class PlayerFragment(
     private fun initMediaPlayer() {
         player = MediaPlayer().apply {
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
 
             setOnCompletionListener {
                 progressTimer.cancel()
@@ -284,6 +290,7 @@ class PlayerFragment(
         })
     }
 
+    @SuppressLint("DiscouragedApi")
     private fun setupProgressTimer() {
         progressTimer.cancel()
         progressTimer = Timer()

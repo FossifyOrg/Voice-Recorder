@@ -14,6 +14,7 @@ import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.getContrastColor
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.isDynamicTheme
 import org.fossify.commons.extensions.isOrWasThankYouInstalled
 import org.fossify.commons.extensions.setFillWithStroke
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
@@ -76,7 +77,7 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     private fun initVariables() {
         mWidgetColor = config.widgetBgColor
         @Suppress("DEPRECATION")
-        if (mWidgetColor == resources.getColor(R.color.default_widget_bg_color) && config.isUsingSystemTheme) {
+        if (mWidgetColor == resources.getColor(R.color.default_widget_bg_color) && isDynamicTheme()) {
             mWidgetColor = resources.getColor(org.fossify.commons.R.color.you_primary_color, theme)
         }
 

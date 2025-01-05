@@ -35,6 +35,7 @@ import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
 import org.greenrobot.eventbus.EventBus
+import kotlin.math.min
 
 class RecordingsAdapter(
     activity: SimpleActivity,
@@ -235,7 +236,7 @@ class RecordingsAdapter(
                 positions.sortDescending()
                 removeSelectedItems(positions)
                 if (recordingsToRemove.map { it.id }.contains(currRecordingId)) {
-                    val newRecordingIndex = Math.min(oldRecordingIndex, recordings.size - 1)
+                    val newRecordingIndex = min(oldRecordingIndex, recordings.size - 1)
                     val newRecording = recordings[newRecordingIndex]
                     refreshListener.playRecording(newRecording, false)
                 }
@@ -273,7 +274,7 @@ class RecordingsAdapter(
             }
 
             recordingTitle.text = recording.title
-            recordingDate.text = recording.timestamp.formatDate(root.context)
+            recordingDate.text = (recording.timestamp * 1000L).formatDate(root.context)
             recordingDuration.text = recording.duration.getFormattedDuration()
             recordingSize.text = recording.size.formatSize()
 

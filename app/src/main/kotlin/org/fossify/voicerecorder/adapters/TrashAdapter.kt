@@ -187,7 +187,7 @@ class TrashAdapter(
             }
 
             recordingTitle.text = recording.title
-            recordingDate.text = recording.timestamp.formatDate(root.context)
+            recordingDate.text = (recording.timestamp * 1000L).formatDate(root.context)
             recordingDuration.text = recording.duration.getFormattedDuration()
             recordingSize.text = recording.size.formatSize()
 

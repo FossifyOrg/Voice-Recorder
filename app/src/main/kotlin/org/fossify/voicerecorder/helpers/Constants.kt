@@ -7,6 +7,8 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
 import org.fossify.commons.helpers.isQPlus
 
+const val REPOSITORY_NAME = "Voice-Recorder"
+
 const val RECORDER_RUNNING_NOTIF_ID = 10000
 
 private const val PATH = "com.fossify.voicerecorder.action."

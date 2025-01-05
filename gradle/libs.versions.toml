@@ -12,7 +12,7 @@ androidx-swiperefreshlayout = "1.1.0"
 #Eventbus
 eventbus = "3.3.1"
 #Fossify
-commons = "7a3870e42b"
+commons = "4013116a24"
 #AudioRecordView
 audiorecordview = "1.0.4"
 #TAndroidLame
