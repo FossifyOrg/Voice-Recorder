@@ -4,7 +4,17 @@ import android.content.ContentValues
 import android.provider.MediaStore.Audio.Media
 import androidx.appcompat.app.AlertDialog
 import org.fossify.commons.activities.BaseSimpleActivity
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.getAlertDialogBuilder
+import org.fossify.commons.extensions.getFilenameExtension
+import org.fossify.commons.extensions.getParentPath
+import org.fossify.commons.extensions.isAValidFilename
+import org.fossify.commons.extensions.renameDocumentSdk30
+import org.fossify.commons.extensions.renameFile
+import org.fossify.commons.extensions.setupDialogStuff
+import org.fossify.commons.extensions.showErrorToast
+import org.fossify.commons.extensions.showKeyboard
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
 import org.fossify.voicerecorder.databinding.DialogRenameRecordingBinding
@@ -15,7 +25,11 @@ import org.fossify.voicerecorder.models.Recording
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 
-class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Recording, val callback: () -> Unit) {
+class RenameRecordingDialog(
+    val activity: BaseSimpleActivity,
+    val recording: Recording,
+    val callback: () -> Unit
+) {
     init {
         val binding = DialogRenameRecordingBinding.inflate(activity.layoutInflater).apply {
             renameRecordingTitle.setText(recording.title.substringBeforeLast('.'))
@@ -26,7 +40,11 @@ class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Rec
             .setPositiveButton(org.fossify.commons.R.string.ok, null)
             .setNegativeButton(org.fossify.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(view, this, org.fossify.commons.R.string.rename) { alertDialog ->
+                activity.setupDialogStuff(
+                    view = view,
+                    dialog = this,
+                    titleId = org.fossify.commons.R.string.rename
+                ) { alertDialog ->
                     alertDialog.showKeyboard(binding.renameRecordingTitle)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val newTitle = binding.renameRecordingTitle.value
@@ -68,7 +86,12 @@ class RenameRecordingDialog(val activity: BaseSimpleActivity, val recording: Rec
 
         // if the old way of renaming fails, try the new SDK 30 one on Android 11+
         try {
-            activity.contentResolver.update(getAudioFileContentUri(recording.id.toLong()), values, null, null)
+            activity.contentResolver.update(
+                getAudioFileContentUri(recording.id.toLong()),
+                values,
+                null,
+                null
+            )
         } catch (e: Exception) {
             try {
                 val path = "${activity.config.saveRecordingsFolder}/${recording.title}"

@@ -7,13 +7,20 @@ import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.deleteFile
 import org.fossify.commons.extensions.getParentPath
 import org.fossify.commons.extensions.toFileDirItem
-import org.fossify.commons.helpers.*
+import org.fossify.commons.helpers.DAY_SECONDS
+import org.fossify.commons.helpers.MONTH_SECONDS
+import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.isQPlus
+import org.fossify.commons.helpers.isRPlus
 import org.fossify.commons.models.FileDirItem
 import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.models.Recording
 import java.io.File
 
-fun BaseSimpleActivity.deleteRecordings(recordingsToRemove: Collection<Recording>, callback: (success: Boolean) -> Unit) {
+fun BaseSimpleActivity.deleteRecordings(
+    recordingsToRemove: Collection<Recording>,
+    callback: (success: Boolean) -> Unit
+) {
     when {
         isRPlus() -> {
             val fileUris = recordingsToRemove.map { recording ->
@@ -48,7 +55,10 @@ fun BaseSimpleActivity.deleteRecordings(recordingsToRemove: Collection<Recording
     }
 }
 
-fun BaseSimpleActivity.restoreRecordings(recordingsToRestore: Collection<Recording>, callback: (success: Boolean) -> Unit) {
+fun BaseSimpleActivity.restoreRecordings(
+    recordingsToRestore: Collection<Recording>,
+    callback: (success: Boolean) -> Unit
+) {
     when {
         isRPlus() -> {
             val fileUris = recordingsToRestore.map { recording ->
@@ -90,7 +100,9 @@ fun BaseSimpleActivity.restoreRecordings(recordingsToRestore: Collection<Recordi
 
         else -> {
             copyMoveFilesTo(
-                fileDirItems = recordingsToRestore.map { File(it.path).toFileDirItem(this) }.toMutableList() as ArrayList<FileDirItem>,
+                fileDirItems = recordingsToRestore
+                    .map { File(it.path).toFileDirItem(this) }
+                    .toMutableList() as ArrayList<FileDirItem>,
                 source = recordingsToRestore.first().path.getParentPath(),
                 destination = config.saveRecordingsFolder,
                 isCopyOperation = false,
@@ -103,7 +115,10 @@ fun BaseSimpleActivity.restoreRecordings(recordingsToRestore: Collection<Recordi
     }
 }
 
-fun BaseSimpleActivity.moveRecordingsToRecycleBin(recordingsToMove: Collection<Recording>, callback: (success: Boolean) -> Unit) {
+fun BaseSimpleActivity.moveRecordingsToRecycleBin(
+    recordingsToMove: Collection<Recording>,
+    callback: (success: Boolean) -> Unit
+) {
     when {
         isRPlus() -> {
             val fileUris = recordingsToMove.map { recording ->
@@ -145,7 +160,9 @@ fun BaseSimpleActivity.moveRecordingsToRecycleBin(recordingsToMove: Collection<R
 
         else -> {
             copyMoveFilesTo(
-                fileDirItems = recordingsToMove.map { File(it.path).toFileDirItem(this) }.toMutableList() as ArrayList<FileDirItem>,
+                fileDirItems = recordingsToMove
+                    .map { File(it.path).toFileDirItem(this) }
+                    .toMutableList() as ArrayList<FileDirItem>,
                 source = recordingsToMove.first().path.getParentPath(),
                 destination = getOrCreateTrashFolder(),
                 isCopyOperation = false,
@@ -164,15 +181,20 @@ fun BaseSimpleActivity.checkRecycleBinItems() {
         return
     }
 
-    if (config.useRecycleBin && config.lastRecycleBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000) {
+    if (
+        config.useRecycleBin &&
+        config.lastRecycleBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000
+    ) {
         config.lastRecycleBinCheck = System.currentTimeMillis()
         ensureBackgroundThread {
             try {
-                val recordingsToRemove = getLegacyRecordings(trashed = true).filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }
+                val recordingsToRemove = getLegacyRecordings(trashed = true)
+                    .filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }
                 if (recordingsToRemove.isNotEmpty()) {
                     deleteRecordings(recordingsToRemove) {}
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

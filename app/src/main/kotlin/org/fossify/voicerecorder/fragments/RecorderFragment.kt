@@ -1,5 +1,6 @@
 package org.fossify.voicerecorder.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -10,12 +11,24 @@ import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.compose.extensions.getActivity
 import org.fossify.commons.dialogs.PermissionRequiredDialog
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.applyColorFilter
+import org.fossify.commons.extensions.beGone
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.getColoredDrawableWithColor
+import org.fossify.commons.extensions.getContrastColor
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.openNotificationSettings
 import org.fossify.commons.helpers.isNougatPlus
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.setDebouncedClickListener
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
+import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
+import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
+import org.fossify.voicerecorder.helpers.RECORDING_STOPPED
+import org.fossify.voicerecorder.helpers.TOGGLE_PAUSE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
 import org.greenrobot.eventbus.EventBus
@@ -24,7 +37,11 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.Timer
 import java.util.TimerTask
 
-class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPagerFragment(context, attributeSet) {
+class RecorderFragment(
+    context: Context,
+    attributeSet: AttributeSet
+) : MyViewPagerFragment(context, attributeSet) {
+
     private var status = RECORDING_STOPPED
     private var pauseBlinkTimer = Timer()
     private var bus: EventBus? = null
@@ -62,9 +79,13 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
                 if (granted) {
                     toggleRecording()
                 } else {
-                    PermissionRequiredDialog(context as BaseSimpleActivity, org.fossify.commons.R.string.allow_notifications_voice_recorder, {
-                        (context as BaseSimpleActivity).openNotificationSettings()
-                    })
+                    PermissionRequiredDialog(
+                        activity = context as BaseSimpleActivity,
+                        textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
+                        positiveActionCallback = {
+                            (context as BaseSimpleActivity).openNotificationSettings()
+                        }
+                    )
                 }
             }
         }
@@ -80,7 +101,7 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
             action = GET_RECORDER_INFO
             try {
                 context.startService(this)
-            } catch (e: Exception) {
+            } catch (ignored: Exception) {
             }
         }
     }
@@ -93,7 +114,12 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
         }
 
         binding.togglePauseButton.apply {
-            setImageDrawable(resources.getColoredDrawableWithColor(org.fossify.commons.R.drawable.ic_pause_vector, properPrimaryColor.getContrastColor()))
+            setImageDrawable(
+                resources.getColoredDrawableWithColor(
+                    drawableId = org.fossify.commons.R.drawable.ic_pause_vector,
+                    color = properPrimaryColor.getContrastColor()
+                )
+            )
             background.applyColorFilter(properPrimaryColor)
         }
 
@@ -106,9 +132,16 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
     }
 
     private fun getToggleButtonIcon(): Drawable {
-        val drawable =
-            if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) org.fossify.commons.R.drawable.ic_stop_vector else org.fossify.commons.R.drawable.ic_microphone_vector
-        return resources.getColoredDrawableWithColor(drawable, context.getProperPrimaryColor().getContrastColor())
+        val drawable = if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) {
+            org.fossify.commons.R.drawable.ic_stop_vector
+        } else {
+            org.fossify.commons.R.drawable.ic_microphone_vector
+        }
+
+        return resources.getColoredDrawableWithColor(
+            drawableId = drawable,
+            color = context.getProperPrimaryColor().getContrastColor()
+        )
     }
 
     private fun toggleRecording() {
@@ -147,12 +180,14 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
             if (status == RECORDING_PAUSED) {
                 // update just the alpha so that it will always be clickable
                 Handler(Looper.getMainLooper()).post {
-                    binding.togglePauseButton.alpha = if (binding.togglePauseButton.alpha == 0f) 1f else 0f
+                    binding.togglePauseButton.alpha =
+                        if (binding.togglePauseButton.alpha == 0f) 1f else 0f
                 }
             }
         }
     }
 
+    @SuppressLint("DiscouragedApi")
     private fun refreshView() {
         binding.toggleRecordingButton.setImageDrawable(getToggleButtonIcon())
         binding.togglePauseButton.beVisibleIf(status != RECORDING_STOPPED && isNougatPlus())
@@ -171,17 +206,20 @@ class RecorderFragment(context: Context, attributeSet: AttributeSet) : MyViewPag
         }
     }
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun gotDurationEvent(event: Events.RecordingDuration) {
         updateRecordingDuration(event.duration)
     }
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun gotStatusEvent(event: Events.RecordingStatus) {
         status = event.status
         refreshView()
     }
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun gotAmplitudeEvent(event: Events.RecordingAmplitude) {
         val amplitude = event.amplitude

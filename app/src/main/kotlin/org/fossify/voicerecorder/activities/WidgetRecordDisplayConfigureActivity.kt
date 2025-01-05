@@ -9,7 +9,13 @@ import android.os.Bundle
 import android.widget.SeekBar
 import org.fossify.commons.dialogs.ColorPickerDialog
 import org.fossify.commons.dialogs.FeatureLockedDialog
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.adjustAlpha
+import org.fossify.commons.extensions.applyColorFilter
+import org.fossify.commons.extensions.getContrastColor
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.isOrWasThankYouInstalled
+import org.fossify.commons.extensions.setFillWithStroke
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.WidgetRecordDisplayConfigBinding
@@ -33,7 +39,8 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         initVariables()
 
         val isCustomizingColors = intent.extras?.getBoolean(IS_CUSTOMIZING_COLORS) ?: false
-        mWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        mWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID)
+            ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         if (mWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID && !isCustomizingColors) {
             finish()
@@ -68,13 +75,19 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
 
     private fun initVariables() {
         mWidgetColor = config.widgetBgColor
+        @Suppress("DEPRECATION")
         if (mWidgetColor == resources.getColor(R.color.default_widget_bg_color) && config.isUsingSystemTheme) {
             mWidgetColor = resources.getColor(org.fossify.commons.R.color.you_primary_color, theme)
         }
 
         mWidgetAlpha = Color.alpha(mWidgetColor) / 255.toFloat()
 
-        mWidgetColorWithoutTransparency = Color.rgb(Color.red(mWidgetColor), Color.green(mWidgetColor), Color.blue(mWidgetColor))
+        mWidgetColorWithoutTransparency = Color.rgb(
+            Color.red(mWidgetColor),
+            Color.green(mWidgetColor),
+            Color.blue(mWidgetColor)
+        )
+
         binding.configWidgetSeekbar.setOnSeekBarChangeListener(seekbarChangeListener)
         binding.configWidgetSeekbar.progress = (mWidgetAlpha * 100).toInt()
         updateColors()
@@ -101,7 +114,12 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     }
 
     private fun requestWidgetUpdate() {
-        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, MyWidgetRecordDisplayProvider::class.java).apply {
+        Intent(
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+            null,
+            this,
+            MyWidgetRecordDisplayProvider::class.java
+        ).apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mWidgetId))
             sendBroadcast(this)
         }

@@ -16,11 +16,22 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.getDocumentSdk30
+import org.fossify.commons.extensions.getDuration
+import org.fossify.commons.extensions.getIntValue
+import org.fossify.commons.extensions.getLongValue
+import org.fossify.commons.extensions.getStringValue
+import org.fossify.commons.extensions.internalStoragePath
+import org.fossify.commons.extensions.isAudioFast
+import org.fossify.commons.extensions.queryCursor
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isRPlus
 import org.fossify.voicerecorder.R
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.Config
+import org.fossify.voicerecorder.helpers.IS_RECORDING
+import org.fossify.voicerecorder.helpers.MyWidgetRecordDisplayProvider
+import org.fossify.voicerecorder.helpers.TOGGLE_WIDGET_UI
+import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.models.Recording
 import java.io.File
 import kotlin.math.roundToLong
@@ -38,7 +49,13 @@ fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
 
 fun Context.updateWidgets(isRecording: Boolean) {
     val widgetIDs = AppWidgetManager.getInstance(applicationContext)
-        ?.getAppWidgetIds(ComponentName(applicationContext, MyWidgetRecordDisplayProvider::class.java)) ?: return
+        ?.getAppWidgetIds(
+            ComponentName(
+                applicationContext,
+                MyWidgetRecordDisplayProvider::class.java
+            )
+        ) ?: return
+
     if (widgetIDs.isNotEmpty()) {
         Intent(applicationContext, MyWidgetRecordDisplayProvider::class.java).apply {
             action = TOGGLE_WIDGET_UI
@@ -76,7 +93,10 @@ fun Context.getNewMediaStoreRecordings(trashed: Boolean = false): ArrayList<Reco
 
     val bundle = Bundle().apply {
         putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(Media.DATE_ADDED))
-        putInt(ContentResolver.QUERY_ARG_SORT_DIRECTION, ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
+        putInt(
+            ContentResolver.QUERY_ARG_SORT_DIRECTION,
+            ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
+        )
         putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "${Media.OWNER_PACKAGE_NAME} = ?")
         putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, arrayOf(packageName))
         if (config.useRecycleBin) {
@@ -139,8 +159,16 @@ fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Recording> 
         val timestamp = (it.lastModified() / 1000).toInt()
         val duration = getDuration(it.absolutePath) ?: 0
         val size = it.length().toInt()
-        val recording = Recording(id, title, path, timestamp, duration, size)
-        recordings.add(recording)
+        recordings.add(
+            Recording(
+                id = id,
+                title = title,
+                path = path,
+                timestamp = timestamp,
+                duration = duration,
+                size = size
+            )
+        )
     }
     return recordings
 }
@@ -161,8 +189,16 @@ fun Context.getSAFRecordings(trashed: Boolean = false): ArrayList<Recording> {
         val timestamp = (it.lastModified() / 1000).toInt()
         val duration = getDurationFromUri(it.uri)
         val size = it.length().toInt()
-        val recording = Recording(id, title, path, timestamp, duration.toInt(), size)
-        recordings.add(recording)
+        recordings.add(
+            Recording(
+                id = id,
+                title = title,
+                path = path,
+                timestamp = timestamp,
+                duration = duration.toInt(),
+                size = size
+            )
+        )
     }
 
     recordings.sortByDescending { it.timestamp }
@@ -217,13 +253,21 @@ private fun Context.readRecordingFromCursor(cursor: Cursor): Recording {
         size = getSizeFromUri(id.toLong())
     }
 
-    return Recording(id, title, "", timestamp, duration.toInt(), size)
+    return Recording(
+        id = id,
+        title = title,
+        path = "",
+        timestamp = timestamp,
+        duration = duration.toInt(),
+        size = size
+    )
 }
 
 private fun Context.getSizeFromUri(id: Long): Int {
     val recordingUri = getAudioFileContentUri(id)
     return try {
-        contentResolver.openInputStream(recordingUri)?.available() ?: 0
+        contentResolver.openInputStream(recordingUri)
+            ?.use { it.available() } ?: 0
     } catch (e: Exception) {
         0
     }

@@ -1,12 +1,21 @@
 package org.fossify.voicerecorder.adapters
 
-import android.view.*
+import android.annotation.SuppressLint
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.dialogs.ConfirmationDialog
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.formatDate
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getPopupMenuTheme
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.setupViewBackground
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.R
@@ -22,7 +31,7 @@ import org.greenrobot.eventbus.EventBus
 class TrashAdapter(
     activity: SimpleActivity,
     var recordings: ArrayList<Recording>,
-    val refreshListener: RefreshRecordingsListener,
+    private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView
 ) :
     MyRecyclerViewAdapter(activity, recyclerView, {}), RecyclerViewFastScroller.OnPopupTextUpdate {
@@ -60,21 +69,27 @@ class TrashAdapter(
     override fun onActionModeDestroyed() {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return createViewHolder(ItemRecordingBinding.inflate(layoutInflater, parent, false).root)
+        return createViewHolder(
+            view = ItemRecordingBinding.inflate(layoutInflater, parent, false).root
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recording = recordings[position]
-        holder.bindView(recording, true, true) { itemView, layoutPosition ->
+        holder.bindView(
+            any = recording,
+            allowSingleClick = true,
+            allowLongClick = true
+        ) { itemView, _ ->
             setupView(itemView, recording)
         }
+
         bindViewHolder(holder)
     }
 
     override fun getItemCount() = recordings.size
 
-    private fun getItemWithKey(key: Int): Recording? = recordings.firstOrNull { it.id == key }
-
+    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: ArrayList<Recording>) {
         if (newItems.hashCode() != recordings.hashCode()) {
             recordings = newItems
@@ -88,7 +103,9 @@ class TrashAdapter(
             return
         }
 
-        val recordingsToRestore = recordings.filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        val recordingsToRestore = recordings
+            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+
         val positions = getSelectedItemPositions()
 
         activity.restoreRecordings(recordingsToRestore) { success ->
@@ -123,7 +140,9 @@ class TrashAdapter(
             return
         }
 
-        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        val recordingsToRemove = recordings
+            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+
         val positions = getSelectedItemPositions()
 
         activity.deleteRecordings(recordingsToRemove) { success ->
@@ -133,7 +152,10 @@ class TrashAdapter(
         }
     }
 
-    private fun doDeleteAnimation(recordingsToRemove: ArrayList<Recording>, positions: ArrayList<Int>) {
+    private fun doDeleteAnimation(
+        recordingsToRemove: ArrayList<Recording>,
+        positions: ArrayList<Int>
+    ) {
         recordings.removeAll(recordingsToRemove.toSet())
         activity.runOnUiThread {
             if (recordings.isEmpty()) {
@@ -146,14 +168,21 @@ class TrashAdapter(
         }
     }
 
-    private fun getSelectedItems() = recordings.filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+    private fun getSelectedItems(): ArrayList<Recording> {
+        return recordings.filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+    }
 
     private fun setupView(view: View, recording: Recording) {
         ItemRecordingBinding.bind(view).apply {
             root.setupViewBackground(activity)
             recordingFrame.isSelected = selectedKeys.contains(recording.id)
 
-            arrayListOf<TextView>(recordingTitle, recordingDate, recordingDuration, recordingSize).forEach {
+            arrayListOf(
+                recordingTitle,
+                recordingDate,
+                recordingDuration,
+                recordingSize
+            ).forEach {
                 it.setTextColor(textColor)
             }
 
@@ -175,6 +204,7 @@ class TrashAdapter(
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun showPopupMenu(view: View, recording: Recording) {
         if (selectedKeys.isNotEmpty()) {
             selectedKeys.clear()
@@ -188,7 +218,10 @@ class TrashAdapter(
         PopupMenu(contextTheme, view, Gravity.END).apply {
             inflate(getActionMenuId())
             menu.findItem(R.id.cab_select_all).isVisible = false
-            menu.findItem(R.id.cab_restore).title = resources.getString(org.fossify.commons.R.string.restore_this_file)
+            menu.findItem(R.id.cab_restore).title = resources.getString(
+                org.fossify.commons.R.string.restore_this_file
+            )
+
             setOnMenuItemClickListener { item ->
                 val recordingId = recording.id
                 when (item.itemId) {
@@ -211,7 +244,11 @@ class TrashAdapter(
         }
     }
 
-    private fun executeItemMenuOperation(callId: Int, removeAfterCallback: Boolean = true, callback: () -> Unit) {
+    private fun executeItemMenuOperation(
+        callId: Int,
+        @Suppress("SameParameterValue") removeAfterCallback: Boolean = false,
+        callback: () -> Unit
+    ) {
         selectedKeys.add(callId)
         callback()
         if (removeAfterCallback) {

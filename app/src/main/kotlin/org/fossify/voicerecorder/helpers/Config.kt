@@ -1,5 +1,6 @@
 package org.fossify.voicerecorder.helpers
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaRecorder
 import org.fossify.commons.helpers.BaseConfig
@@ -17,7 +18,8 @@ class Config(context: Context) : BaseConfig(context) {
 
     var saveRecordingsFolder: String
         get() = prefs.getString(SAVE_RECORDINGS, context.getDefaultRecordingsFolder())!!
-        set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder).apply()
+        set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder)
+            .apply()
 
     var extension: Int
         get() = prefs.getInt(EXTENSION, EXTENSION_MP3)
@@ -27,8 +29,8 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(AUDIO_SOURCE, MediaRecorder.AudioSource.CAMCORDER)
         set(audioSource) = prefs.edit().putInt(AUDIO_SOURCE, audioSource).apply()
 
-    fun getAudioSourceText(audio_source: Int) = context.getString(
-        when (audio_source) {
+    fun getAudioSourceText(audioSource: Int) = context.getString(
+        when (audioSource) {
             MediaRecorder.AudioSource.DEFAULT -> R.string.audio_source_default
             MediaRecorder.AudioSource.MIC -> R.string.audio_source_microphone
             MediaRecorder.AudioSource.VOICE_RECOGNITION -> R.string.audio_source_voice_recognition
@@ -45,7 +47,8 @@ class Config(context: Context) : BaseConfig(context) {
 
     var recordAfterLaunch: Boolean
         get() = prefs.getBoolean(RECORD_AFTER_LAUNCH, false)
-        set(recordAfterLaunch) = prefs.edit().putBoolean(RECORD_AFTER_LAUNCH, recordAfterLaunch).apply()
+        set(recordAfterLaunch) = prefs.edit().putBoolean(RECORD_AFTER_LAUNCH, recordAfterLaunch)
+            .apply()
 
     fun getExtensionText() = context.getString(
         when (extension) {
@@ -63,11 +66,13 @@ class Config(context: Context) : BaseConfig(context) {
         }
     )
 
+    @SuppressLint("InlinedApi")
     fun getOutputFormat() = when (extension) {
         EXTENSION_OGG -> MediaRecorder.OutputFormat.OGG
         else -> MediaRecorder.OutputFormat.MPEG_4
     }
 
+    @SuppressLint("InlinedApi")
     fun getAudioEncoder() = when (extension) {
         EXTENSION_OGG -> MediaRecorder.AudioEncoder.OPUS
         else -> MediaRecorder.AudioEncoder.AAC
@@ -79,7 +84,8 @@ class Config(context: Context) : BaseConfig(context) {
 
     var lastRecycleBinCheck: Long
         get() = prefs.getLong(LAST_RECYCLE_BIN_CHECK, 0L)
-        set(lastRecycleBinCheck) = prefs.edit().putLong(LAST_RECYCLE_BIN_CHECK, lastRecycleBinCheck).apply()
+        set(lastRecycleBinCheck) = prefs.edit().putLong(LAST_RECYCLE_BIN_CHECK, lastRecycleBinCheck)
+            .apply()
 
     var keepScreenOn: Boolean
         get() = prefs.getBoolean(KEEP_SCREEN_ON, true)

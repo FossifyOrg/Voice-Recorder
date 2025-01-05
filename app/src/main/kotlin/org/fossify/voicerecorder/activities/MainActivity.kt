@@ -6,9 +6,25 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.*
+import org.fossify.commons.extensions.appLaunched
+import org.fossify.commons.extensions.checkAppSideloading
+import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
+import org.fossify.commons.extensions.getProperBackgroundColor
+import org.fossify.commons.extensions.hideKeyboard
+import org.fossify.commons.extensions.launchMoreAppsFromUsIntent
+import org.fossify.commons.extensions.onPageChangeListener
+import org.fossify.commons.extensions.onTabSelectionChanged
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.updateBottomTabItemColors
+import org.fossify.commons.helpers.LICENSE_ANDROID_LAME
+import org.fossify.commons.helpers.LICENSE_AUDIO_RECORD_VIEW
+import org.fossify.commons.helpers.LICENSE_AUTOFITTEXTVIEW
+import org.fossify.commons.helpers.LICENSE_EVENT_BUS
+import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
+import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
+import org.fossify.commons.helpers.isRPlus
 import org.fossify.commons.models.FAQItem
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
@@ -37,7 +53,12 @@ class MainActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(binding.mainCoordinator, binding.mainHolder, useTransparentNavigation = false, useTopSearchMenu = true)
+        updateMaterialActivityViews(
+            mainCoordinatorLayout = binding.mainCoordinator,
+            nestedView = binding.mainHolder,
+            useTransparentNavigation = false,
+            useTopSearchMenu = true
+        )
 
         if (checkAppSideloading()) {
             return
@@ -97,6 +118,8 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (binding.mainMenu.isSearchOpen) {
             binding.mainMenu.closeSearch()
@@ -110,7 +133,9 @@ class MainActivity : SimpleActivity() {
 
     private fun refreshMenuItems() {
         binding.mainMenu.getToolbar().menu.apply {
-            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(org.fossify.commons.R.bool.hide_google_relations)
+            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(
+                org.fossify.commons.R.bool.hide_google_relations
+            )
         }
     }
 
@@ -161,7 +186,10 @@ class MainActivity : SimpleActivity() {
 
     private fun setupViewPager() {
         binding.mainTabsHolder.removeAllTabs()
-        var tabDrawables = arrayOf(org.fossify.commons.R.drawable.ic_microphone_vector, R.drawable.ic_headset_vector)
+        var tabDrawables = arrayOf(
+            org.fossify.commons.R.drawable.ic_microphone_vector,
+            R.drawable.ic_headset_vector
+        )
         var tabLabels = arrayOf(R.string.recorder, R.string.player)
         if (config.useRecycleBin) {
             tabDrawables += org.fossify.commons.R.drawable.ic_delete_vector
@@ -169,12 +197,27 @@ class MainActivity : SimpleActivity() {
         }
 
         tabDrawables.forEachIndexed { i, drawableId ->
-            binding.mainTabsHolder.newTab().setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item).apply {
-                customView?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)?.setImageDrawable(getDrawable(drawableId))
-                customView?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)?.setText(tabLabels[i])
-                AutofitHelper.create(customView?.findViewById(org.fossify.commons.R.id.tab_item_label))
-                binding.mainTabsHolder.addTab(this)
-            }
+            binding.mainTabsHolder.newTab()
+                .setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item).apply {
+                    customView
+                        ?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)
+                        ?.setImageDrawable(
+                            AppCompatResources.getDrawable(
+                                this@MainActivity,
+                                drawableId
+                            )
+                        )
+
+                    customView
+                        ?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)
+                        ?.setText(tabLabels[i])
+
+                    AutofitHelper.create(
+                        customView?.findViewById(org.fossify.commons.R.id.tab_item_label)
+                    )
+
+                    binding.mainTabsHolder.addTab(this)
+                }
         }
 
         binding.mainTabsHolder.onTabSelectionChanged(
@@ -229,23 +272,49 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or LICENSE_AUDIO_RECORD_VIEW or LICENSE_ANDROID_LAME or LICENSE_AUTOFITTEXTVIEW
+        val licenses = LICENSE_EVENT_BUS or
+                LICENSE_AUDIO_RECORD_VIEW or
+                LICENSE_ANDROID_LAME or
+                LICENSE_AUTOFITTEXTVIEW
 
         val faqItems = arrayListOf(
-            FAQItem(R.string.faq_1_title, R.string.faq_1_text),
-            FAQItem(org.fossify.commons.R.string.faq_9_title_commons, org.fossify.commons.R.string.faq_9_text_commons)
+            FAQItem(
+                title = R.string.faq_1_title,
+                text = R.string.faq_1_text
+            ),
+            FAQItem(
+                title = org.fossify.commons.R.string.faq_9_title_commons,
+                text = org.fossify.commons.R.string.faq_9_text_commons
+            )
         )
 
         if (!resources.getBoolean(org.fossify.commons.R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(org.fossify.commons.R.string.faq_2_title_commons, org.fossify.commons.R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(org.fossify.commons.R.string.faq_6_title_commons, org.fossify.commons.R.string.faq_6_text_commons))
+            faqItems.add(
+                FAQItem(
+                    title = org.fossify.commons.R.string.faq_2_title_commons,
+                    text = org.fossify.commons.R.string.faq_2_text_commons
+                )
+            )
+            faqItems.add(
+                FAQItem(
+                    title = org.fossify.commons.R.string.faq_6_title_commons,
+                    text = org.fossify.commons.R.string.faq_6_text_commons
+                )
+            )
         }
 
-        startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
+        startAboutActivity(
+            appNameId = R.string.app_name,
+            licenseMask = licenses,
+            versionName = BuildConfig.VERSION_NAME,
+            faqItems = faqItems,
+            showFAQBeforeMail = true
+        )
     }
 
     private fun isThirdPartyIntent() = intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
 
+    @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun recordingSaved(event: Events.RecordingSaved) {
         if (isThirdPartyIntent()) {

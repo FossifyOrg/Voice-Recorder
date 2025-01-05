@@ -58,9 +58,10 @@ import java.util.TimerTask
 class RecorderService : Service() {
     companion object {
         var isRunning = false
+
+        private const val AMPLITUDE_UPDATE_MS = 75L
     }
 
-    private val AMPLITUDE_UPDATE_MS = 75L
 
     private var currFilePath = ""
     private var duration = 0
@@ -92,6 +93,7 @@ class RecorderService : Service() {
     }
 
     // mp4 output format with aac encoding should produce good enough m4a files according to https://stackoverflow.com/a/33054794/1967672
+    @SuppressLint("DiscouragedApi")
     private fun startRecording() {
         isRunning = true
         updateWidgets(true)
@@ -190,6 +192,7 @@ class RecorderService : Service() {
         startAmplitudeUpdates()
     }
 
+    @SuppressLint("DiscouragedApi")
     private fun startAmplitudeUpdates() {
         amplitudeTimer.cancel()
         amplitudeTimer = Timer()
@@ -295,7 +298,7 @@ class RecorderService : Service() {
             }
         }
 
-        var priority = Notification.PRIORITY_DEFAULT
+        var priority = NotificationManager.IMPORTANCE_DEFAULT
         var icon = R.drawable.ic_graphic_eq_vector
         var title = label
         var visibility = NotificationCompat.VISIBILITY_PUBLIC
@@ -305,7 +308,7 @@ class RecorderService : Service() {
         }
 
         if (hideNotification) {
-            priority = Notification.PRIORITY_MIN
+            priority = NotificationManager.IMPORTANCE_MIN
             icon = R.drawable.ic_empty
             title = ""
             text = ""

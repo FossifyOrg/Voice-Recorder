@@ -10,7 +10,11 @@ import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.helpers.SAMPLE_RATE
-import java.io.*
+import java.io.File
+import java.io.FileDescriptor
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
@@ -53,7 +57,7 @@ class Mp3Recorder(val context: Context) : Recorder {
             if (fileDescriptor != null) {
                 FileOutputStream(fileDescriptor)
             } else {
-                FileOutputStream(File(outputPath))
+                FileOutputStream(File(outputPath!!))
             }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
