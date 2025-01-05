@@ -29,4 +29,5 @@
     <string name="faq_1_title">在录音过程中我可以隐藏通知提示图标么？</string>
     <string name="faq_1_text">这个，视情况而定。当您正在使用设备的时候，现在已经不可能完全隐藏像此类应用程序的通知图标了。 如果您勾选恰当的设定条目，应用程序将秦可能的隐藏自身。您仍可以在锁屏界面隐藏它，如果您在您设备设定中禁用显示敏感内容的通知提示的话。</string>
     <string name="keep_screen_on">录制时保持屏幕开启</string>
+    <string name="recording_too_short">录音时间太短无法录制！</string>
 </resources>
