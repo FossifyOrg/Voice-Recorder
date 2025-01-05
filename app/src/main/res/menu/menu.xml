@@ -7,12 +7,12 @@
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings_cog_vector"
         android:title="@string/settings"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/about"
         android:icon="@drawable/ic_info_vector"
         android:title="@string/about"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/more_apps_from_us"
         android:title="@string/more_apps_from_us"
