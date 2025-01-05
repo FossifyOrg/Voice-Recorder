@@ -1,7 +1,6 @@
 package org.fossify.voicerecorder.services
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
 import android.os.IBinder
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
@@ -31,7 +29,6 @@ import org.fossify.commons.extensions.isPathOnSD
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.commons.helpers.isOreoPlus
 import org.fossify.commons.helpers.isRPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
@@ -278,24 +275,21 @@ class RecorderService : Service() {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
     private fun showNotification(): Notification {
         val hideNotification = config.hideNotification
         val channelId = "simple_recorder"
         val label = getString(R.string.app_name)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (isOreoPlus()) {
-            val importance = if (hideNotification) {
-                NotificationManager.IMPORTANCE_MIN
-            } else {
-                NotificationManager.IMPORTANCE_DEFAULT
-            }
+        val importance = if (hideNotification) {
+            NotificationManager.IMPORTANCE_MIN
+        } else {
+            NotificationManager.IMPORTANCE_DEFAULT
+        }
 
-            NotificationChannel(channelId, label, importance).apply {
-                setSound(null, null)
-                notificationManager.createNotificationChannel(this)
-            }
+        NotificationChannel(channelId, label, importance).apply {
+            setSound(null, null)
+            notificationManager.createNotificationChannel(this)
         }
 
         var priority = NotificationManager.IMPORTANCE_DEFAULT

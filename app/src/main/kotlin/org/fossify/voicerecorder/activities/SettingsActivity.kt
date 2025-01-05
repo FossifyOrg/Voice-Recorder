@@ -24,7 +24,6 @@ import org.fossify.commons.extensions.updateTextColors
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
 import org.fossify.commons.helpers.NavigationIcon
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.commons.helpers.isNougatPlus
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.commons.helpers.sumByInt
@@ -313,12 +312,9 @@ class SettingsActivity : SimpleActivity() {
             MediaRecorder.AudioSource.DEFAULT,
             MediaRecorder.AudioSource.MIC,
             MediaRecorder.AudioSource.VOICE_RECOGNITION,
-            MediaRecorder.AudioSource.VOICE_COMMUNICATION
+            MediaRecorder.AudioSource.VOICE_COMMUNICATION,
+            MediaRecorder.AudioSource.UNPROCESSED
         )
-
-        if (isNougatPlus()) {
-            availableSources.add(MediaRecorder.AudioSource.UNPROCESSED)
-        }
 
         if (isQPlus()) {
             availableSources.add(MediaRecorder.AudioSource.VOICE_PERFORMANCE)

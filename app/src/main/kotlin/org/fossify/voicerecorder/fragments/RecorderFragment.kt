@@ -20,7 +20,6 @@ import org.fossify.commons.extensions.getFormattedDuration
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.openNotificationSettings
-import org.fossify.commons.helpers.isNougatPlus
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.setDebouncedClickListener
@@ -190,7 +189,7 @@ class RecorderFragment(
     @SuppressLint("DiscouragedApi")
     private fun refreshView() {
         binding.toggleRecordingButton.setImageDrawable(getToggleButtonIcon())
-        binding.togglePauseButton.beVisibleIf(status != RECORDING_STOPPED && isNougatPlus())
+        binding.togglePauseButton.beVisibleIf(status != RECORDING_STOPPED)
         pauseBlinkTimer.cancel()
 
         if (status == RECORDING_PAUSED) {
