@@ -12,6 +12,7 @@ androidx-swiperefreshlayout = "1.1.0"
 #Eventbus
 eventbus = "3.3.1"
 #Fossify
+#noinspection GradleDependency
 commons = "4013116a24"
 #AudioRecordView
 audiorecordview = "1.0.4"

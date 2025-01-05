@@ -16,6 +16,7 @@
         android:name="android.hardware.faketouch"
         android:required="false" />
 
+    <!--suppress DeprecatedClassUsageInspection -->
     <uses-permission
         android:name="android.permission.USE_FINGERPRINT"
         tools:node="remove" />
@@ -31,13 +32,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute"
         tools:replace="android:label">
 
         <activity
             android:name=".activities.WidgetRecordDisplayConfigureActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/MyWidgetConfigTheme">
+            android:theme="@style/MyWidgetConfigTheme"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
