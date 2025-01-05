@@ -21,7 +21,7 @@
         tools:node="remove" />
 
     <application
-        android:name="org.fossify.voicerecorder.App"
+        android:name="org.fossify.commons.FossifyApp"
         android:allowBackup="true"
         android:appCategory="audio"
         android:icon="@mipmap/ic_launcher"
