@@ -28,4 +28,6 @@
     <string name="faq_1_text">嗯……看情況。當您正在使用裝置時，沒辦法完全隱藏這類 app 的通知。若您有開啟相應的選項，本 app 會盡其所能來隱藏。不過鎖定畫面上的可以隱藏，只要在裝置的設定中停用「敏感通知」即可。</string>
     <string name="recorder">錄音機</string>
     <string name="player">播放器</string>
+    <string name="recording_too_short">錄音時間太短，無法錄製！</string>
+    <string name="keep_screen_on">錄製時維持螢幕開啟</string>
 </resources>
