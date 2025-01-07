@@ -5,8 +5,6 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
-import org.fossify.commons.dialogs.FeatureLockedDialog
-import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
 import org.fossify.commons.extensions.addLockedLabelIfNeeded
 import org.fossify.commons.extensions.beGone
@@ -31,8 +29,9 @@ import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.emptyTheRecycleBin
+import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
 import org.fossify.voicerecorder.extensions.getAllRecordings
+import org.fossify.voicerecorder.extensions.launchFilePickerDialog
 import org.fossify.voicerecorder.helpers.BITRATES
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
@@ -158,27 +157,8 @@ class SettingsActivity : SimpleActivity() {
             addLockedLabelIfNeeded(R.string.save_recordings_in)
         binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
         binding.settingsSaveRecordingsHolder.setOnClickListener {
-            if (isOrWasThankYouInstalled()) {
-                FilePickerDialog(this, config.saveRecordingsFolder, false, showFAB = true) {
-                    val path = it
-                    handleSAFDialog(path) { grantedSAF ->
-                        if (!grantedSAF) {
-                            return@handleSAFDialog
-                        }
-
-                        handleSAFDialogSdk30(path) { grantedSAF30 ->
-                            if (!grantedSAF30) {
-                                return@handleSAFDialogSdk30
-                            }
-
-                            config.saveRecordingsFolder = path
-                            binding.settingsSaveRecordings.text =
-                                humanizePath(config.saveRecordingsFolder)
-                        }
-                    }
-                }
-            } else {
-                FeatureLockedDialog(this) { }
+            launchFilePickerDialog {
+                binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
             }
         }
     }
@@ -272,7 +252,7 @@ class SettingsActivity : SimpleActivity() {
                     negative = org.fossify.commons.R.string.no
                 ) {
                     ensureBackgroundThread {
-                        emptyTheRecycleBin()
+                        deleteTrashedRecordings()
                         runOnUiThread {
                             recycleBinContentSize = 0
                             binding.settingsEmptyRecycleBinSize.text = 0.formatSize()

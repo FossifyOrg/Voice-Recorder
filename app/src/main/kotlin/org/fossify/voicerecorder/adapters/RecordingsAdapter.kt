@@ -19,7 +19,6 @@ import org.fossify.commons.extensions.openPathIntent
 import org.fossify.commons.extensions.setupViewBackground
 import org.fossify.commons.extensions.sharePathsIntent
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
@@ -29,8 +28,7 @@ import org.fossify.voicerecorder.dialogs.DeleteConfirmationDialog
 import org.fossify.voicerecorder.dialogs.RenameRecordingDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteRecordings
-import org.fossify.voicerecorder.extensions.moveRecordingsToRecycleBin
-import org.fossify.voicerecorder.helpers.getAudioFileContentUri
+import org.fossify.voicerecorder.extensions.trashRecordings
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
@@ -133,23 +131,13 @@ class RecordingsAdapter(
 
     private fun openRecordingWith() {
         val recording = getItemWithKey(selectedKeys.first()) ?: return
-        val path = if (isQPlus()) {
-            getAudioFileContentUri(recording.id.toLong()).toString()
-        } else {
-            recording.path
-        }
-
+        val path = recording.path
         activity.openPathIntent(path, false, BuildConfig.APPLICATION_ID, "audio/*")
     }
 
     private fun shareRecordings() {
         val selectedItems = getSelectedItems()
-        val paths = selectedItems.map {
-            it.path.ifEmpty {
-                getAudioFileContentUri(it.id.toLong()).toString()
-            }
-        }
-
+        val paths = selectedItems.map { it.path }
         activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 
@@ -177,15 +165,15 @@ class RecordingsAdapter(
             ensureBackgroundThread {
                 val toRecycleBin = !skipRecycleBin && activity.config.useRecycleBin
                 if (toRecycleBin) {
-                    moveMediaStoreRecordingsToRecycleBin()
+                    trashRecordings()
                 } else {
-                    deleteMediaStoreRecordings()
+                    deleteRecordings()
                 }
             }
         }
     }
 
-    private fun deleteMediaStoreRecordings() {
+    private fun deleteRecordings() {
         if (selectedKeys.isEmpty()) {
             return
         }
@@ -203,7 +191,7 @@ class RecordingsAdapter(
         }
     }
 
-    private fun moveMediaStoreRecordingsToRecycleBin() {
+    private fun trashRecordings() {
         if (selectedKeys.isEmpty()) {
             return
         }
@@ -214,7 +202,7 @@ class RecordingsAdapter(
 
         val positions = getSelectedItemPositions()
 
-        activity.moveRecordingsToRecycleBin(recordingsToRemove) { success ->
+        activity.trashRecordings(recordingsToRemove) { success ->
             if (success) {
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())

@@ -1,42 +1,33 @@
 package org.fossify.voicerecorder.extensions
 
-import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Media
+import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.extensions.getDocumentSdk30
 import org.fossify.commons.extensions.getDuration
-import org.fossify.commons.extensions.getIntValue
-import org.fossify.commons.extensions.getLongValue
-import org.fossify.commons.extensions.getStringValue
 import org.fossify.commons.extensions.internalStoragePath
 import org.fossify.commons.extensions.isAudioFast
-import org.fossify.commons.extensions.queryCursor
-import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isRPlus
-import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.Config
+import org.fossify.voicerecorder.helpers.DEFAULT_RECORDINGS_FOLDER
 import org.fossify.voicerecorder.helpers.IS_RECORDING
 import org.fossify.voicerecorder.helpers.MyWidgetRecordDisplayProvider
 import org.fossify.voicerecorder.helpers.TOGGLE_WIDGET_UI
-import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.models.Recording
 import java.io.File
 import kotlin.math.roundToLong
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
+
+val Context.trashFolder
+    get() = "${config.saveRecordingsFolder}/.trash"
 
 fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
     val size = (60 * resources.displayMetrics.density).toInt()
@@ -65,85 +56,71 @@ fun Context.updateWidgets(isRecording: Boolean) {
     }
 }
 
-fun Context.getDefaultRecordingsFolder(): String {
-    val defaultPath = getDefaultRecordingsRelativePath()
-    return "$internalStoragePath/$defaultPath"
+fun Context.getOrCreateTrashFolder(): String {
+    val folder = File(trashFolder)
+    if (!folder.exists()) {
+        folder.mkdir()
+    }
+    return trashFolder
 }
 
-fun Context.getDefaultRecordingsRelativePath(): String {
-    return if (isQPlus()) {
-        "${Environment.DIRECTORY_MUSIC}/Recordings"
+fun Context.getDefaultRecordingsFolder(): String {
+    return "$internalStoragePath/$DEFAULT_RECORDINGS_FOLDER"
+}
+
+fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
+    return if (isRPlus()) {
+        val recordings = arrayListOf<Recording>()
+        recordings.addAll(getRecordings(trashed))
+        if (trashed) {
+            // Return recordings trashed using MediaStore, this won't be needed in the future
+            recordings.addAll(getMediaStoreTrashedRecordings())
+        }
+
+        recordings
     } else {
-        getString(R.string.app_name)
+        getLegacyRecordings(trashed)
     }
 }
 
-@SuppressLint("InlinedApi")
-fun Context.getNewMediaStoreRecordings(trashed: Boolean = false): ArrayList<Recording> {
+private fun Context.getRecordings(trashed: Boolean = false): ArrayList<Recording> {
     val recordings = ArrayList<Recording>()
-
-    val uri = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-    val projection = arrayOf(
-        Media._ID,
-        Media.DISPLAY_NAME,
-        Media.DATE_ADDED,
-        Media.DURATION,
-        Media.SIZE
-    )
-
-    val bundle = Bundle().apply {
-        putStringArray(ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(Media.DATE_ADDED))
-        putInt(
-            ContentResolver.QUERY_ARG_SORT_DIRECTION,
-            ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
-        )
-        putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "${Media.OWNER_PACKAGE_NAME} = ?")
-        putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, arrayOf(packageName))
-        if (config.useRecycleBin) {
-            val trashedValue = if (trashed) MediaStore.MATCH_ONLY else MediaStore.MATCH_EXCLUDE
-            putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, trashedValue)
+    val folder = if (trashed) trashFolder else config.saveRecordingsFolder
+    val files = getDocumentSdk30(folder)?.listFiles() ?: return recordings
+    files.forEach { file ->
+        if (file.isAudioRecording()) {
+            recordings.add(
+                readRecordingFromFile(file)
+            )
         }
     }
-    queryCursor(uri, projection, bundle, true) { cursor ->
-        val recording = readRecordingFromCursor(cursor)
-        recordings.add(recording)
-    }
 
     return recordings
 }
 
-@SuppressLint("InlinedApi")
-fun Context.getMediaStoreRecordings(trashed: Boolean = false): ArrayList<Recording> {
+@Deprecated(
+    message = "Use getRecordings instead. This method is only here for backward compatibility.",
+    replaceWith = ReplaceWith("getRecordings(trashed = true)")
+)
+private fun Context.getMediaStoreTrashedRecordings(): ArrayList<Recording> {
     val recordings = ArrayList<Recording>()
-
-    val uri = Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-    val projection = arrayOf(
-        Media._ID,
-        Media.DISPLAY_NAME,
-        Media.DATE_ADDED,
-        Media.DURATION,
-        Media.SIZE
-    )
-
-    var selection = "${Media.OWNER_PACKAGE_NAME} = ?"
-    var selectionArgs = arrayOf(packageName)
-    val sortOrder = "${Media.DATE_ADDED} DESC"
-
-    if (config.useRecycleBin) {
-        val trashedValue = if (trashed) 1 else 0
-        selection += " AND ${Media.IS_TRASHED} = ?"
-        selectionArgs = selectionArgs.plus(trashedValue.toString())
-    }
-
-    queryCursor(uri, projection, selection, selectionArgs, sortOrder, true) { cursor ->
-        val recording = readRecordingFromCursor(cursor)
-        recordings.add(recording)
+    val folder = config.saveRecordingsFolder
+    val documentFiles = getDocumentSdk30(folder)?.listFiles() ?: return recordings
+    documentFiles.forEach { file ->
+        if (file.isTrashedMediaStoreRecording()) {
+            val recording = readRecordingFromFile(file)
+            recordings.add(
+                recording.copy(
+                    title = "^\\.trashed-\\d+-".toRegex().replace(file.name!!, "")
+                )
+            )
+        }
     }
 
     return recordings
 }
 
-fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Recording> {
+private fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Recording> {
     val recordings = ArrayList<Recording>()
     val folder = if (trashed) {
         trashFolder
@@ -173,104 +150,21 @@ fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Recording> 
     return recordings
 }
 
-fun Context.getSAFRecordings(trashed: Boolean = false): ArrayList<Recording> {
-    val recordings = ArrayList<Recording>()
-    val folder = if (trashed) {
-        trashFolder
-    } else {
-        config.saveRecordingsFolder
-    }
-    val files = getDocumentSdk30(folder)?.listFiles() ?: return recordings
-
-    files.filter { it.type?.startsWith("audio") == true && !it.name.isNullOrEmpty() }.forEach {
-        val id = it.hashCode()
-        val title = it.name!!
-        val path = it.uri.toString()
-        val timestamp = (it.lastModified() / 1000).toInt()
-        val duration = getDurationFromUri(it.uri)
-        val size = it.length().toInt()
-        recordings.add(
-            Recording(
-                id = id,
-                title = title,
-                path = path,
-                timestamp = timestamp,
-                duration = duration.toInt(),
-                size = size
-            )
-        )
-    }
-
-    recordings.sortByDescending { it.timestamp }
-    return recordings
-}
-
-fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
-    val recordings = ArrayList<Recording>()
-    return when {
-        isRPlus() -> {
-            recordings.addAll(getNewMediaStoreRecordings(trashed))
-            recordings.addAll(getSAFRecordings(trashed))
-            recordings
-        }
-
-        isQPlus() -> {
-            recordings.addAll(getMediaStoreRecordings(trashed))
-            recordings.addAll(getLegacyRecordings(trashed))
-            recordings
-        }
-
-        else -> {
-            recordings.addAll(getLegacyRecordings(trashed))
-            recordings
-        }
-    }
-}
-
-val Context.trashFolder
-    get() = "${config.saveRecordingsFolder}/.trash"
-
-fun Context.getOrCreateTrashFolder(): String {
-    val folder = File(trashFolder)
-    if (!folder.exists()) {
-        folder.mkdir()
-    }
-    return trashFolder
-}
-
-private fun Context.readRecordingFromCursor(cursor: Cursor): Recording {
-    val id = cursor.getIntValue(Media._ID)
-    val title = cursor.getStringValue(Media.DISPLAY_NAME)
-    val timestamp = cursor.getIntValue(Media.DATE_ADDED)
-    var duration = cursor.getLongValue(Media.DURATION) / 1000
-    var size = cursor.getIntValue(Media.SIZE)
-
-    if (duration == 0L) {
-        duration = getDurationFromUri(getAudioFileContentUri(id.toLong()))
-    }
-
-    if (size == 0) {
-        size = getSizeFromUri(id.toLong())
-    }
-
+private fun Context.readRecordingFromFile(file: DocumentFile): Recording {
+    val id = file.hashCode()
+    val title = file.name!!
+    val path = file.uri.toString()
+    val timestamp = (file.lastModified() / 1000).toInt()
+    val duration = getDurationFromUri(file.uri)
+    val size = file.length().toInt()
     return Recording(
         id = id,
         title = title,
-        path = "",
+        path = path,
         timestamp = timestamp,
         duration = duration.toInt(),
         size = size
     )
-}
-
-private fun Context.getSizeFromUri(id: Long): Int {
-    val recordingUri = getAudioFileContentUri(id)
-    return try {
-        contentResolver.openInputStream(recordingUri)
-            ?.use { it.available() } ?: 0
-    } catch (e: Exception) {
-        0
-    }
 }
 
 private fun Context.getDurationFromUri(uri: Uri): Long {
