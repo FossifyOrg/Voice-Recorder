@@ -9,6 +9,7 @@ import java.io.FileDescriptor
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
+    @Suppress("DEPRECATION")
     private var recorder = MediaRecorder().apply {
         setAudioSource(context.config.audioSource)
         setOutputFormat(context.config.getOutputFormat())

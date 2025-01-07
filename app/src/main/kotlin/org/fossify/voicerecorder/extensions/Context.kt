@@ -86,6 +86,7 @@ fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
         recordings.addAll(getRecordings(trashed))
         if (trashed) {
             // Return recordings trashed using MediaStore, this won't be needed in the future
+            @Suppress("DEPRECATION")
             recordings.addAll(getMediaStoreTrashedRecordings())
         }
 
