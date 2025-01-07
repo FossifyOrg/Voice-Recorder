@@ -31,4 +31,5 @@
     <string name="faq_1_text">Az attól függ. Amíg használja az eszközt, addig nem lehetséges az ehhez hasonló alkalmazások értesítéseinek elrejtése. Ha bekapcsolja a megfelelő beállítást, akkor az alkalmazás megpróbálja elrejteni őket. A zárképernyőn viszont elrejtheti őket, ha letiltja az érzékeny értesítéseket az eszköz beállításaiban.</string>
     <string name="keep_screen_on">Tartsa bekapcsolva a képernyőt felvétel közben</string>
     <string name="recording_too_short">A felvétel túl rövid volt a felvételhez!</string>
+    <string name="confirm_recording_folder">A felvételek mentéséhez a mappa megerősítése szükséges. A folytatáshoz nyomja meg az OK gombot.</string>
 </resources>
