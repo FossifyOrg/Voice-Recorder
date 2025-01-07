@@ -73,7 +73,6 @@ class RenameRecordingDialog(
     }
 
     private fun renameRecording(recording: Recording, newTitle: String) {
-        // TODO: IllegalStateException: File already exists
         val oldExtension = recording.title.getFilenameExtension()
         val newDisplayName = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
 

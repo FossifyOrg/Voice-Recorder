@@ -6,13 +6,7 @@ import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
 import org.fossify.commons.extensions.deleteFile
-import org.fossify.commons.extensions.getDoesFilePathExist
-import org.fossify.commons.extensions.getFilenameExtension
-import org.fossify.commons.extensions.getParentPath
 import org.fossify.commons.extensions.hasProperStoredFirstParentUri
-import org.fossify.commons.extensions.renameDocumentSdk30
-import org.fossify.commons.extensions.renameFile
-import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.toFileDirItem
 import org.fossify.commons.helpers.DAY_SECONDS
 import org.fossify.commons.helpers.MONTH_SECONDS
@@ -20,9 +14,7 @@ import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
 import org.fossify.commons.models.FileDirItem
 import org.fossify.voicerecorder.dialogs.StoragePermissionDialog
-import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
-import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 fun BaseSimpleActivity.ensureStoragePermission(callback: (result: Boolean) -> Unit) {
@@ -137,25 +129,12 @@ private fun BaseSimpleActivity.moveRecordingsSAF(
         val destinationParentDocumentUri =
             createDocumentUriUsingFirstParentTreeUri(destinationParent)
         recordings.forEach { recording ->
-            if (getDoesFilePathExist(File(destinationParent, recording.title).absolutePath)) {
-                renameRecording(recording, recording.title) { success ->
-                    if (success) {
-                        DocumentsContract.moveDocument(
-                            contentResolver,
-                            recording.path.toUri(),
-                            sourceParentDocumentUri,
-                            destinationParentDocumentUri
-                        )
-                    }
-                }
-            } else {
-                DocumentsContract.moveDocument(
-                    contentResolver,
-                    recording.path.toUri(),
-                    sourceParentDocumentUri,
-                    destinationParentDocumentUri
-                )
-            }
+            DocumentsContract.moveDocument(
+                contentResolver,
+                recording.path.toUri(),
+                sourceParentDocumentUri,
+                destinationParentDocumentUri
+            )
         }
 
         callback(true)
@@ -204,34 +183,4 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
             }
         }
     }
-}
-
-private fun BaseSimpleActivity.renameRecording(
-    recording: Recording,
-    newTitle: String,
-    callback: (success: Boolean) -> Unit
-) {
-    val oldExtension = recording.title.getFilenameExtension()
-    val newDisplayName = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
-
-    try {
-        val path = "${config.saveRecordingsFolder}/${recording.title}"
-        val newPath = "${path.getParentPath()}/$newDisplayName"
-        handleSAFDialogSdk30(path) {
-            val success = renameDocumentSdk30(path, newPath)
-            if (success) {
-                EventBus.getDefault().post(Events.RecordingCompleted())
-            }
-        }
-    } catch (e: Exception) {
-        showErrorToast(e)
-    }
-}
-
-private fun BaseSimpleActivity.renameRecordingLegacy(recording: Recording, newTitle: String) {
-    val oldExtension = recording.title.getFilenameExtension()
-    val oldPath = recording.path
-    val newFilename = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
-    val newPath = File(oldPath.getParentPath(), newFilename).absolutePath
-    renameFile(oldPath, newPath, false)
 }
