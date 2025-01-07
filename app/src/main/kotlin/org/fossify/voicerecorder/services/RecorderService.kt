@@ -157,9 +157,14 @@ class RecorderService : Service() {
                     scanRecording()
                     EventBus.getDefault().post(Events.RecordingCompleted())
                 }
-            } catch (e: RuntimeException) {
+            } catch (
+                @Suppress(
+                    "TooGenericExceptionCaught",
+                    "SwallowedException"
+                ) e: RuntimeException
+            ) {
                 toast(R.string.recording_too_short)
-            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            } catch (e: Exception) {
                 showErrorToast(e)
                 e.printStackTrace()
             }
