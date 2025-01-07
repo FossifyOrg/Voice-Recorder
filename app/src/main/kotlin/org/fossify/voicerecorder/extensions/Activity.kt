@@ -32,7 +32,8 @@ fun BaseSimpleActivity.launchFilePickerDialog(callback: (success: Boolean) -> Un
         activity = this,
         currPath = config.saveRecordingsFolder,
         pickFile = false,
-        showFAB = true
+        showFAB = true,
+        showRationale = false
     ) { path ->
         handleSAFDialog(path) { grantedSAF ->
             if (!grantedSAF) {
@@ -40,7 +41,7 @@ fun BaseSimpleActivity.launchFilePickerDialog(callback: (success: Boolean) -> Un
                 return@handleSAFDialog
             }
 
-            handleSAFDialogSdk30(path) { grantedSAF30 ->
+            handleSAFDialogSdk30(path, showRationale = false) { grantedSAF30 ->
                 if (!grantedSAF30) {
                     callback(false)
                     return@handleSAFDialogSdk30
