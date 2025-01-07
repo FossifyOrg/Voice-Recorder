@@ -30,8 +30,9 @@ import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.adapters.ViewPagerAdapter
 import org.fossify.voicerecorder.databinding.ActivityMainBinding
-import org.fossify.voicerecorder.extensions.checkRecycleBinItems
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
+import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -65,7 +66,7 @@ class MainActivity : SimpleActivity() {
         }
 
         if (savedInstanceState == null) {
-            checkRecycleBinItems()
+            deleteExpiredTrashedRecordings()
         }
 
         handlePermission(PERMISSION_RECORD_AUDIO) {
@@ -172,12 +173,20 @@ class MainActivity : SimpleActivity() {
 
     private fun tryInitVoiceRecorder() {
         if (isRPlus()) {
-            setupViewPager()
+            ensureStoragePermission { granted ->
+                if (granted) {
+                    setupViewPager()
+                } else {
+                    toast(org.fossify.commons.R.string.no_storage_permissions)
+                    finish()
+                }
+            }
         } else {
             handlePermission(PERMISSION_WRITE_STORAGE) {
                 if (it) {
                     setupViewPager()
                 } else {
+                    toast(org.fossify.commons.R.string.no_storage_permissions)
                     finish()
                 }
             }

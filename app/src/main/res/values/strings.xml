@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Voice Recorder</string>
+    <string name="confirm_recording_folder">You must confirm the folder where you want to save your recordings. Please press "OK" to continue.</string>
     <string name="recording_saved_successfully">Recording saved successfully</string>
     <string name="recording_too_short">Recording was too short to record!</string>
     <string name="recording">Recording</string>

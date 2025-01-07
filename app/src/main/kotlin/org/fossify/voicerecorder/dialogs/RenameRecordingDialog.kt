@@ -1,7 +1,5 @@
 package org.fossify.voicerecorder.dialogs
 
-import android.content.ContentValues
-import android.provider.MediaStore.Audio.Media
 import androidx.appcompat.app.AlertDialog
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.getAlertDialogBuilder
@@ -19,7 +17,6 @@ import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
 import org.fossify.voicerecorder.databinding.DialogRenameRecordingBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
 import org.greenrobot.eventbus.EventBus
@@ -60,9 +57,9 @@ class RenameRecordingDialog(
 
                         ensureBackgroundThread {
                             if (isRPlus()) {
-                                updateMediaStoreTitle(recording, newTitle)
+                                renameRecording(recording, newTitle)
                             } else {
-                                updateLegacyFilename(recording, newTitle)
+                                renameRecordingLegacy(recording, newTitle)
                             }
 
                             activity.runOnUiThread {
@@ -75,40 +72,26 @@ class RenameRecordingDialog(
             }
     }
 
-    private fun updateMediaStoreTitle(recording: Recording, newTitle: String) {
+    private fun renameRecording(recording: Recording, newTitle: String) {
+        // TODO: IllegalStateException: File already exists
         val oldExtension = recording.title.getFilenameExtension()
         val newDisplayName = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"
 
-        val values = ContentValues().apply {
-            put(Media.TITLE, newTitle.substringAfterLast('.'))
-            put(Media.DISPLAY_NAME, newDisplayName)
-        }
-
-        // if the old way of renaming fails, try the new SDK 30 one on Android 11+
         try {
-            activity.contentResolver.update(
-                getAudioFileContentUri(recording.id.toLong()),
-                values,
-                null,
-                null
-            )
-        } catch (e: Exception) {
-            try {
-                val path = "${activity.config.saveRecordingsFolder}/${recording.title}"
-                val newPath = "${path.getParentPath()}/$newDisplayName"
-                activity.handleSAFDialogSdk30(path) {
-                    val success = activity.renameDocumentSdk30(path, newPath)
-                    if (success) {
-                        EventBus.getDefault().post(Events.RecordingCompleted())
-                    }
+            val path = "${activity.config.saveRecordingsFolder}/${recording.title}"
+            val newPath = "${path.getParentPath()}/$newDisplayName"
+            activity.handleSAFDialogSdk30(path) {
+                val success = activity.renameDocumentSdk30(path, newPath)
+                if (success) {
+                    EventBus.getDefault().post(Events.RecordingCompleted())
                 }
-            } catch (e: Exception) {
-                activity.showErrorToast(e)
             }
+        } catch (e: Exception) {
+            activity.showErrorToast(e)
         }
     }
 
-    private fun updateLegacyFilename(recording: Recording, newTitle: String) {
+    private fun renameRecordingLegacy(recording: Recording, newTitle: String) {
         val oldExtension = recording.title.getFilenameExtension()
         val oldPath = recording.path
         val newFilename = "${newTitle.removeSuffix(".$oldExtension")}.$oldExtension"

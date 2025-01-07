@@ -20,8 +20,10 @@ import org.fossify.commons.extensions.getFormattedDuration
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.openNotificationSettings
+import org.fossify.commons.extensions.toast
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setDebouncedClickListener
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
@@ -74,17 +76,24 @@ class RecorderFragment(
 
         updateRecordingDuration(0)
         binding.toggleRecordingButton.setDebouncedClickListener {
-            (context as? BaseSimpleActivity)?.handleNotificationPermission { granted ->
-                if (granted) {
-                    toggleRecording()
-                } else {
-                    PermissionRequiredDialog(
-                        activity = context as BaseSimpleActivity,
-                        textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
-                        positiveActionCallback = {
-                            (context as BaseSimpleActivity).openNotificationSettings()
+            val activity = context as? BaseSimpleActivity
+            activity?.ensureStoragePermission {
+                if (it) {
+                    activity.handleNotificationPermission { granted ->
+                        if (granted) {
+                            toggleRecording()
+                        } else {
+                            PermissionRequiredDialog(
+                                activity = context as BaseSimpleActivity,
+                                textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
+                                positiveActionCallback = {
+                                    (context as BaseSimpleActivity).openNotificationSettings()
+                                }
+                            )
                         }
-                    )
+                    }
+                } else {
+                    activity.toast(org.fossify.commons.R.string.no_storage_permissions)
                 }
             }
         }

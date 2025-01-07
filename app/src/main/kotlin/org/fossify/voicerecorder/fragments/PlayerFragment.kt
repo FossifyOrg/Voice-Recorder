@@ -5,13 +5,12 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.provider.DocumentsContract
 import android.util.AttributeSet
 import android.widget.SeekBar
+import androidx.core.net.toUri
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.areSystemAnimationsEnabled
 import org.fossify.commons.extensions.beVisibleIf
@@ -30,7 +29,6 @@ import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.helpers.getAudioFileContentUri
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
@@ -246,20 +244,7 @@ class PlayerFragment(
             reset()
 
             try {
-                val uri = Uri.parse(recording.path)
-                when {
-                    DocumentsContract.isDocumentUri(context, uri) -> {
-                        setDataSource(context, uri)
-                    }
-
-                    recording.path.isEmpty() -> {
-                        setDataSource(context, getAudioFileContentUri(recording.id.toLong()))
-                    }
-
-                    else -> {
-                        setDataSource(recording.path)
-                    }
-                }
+                setDataSource(context, recording.path.toUri())
             } catch (e: Exception) {
                 context?.showErrorToast(e)
                 return
