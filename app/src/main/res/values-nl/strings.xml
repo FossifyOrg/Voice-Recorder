@@ -29,4 +29,6 @@
     <string name="faq_1_text">Niet helemaal. Terwijl u het apparaat gebruikt is het niet langer mogelijk om meldingen van apps zoals deze volledig te verbergen. Met de juiste instelling aangevinkt zal de app ze proberen ze te verbergen. U kunt ze wel verbergen op het vergrendelscherm, als u het weergeven van gevoelige meldingen uitschakelt in de instellingen van uw apparaat.</string>
     <string name="bitrate">Bitrate</string>
     <string name="audio_source_camcorder">Camera</string>
+    <string name="recording_too_short">De opname was te kort!</string>
+    <string name="keep_screen_on">Scherm ingeschakeld houden tijdens het opnemen</string>
 </resources>

@@ -29,4 +29,6 @@
     <string name="faq_1_text">Naja, das kommt darauf an. Während der Nutzung des Geräts ist es nicht mehr möglich, die Benachrichtigungen von Apps wie dieser vollständig auszublenden. Wenn du die Option in den Einstellungen aktivierst, wird die App ihr Bestes tun, es auszublenden. Du kannst es jedoch auf dem Sperrbildschirm ausblenden, indem du die Anzeige vertraulicher Benachrichtigungen in den Geräteeinstellungen verbietest.</string>
     <string name="player">Player</string>
     <string name="bitrate">Bitrate</string>
+    <string name="keep_screen_on">Den Bildschirm während der Aufnahme eingeschaltet lassen</string>
+    <string name="recording_too_short">Die Aufnahme war zu kurz, um sie aufzunehmen!</string>
 </resources>

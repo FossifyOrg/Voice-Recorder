@@ -29,4 +29,6 @@
     <string name="audio_source_voice_performance">ahotsaren interpretazioa</string>
     <string name="faq_1_title">Ezkutatu al dezaket jakinarazpenen ikonoa grabatzean?</string>
     <string name="faq_1_text">Beno, zenbait kasutan bai. Zure gailua erabiltzen duzun bitartean ez da posible horrelako aplikazioen jakinarazpenak guztiz ezkutatu. Ezarpen-elementu egokia markatuz gero, aplikazioak ahal duen guztia egingo du ezkutatzeko. Hala ere, blokeo-pantailan ezkutatu dezakezu, zure gailuaren ezarpenetan jakinarazpen sentikorren bistaratzea desgaitzen baduzu.</string>
+    <string name="keep_screen_on">Mantendu pantaila piztuta grabaketak dirauen bitartean</string>
+    <string name="recording_too_short">Grabaketa motzegia da!</string>
 </resources>

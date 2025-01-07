@@ -30,4 +30,6 @@
     <string name="faq_1_text">Bhuel, braitheann sé. Cé go n-úsáideann tú do ghléas ní féidir fógraí aipeanna mar seo a cheilt go hiomlán a thuilleadh. Má dhéanann tú seiceáil ar an mír socruithe cuí, déanfaidh an app a dhícheall é a cheilt. Is féidir leat é a cheilt ar an scáileán glas, áfach, má dhíchumasaíonn tú taispeáint fógraí íogaire i socruithe do ghléis.</string>
     <string name="recording_saved_successfully">D\'éirigh leis an taifeadadh a shábháil</string>
     <string name="no_recordings_found">Níl aon taifeadtaí cruthaithe ag an aip seo\nfuarthas</string>
+    <string name="keep_screen_on">Coinnigh an scáileán ar siúl le linn taifeadta</string>
+    <string name="recording_too_short">Bhí an taifeadadh ró-ghearr le taifeadadh!</string>
 </resources>
