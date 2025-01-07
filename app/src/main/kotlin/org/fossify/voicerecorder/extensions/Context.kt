@@ -9,12 +9,15 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
+import android.os.Environment
 import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.extensions.getDocumentSdk30
 import org.fossify.commons.extensions.getDuration
 import org.fossify.commons.extensions.internalStoragePath
 import org.fossify.commons.extensions.isAudioFast
+import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isRPlus
+import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.Config
 import org.fossify.voicerecorder.helpers.DEFAULT_RECORDINGS_FOLDER
 import org.fossify.voicerecorder.helpers.IS_RECORDING
@@ -65,7 +68,16 @@ fun Context.getOrCreateTrashFolder(): String {
 }
 
 fun Context.getDefaultRecordingsFolder(): String {
-    return "$internalStoragePath/$DEFAULT_RECORDINGS_FOLDER"
+    val defaultPath = getDefaultRecordingsRelativePath()
+    return "$internalStoragePath/$defaultPath"
+}
+
+fun Context.getDefaultRecordingsRelativePath(): String {
+    return if (isQPlus()) {
+        "${Environment.DIRECTORY_MUSIC}/$DEFAULT_RECORDINGS_FOLDER"
+    } else {
+        getString(R.string.app_name)
+    }
 }
 
 fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
