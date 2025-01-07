@@ -159,8 +159,9 @@ class RecorderService : Service() {
                 }
             } catch (e: RuntimeException) {
                 toast(R.string.recording_too_short)
-            } catch (e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
                 showErrorToast(e)
+                e.printStackTrace()
             }
         }
         recorder = null

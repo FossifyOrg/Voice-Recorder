@@ -146,7 +146,7 @@ private fun Context.getLegacyRecordings(trashed: Boolean = false): ArrayList<Rec
         val id = it.hashCode()
         val title = it.name
         val path = it.absolutePath
-        val timestamp = (it.lastModified() / 1000).toInt()
+        val timestamp = it.lastModified()
         val duration = getDuration(it.absolutePath) ?: 0
         val size = it.length().toInt()
         recordings.add(
@@ -167,7 +167,7 @@ private fun Context.readRecordingFromFile(file: DocumentFile): Recording {
     val id = file.hashCode()
     val title = file.name!!
     val path = file.uri.toString()
-    val timestamp = (file.lastModified() / 1000).toInt()
+    val timestamp = file.lastModified()
     val duration = getDurationFromUri(file.uri)
     val size = file.length().toInt()
     return Recording(
