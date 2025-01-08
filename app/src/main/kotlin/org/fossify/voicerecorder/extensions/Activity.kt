@@ -153,7 +153,7 @@ private fun BaseSimpleActivity.moveRecordingsSAF(
                     sourceParentDocumentUri,
                     destinationParentDocumentUri
                 )
-            } catch (e: IllegalStateException) {
+            } catch (@Suppress("SwallowedException") e: IllegalStateException) {
                 val sourceUri = recording.path.toUri()
                 contentResolver.openInputStream(sourceUri)?.use { inputStream ->
                     val targetPath = File(destinationParent, recording.title).absolutePath

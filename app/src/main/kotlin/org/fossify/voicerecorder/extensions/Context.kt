@@ -231,7 +231,7 @@ fun Context.createDocumentFile(path: String): Uri? {
             path.getMimeType(),
             path.getFilenameFromPath()
         )
-    } catch (e: IllegalStateException) {
+    } catch (@Suppress("SwallowedException") e: IllegalStateException) {
         null
     }
 }

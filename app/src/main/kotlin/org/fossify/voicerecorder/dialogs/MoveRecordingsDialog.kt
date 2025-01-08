@@ -5,6 +5,7 @@ import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.setupDialogStuff
+import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
@@ -51,7 +52,7 @@ class MoveRecordingsDialog(
                                 getButton(AlertDialog.BUTTON_NEGATIVE)
                             ).forEach { button ->
                                 button.isEnabled = false
-                                button.alpha = 0.6f
+                                button.alpha = MEDIUM_ALPHA
                             }
 
                             moveAllRecordings()
