@@ -30,4 +30,5 @@
     <string name="player">播放器</string>
     <string name="recording_too_short">錄音時間太短，無法錄製！</string>
     <string name="keep_screen_on">錄製時維持螢幕開啟</string>
+    <string name="confirm_recording_folder">您必須確認要儲存錄音的資料夾。請按確定繼續。</string>
 </resources>
