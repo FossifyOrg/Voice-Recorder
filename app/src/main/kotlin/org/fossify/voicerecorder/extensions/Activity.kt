@@ -5,7 +5,6 @@ import androidx.core.net.toUri
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
-import org.fossify.commons.extensions.createSAFFileSdk30
 import org.fossify.commons.extensions.deleteFile
 import org.fossify.commons.extensions.hasProperStoredFirstParentUri
 import org.fossify.commons.extensions.toFileDirItem
@@ -140,12 +139,24 @@ private fun BaseSimpleActivity.moveRecordingsSAF(
         val destinationParentDocumentUri =
             createDocumentUriUsingFirstParentTreeUri(destinationParent)
         recordings.forEach { recording ->
-            DocumentsContract.moveDocument(
-                contentResolver,
-                recording.path.toUri(),
-                sourceParentDocumentUri,
-                destinationParentDocumentUri
-            )
+            try {
+                DocumentsContract.moveDocument(
+                    contentResolver,
+                    recording.path.toUri(),
+                    sourceParentDocumentUri,
+                    destinationParentDocumentUri
+                )
+            } catch (e: IllegalStateException) {
+                val sourceUri = recording.path.toUri()
+                contentResolver.openInputStream(sourceUri)?.use { inputStream ->
+                    val targetPath = File(destinationParent, recording.title).absolutePath
+                    val targetUri = createDocumentFile(targetPath) ?: return@forEach
+                    contentResolver.openOutputStream(targetUri)?.use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
+                    DocumentsContract.deleteDocument(contentResolver, sourceUri)
+                }
+            }
         }
 
         callback(true)

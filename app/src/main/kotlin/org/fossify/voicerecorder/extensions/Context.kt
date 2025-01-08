@@ -10,9 +10,17 @@ import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Environment
+import android.provider.DocumentsContract
 import androidx.documentfile.provider.DocumentFile
+import org.fossify.commons.extensions.createFirstParentTreeUri
+import org.fossify.commons.extensions.createSAFDirectorySdk30
 import org.fossify.commons.extensions.getDocumentSdk30
+import org.fossify.commons.extensions.getDoesFilePathExistSdk30
 import org.fossify.commons.extensions.getDuration
+import org.fossify.commons.extensions.getFilenameFromPath
+import org.fossify.commons.extensions.getMimeType
+import org.fossify.commons.extensions.getParentPath
+import org.fossify.commons.extensions.getSAFDocumentId
 import org.fossify.commons.extensions.internalStoragePath
 import org.fossify.commons.extensions.isAudioFast
 import org.fossify.commons.helpers.isQPlus
@@ -188,5 +196,27 @@ private fun Context.getDurationFromUri(uri: Uri): Long {
         (time.toLong() / 1000.toDouble()).roundToLong()
     } catch (e: Exception) {
         0L
+    }
+}
+
+// Based on common's `Context.createSAFFileSdk30` extension
+fun Context.createDocumentFile(path: String): Uri? {
+    return try {
+        val treeUri = createFirstParentTreeUri(path)
+        val parentPath = path.getParentPath()
+        if (!getDoesFilePathExistSdk30(parentPath)) {
+            createSAFDirectorySdk30(parentPath)
+        }
+
+        val documentId = getSAFDocumentId(parentPath)
+        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+        DocumentsContract.createDocument(
+            contentResolver,
+            parentUri,
+            path.getMimeType(),
+            path.getFilenameFromPath()
+        )
+    } catch (e: IllegalStateException) {
+        null
     }
 }
