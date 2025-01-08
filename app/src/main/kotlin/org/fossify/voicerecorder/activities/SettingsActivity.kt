@@ -31,7 +31,7 @@ import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
 import org.fossify.voicerecorder.extensions.getAllRecordings
-import org.fossify.voicerecorder.extensions.launchFilePickerDialog
+import org.fossify.voicerecorder.extensions.launchFolderPicker
 import org.fossify.voicerecorder.helpers.BITRATES
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
@@ -157,8 +157,12 @@ class SettingsActivity : SimpleActivity() {
             addLockedLabelIfNeeded(R.string.save_recordings_in)
         binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
         binding.settingsSaveRecordingsHolder.setOnClickListener {
-            launchFilePickerDialog {
-                binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
+            val currentFolder = config.saveRecordingsFolder
+            launchFolderPicker(currentFolder) { newFolder ->
+                if (!newFolder.isNullOrEmpty()) {
+                    config.saveRecordingsFolder = newFolder
+                    binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
+                }
             }
         }
     }

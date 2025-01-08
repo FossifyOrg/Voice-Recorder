@@ -5,6 +5,7 @@ import androidx.core.net.toUri
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
+import org.fossify.commons.extensions.createSAFFileSdk30
 import org.fossify.commons.extensions.deleteFile
 import org.fossify.commons.extensions.hasProperStoredFirstParentUri
 import org.fossify.commons.extensions.toFileDirItem
@@ -20,35 +21,44 @@ import java.io.File
 fun BaseSimpleActivity.ensureStoragePermission(callback: (result: Boolean) -> Unit) {
     if (isRPlus() && !hasProperStoredFirstParentUri(config.saveRecordingsFolder)) {
         StoragePermissionDialog(this) {
-            launchFilePickerDialog(callback)
+            launchFolderPicker(config.saveRecordingsFolder) { newPath ->
+                if (!newPath.isNullOrEmpty()) {
+                    config.saveRecordingsFolder = newPath
+                    callback(true)
+                } else {
+                    callback(false)
+                }
+            }
         }
     } else {
         callback(true)
     }
 }
 
-fun BaseSimpleActivity.launchFilePickerDialog(callback: (success: Boolean) -> Unit) {
+fun BaseSimpleActivity.launchFolderPicker(
+    currentPath: String,
+    callback: (newPath: String?) -> Unit
+) {
     FilePickerDialog(
         activity = this,
-        currPath = config.saveRecordingsFolder,
+        currPath = currentPath,
         pickFile = false,
         showFAB = true,
         showRationale = false
     ) { path ->
         handleSAFDialog(path) { grantedSAF ->
             if (!grantedSAF) {
-                callback(false)
+                callback(null)
                 return@handleSAFDialog
             }
 
             handleSAFDialogSdk30(path, showRationale = false) { grantedSAF30 ->
                 if (!grantedSAF30) {
-                    callback(false)
+                    callback(null)
                     return@handleSAFDialogSdk30
                 }
 
-                config.saveRecordingsFolder = path
-                callback(true)
+                callback(path)
             }
         }
     }
