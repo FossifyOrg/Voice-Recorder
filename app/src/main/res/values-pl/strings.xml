@@ -32,4 +32,6 @@
     <string name="faq_1_text">To zależy. Podczas korzystania z urządzenia nie da się już całkowicie ukryć powiadomień aplikacji takich jak ta. Jeśli zaznaczysz odpowiednie ustawienie, aplikacja spróbuje to zrobić. Możesz jednak ukryć ikonę powiadomienia na ekranie blokady w ustawieniach bezpieczeństwa z ustawień urządzenia.</string>
     <string name="recording_too_short">Nagranie było za krótkie, aby je zapisać!</string>
     <string name="confirm_recording_folder">Musisz potwierdzić folder, w którym chcesz zapisywać swoje nagrania. Naciśnij OK, aby kontynuować.</string>
+    <string name="move_recordings_to_new_folder_desc">Masz istniejące nagrania. Czy przenieść je do nowego folderu?</string>
+    <string name="move_recordings">Przenieś nagrania</string>
 </resources>
