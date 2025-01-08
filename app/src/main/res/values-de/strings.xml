@@ -31,4 +31,5 @@
     <string name="bitrate">Bitrate</string>
     <string name="keep_screen_on">Den Bildschirm während der Aufnahme eingeschaltet lassen</string>
     <string name="recording_too_short">Die Aufnahme war zu kurz, um sie aufzunehmen!</string>
+    <string name="confirm_recording_folder">Du musst den Ordner bestätigen, in dem du deine Aufnahmen speichern möchtest. Bitte auf OK drücken, um fortzufahren.</string>
 </resources>
