@@ -88,6 +88,21 @@ fun Context.getDefaultRecordingsRelativePath(): String {
     }
 }
 
+fun Context.hasRecordings(): Boolean {
+    val recordingsFolder = config.saveRecordingsFolder
+    return if (isRPlus()) {
+        getDocumentSdk30(recordingsFolder)
+            ?.listFiles()
+            ?.any { it.isAudioRecording() }
+            ?: false
+    } else {
+        File(recordingsFolder)
+            .listFiles()
+            ?.any { it.isAudioFast() }
+            ?: false
+    }
+}
+
 fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
     return if (isRPlus()) {
         val recordings = arrayListOf<Recording>()

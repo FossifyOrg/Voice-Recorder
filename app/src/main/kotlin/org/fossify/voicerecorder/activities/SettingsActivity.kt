@@ -28,9 +28,11 @@ import org.fossify.commons.helpers.sumByInt
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
+import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
 import org.fossify.voicerecorder.extensions.getAllRecordings
+import org.fossify.voicerecorder.extensions.hasRecordings
 import org.fossify.voicerecorder.extensions.launchFolderPicker
 import org.fossify.voicerecorder.helpers.BITRATES
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
@@ -160,8 +162,26 @@ class SettingsActivity : SimpleActivity() {
             val currentFolder = config.saveRecordingsFolder
             launchFolderPicker(currentFolder) { newFolder ->
                 if (!newFolder.isNullOrEmpty()) {
-                    config.saveRecordingsFolder = newFolder
-                    binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
+                    ensureBackgroundThread {
+                        val hasRecordings = hasRecordings()
+                        runOnUiThread {
+                            if (newFolder != currentFolder && hasRecordings) {
+                                MoveRecordingsDialog(
+                                    activity = this,
+                                    previousFolder = currentFolder,
+                                    newFolder = newFolder
+                                ) {
+                                    config.saveRecordingsFolder = newFolder
+                                    binding.settingsSaveRecordings.text =
+                                        humanizePath(config.saveRecordingsFolder)
+                                }
+                            } else {
+                                config.saveRecordingsFolder = newFolder
+                                binding.settingsSaveRecordings.text =
+                                    humanizePath(config.saveRecordingsFolder)
+                            }
+                        }
+                    }
                 }
             }
         }

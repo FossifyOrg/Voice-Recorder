@@ -2,6 +2,8 @@
 <resources>
     <string name="app_launcher_name">Voice Recorder</string>
     <string name="confirm_recording_folder">You must confirm the folder where you want to save your recordings. Please press "OK" to continue.</string>
+    <string name="move_recordings">Move recordings</string>
+    <string name="move_recordings_to_new_folder_desc">You have existing recordings. Do you want to move them to your new folder?</string>
     <string name="recording_saved_successfully">Recording saved successfully</string>
     <string name="recording_too_short">Recording was too short to record!</string>
     <string name="recording">Recording</string>
