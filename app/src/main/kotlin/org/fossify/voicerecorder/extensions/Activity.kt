@@ -5,7 +5,9 @@ import androidx.core.net.toUri
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
+import org.fossify.commons.extensions.createSAFDirectorySdk30
 import org.fossify.commons.extensions.deleteFile
+import org.fossify.commons.extensions.getDoesFilePathExistSdk30
 import org.fossify.commons.extensions.hasProperStoredFirstParentUri
 import org.fossify.commons.extensions.toFileDirItem
 import org.fossify.commons.helpers.DAY_SECONDS
@@ -138,6 +140,11 @@ private fun BaseSimpleActivity.moveRecordingsSAF(
         val sourceParentDocumentUri = createDocumentUriUsingFirstParentTreeUri(sourceParent)
         val destinationParentDocumentUri =
             createDocumentUriUsingFirstParentTreeUri(destinationParent)
+
+        if (!getDoesFilePathExistSdk30(destinationParent)) {
+            createSAFDirectorySdk30(destinationParent)
+        }
+
         recordings.forEach { recording ->
             try {
                 DocumentsContract.moveDocument(
