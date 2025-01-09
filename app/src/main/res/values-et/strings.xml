@@ -32,4 +32,6 @@
     <string name="recording_too_short">Salvestise kestus oli liiga napp, et seda jäädvustada!</string>
     <string name="keep_screen_on">Salvestuse ajal hoia ekraan sisselülitatuna</string>
     <string name="confirm_recording_folder">Sa pead valima kusta, kuhu soovid salvestusi talletada. Jätkamiseks palun vajuta „Sobib“ nuppu.</string>
+    <string name="move_recordings_to_new_folder_desc">Sul on olemasolevaid salvestusi. Kas sa soovid neid oma uude kausta tõsta?</string>
+    <string name="move_recordings">Salvestuste teisaldamine</string>
 </resources>
