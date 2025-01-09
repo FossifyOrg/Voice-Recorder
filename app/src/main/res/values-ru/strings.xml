@@ -34,4 +34,6 @@
     <string name="keep_screen_on">Не отключать экран во время записи</string>
     <string name="recording_too_short">Запись слишком короткая!</string>
     <string name="confirm_recording_folder">Необходимо подтвердить папку, в которую вы хотите сохранять свои записи. Нажмите \"OK\" для продолжения.</string>
+    <string name="move_recordings">Перемещение записей</string>
+    <string name="move_recordings_to_new_folder_desc">У вас есть записи. Переместить их в новую папку?</string>
 </resources>
