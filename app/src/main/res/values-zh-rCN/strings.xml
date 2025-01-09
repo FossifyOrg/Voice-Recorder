@@ -31,4 +31,6 @@
     <string name="keep_screen_on">录制时保持屏幕开启</string>
     <string name="recording_too_short">录音时间太短无法录制！</string>
     <string name="confirm_recording_folder">您必须确认要保存录制的文件夹。请按“确定”继续。</string>
+    <string name="move_recordings">移动录音</string>
+    <string name="move_recordings_to_new_folder_desc">您有现有的录音。是否要将它们移动到新文件夹？</string>
 </resources>
