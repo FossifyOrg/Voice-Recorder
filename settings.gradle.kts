@@ -13,4 +13,5 @@ dependencyResolutionManagement {
         maven { setUrl("https://jitpack.io") }
     }
 }
+rootProject.name = "Voice-Recorder"
 include(":app")
