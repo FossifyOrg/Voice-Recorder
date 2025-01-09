@@ -25,6 +25,7 @@ import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setDebouncedClickListener
+import org.fossify.voicerecorder.extensions.setKeepScreenAwake
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
 import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
@@ -180,7 +181,7 @@ class RecorderFragment(
         Intent(context, RecorderService::class.java).apply {
             context.stopService(this)
         }
-        context.getActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        context.getActivity().setKeepScreenAwake(false)
     }
 
     private fun getPauseBlinkTask() = object : TimerTask() {
@@ -209,7 +210,7 @@ class RecorderFragment(
         if (status == RECORDING_RUNNING) {
             binding.togglePauseButton.alpha = 1f
             if (context.config.keepScreenOn) {
-                context.getActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                context.getActivity().setKeepScreenAwake(true)
             }
         }
     }

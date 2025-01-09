@@ -1,6 +1,8 @@
 package org.fossify.voicerecorder.extensions
 
+import android.app.Activity
 import android.provider.DocumentsContract
+import android.view.WindowManager
 import androidx.core.net.toUri
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.dialogs.FilePickerDialog
@@ -18,6 +20,14 @@ import org.fossify.commons.models.FileDirItem
 import org.fossify.voicerecorder.dialogs.StoragePermissionDialog
 import org.fossify.voicerecorder.models.Recording
 import java.io.File
+
+fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
+    if (keepScreenOn) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    } else {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+}
 
 fun BaseSimpleActivity.ensureStoragePermission(callback: (result: Boolean) -> Unit) {
     if (isRPlus() && !hasProperStoredFirstParentUri(config.saveRecordingsFolder)) {
