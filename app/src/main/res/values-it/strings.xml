@@ -30,4 +30,9 @@
     <string name="faq_1_title">Posso nascondere la notifica durante la registrazione\?</string>
     <string name="faq_1_text">Dipende. Mentre usi il tuo dispositivo non è più possibile nascondere completamente le notifiche di app come questa. Se selezioni l\'impostazione appropriata, la app farà del suo meglio per nasconderla. Comunque, puoi nasconderla nella schermata di blocco, se disabiliti la visualizzazione di notifiche sensibili nelle impostazioni del tuo dispositivo.</string>
     <string name="bitrate">Bitrate</string>
+    <string name="move_recordings">Sposta registrazioni</string>
+    <string name="move_recordings_to_new_folder_desc">Ci sono già delle registrazioni. Vuoi spostarle nella tua nuova cartella?</string>
+    <string name="confirm_recording_folder">È necessario confermare la cartella dove vuoi salvare le tue registrazioni. Si prega di premere OK per continuare.</string>
+    <string name="recording_too_short">La registrazione era troppo corta per essere registrata!</string>
+    <string name="keep_screen_on">Mantieni lo schermo acceso durante la registrazione</string>
 </resources>
