@@ -1,0 +1,10 @@
+* Replaced checkboxes with switches
+* Removed support for Android 7 and older versions
+* Added button to cancel recording
+* Added option to keep screen on during recording
+* Fixed issue with delete recording button
+* Fixed issue with invalid button states
+* Fixed app not responding errors
+* Added option to move recordings when changing recordings folder
+* Other minor bug fixes and improvements
+* Added more translations
