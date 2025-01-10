@@ -22,7 +22,7 @@ class Config(context: Context) : BaseConfig(context) {
             .apply()
 
     var extension: Int
-        get() = prefs.getInt(EXTENSION, EXTENSION_MP3)
+        get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
         set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
 
     var audioSource: Int
