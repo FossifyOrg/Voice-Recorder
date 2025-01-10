@@ -56,7 +56,7 @@
         android:layout_width="@dimen/toggle_recording_button_size"
         android:layout_height="@dimen/toggle_recording_button_size"
         android:layout_marginBottom="@dimen/big_margin"
-        android:background="@drawable/circle_background"
+        android:background="@drawable/circle_button_background"
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/normal_margin"
