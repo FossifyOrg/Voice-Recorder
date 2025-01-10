@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="00:00" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cancel_recording_button"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toTopOf="@id/toggle_recording_button"
         tools:visibility="visible" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/toggle_recording_button"
         android:layout_width="@dimen/toggle_recording_button_size"
         android:layout_height="@dimen/toggle_recording_button_size"
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/save_recording_button"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
