@@ -1,5 +1,6 @@
 package org.fossify.voicerecorder.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,7 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
             val recordings = context.getAllRecordings(trashed)
                 .apply { sortByDescending { it.timestamp } }
 
-            post {
+            (context as? Activity)?.runOnUiThread {
                 onLoadingEnd(recordings)
             }
         }
