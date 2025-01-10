@@ -33,4 +33,6 @@
     <string name="keep_screen_on">Mantén la pantalla activada durant l\'enregistrament</string>
     <string name="recording_too_short">L\'enregistrament ha estat massa curt per a gravar!</string>
     <string name="confirm_recording_folder">Cal confirmar la carpeta on voleu desar les vostres gravacions. Premeu D\'acord per a continuar.</string>
+    <string name="move_recordings">Mou els enregistraments</string>
+    <string name="move_recordings_to_new_folder_desc">Teniu enregistraments existents. Voleu moure\'ls a la carpeta nova?</string>
 </resources>
