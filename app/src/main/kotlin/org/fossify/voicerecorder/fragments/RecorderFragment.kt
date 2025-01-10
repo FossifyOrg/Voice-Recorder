@@ -173,12 +173,7 @@ class RecorderFragment(
     }
 
     private fun cancelRecording() {
-        status = if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) {
-            RECORDING_STOPPED
-        } else {
-            RECORDING_RUNNING
-        }
-
+        status = RECORDING_STOPPED
         Intent(context, RecorderService::class.java).apply {
             action = CANCEL_RECORDING
             context.startService(this)
