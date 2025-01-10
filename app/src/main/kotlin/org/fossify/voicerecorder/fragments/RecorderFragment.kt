@@ -159,7 +159,6 @@ class RecorderFragment(
         Intent(context, RecorderService::class.java).apply {
             context.startService(this)
         }
-        binding.recorderVisualizer.recreate()
     }
 
     private fun cancelRecording() {
@@ -213,6 +212,8 @@ class RecorderFragment(
 
             else -> {
                 binding.toggleRecordingButton.alpha = 1f
+                binding.recorderVisualizer.recreate()
+                binding.recordingDuration.text = null
             }
         }
     }
