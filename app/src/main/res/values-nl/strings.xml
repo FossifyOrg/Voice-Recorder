@@ -31,4 +31,7 @@
     <string name="audio_source_camcorder">Camera</string>
     <string name="recording_too_short">De opname was te kort!</string>
     <string name="keep_screen_on">Scherm ingeschakeld houden tijdens het opnemen</string>
+    <string name="confirm_recording_folder">Bevestig de map waarin de opnames moeten worden opgeslagen en klik op OK om door te gaan.</string>
+    <string name="move_recordings">Opnames verplaatsen</string>
+    <string name="move_recordings_to_new_folder_desc">Wil je de bestaande opnames verplaatsen naar de nieuwe map?</string>
 </resources>

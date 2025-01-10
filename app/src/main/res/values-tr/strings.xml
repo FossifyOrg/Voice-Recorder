@@ -29,4 +29,9 @@
     <string name="audio_source_voice_performance">Ses performansı</string>
     <string name="faq_1_title">Kayıt sırasında bildirim simgesini gizleyebilir miyim\?</string>
     <string name="faq_1_text">Duruma göre değişir. Aygıtınızı kullanırken, bunun gibi uygulamaların bildirimlerini tamamen gizlemek artık mümkün değildir. Doğru ayar ögesini seçerseniz, uygulama onu gizlemek için elinden geleni yapacaktır. Aygıt ayarlarınızda hassas bildirimlerin görüntülenmesini devre dışı bırakırsanız, bunu kilit ekranında gizleyebilirsiniz.</string>
+    <string name="keep_screen_on">Kayıt yaparken ekranı açık tut</string>
+    <string name="recording_too_short">Kayıt, kaydedilmek için çok kısa!</string>
+    <string name="move_recordings">Kayıtları taşı</string>
+    <string name="confirm_recording_folder">Kayıtlarınızın kaydedileceği klasörü doğrulamanız gerekiyor. Devam etmek için lütfen TAMAM\'a dokunu.</string>
+    <string name="move_recordings_to_new_folder_desc">Kayıtlarınız mevcut. Yeni klasörünüze taşımak istiyor musunuz?</string>
 </resources>

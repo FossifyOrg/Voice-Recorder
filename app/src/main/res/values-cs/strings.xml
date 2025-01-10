@@ -32,4 +32,7 @@
     <string name="faq_1_text">No, přijde na to. Při používání vašeho zařízení již není možné plně skrýt oznámení o takových aplikacích. Pokud zkontrolujete příslušnou položku nastavení, aplikace udělá vše pro to, aby ji skryla. Můžete jí však skrýt na zamykací obrazovce, pokud v nastavení vašeho zařízení deaktivujete zobrazování citlivých oznámení.</string>
     <string name="keep_screen_on">Ponechat zapnutou obrazovku během nahrávání</string>
     <string name="recording_too_short">Nahrávka byla příliš krátká k uložení!</string>
+    <string name="move_recordings_to_new_folder_desc">Máte existující nahrávky. Chcete je přesunout do nové složky?</string>
+    <string name="move_recordings">Přesunout nahrávky</string>
+    <string name="confirm_recording_folder">Musíte potvrdit složku, do které chcete nahrávky uložit. Pro pokračování stiskněte tlačítko OK.</string>
 </resources>

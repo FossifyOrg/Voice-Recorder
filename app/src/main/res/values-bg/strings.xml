@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Диктофон</string>
-    <string name="recording_saved_successfully">Записът е запазен успешно</string>
+    <string name="recording_saved_successfully">Записът е запазен</string>
     <string name="recording">Записване</string>
-    <string name="no_recordings_found">Не са открити записи,
-\nсъздадени от това приложение</string>
-    <string name="no_recordings_in_folder_found">В избраната папка
-\nне са намерени записи</string>
-    <string name="paused">На Пауза</string>
-    <string name="recorder">Рекордер</string>
-    <string name="player">Плейър</string>
+    <string name="no_recordings_found">Не са открити записи,\nсъздадени от това приложение</string>
+    <string name="no_recordings_in_folder_found">В избраната папка\nне са открити записи</string>
+    <string name="paused">Пауза</string>
+    <string name="recorder">Диктофон</string>
+    <string name="player">Възпроизвеждане</string>
     <string name="delete_recordings_confirmation">Премахване на %s?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d запис</item>
-        <item quantity="other">%d записи</item>
+        <item quantity="other">%d записа</item>
     </plurals>
     <string name="try_hiding_notification">Опитайте да скриете известието за запис</string>
-    <string name="save_recordings_in">Запазете записите в</string>
-    <string name="audio_source">Аудио източник</string>
-    <string name="bitrate">Битрейт</string>
-    <string name="record_after_launch">Започнете да записвате автоматично след стартиране на приложението</string>
+    <string name="save_recordings_in">Местоположение на записите</string>
+    <string name="audio_source">Източник на звука</string>
+    <string name="bitrate">Скорост на данните</string>
+    <string name="record_after_launch">Автоматично записване при старт на приложението</string>
     <string name="audio_source_camcorder">Камера</string>
-    <string name="audio_source_default">Android по подразбиране</string>
+    <string name="audio_source_default">По подразбиране от системата</string>
     <string name="audio_source_unprocessed">Необработени</string>
     <string name="audio_source_microphone">Микрофон</string>
     <string name="audio_source_voice_recognition">Гласово разпознаване</string>
-    <string name="audio_source_voice_communication">Гласова комуникация</string>
+    <string name="audio_source_voice_communication">Гласова връзка</string>
     <string name="audio_source_voice_performance">Гласово изпълнение</string>
-    <string name="faq_1_title">Мога ли да скрия иконата за уведомяване по време на запис\?</string>
+    <string name="faq_1_title">Мога ли да скрия пиктограмата на известието по време на запис?</string>
     <string name="faq_1_text">Е, зависи. Докато използвате устройството си, вече не е възможно да скриете напълно известията на подобни приложения. Ако поставите отметка на съответния елемент от настройката, приложението ще направи всичко възможно да го скрие. Все пак можете да го скриете на заключения екран, ако забраните показването на чувствителни известия в настройките на устройството си.</string>
+    <string name="recording_too_short">Записът е твърде къс!</string>
+    <string name="keep_screen_on">Без згасяне на екрана по време на запис</string>
+    <string name="confirm_recording_folder">Трябва да потвърдите папката, в която да бъдат запазвани записите. За да продължите изберете Добре.</string>
 </resources>
