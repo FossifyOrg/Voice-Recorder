@@ -82,7 +82,7 @@ class RecorderFragment(
                 if (it) {
                     activity.handleNotificationPermission { granted ->
                         if (granted) {
-                            toggleRecording()
+                            cycleRecordingState()
                         } else {
                             PermissionRequiredDialog(
                                 activity = context as BaseSimpleActivity,
@@ -141,18 +141,23 @@ class RecorderFragment(
         )
     }
 
-    private fun toggleRecording() {
-        status = if (status == RECORDING_RUNNING) RECORDING_PAUSED else RECORDING_RUNNING
-        binding.toggleRecordingButton.setImageDrawable(getToggleButtonIcon())
+    private fun cycleRecordingState() {
+        when (status) {
+            RECORDING_PAUSED,
+            RECORDING_RUNNING -> {
+                Intent(context, RecorderService::class.java).apply {
+                    action = TOGGLE_PAUSE
+                    context.startService(this)
+                }
+            }
 
-        if (status == RECORDING_RUNNING) {
-            startRecording()
-        } else {
-            Intent(context, RecorderService::class.java).apply {
-                action = TOGGLE_PAUSE
-                context.startService(this)
+            else -> {
+                startRecording()
             }
         }
+
+        status = if (status == RECORDING_RUNNING) RECORDING_PAUSED else RECORDING_RUNNING
+        binding.toggleRecordingButton.setImageDrawable(getToggleButtonIcon())
     }
 
     private fun startRecording() {
