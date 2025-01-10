@@ -8,6 +8,7 @@ private const val PATH = "com.fossify.voicerecorder.action."
 const val GET_RECORDER_INFO = PATH + "GET_RECORDER_INFO"
 const val STOP_AMPLITUDE_UPDATE = PATH + "STOP_AMPLITUDE_UPDATE"
 const val TOGGLE_PAUSE = PATH + "TOGGLE_PAUSE"
+const val CANCEL_RECORDING = PATH + "CANCEL_RECORDING"
 
 const val EXTENSION_M4A = 0
 const val EXTENSION_MP3 = 1

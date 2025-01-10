@@ -11,6 +11,7 @@ import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.IBinder
+import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
 import org.fossify.commons.extensions.createSAFFileSdk30
@@ -29,6 +30,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.updateWidgets
+import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDER_RUNNING_NOTIF_ID
@@ -70,6 +72,7 @@ class RecorderService : Service() {
             GET_RECORDER_INFO -> broadcastRecorderInfo()
             STOP_AMPLITUDE_UPDATE -> amplitudeTimer.cancel()
             TOGGLE_PAUSE -> togglePause()
+            CANCEL_RECORDING -> cancelRecording()
             else -> startRecording()
         }
 
@@ -170,6 +173,31 @@ class RecorderService : Service() {
             }
         }
         recorder = null
+    }
+
+    private fun cancelRecording() {
+        durationTimer.cancel()
+        amplitudeTimer.cancel()
+        status = RECORDING_STOPPED
+
+        recorder?.apply {
+            try {
+                stop()
+                release()
+            } catch (ignored: Exception) {
+            }
+        }
+
+        recorder = null
+        if (isRPlus()) {
+            val recordingUri = createDocumentUriUsingFirstParentTreeUri(recordingFile)
+            DocumentsContract.deleteDocument(contentResolver, recordingUri)
+        } else {
+            File(recordingFile).delete()
+        }
+
+        EventBus.getDefault().post(Events.RecordingCompleted())
+        stopSelf()
     }
 
     private fun broadcastRecorderInfo() {

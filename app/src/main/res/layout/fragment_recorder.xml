@@ -34,11 +34,31 @@
         tools:text="00:00" />
 
     <ImageView
+        android:id="@+id/cancel_recording_button"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/cancel"
+        android:focusable="true"
+        android:padding="@dimen/normal_margin"
+        android:src="@drawable/ic_cancel_vector"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/toggle_recording_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/toggle_recording_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toggle_recording_button"
+        tools:visibility="visible" />
+
+    <ImageView
         android:id="@+id/toggle_recording_button"
         android:layout_width="@dimen/toggle_recording_button_size"
         android:layout_height="@dimen/toggle_recording_button_size"
         android:layout_marginBottom="@dimen/big_margin"
         android:background="@drawable/circle_background"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="@dimen/normal_margin"
         android:src="@drawable/ic_microphone_vector"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,13 +69,16 @@
         android:id="@+id/toggle_pause_button"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
-        android:layout_marginBottom="@dimen/big_margin"
-        android:background="@drawable/circle_background"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="@dimen/normal_margin"
-        android:src="@drawable/ic_pause_vector"
+        android:src="@drawable/ic_pause_recording_vector"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/toggle_recording_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toggle_recording_button" />
+        app:layout_constraintStart_toEndOf="@+id/toggle_recording_button"
+        app:layout_constraintTop_toTopOf="@id/toggle_recording_button"
+        tools:visibility="visible" />
 
 </org.fossify.voicerecorder.fragments.RecorderFragment>

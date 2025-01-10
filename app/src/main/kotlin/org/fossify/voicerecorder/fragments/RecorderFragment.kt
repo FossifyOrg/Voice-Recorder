@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.compose.extensions.getActivity
 import org.fossify.commons.dialogs.PermissionRequiredDialog
@@ -26,6 +25,7 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setDebouncedClickListener
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
+import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
 import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
@@ -99,7 +99,8 @@ class RecorderFragment(
             }
         }
 
-        binding.togglePauseButton.setOnClickListener {
+        binding.cancelRecordingButton.setDebouncedClickListener { cancelRecording() }
+        binding.togglePauseButton.setDebouncedClickListener {
             Intent(context, RecorderService::class.java).apply {
                 action = TOGGLE_PAUSE
                 context.startService(this)
@@ -116,24 +117,17 @@ class RecorderFragment(
     }
 
     private fun setupColors() {
+        val properTextColor = context.getProperTextColor()
         val properPrimaryColor = context.getProperPrimaryColor()
         binding.toggleRecordingButton.apply {
             setImageDrawable(getToggleButtonIcon())
             background.applyColorFilter(properPrimaryColor)
         }
 
-        binding.togglePauseButton.apply {
-            setImageDrawable(
-                resources.getColoredDrawableWithColor(
-                    drawableId = org.fossify.commons.R.drawable.ic_pause_vector,
-                    color = properPrimaryColor.getContrastColor()
-                )
-            )
-            background.applyColorFilter(properPrimaryColor)
-        }
-
+        binding.cancelRecordingButton.applyColorFilter(properTextColor)
+        binding.togglePauseButton.applyColorFilter(properTextColor)
         binding.recorderVisualizer.chunkColor = properPrimaryColor
-        binding.recordingDuration.setTextColor(context.getProperTextColor())
+        binding.recordingDuration.setTextColor(properTextColor)
     }
 
     private fun updateRecordingDuration(duration: Int) {
@@ -166,6 +160,7 @@ class RecorderFragment(
             startRecording()
         } else {
             binding.togglePauseButton.beGone()
+            binding.cancelRecordingButton.beGone()
             stopRecording()
         }
     }
@@ -175,6 +170,20 @@ class RecorderFragment(
             context.startService(this)
         }
         binding.recorderVisualizer.recreate()
+    }
+
+    private fun cancelRecording() {
+        status = if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) {
+            RECORDING_STOPPED
+        } else {
+            RECORDING_RUNNING
+        }
+
+        Intent(context, RecorderService::class.java).apply {
+            action = CANCEL_RECORDING
+            context.startService(this)
+        }
+        refreshView()
     }
 
     private fun stopRecording() {
@@ -200,6 +209,7 @@ class RecorderFragment(
     private fun refreshView() {
         binding.toggleRecordingButton.setImageDrawable(getToggleButtonIcon())
         binding.togglePauseButton.beVisibleIf(status != RECORDING_STOPPED)
+        binding.cancelRecordingButton.beVisibleIf(status != RECORDING_STOPPED)
         pauseBlinkTimer.cancel()
 
         if (status == RECORDING_PAUSED) {
