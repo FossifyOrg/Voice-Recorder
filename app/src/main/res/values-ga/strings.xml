@@ -32,4 +32,7 @@
     <string name="no_recordings_found">Níl aon taifeadtaí cruthaithe ag an aip seo\nfuarthas</string>
     <string name="keep_screen_on">Coinnigh an scáileán ar siúl le linn taifeadta</string>
     <string name="recording_too_short">Bhí an taifeadadh ró-ghearr le taifeadadh!</string>
+    <string name="confirm_recording_folder">Ní mór duit an fillteán a dheimhniú inar mian leat do thaifeadtaí a shábháil. Brúigh OK chun leanúint ar aghaidh.</string>
+    <string name="move_recordings_to_new_folder_desc">Tá taifeadtaí agat cheana féin. Ar mhaith leat iad a bhogadh chuig d\'fhillteán nua?</string>
+    <string name="move_recordings">Bog taifeadtaí</string>
 </resources>
