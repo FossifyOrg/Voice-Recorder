@@ -3,10 +3,8 @@
     <string name="app_launcher_name">Diktiergerät</string>
     <string name="recording_saved_successfully">Aufnahme erfolgreich gespeichert</string>
     <string name="recording">Aufnahme</string>
-    <string name="no_recordings_found">Es wurden keine von dieser App
-\nerstellten Aufnahmen gefunden</string>
-    <string name="no_recordings_in_folder_found">Es wurden keine Aufnahmen
-\nim ausgewählten Ordner gefunden</string>
+    <string name="no_recordings_found">Es wurden keine von dieser App\nerstellten Aufnahmen gefunden</string>
+    <string name="no_recordings_in_folder_found">Es wurden keine Aufnahmen\nim ausgewählten Ordner gefunden</string>
     <string name="paused">Pausiert</string>
     <string name="recorder">Diktiergerät</string>
     <string name="delete_recordings_confirmation">%s löschen\?</string>
@@ -15,7 +13,7 @@
         <item quantity="other">%d Aufnahmen</item>
     </plurals>
     <string name="try_hiding_notification">Versuche, die Aufnahmebenachrichtigung auszublenden</string>
-    <string name="save_recordings_in">Aufnahme speichern in</string>
+    <string name="save_recordings_in">Aufnahmen speichern in</string>
     <string name="audio_source">Tonquelle</string>
     <string name="record_after_launch">Aufnahme startet automatisch beim Öffnen der App</string>
     <string name="audio_source_camcorder">Kamera</string>
@@ -32,4 +30,6 @@
     <string name="keep_screen_on">Den Bildschirm während der Aufnahme eingeschaltet lassen</string>
     <string name="recording_too_short">Die Aufnahme war zu kurz, um sie aufzunehmen!</string>
     <string name="confirm_recording_folder">Du musst den Ordner bestätigen, in dem du deine Aufnahmen speichern möchtest. Bitte auf OK drücken, um fortzufahren.</string>
+    <string name="move_recordings_to_new_folder_desc">Du hast bereits vorhandene Aufnahmen. Möchtest du diese in den neuen Ordner verschieben?</string>
+    <string name="move_recordings">Aufnahmen verschieben</string>
 </resources>
