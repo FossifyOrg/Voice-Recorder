@@ -156,10 +156,6 @@ class RecorderService : Service() {
             try {
                 stop()
                 release()
-                ensureBackgroundThread {
-                    scanRecording()
-                    EventBus.getDefault().post(Events.RecordingCompleted())
-                }
             } catch (
                 @Suppress(
                     "TooGenericExceptionCaught",
@@ -170,6 +166,11 @@ class RecorderService : Service() {
             } catch (e: Exception) {
                 showErrorToast(e)
                 e.printStackTrace()
+            }
+
+            ensureBackgroundThread {
+                scanRecording()
+                EventBus.getDefault().post(Events.RecordingCompleted())
             }
         }
         recorder = null
