@@ -1,0 +1,9 @@
+* Checkboxen durch Schalter ersetzt
+* Unterstützung für Android 7 und ältere Versionen entfernt
+* Schaltfläche zum Abbrechen der Aufnahme hinzugefügt
+* Option hinzugefügt, um den Bildschirm während der Aufnahme eingeschaltet zu lassen
+* Problem mit der Schaltfläche „Aufnahme löschen“ behoben
+* Problem mit ungültigen Zuständen von Schaltflächen behoben
+* Fehler bei nicht reagierender App behoben
+* Option zum Verschieben von Aufnahmen beim Wechsel des Aufnahmeordners hinzugefügt
+…
