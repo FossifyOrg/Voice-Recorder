@@ -1,7 +1,13 @@
 Changelog
 ==========
 
-Version 1.1.0 *(2026-01-11)*
+Version 1.1.1 *(2025-01-16)*
+----------------------------
+
+* Mark MP3 format as experimental (https://github.com/FossifyOrg/Voice-Recorder/issues/81)
+* Added more translations
+
+Version 1.1.0 *(2025-01-11)*
 ----------------------------
 
 * Replaced checkboxes with switches (https://github.com/orgs/FossifyOrg/discussions/78)
