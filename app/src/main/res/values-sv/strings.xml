@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Röstinspelning</string>
+    <string name="app_launcher_name">Röstinspelare</string>
     <string name="recording_saved_successfully">Inspelningen har sparats</string>
     <string name="recording">Spelar in</string>
     <string name="no_recordings_found">Inga inspelningar som har skapats av den här appen
@@ -10,7 +10,7 @@
     <string name="paused">Pausad</string>
     <string name="recorder">Inspelning</string>
     <string name="player">Uppspelning</string>
-    <string name="delete_recordings_confirmation">Radera %s\?</string>
+    <string name="delete_recordings_confirmation">Vill du radera %s?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d inspelning</item>
         <item quantity="other">%d inspelningar</item>
@@ -31,4 +31,7 @@
     <string name="faq_1_text">Det beror på. När du använder din enhet är det inte längre möjligt att helt dölja meddelanden från appar som dessa. Om du markerar rätt inställningsobjekt gör appen sitt bästa för att dölja den. Du kan dock dölja den på låsskärmen om du inaktiverar visning av känsliga meddelanden i enhetens inställningar.</string>
     <string name="recording_too_short">Inspelningen var för kort för att spela in!</string>
     <string name="keep_screen_on">Låt skärmen vara på under inspelning</string>
+    <string name="move_recordings_to_new_folder_desc">Du har befintliga inspelningar. Vill du flytta dem till den nya mappen?</string>
+    <string name="move_recordings">Flytta inspelningar</string>
+    <string name="confirm_recording_folder">Du måste bekräfta mappen där du vill spara dina inspelningar. Tryck på OK för att fortsätta.</string>
 </resources>

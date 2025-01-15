@@ -30,4 +30,9 @@
     <string name="audio_source_voice_performance">Glasovna izvedba</string>
     <string name="faq_1_title">Mogu li sakriti ikonu obavijesti tijekom snimanja\?</string>
     <string name="faq_1_text">Ovisi. Dok koristiš svoj uređaj više nije moguće u potpunosti sakriti obavijesti ovakvih aplikacija. Ako označiš ispravnu stavku postavke, aplikacija će je pokušati sakriti. Možeš je sakriti na zaključanom ekranu, ako isključiš prikaz osobnih obavijesti u postavkama uređaja.</string>
+    <string name="keep_screen_on">Ostavi ekran uključen tijekom snimanja</string>
+    <string name="confirm_recording_folder">Moraš potvrditi mapu u koju želiš spremiti tvoje snimke. Pritisni „U redu” za nastavak.</string>
+    <string name="move_recordings">Premjesti snimke</string>
+    <string name="move_recordings_to_new_folder_desc">Imaš postojeće snimke. Želiš li ih premjestiti u tvoju novu mapu?</string>
+    <string name="recording_too_short">Snimka je bila prekratka za snimanje!</string>
 </resources>
