@@ -10,6 +10,12 @@ Version 1.1.1 *(2026-01-11)*
 Version 1.1.0 *(2026-01-11)*
 ----------------------------
 
+* Mark MP3 format as experimental (https://github.com/FossifyOrg/Voice-Recorder/issues/81)
+* Added more translations
+
+Version 1.1.0 *(2026-01-11)*
+----------------------------
+
 * Replaced checkboxes with switches (https://github.com/orgs/FossifyOrg/discussions/78)
 * Removed support for Android 7 and older versions (https://github.com/orgs/FossifyOrg/discussions/241)
 * Added button to cancel recording (https://github.com/FossifyOrg/Voice-Recorder/issues/57)
