@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.1.2 *(2025-01-16)*
+----------------------------
+
+* Added experimental notice when recording MP3 (https://github.com/FossifyOrg/Voice-Recorder/issues/81)
+* Added more translations
+
 Version 1.1.1 *(2025-01-16)*
 ----------------------------
 

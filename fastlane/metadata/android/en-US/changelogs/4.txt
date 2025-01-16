@@ -1,0 +1,2 @@
+* Added experimental notice when recording MP3
+* Added more translations
