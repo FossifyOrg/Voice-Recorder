@@ -34,4 +34,5 @@
     <string name="confirm_recording_folder">Musisz potwierdzić folder, w którym chcesz zapisywać swoje nagrania. Naciśnij OK, aby kontynuować.</string>
     <string name="move_recordings_to_new_folder_desc">Masz istniejące nagrania. Czy przenieść je do nowego folderu?</string>
     <string name="move_recordings">Przenieś nagrania</string>
+    <string name="mp3_experimental_notice">Obsługa formatu MP3 jest eksperymentalna, dlatego zachowaj ostrożność.</string>
 </resources>
