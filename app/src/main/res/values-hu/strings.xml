@@ -34,4 +34,5 @@
     <string name="confirm_recording_folder">A felvételek mentéséhez a mappa megerősítése szükséges. A folytatáshoz nyomja meg az OK gombot.</string>
     <string name="move_recordings_to_new_folder_desc">Meglévő felvételek. Szeretné őket áthelyezni az új mappába?</string>
     <string name="move_recordings">Felvételek áthelyezése</string>
+    <string name="mp3_experimental_notice">Az MP3-támogatás kísérleti stádiumban van, ezért óvatosan használja.</string>
 </resources>
