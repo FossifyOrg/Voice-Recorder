@@ -3,9 +3,9 @@ package org.fossify.voicerecorder.recorder
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaRecorder
+import android.os.ParcelFileDescriptor
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.helpers.SAMPLE_RATE
-import java.io.FileDescriptor
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
@@ -22,8 +22,9 @@ class MediaRecorderWrapper(val context: Context) : Recorder {
         recorder.setOutputFile(path)
     }
 
-    override fun setOutputFile(fileDescriptor: FileDescriptor) {
-        recorder.setOutputFile(fileDescriptor)
+    override fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor) {
+        val pFD = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
+        recorder.setOutputFile(pFD.fileDescriptor)
     }
 
     override fun prepare() {
