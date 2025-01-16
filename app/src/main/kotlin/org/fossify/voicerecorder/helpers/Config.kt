@@ -54,7 +54,7 @@ class Config(context: Context) : BaseConfig(context) {
         when (extension) {
             EXTENSION_M4A -> R.string.m4a
             EXTENSION_OGG -> R.string.ogg_opus
-            else -> R.string.mp3
+            else -> R.string.mp3_experimental
         }
     )
 
