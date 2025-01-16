@@ -113,19 +113,13 @@ class RecorderService : Service() {
             if (isRPlus()) {
                 val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingFile)
                 createSAFFileSdk30(recordingFile)
-
-                val outputFileDescriptor =
-                    contentResolver.openFileDescriptor(fileUri, "w")!!.fileDescriptor
-
-                recorder?.setOutputFile(outputFileDescriptor)
+                contentResolver.openFileDescriptor(fileUri, "w")!!
+                    .use { recorder?.setOutputFile(it) }
             } else if (isPathOnSD(recordingFile)) {
                 var document = getDocumentFile(recordingFile.getParentPath())
                 document = document?.createFile("", recordingFile.getFilenameFromPath())
-
-                val outputFileDescriptor =
-                    contentResolver.openFileDescriptor(document!!.uri, "w")!!.fileDescriptor
-
-                recorder?.setOutputFile(outputFileDescriptor)
+                contentResolver.openFileDescriptor(document!!.uri, "w")!!
+                    .use { recorder?.setOutputFile(it) }
             } else {
                 recorder?.setOutputFile(recordingFile)
             }

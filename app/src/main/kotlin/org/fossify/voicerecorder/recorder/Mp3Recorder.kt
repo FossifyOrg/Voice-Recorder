@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
+import android.os.ParcelFileDescriptor
 import com.naman14.androidlame.AndroidLame
 import com.naman14.androidlame.LameBuilder
 import org.fossify.commons.extensions.showErrorToast
@@ -11,7 +12,6 @@ import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.helpers.SAMPLE_RATE
 import java.io.File
-import java.io.FileDescriptor
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
@@ -26,7 +26,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var amplitude = AtomicInteger(0)
     private var outputPath: String? = null
     private var androidLame: AndroidLame? = null
-    private var fileDescriptor: FileDescriptor? = null
+    private var fileDescriptor: ParcelFileDescriptor? = null
     private var outputStream: FileOutputStream? = null
     private val minBufferSize = AudioRecord.getMinBufferSize(
         SAMPLE_RATE,
@@ -55,7 +55,7 @@ class Mp3Recorder(val context: Context) : Recorder {
 
         outputStream = try {
             if (fileDescriptor != null) {
-                FileOutputStream(fileDescriptor)
+                FileOutputStream(fileDescriptor!!.fileDescriptor)
             } else {
                 FileOutputStream(File(outputPath!!))
             }
@@ -64,7 +64,7 @@ class Mp3Recorder(val context: Context) : Recorder {
             return
         }
 
-        val androidLame = LameBuilder()
+        androidLame = LameBuilder()
             .setInSampleRate(SAMPLE_RATE)
             .setOutBitrate(context.config.bitrate / 1000)
             .setOutSampleRate(SAMPLE_RATE)
@@ -83,7 +83,7 @@ class Mp3Recorder(val context: Context) : Recorder {
                 if (!isPaused.get()) {
                     val count = audioRecord.read(rawData, 0, minBufferSize)
                     if (count > 0) {
-                        val encoded = androidLame.encode(rawData, rawData, count, mp3buffer)
+                        val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
                         if (encoded > 0) {
                             try {
                                 updateAmplitude(rawData)
@@ -101,6 +101,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     override fun stop() {
         isPaused.set(true)
         isStopped.set(true)
+        audioRecord.stop()
     }
 
     override fun pause() {
@@ -114,14 +115,15 @@ class Mp3Recorder(val context: Context) : Recorder {
     override fun release() {
         androidLame?.flush(mp3buffer)
         outputStream?.close()
+        audioRecord.release()
     }
 
     override fun getMaxAmplitude(): Int {
         return amplitude.get()
     }
 
-    override fun setOutputFile(fileDescriptor: FileDescriptor) {
-        this.fileDescriptor = fileDescriptor
+    override fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor) {
+        this.fileDescriptor = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
     }
 
     private fun updateAmplitude(data: ShortArray) {

@@ -1,10 +1,10 @@
 package org.fossify.voicerecorder.recorder
 
-import java.io.FileDescriptor
+import android.os.ParcelFileDescriptor
 
 interface Recorder {
     fun setOutputFile(path: String)
-    fun setOutputFile(fileDescriptor: FileDescriptor)
+    fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor)
     fun prepare()
     fun start()
     fun stop()
