@@ -1,0 +1,10 @@
+* Nahrazení zaškrtávacích políček přepínači
+* Odstraněna podpora systému Android 7 a starších verzí
+* Přidáno tlačítko pro zrušení nahrávání
+* Přidána možnost ponechat obrazovku zapnutou během nahrávání
+* Opraven problém s tlačítkem pro odstranění nahrávání
+* Opraven problém s neplatnými stavy tlačítek
+* Opraveny chyby s neodpovídáním aplikace
+* Přidána možnost přesunout nahrávky při změně složky s nahrávkami
+* Další drobné opravy chyb a vylepšení
+* Přidány další překlady
