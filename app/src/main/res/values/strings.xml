@@ -14,6 +14,7 @@
     <string name="player">Player</string>
     <!-- Confirmation dialog -->
     <!-- Are you sure you want to delete 5 recordings? -->
+    <string name="mp3_experimental_notice">MP3 support is experimental, please use with caution.</string>
     <string name="delete_recordings_confirmation">Delete %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d recording</item>

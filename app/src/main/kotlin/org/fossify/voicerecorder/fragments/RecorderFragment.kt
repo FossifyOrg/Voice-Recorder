@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.compose.extensions.getActivity
+import org.fossify.commons.dialogs.ConfirmationAdvancedDialog
 import org.fossify.commons.dialogs.PermissionRequiredDialog
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.beVisibleIf
@@ -21,11 +22,13 @@ import org.fossify.commons.extensions.openNotificationSettings
 import org.fossify.commons.extensions.setDebouncedClickListener
 import org.fossify.commons.extensions.toast
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.SettingsActivity
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
+import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
 import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
@@ -161,8 +164,32 @@ class RecorderFragment(
     }
 
     private fun startRecording() {
-        Intent(context, RecorderService::class.java).apply {
-            context.startService(this)
+        if (context.config.extension == EXTENSION_MP3) {
+            showExperimentalNotice()
+        } else {
+            Intent(context, RecorderService::class.java).apply {
+                context.startService(this)
+            }
+        }
+    }
+
+    private fun showExperimentalNotice() {
+        val activity = context as? BaseSimpleActivity ?: return
+        ConfirmationAdvancedDialog(
+            activity = activity,
+            messageId = R.string.mp3_experimental_notice,
+            positive = org.fossify.commons.R.string.ok,
+            negative = org.fossify.commons.R.string.go_to_settings
+        ) { recordAnyway ->
+            if (recordAnyway) {
+                Intent(activity, RecorderService::class.java).apply {
+                    activity.startService(this)
+                }
+            } else {
+                Intent(activity, SettingsActivity::class.java).apply {
+                    activity.startActivity(this)
+                }
+            }
         }
     }
 
