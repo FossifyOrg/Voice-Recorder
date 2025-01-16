@@ -64,7 +64,7 @@ class Mp3Recorder(val context: Context) : Recorder {
             return
         }
 
-        val androidLame = LameBuilder()
+        androidLame = LameBuilder()
             .setInSampleRate(SAMPLE_RATE)
             .setOutBitrate(context.config.bitrate / 1000)
             .setOutSampleRate(SAMPLE_RATE)
@@ -83,7 +83,7 @@ class Mp3Recorder(val context: Context) : Recorder {
                 if (!isPaused.get()) {
                     val count = audioRecord.read(rawData, 0, minBufferSize)
                     if (count > 0) {
-                        val encoded = androidLame.encode(rawData, rawData, count, mp3buffer)
+                        val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
                         if (encoded > 0) {
                             try {
                                 updateAmplitude(rawData)
