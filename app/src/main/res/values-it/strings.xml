@@ -35,4 +35,5 @@
     <string name="confirm_recording_folder">È necessario confermare la cartella dove vuoi salvare le tue registrazioni. Si prega di premere OK per continuare.</string>
     <string name="recording_too_short">La registrazione era troppo corta per essere registrata!</string>
     <string name="keep_screen_on">Mantieni lo schermo acceso durante la registrazione</string>
+    <string name="mp3_experimental_notice">Il supporto MP3 è sperimentale, si prega di usarlo con cautela.</string>
 </resources>
