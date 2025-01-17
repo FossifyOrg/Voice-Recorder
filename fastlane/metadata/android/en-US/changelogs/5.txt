@@ -1,0 +1,2 @@
+* Fixed cut-off or corrupted recordings
+* Added more translations

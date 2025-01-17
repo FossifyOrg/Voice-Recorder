@@ -1,6 +1,12 @@
 Changelog
 ==========
 
+Version 1.1.3 *(2025-01-17)*
+----------------------------
+
+* Fixed cut-off or corrupted recordings (https://github.com/FossifyOrg/Voice-Recorder/issues/81)
+* Added more translations
+
 Version 1.1.2 *(2025-01-16)*
 ----------------------------
 
