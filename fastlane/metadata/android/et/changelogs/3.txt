@@ -1,0 +1,10 @@
+* Asendasime märkeruudud lülititega
+* Eemaldasime Android 7 ja vanemate versioonide toe
+* Lisasime nupu salvestamise katkestamiseks
+* Lisasime võimaluse, et ekraan püsib salvestamisel sisselülitatuna
+* Parandasime salvestuse kustutamise nupu vea
+* Parandasime nuppude vigaste olekute vea
+* Parandasime olukorra, kus rakendus ei reageerinud vigadele
+* Lisasime võimaluse kausta muutmisel ka salvestuste teisaldamiseks
+* Muud väiksemad parandused ja täiendused
+* Lisasime veel tõlkeid

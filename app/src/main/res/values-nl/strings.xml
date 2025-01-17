@@ -34,4 +34,5 @@
     <string name="confirm_recording_folder">Bevestig de map waarin de opnames moeten worden opgeslagen en klik op OK om door te gaan.</string>
     <string name="move_recordings">Opnames verplaatsen</string>
     <string name="move_recordings_to_new_folder_desc">Wil je de bestaande opnames verplaatsen naar de nieuwe map?</string>
+    <string name="mp3_experimental_notice">Pas op: ondersteuning voor MP3 is experimenteel.</string>
 </resources>

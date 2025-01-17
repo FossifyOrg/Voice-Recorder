@@ -33,4 +33,5 @@
     <string name="confirm_recording_folder">您必須確認要儲存錄音的資料夾。請按確定繼續。</string>
     <string name="move_recordings_to_new_folder_desc">您有既有的錄音。您想要將它們移動到新的資料夾嗎？</string>
     <string name="move_recordings">移動錄音</string>
+    <string name="mp3_experimental_notice">MP3 支援為實驗性質，請謹慎使用。</string>
 </resources>
