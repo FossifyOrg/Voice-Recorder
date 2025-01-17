@@ -30,5 +30,4 @@
     <string name="recording_too_short">Записът е твърде къс!</string>
     <string name="keep_screen_on">Без згасяне на екрана по време на запис</string>
     <string name="confirm_recording_folder">Трябва да потвърдите папката, в която да бъдат запазвани записите. За да продължите изберете Добре.</string>
-    <string name="mp3_experimental_notice">Поддръжката на MP3 е експериментална, използвайте с повишено внимание.</string>
 </resources>
