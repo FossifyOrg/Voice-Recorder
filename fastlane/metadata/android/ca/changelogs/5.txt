@@ -1,0 +1,2 @@
+* Corregeix els enregistraments tallats o malmesos
+* S'han afegit més traduccions
