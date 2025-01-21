@@ -5,7 +5,7 @@ rules [here](https://github.com/FossifyOrg/General-Discussion#how-do-i-suggest-a
 
 ### Contributing as a developer
 
-Some instructions about code style and everything that has to be done to increase the change of your code getting accepted can be found at
+Some instructions about code style and everything that has to be done to increase the chance of your code getting accepted can be found at
 the [General Discussion](https://github.com/FossifyOrg/General-Discussion#contribution-rules-for-developers) section.
 
 ### Contributing as a non developer
