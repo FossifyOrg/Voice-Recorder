@@ -6,5 +6,5 @@
 * Saincheist seasta le stáit cnaipe neamhbhailí
 * Aip sheasta gan freagra a thabhairt ar earráidí
 * Rogha breise chun taifeadtaí a bhogadh nuair a athraítear fillteán taifeadtaí
-* Ceartúcháin agus feabhsuithe beaga eile ar fhabht
-* Cuireadh tuilleadh aistriúcháin leis
+* Ceartúcháin fabhtanna
+* Tuilleadh aistriúcháin
