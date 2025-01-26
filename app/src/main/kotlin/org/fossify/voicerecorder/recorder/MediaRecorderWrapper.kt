@@ -5,7 +5,6 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.ParcelFileDescriptor
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.helpers.SAMPLE_RATE
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
@@ -15,7 +14,7 @@ class MediaRecorderWrapper(val context: Context) : Recorder {
         setOutputFormat(context.config.getOutputFormat())
         setAudioEncoder(context.config.getAudioEncoder())
         setAudioEncodingBitRate(context.config.bitrate)
-        setAudioSamplingRate(SAMPLE_RATE)
+        setAudioSamplingRate(context.config.samplingRate)
     }
 
     override fun setOutputFile(path: String) {
