@@ -30,4 +30,6 @@
     <string name="recording_too_short">Записът е твърде къс!</string>
     <string name="keep_screen_on">Без згасяне на екрана по време на запис</string>
     <string name="confirm_recording_folder">Трябва да потвърдите папката, в която да бъдат запазвани записите. За да продължите изберете Добре.</string>
+    <string name="move_recordings_to_new_folder_desc">Има записи. Желаете ли да бъдат преместени в новата папка?</string>
+    <string name="move_recordings">Преместване на записи</string>
 </resources>
