@@ -1,0 +1,2 @@
+* MP3 kaydederken deneysel bildirim eklendi
+* Daha fazla çeviri eklendi

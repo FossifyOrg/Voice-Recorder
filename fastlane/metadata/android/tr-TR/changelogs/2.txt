@@ -1,0 +1,10 @@
+* Onay kutuları düğmelerle değiştirdi
+* Android 7 ve daha eski sürümler desteklenmiyor
+* Kaydı iptal etmek için düğme eklendi
+* Kayıt sırasında ekranı açık tutma seçeneği eklendi
+* Kaydı sil düğmesi ile ilgili sorun düzeltildi
+* Geçersiz düğme durumlarındaki sorun giderildi
+* Uygulama donma hataları giderildi
+* Kayıt klasörünü değiştirirken kayıtları taşıma seçeneği eklendi
+* Diğer küçük hata düzeltmeleri ve iyileştirmeleri
+* Daha fazla çeviri eklendi
