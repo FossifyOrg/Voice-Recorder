@@ -24,4 +24,16 @@
     <string name="audio_source">מקור שמע</string>
     <string name="keep_screen_on">השאר את המסך דולק במהלך הקלטה</string>
     <string name="recording_too_short">משך ההקלטה היה קצר מדי בשביל להקליט!</string>
+    <string name="audio_source_default">ברירת המחדל של אנדרואיד</string>
+    <string name="audio_source_unprocessed">לא מעובד</string>
+    <string name="audio_source_microphone">מיקרופון</string>
+    <string name="recorder">מקליט</string>
+    <string name="player">נגן</string>
+    <string name="audio_source_voice_recognition">זיהוי קולי</string>
+    <string name="audio_source_voice_performance">ביצוע קול</string>
+    <string name="audio_source_voice_communication">תקשורת קולית</string>
+    <string name="audio_source_camcorder">מצלמה</string>
+    <string name="move_recordings">העבר הקלטות</string>
+    <string name="move_recordings_to_new_folder_desc">יש לך הקלטות קיימות. האם אתה רוצה להעביר אותם לתיקיה החדשה שלך?</string>
+    <string name="confirm_recording_folder">עליך לאשר את התיקיה שבה ברצונך לשמור את ההקלטות שלך. אנא לחץ על אישור כדי להמשיך.</string>
 </resources>
