@@ -33,4 +33,6 @@
     <string name="move_recordings">Déplacer les enregistrements</string>
     <string name="move_recordings_to_new_folder_desc">Vous avez des enregistrements existants. Voulez-vous les déplacer dans votre nouveau dossier ?</string>
     <string name="confirm_recording_folder">Vous devez confirmer le dossier dans lequel vous souhaitez sauvegarder vos enregistrements. Appuyez sur OK pour continuer.</string>
+    <string name="keep_screen_on">Garder l\'écran allumé pendant les enregistrements</string>
+    <string name="recording_too_short">L\'enregistrement est trop court !</string>
 </resources>
