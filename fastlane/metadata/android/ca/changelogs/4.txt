@@ -1,2 +1,0 @@
-* S'ha afegit un avís experimental en enregistrar MP3
-* S'han afegit més traduccions

@@ -1,2 +1,0 @@
-* Lisasime katselise teate salvestusel MP3 vormingusse
-* Lisasime veel tõlkeid
