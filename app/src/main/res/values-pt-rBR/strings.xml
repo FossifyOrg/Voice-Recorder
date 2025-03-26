@@ -13,6 +13,7 @@
     <string name="delete_recordings_confirmation">Apagar %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d gravação</item>
+        <item quantity="many">%d gravações</item>
         <item quantity="other">%d gravações</item>
     </plurals>
     <string name="try_hiding_notification">Tentar ocultar a notificação de gravação</string>
@@ -29,4 +30,9 @@
     <string name="faq_1_title">Posso ocultar o ícone de notificação durante a gravação\?</string>
     <string name="faq_1_text">Bem, depende. Enquanto você usa seu dispositivo, não é mais possível ocultar totalmente as notificações de aplicativos como este. Se você verificar o item de configuração adequado, o aplicativo fará o seu melhor para escondê-lo. Você pode escondê-lo na tela de bloqueio desativando a exibição de notificações confidenciais nas configurações do dispositivo.</string>
     <string name="bitrate">Taxa de bits</string>
+    <string name="keep_screen_on">Mantenha a tela ligada durante a gravação</string>
+    <string name="move_recordings">Mover gravações</string>
+    <string name="confirm_recording_folder">Você deve confirmar a pasta onde deseja salvar suas gravações. Pressione OK para continuar.</string>
+    <string name="move_recordings_to_new_folder_desc">Você tem gravações existentes. Quer movê-las para sua nova pasta?</string>
+    <string name="recording_too_short">A gravação foi muito curta para gravar!</string>
 </resources>
