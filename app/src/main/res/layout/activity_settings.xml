@@ -217,6 +217,28 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_audio_source_holder"
+                style="@style/SettingsHolderTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/settings_audio_source_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/audio_source" />
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/settings_audio_source"
+                    style="@style/SettingsTextValueStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/settings_audio_source_label"
+                    tools:text="Camera" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_extension_holder"
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"
@@ -240,28 +262,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/settings_audio_source_holder"
-                style="@style/SettingsHolderTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <org.fossify.commons.views.MyTextView
-                    android:id="@+id/settings_audio_source_label"
-                    style="@style/SettingsTextLabelStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/audio_source" />
-
-                <org.fossify.commons.views.MyTextView
-                    android:id="@+id/settings_audio_source"
-                    style="@style/SettingsTextValueStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/settings_audio_source_label"
-                    tools:text="128 kbps" />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/settings_bitrate_holder"
                 style="@style/SettingsHolderTextViewStyle"
                 android:layout_width="match_parent"
@@ -281,6 +281,29 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/settings_bitrate_label"
                     tools:text="192 kbps" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_sampling_rate_holder"
+                style="@style/SettingsHolderTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/settings_sampling_rate_label"
+                    style="@style/SettingsTextLabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sampling_rate" />
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/settings_sampling_rate"
+                    style="@style/SettingsTextValueStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/settings_sampling_rate_label"
+                    tools:text="48000 Hz" />
 
             </RelativeLayout>
 
