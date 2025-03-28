@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.compose.extensions.getActivity
+import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.PermissionRequiredDialog
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.beVisibleIf
@@ -99,7 +100,7 @@ class RecorderFragment(
             }
         }
 
-        binding.cancelRecordingButton.setDebouncedClickListener { cancelRecording() }
+        binding.cancelRecordingButton.setDebouncedClickListener { showCancelRecordingDialog() }
         binding.saveRecordingButton.setDebouncedClickListener { saveRecording() }
         Intent(context, RecorderService::class.java).apply {
             action = GET_RECORDER_INFO
@@ -163,6 +164,17 @@ class RecorderFragment(
     private fun startRecording() {
         Intent(context, RecorderService::class.java).apply {
             context.startService(this)
+        }
+    }
+
+    private fun showCancelRecordingDialog() {
+        val activity = context as? BaseSimpleActivity ?: return
+        ConfirmationDialog(
+            activity = activity,
+            message = activity.getString(R.string.cancel_recording_confirmation),
+            dialogTitle = activity.getString(R.string.cancel_recording)
+        ) {
+            cancelRecording()
         }
     }
 
