@@ -35,4 +35,6 @@
     <string name="confirm_recording_folder">Ní mór duit an fillteán a dheimhniú inar mian leat do thaifeadtaí a shábháil. Brúigh OK chun leanúint ar aghaidh.</string>
     <string name="move_recordings_to_new_folder_desc">Tá taifeadtaí agat cheana féin. Ar mhaith leat iad a bhogadh chuig d\'fhillteán nua?</string>
     <string name="move_recordings">Bog taifeadtaí</string>
+    <string name="cancel_recording">Cealaigh an taifeadadh</string>
+    <string name="cancel_recording_confirmation">An bhfuil tú cinnte gur mhaith leat an taifeadadh reatha a chealú? Ní féidir é seo a chealú.</string>
 </resources>
