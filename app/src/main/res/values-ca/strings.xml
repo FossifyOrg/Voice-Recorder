@@ -35,4 +35,6 @@
     <string name="confirm_recording_folder">Cal confirmar la carpeta on voleu desar les vostres gravacions. Premeu D\'acord per a continuar.</string>
     <string name="move_recordings">Mou els enregistraments</string>
     <string name="move_recordings_to_new_folder_desc">Teniu enregistraments existents. Voleu moure\'ls a la carpeta nova?</string>
+    <string name="cancel_recording">Cancel·la l\'enregistrament</string>
+    <string name="cancel_recording_confirmation">Segur que voleu cancel·lar l\'enregistrament actual? Això no es pot desfer.</string>
 </resources>
