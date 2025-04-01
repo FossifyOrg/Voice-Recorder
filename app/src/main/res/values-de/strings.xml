@@ -32,4 +32,6 @@
     <string name="confirm_recording_folder">Du musst den Ordner bestätigen, in dem du deine Aufnahmen speichern möchtest. Bitte auf OK drücken, um fortzufahren.</string>
     <string name="move_recordings_to_new_folder_desc">Du hast bereits vorhandene Aufnahmen. Möchtest du diese in den neuen Ordner verschieben?</string>
     <string name="move_recordings">Aufnahmen verschieben</string>
+    <string name="cancel_recording">Aufnahme abbrechen</string>
+    <string name="cancel_recording_confirmation">Soll die laufende Aufnahme wirklich abgebrochen werden? Dies kann nicht rückgängig gemacht werden.</string>
 </resources>
