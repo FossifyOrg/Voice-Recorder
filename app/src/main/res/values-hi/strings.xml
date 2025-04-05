@@ -29,4 +29,11 @@
     <string name="audio_source_voice_communication">आवाज संचार</string>
     <string name="audio_source_voice_performance">आवाज़ का प्रदर्शन</string>
     <string name="faq_1_title">क्या मैं रिकॉर्डिंग के दौरान अधिसूचना आइकन छुपा सकता हूँ?</string>
+    <string name="move_recordings_to_new_folder_desc">आपके पास पहले से रिकॉर्डिंग हैं। क्या आप उन्हें अपने नए फ़ोल्डर में ले जाना चाहते हैं?</string>
+    <string name="cancel_recording">रिकॉर्डिंग रद्द करें</string>
+    <string name="cancel_recording_confirmation">क्या आप वाकई वर्तमान रिकॉर्डिंग रद्द करना चाहते हैं? इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="keep_screen_on">रिकॉर्डिंग करते समय स्क्रीन चालू रखें</string>
+    <string name="confirm_recording_folder">आपको उस फ़ोल्डर की पुष्टि करनी होगी जहां आप अपनी रिकॉर्डिंग सहेजना चाहते हैं। कृपया जारी रखने के लिए OK दबाएँ।</string>
+    <string name="recording_too_short">यह रिकार्ड नहीं किया जा सका, यह बहुत छोटा था!</string>
+    <string name="move_recordings">रिकॉर्डिंग को मूव करें</string>
 </resources>

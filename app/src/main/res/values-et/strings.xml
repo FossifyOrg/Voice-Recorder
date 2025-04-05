@@ -34,4 +34,6 @@
     <string name="confirm_recording_folder">Sa pead valima kusta, kuhu soovid salvestusi talletada. Jätkamiseks palun vajuta „Sobib“ nuppu.</string>
     <string name="move_recordings_to_new_folder_desc">Sul on olemasolevaid salvestusi. Kas sa soovid neid oma uude kausta tõsta?</string>
     <string name="move_recordings">Salvestuste teisaldamine</string>
+    <string name="cancel_recording">Katkesta salvestamine</string>
+    <string name="cancel_recording_confirmation">Kas sa oled kindel, et soovid salvestamise katkestada? Seda tegevust ei saa hiljem tagasi pöörata.</string>
 </resources>

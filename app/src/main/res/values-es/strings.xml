@@ -33,4 +33,6 @@
     <string name="move_recordings_to_new_folder_desc">Tienes grabaciones existentes. ¿Quieres moverlas a tu nueva carpeta?</string>
     <string name="keep_screen_on">Mantener la pantalla encendida durante la grabación</string>
     <string name="recording_too_short">¡La grabación fue demasiado corta para grabar!</string>
+    <string name="cancel_recording">Cancelar grabación</string>
+    <string name="cancel_recording_confirmation">¿Está seguro de que desea cancelar la grabación actual? Esto no se puede deshacer.</string>
 </resources>
