@@ -34,4 +34,6 @@
     <string name="keep_screen_on">Pidä näyttö päällä nauhoituksen aikana</string>
     <string name="confirm_recording_folder">Varmista nauhoitusten tallennuskansio. Paina OK jatkaaksesi.</string>
     <string name="recording_too_short">Nauhoitus oli liian lyhyt!</string>
+    <string name="cancel_recording">Peruuta tallennus</string>
+    <string name="cancel_recording_confirmation">Haluatko varmasti perua nykyisen tallennuksen. Tätä ei voi perua.</string>
 </resources>
