@@ -19,7 +19,7 @@
     <plurals name="delete_recordings">
         <item quantity="one">%d gravação</item>
         <item quantity="many">%d gravações</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d gravações</item>
     </plurals>
     <string name="audio_source">Fonte de áudio</string>
     <string name="audio_source_unprocessed">Não processado</string>
@@ -30,4 +30,11 @@
     <string name="audio_source_voice_communication">Comunicação por voz</string>
     <string name="audio_source_voice_performance">Desempenho de voz</string>
     <string name="faq_1_text">Depende. Actuamente, já não possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a alinea correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
+    <string name="cancel_recording">Cancelar gravação</string>
+    <string name="cancel_recording_confirmation">Tem certeza que quer cancelar a gravação? Não pode ser desfeito.</string>
+    <string name="keep_screen_on">Manter o ecrã ligado durante a gravação</string>
+    <string name="confirm_recording_folder">Deve confirmar a pasta selecionada onde quer guardar as suas gravações. Clique OK para continuar.</string>
+    <string name="move_recordings">Mover gravações</string>
+    <string name="move_recordings_to_new_folder_desc">Tem gravações existentes. Quer as mover para a sua pasta nova?</string>
+    <string name="recording_too_short">Esta gravação é demasiado curta para ser guardada!</string>
 </resources>
