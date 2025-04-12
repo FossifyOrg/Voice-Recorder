@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Hlasový záznamník</string>
-    <string name="recording_saved_successfully">Nahrávka se úspěšně uložila</string>
+    <string name="recording_saved_successfully">Nahrávka byla úspěšně uložena</string>
     <string name="recording">Nahrávám</string>
     <string name="no_recordings_found">Nebyly nalezeny žádné nahrávky
 \nvytvořené touto aplikací</string>
