@@ -35,4 +35,6 @@
     <string name="confirm_recording_folder">Vous devez confirmer le dossier dans lequel vous souhaitez sauvegarder vos enregistrements. Appuyez sur OK pour continuer.</string>
     <string name="keep_screen_on">Garder l\'écran allumé pendant les enregistrements</string>
     <string name="recording_too_short">L\'enregistrement est trop court !</string>
+    <string name="cancel_recording">Annuler l\'enregistrement</string>
+    <string name="cancel_recording_confirmation">Êtes-vous sur de vouloir annuler l\'enregistrement en cours ? Cette action est irrémédiable.</string>
 </resources>
