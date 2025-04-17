@@ -45,6 +45,10 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(BITRATE, DEFAULT_BITRATE)
         set(bitrate) = prefs.edit().putInt(BITRATE, bitrate).apply()
 
+    var samplingRate: Int
+        get() = prefs.getInt(SAMPLING_RATE, DEFAULT_SAMPLING_RATE)
+        set(samplingRate) = prefs.edit().putInt(SAMPLING_RATE, samplingRate).apply()
+
     var recordAfterLaunch: Boolean
         get() = prefs.getBoolean(RECORD_AFTER_LAUNCH, false)
         set(recordAfterLaunch) = prefs.edit().putBoolean(RECORD_AFTER_LAUNCH, recordAfterLaunch)

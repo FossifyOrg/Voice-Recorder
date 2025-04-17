@@ -10,7 +10,6 @@ import com.naman14.androidlame.LameBuilder
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.helpers.SAMPLE_RATE
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -29,7 +28,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var fileDescriptor: ParcelFileDescriptor? = null
     private var outputStream: FileOutputStream? = null
     private val minBufferSize = AudioRecord.getMinBufferSize(
-        SAMPLE_RATE,
+        context.config.samplingRate,
         AudioFormat.CHANNEL_IN_MONO,
         AudioFormat.ENCODING_PCM_16BIT
     )
@@ -37,7 +36,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     @SuppressLint("MissingPermission")
     private val audioRecord = AudioRecord(
         context.config.audioSource,
-        SAMPLE_RATE,
+        context.config.samplingRate,
         AudioFormat.CHANNEL_IN_MONO,
         AudioFormat.ENCODING_PCM_16BIT,
         minBufferSize * 2
@@ -65,9 +64,9 @@ class Mp3Recorder(val context: Context) : Recorder {
         }
 
         androidLame = LameBuilder()
-            .setInSampleRate(SAMPLE_RATE)
+            .setInSampleRate(context.config.samplingRate)
             .setOutBitrate(context.config.bitrate / 1000)
-            .setOutSampleRate(SAMPLE_RATE)
+            .setOutSampleRate(context.config.samplingRate)
             .setOutChannels(1)
             .build()
 
