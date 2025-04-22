@@ -34,4 +34,6 @@
     <string name="confirm_recording_folder">Zure grabazioak gordetzeko karpeta baieztatu behar duzu. Sakatu Ados jarraitzeko.</string>
     <string name="move_recordings">Mugitu grabazioak</string>
     <string name="move_recordings_to_new_folder_desc">Grabazioak dituzu. Karpeta berrira mugitu nahi dituzu?</string>
+    <string name="cancel_recording">Utzi grabazioa</string>
+    <string name="cancel_recording_confirmation">Ziur al zaude uneko grabazioa utzi nahi duzula? Hau ezin da desegin.</string>
 </resources>
