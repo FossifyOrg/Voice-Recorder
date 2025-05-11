@@ -36,4 +36,6 @@
     <string name="move_recordings">העבר הקלטות</string>
     <string name="move_recordings_to_new_folder_desc">יש לך הקלטות קיימות. האם אתה רוצה להעביר אותם לתיקיה החדשה שלך?</string>
     <string name="confirm_recording_folder">עליך לאשר את התיקיה שבה ברצונך לשמור את ההקלטות שלך. אנא לחץ על אישור כדי להמשיך.</string>
+    <string name="cancel_recording">ביטול הקלטה</string>
+    <string name="cancel_recording_confirmation">האם אתה בטוח שברצונך לבטל את ההקלטה הנוכחית? לא ניתן לבטל פעולה זו.</string>
 </resources>
