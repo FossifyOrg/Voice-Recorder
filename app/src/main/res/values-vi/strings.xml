@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Ghi âm</string>
-    <string name="recording_saved_successfully">Đã lưu bản ghi thành công</string>
+    <string name="recording_saved_successfully">Đã lưu bản ghi âm thành công</string>
     <string name="recording">Đang ghi âm</string>
-    <string name="no_recordings_found">Không có bản ghi nào được tạo bởi ứng dụng này
-\nđược tìm thấy</string>
-    <string name="no_recordings_in_folder_found">Không tìm thấy bản ghi nào
-\ntrong thư mục đã chọn</string>
-    <string name="paused">Đã tạm dừng</string>
-    <string name="recorder">Máy ghi âm</string>
-    <string name="player">Máy phát</string>
+    <string name="no_recordings_found">Không có bản ghi âm nào được tạo bởi ứng dụng này \nđược tìm thấy</string>
+    <string name="no_recordings_in_folder_found">Không tìm thấy bản ghi âm nào \ntrong thư mục đã chọn</string>
+    <string name="paused">Tạm dừng</string>
+    <string name="recorder">Ghi âm</string>
+    <string name="player">Phát lại</string>
     <string name="delete_recordings_confirmation">Xóa %s\?</string>
     <plurals name="delete_recordings">
-        <item quantity="other">%d đang ghi âm</item>
+        <item quantity="other">%d bản ghi</item>
     </plurals>
-    <string name="try_hiding_notification">Hãy thử ẩn thông báo ghi âm</string>
-    <string name="save_recordings_in">Lưu bản ghi trong</string>
+    <string name="try_hiding_notification">Thử ẩn thông báo ghi âm</string>
+    <string name="save_recordings_in">Thư mục lưu bản ghi âm</string>
     <string name="audio_source">Nguồn âm thanh</string>
-    <string name="record_after_launch">Bắt đầu ghi âm tự động sau khi khởi chạy ứng dụng</string>
+    <string name="record_after_launch">Tự động ghi âm ngay sau khi chạy ứng dụng</string>
     <string name="audio_source_camcorder">Máy ảnh</string>
-    <string name="audio_source_default">Android mặc định</string>
+    <string name="audio_source_default">Mặc định Android</string>
     <string name="audio_source_unprocessed">Chưa qua xử lý</string>
     <string name="audio_source_microphone">Micrô</string>
     <string name="audio_source_voice_recognition">Nhận diện giọng nói</string>
@@ -27,4 +25,12 @@
     <string name="audio_source_voice_performance">Hiệu suất giọng nói</string>
     <string name="faq_1_title">Tôi có thể ẩn biểu tượng thông báo trong khi ghi không\?</string>
     <string name="faq_1_text">Dạ, nó phụ thuộc. Khi bạn sử dụng thiết bị của mình, bạn không thể ẩn hoàn toàn thông báo của các ứng dụng như thế này nữa. Nếu bạn chọn mục cài đặt phù hợp, ứng dụng sẽ cố gắng hết sức để ẩn mục đó. Tuy nhiên, bạn có thể ẩn nó trên màn hình khóa nếu bạn tắt hiển thị các thông báo nhạy cảm trong cài đặt thiết bị của mình.</string>
+    <string name="cancel_recording_confirmation">Bạn có chắc muốn hủy bản ghi âm này? Bản ghi âm sẽ không thể được phục hồi.</string>
+    <string name="bitrate">Bitrate</string>
+    <string name="cancel_recording">Hủy ghi âm</string>
+    <string name="keep_screen_on">Giữ màn hình sáng trong khi ghi âm</string>
+    <string name="confirm_recording_folder">Bạn cần chọn thư mục để lưu các bản ghi âm. Nhấn OK để chọn.</string>
+    <string name="move_recordings">Chuyển bản ghi âm hiện có</string>
+    <string name="move_recordings_to_new_folder_desc">Bạn còn bản ghi âm trong thư mục cũ. Bạn có muốn chuyển chúng sang thư mục mới không?</string>
+    <string name="recording_too_short">Bản ghi âm quá ngắn!</string>
 </resources>
