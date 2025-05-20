@@ -1,0 +1,7 @@
+Added:
+
+• Added confirmation dialog when cancelling recording
+
+Changed:
+
+• Updated translations
