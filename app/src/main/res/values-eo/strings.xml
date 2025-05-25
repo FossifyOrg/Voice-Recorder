@@ -34,4 +34,6 @@
     <string name="recording_too_short">La registro tro mallongis por registri!</string>
     <string name="paused">Paŭzigita</string>
     <string name="player">Legilo</string>
+    <string name="cancel_recording">Nuligi registradon</string>
+    <string name="cancel_recording_confirmation">Ĉu vi certas, ke vi volas nuligi la nunan registradon? Tio ĉi ne malfareblas.</string>
 </resources>
