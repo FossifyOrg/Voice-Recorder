@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Gravador de voz</string>
+    <string name="app_launcher_name">Fossify - Gravador de voz</string>
     <string name="recording_saved_successfully">Gravação salva com sucesso</string>
     <string name="recording">Gravação</string>
     <string name="no_recordings_found">Nenhuma gravação criada por
