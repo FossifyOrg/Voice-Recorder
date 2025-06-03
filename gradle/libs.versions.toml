@@ -15,7 +15,7 @@ eventbus = "3.3.1"
 #noinspection GradleDependency
 commons = "2.0.1"
 #AudioRecordView
-audiorecordview = "1.0.4"
+audiorecordview = "1.0.5"
 #TAndroidLame
 tandroidlame = "1.1"
 #AutofitTextView
