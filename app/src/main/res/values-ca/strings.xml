@@ -37,4 +37,5 @@
     <string name="move_recordings_to_new_folder_desc">Teniu enregistraments existents. Voleu moure\'ls a la carpeta nova?</string>
     <string name="discard_recording">Cancel·la l\'enregistrament</string>
     <string name="discard_recording_confirmation">Segur que voleu cancel·lar l\'enregistrament actual? Això no es pot desfer.</string>
+    <string name="sample_rate">Freqüència de mostreig</string>
 </resources>
