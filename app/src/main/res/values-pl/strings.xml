@@ -35,4 +35,6 @@
     <string name="confirm_recording_folder">Musisz potwierdzić folder, w którym chcesz zapisywać swoje nagrania. Naciśnij OK, aby kontynuować.</string>
     <string name="move_recordings_to_new_folder_desc">Masz istniejące nagrania. Czy przenieść je do nowego folderu?</string>
     <string name="move_recordings">Przenieś nagrania</string>
+    <string name="cancel_recording">Anuluj nagrywanie</string>
+    <string name="cancel_recording_confirmation">Czy anulować bieżące nagrywanie? Tego nie można cofnąć.</string>
 </resources>

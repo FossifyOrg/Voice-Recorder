@@ -31,4 +31,9 @@
     <string name="faq_1_text">Beno, zenbait kasutan bai. Zure gailua erabiltzen duzun bitartean ez da posible horrelako aplikazioen jakinarazpenak guztiz ezkutatu. Ezarpen-elementu egokia markatuz gero, aplikazioak ahal duen guztia egingo du ezkutatzeko. Hala ere, blokeo-pantailan ezkutatu dezakezu, zure gailuaren ezarpenetan jakinarazpen sentikorren bistaratzea desgaitzen baduzu.</string>
     <string name="keep_screen_on">Mantendu pantaila piztuta grabaketak dirauen bitartean</string>
     <string name="recording_too_short">Grabaketa motzegia da!</string>
+    <string name="confirm_recording_folder">Zure grabazioak gordetzeko karpeta baieztatu behar duzu. Sakatu Ados jarraitzeko.</string>
+    <string name="move_recordings">Mugitu grabazioak</string>
+    <string name="move_recordings_to_new_folder_desc">Grabazioak dituzu. Karpeta berrira mugitu nahi dituzu?</string>
+    <string name="cancel_recording">Utzi grabazioa</string>
+    <string name="cancel_recording_confirmation">Ziur al zaude uneko grabazioa utzi nahi duzula? Hau ezin da desegin.</string>
 </resources>

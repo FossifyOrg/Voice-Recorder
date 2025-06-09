@@ -29,4 +29,11 @@
     <string name="audio_source_voice_performance">Ääniesitys</string>
     <string name="faq_1_title">Voinko piilottaa ilmoituskuvakkeen tallennuksen aikana\?</string>
     <string name="faq_1_text">No, se riippuu. Laitetta käytettäessä tällaisten sovellusten ilmoituksia ei ole enää mahdollista piilottaa täysin. Jos valitset kyseiseisen asetuksen, sovellus pyrkii parhaansa mukaan piilottamaan sen. Voit tosin piilottaa sen lukitusnäytöstä, jos poistat arkaluontoisten ilmoitusten näytön käytöstä laitteen asetuksista.</string>
+    <string name="move_recordings">Siirrä nauhoitukset</string>
+    <string name="move_recordings_to_new_folder_desc">Sinulla on olemassaolevia nauhoituksia. Haluatko siirtää ne uuteen kansioon?</string>
+    <string name="keep_screen_on">Pidä näyttö päällä nauhoituksen aikana</string>
+    <string name="confirm_recording_folder">Varmista nauhoitusten tallennuskansio. Paina OK jatkaaksesi.</string>
+    <string name="recording_too_short">Nauhoitus oli liian lyhyt!</string>
+    <string name="cancel_recording">Peruuta tallennus</string>
+    <string name="cancel_recording_confirmation">Haluatko varmasti perua nykyisen tallennuksen. Tätä ei voi perua.</string>
 </resources>

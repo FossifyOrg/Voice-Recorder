@@ -28,4 +28,9 @@
     <string name="faq_1_text">Tergantung. Saat Anda menggunakan perangkat, tidak mungkin lagi untuk menyembunyikan sepenuhnya pemberitahuan aplikasi seperti ini. Jika Anda memeriksa item pengaturan yang tepat, aplikasi akan melakukan yang terbaik untuk menyembunyikannya. Anda dapat menyembunyikannya di layar kunci, jika Anda menonaktifkan tampilan pemberitahuan sensitif di pengaturan perangkat Anda.</string>
     <string name="bitrate">Laju bit</string>
     <string name="recorder">Perekam</string>
+    <string name="confirm_recording_folder">Anda harus mengonfirmasi folder tempat Anda ingin menyimpan rekaman. Silahkan tekan OK untuk melanjutkan.</string>
+    <string name="move_recordings_to_new_folder_desc">Anda memiliki rekaman yang sudah ada. Apakah Anda ingin memindahkannya ke folder baru Anda?</string>
+    <string name="move_recordings">Pindahkan rekaman</string>
+    <string name="recording_too_short">Rekaman terlalu pendek untuk disimpan!</string>
+    <string name="keep_screen_on">Biarkan layar tetap menyala selama perekaman</string>
 </resources>

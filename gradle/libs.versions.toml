@@ -1,37 +1,33 @@
 [versions]
 #jetbrains
-kotlin = "1.9.25"
+kotlin = "2.1.21"
 #KSP
-ksp = "1.9.25-1.0.20"
+ksp = "2.1.21-2.0.1"
 #Detekt
-detekt = "1.23.3"
+detekt = "1.23.8"
 #AndroidX
-androidx-constraintlayout = "2.2.0"
-androidx-documentfile = "1.0.1"
+androidx-constraintlayout = "2.2.1"
+androidx-documentfile = "1.1.0"
 androidx-swiperefreshlayout = "1.1.0"
 #Eventbus
 eventbus = "3.3.1"
 #Fossify
 #noinspection GradleDependency
-commons = "633f38441b"
+commons = "3.0.3"
 #AudioRecordView
-audiorecordview = "1.0.4"
+audiorecordview = "1.0.5"
 #TAndroidLame
 tandroidlame = "1.1"
 #AutofitTextView
 autofittextview = "0.2.1"
 #Gradle
-gradlePlugins-agp = "8.7.3"
+gradlePlugins-agp = "8.10.1"
 #build
 app-build-compileSDKVersion = "34"
 app-build-targetSDK = "34"
 app-build-minimumSDK = "26"
 app-build-javaVersion = "VERSION_17"
 app-build-kotlinJVMTarget = "17"
-#versioning
-app-version-appId = "org.fossify.voicerecorder"
-app-version-versionCode = "5"
-app-version-versionName = "1.1.3"
 [libraries]
 #AndroidX
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }

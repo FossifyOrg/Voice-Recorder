@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Hlasový záznamník</string>
-    <string name="recording_saved_successfully">Nahrávka se úspěšně uložila</string>
+    <string name="recording_saved_successfully">Nahrávka byla úspěšně uložena</string>
     <string name="recording">Nahrávám</string>
     <string name="no_recordings_found">Nebyly nalezeny žádné nahrávky
 \nvytvořené touto aplikací</string>
@@ -35,4 +35,6 @@
     <string name="move_recordings_to_new_folder_desc">Máte existující nahrávky. Chcete je přesunout do nové složky?</string>
     <string name="move_recordings">Přesunout nahrávky</string>
     <string name="confirm_recording_folder">Musíte potvrdit složku, do které chcete nahrávky uložit. Pro pokračování stiskněte tlačítko OK.</string>
+    <string name="cancel_recording">Zrušit nahrávání</string>
+    <string name="cancel_recording_confirmation">Opravdu chcete zrušit aktuální nahrávání? Tato akce je nevratná.</string>
 </resources>

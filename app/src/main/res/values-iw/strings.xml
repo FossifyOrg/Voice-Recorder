@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">מקליט קול</string>
+    <string name="app_launcher_name">רשמקול</string>
     <string name="recording_saved_successfully">ההקלטה נשמרה בהצלחה</string>
     <string name="recording">הקלטה</string>
-    <string name="no_recordings_found">אין הקלטות שנוצרו על ידי האפליקציה הזו
-\nנמצא</string>
-    <string name="no_recordings_in_folder_found">לא נמצאו הקלטות
-\nבתיקייה שנבחרה</string>
+    <string name="no_recordings_found">לא נמצאו הקלטות\nשנוצרו על ידי אפליקציה זו</string>
+    <string name="no_recordings_in_folder_found">לא נמצאו הקלטות\nבתיקייה שנבחרה</string>
     <string name="paused">מושהה</string>
     <string name="delete_recordings_confirmation">למחוק את %s\?</string>
     <plurals name="delete_recordings">
-        <item quantity="one">%d הקלטה</item>
+        <item quantity="one">הקלטה %d</item>
         <item quantity="two">%d הקלטות</item>
-        <item quantity="many">%d הקלטה</item>
         <item quantity="other">%d הקלטות</item>
     </plurals>
     <string name="try_hiding_notification">נסה להסתיר את הודעת ההקלטה</string>
-    <string name="save_recordings_in">שמור הקלטות ב</string>
+    <string name="save_recordings_in">נתיב שמירת הקלטות</string>
     <string name="bitrate">קצב סיביות</string>
-    <string name="record_after_launch">התחל להקליט באופן אוטומטי לאחר הפעלת האפליקציה</string>
-    <string name="faq_1_title">האם אוכל להסתיר את סמל ההתראה במהלך ההקלטה\?</string>
+    <string name="record_after_launch">התחל להקליט באופן אוטומטי לאחר פתיחת האפליקציה</string>
+    <string name="faq_1_title">האם ניתן להסתיר את סמל ההתראה במהלך ההקלטה?</string>
     <string name="faq_1_text">ובכן, זה תלוי. בזמן שאתה משתמש במכשיר שלך, לא ניתן עוד להסתיר באופן מלא את ההתראות של אפליקציות כמו זו. אם תבדוק את פריט ההגדרה המתאים, האפליקציה תעשה כמיטב יכולתה להסתיר אותו. עם זאת, אתה יכול להסתיר אותו במסך הנעילה, אם אתה משבית את הצגת ההתראות הרגישות בהגדרות המכשיר שלך.</string>
+    <string name="audio_source">מקור שמע</string>
+    <string name="keep_screen_on">השאר את המסך דולק במהלך הקלטה</string>
+    <string name="recording_too_short">משך ההקלטה היה קצר מדי בשביל להקליט!</string>
+    <string name="audio_source_default">ברירת המחדל של אנדרואיד</string>
+    <string name="audio_source_unprocessed">לא מעובד</string>
+    <string name="audio_source_microphone">מיקרופון</string>
+    <string name="recorder">מקליט</string>
+    <string name="player">נגן</string>
+    <string name="audio_source_voice_recognition">זיהוי קולי</string>
+    <string name="audio_source_voice_performance">ביצועי קול</string>
+    <string name="audio_source_voice_communication">תקשורת קולית</string>
+    <string name="audio_source_camcorder">מצלמה</string>
+    <string name="move_recordings">העבר הקלטות</string>
+    <string name="move_recordings_to_new_folder_desc">יש לך הקלטות קיימות. האם אתה רוצה להעביר אותם לתיקיה החדשה שלך?</string>
+    <string name="confirm_recording_folder">עליך לאשר את התיקיה שבה ברצונך לשמור את ההקלטות שלך. אנא לחץ על אישור כדי להמשיך.</string>
+    <string name="cancel_recording">ביטול הקלטה</string>
+    <string name="cancel_recording_confirmation">האם אתה בטוח שברצונך לבטל את ההקלטה הנוכחית? לא ניתן לבטל פעולה זו.</string>
 </resources>

@@ -3,8 +3,7 @@
     <string name="app_launcher_name">Grabadora de voz</string>
     <string name="recording_saved_successfully">Grabación guardada con éxito</string>
     <string name="recording">Grabando</string>
-    <string name="no_recordings_found">No se han encontrado grabaciones
-\nse han encontrado</string>
+    <string name="no_recordings_found">No se han encontrado grabaciones \ncreadas por esta aplicación</string>
     <string name="no_recordings_in_folder_found">No se han encontrado grabaciones\nen la carpeta seleccionada</string>
     <string name="paused">En pausa</string>
     <string name="recorder">Grabación</string>
@@ -29,4 +28,11 @@
     <string name="audio_source">Fuente de audio</string>
     <string name="audio_source_default">Por defecto en Android</string>
     <string name="audio_source_voice_performance">Interpretación de la voz</string>
+    <string name="confirm_recording_folder">Debes confirmar la carpeta donde quieres guardar tus grabaciones. Pulsa OK para continuar.</string>
+    <string name="move_recordings">Mover grabaciones</string>
+    <string name="move_recordings_to_new_folder_desc">Tienes grabaciones existentes. ¿Quieres moverlas a tu nueva carpeta?</string>
+    <string name="keep_screen_on">Mantener la pantalla encendida durante la grabación</string>
+    <string name="recording_too_short">¡La grabación fue demasiado corta para grabar!</string>
+    <string name="cancel_recording">Cancelar grabación</string>
+    <string name="cancel_recording_confirmation">¿Está seguro de que desea cancelar la grabación actual? Esto no se puede deshacer.</string>
 </resources>

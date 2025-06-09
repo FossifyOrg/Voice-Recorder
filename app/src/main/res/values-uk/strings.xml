@@ -36,4 +36,6 @@
     <string name="confirm_recording_folder">Ви повинні підтвердити теку, куди хочете зберегти ваші записи. Натисніть «Гаразд», щоби продовжити.</string>
     <string name="move_recordings">Перемістити записи</string>
     <string name="move_recordings_to_new_folder_desc">У вас існують записи. Хочете перемістити їх до нової теки?</string>
+    <string name="cancel_recording">Скасувати записування</string>
+    <string name="cancel_recording_confirmation">Ви впевнені, що хочете скасувати поточний запис? Це не можна скасувати.</string>
 </resources>

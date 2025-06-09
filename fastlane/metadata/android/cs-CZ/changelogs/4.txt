@@ -1,2 +1,0 @@
-* Přidána poznámka o experimentální podpoře při nahrávání MP3
-* Přidány další překlady

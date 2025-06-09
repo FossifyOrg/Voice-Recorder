@@ -1,8 +1,0 @@
-* S'han substituït caselles de selecció per interruptors
-* Eliminat el suport per a l'Android 7 i versions anteriors
-* Afegit un botó per cancel·lar l'enregistrament
-* Afegida l'opció per a mantenir la pantalla activa durant l'enregistrament
-* Corregit un error amb el botó de suprimir enregistraments
-* Corregit un problema amb estats no vàlids de botons
-* Corregida l'aplicació que no respon als errors
-* Afegida l'opció per a moure els enregistraments en canviar la carpeta d'enregistraments[...]

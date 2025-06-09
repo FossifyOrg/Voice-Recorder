@@ -34,4 +34,6 @@
     <string name="move_recordings_to_new_folder_desc">Du har befintliga inspelningar. Vill du flytta dem till den nya mappen?</string>
     <string name="move_recordings">Flytta inspelningar</string>
     <string name="confirm_recording_folder">Du måste bekräfta mappen där du vill spara dina inspelningar. Tryck på OK för att fortsätta.</string>
+    <string name="cancel_recording">Avbryt inspelning</string>
+    <string name="cancel_recording_confirmation">Är du säker på att du vill avbryta nuvarande inspelning. Det går ej att ångra.</string>
 </resources>
