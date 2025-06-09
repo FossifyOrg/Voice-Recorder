@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Option to choose recording sample rate ([#33])
+
 ### Changed
 
 - Updated translations
@@ -87,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.0]: https://github.com/FossifyOrg/Voice-Recorder/releases/tag/1.0.0
 
 [#22]: https://github.com/FossifyOrg/Voice-Recorder/issues/22
+[#33]: https://github.com/FossifyOrg/Voice-Recorder/issues/33
 [#40]: https://github.com/FossifyOrg/Voice-Recorder/issues/40
 [#47]: https://github.com/FossifyOrg/Voice-Recorder/issues/47
 [#57]: https://github.com/FossifyOrg/Voice-Recorder/issues/57
