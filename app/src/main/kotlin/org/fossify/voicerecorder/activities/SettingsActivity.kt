@@ -35,9 +35,13 @@ import org.fossify.voicerecorder.extensions.getAllRecordings
 import org.fossify.voicerecorder.extensions.hasRecordings
 import org.fossify.voicerecorder.extensions.launchFolderPicker
 import org.fossify.voicerecorder.helpers.BITRATES
+import org.fossify.voicerecorder.helpers.DEFAULT_BITRATE
+import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.EXTENSION_OGG
+import org.fossify.voicerecorder.helpers.SAMPLING_RATES
+import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
 import org.greenrobot.eventbus.EventBus
 import java.util.Locale
@@ -76,6 +80,7 @@ class SettingsActivity : SimpleActivity() {
         setupSaveRecordingsFolder()
         setupExtension()
         setupBitrate()
+        setupSamplingRate()
         setupAudioSource()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
@@ -202,6 +207,8 @@ class SettingsActivity : SimpleActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.extension) {
                 config.extension = it as Int
                 binding.settingsExtension.text = config.getExtensionText()
+                adjustBitrate()
+                adjustSamplingRate()
             }
         }
     }
@@ -209,17 +216,65 @@ class SettingsActivity : SimpleActivity() {
     private fun setupBitrate() {
         binding.settingsBitrate.text = getBitrateText(config.bitrate)
         binding.settingsBitrateHolder.setOnClickListener {
-            val items = BITRATES.map { RadioItem(it, getBitrateText(it)) } as ArrayList
+            val items = BITRATES[config.extension]!!
+                .map { RadioItem(it, getBitrateText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.bitrate) {
                 config.bitrate = it as Int
                 binding.settingsBitrate.text = getBitrateText(config.bitrate)
+                adjustSamplingRate()
             }
         }
     }
 
     private fun getBitrateText(value: Int): String {
         return getString(R.string.bitrate_value).format(value / 1000)
+    }
+
+    private fun adjustBitrate() {
+        val availableBitrates = BITRATES[config.extension]!!
+        if (!availableBitrates.contains(config.bitrate)) {
+            config.bitrate = DEFAULT_BITRATE
+            binding.settingsBitrate.text = getBitrateText(config.bitrate)
+        }
+    }
+
+    private fun setupSamplingRate() {
+        binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
+        binding.settingsSamplingRateHolder.setOnClickListener {
+            val items = getSamplingRatesArray()
+                .map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
+
+            RadioGroupDialog(this@SettingsActivity, items, config.samplingRate) {
+                config.samplingRate = it as Int
+                binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
+            }
+        }
+    }
+
+    private fun getSamplingRateText(value: Int): String {
+        return getString(R.string.sampling_rate_value).format(value)
+    }
+
+    private fun getSamplingRatesArray(): ArrayList<Int> {
+        val baseRates = SAMPLING_RATES[config.extension]!!
+        val limits = SAMPLING_RATE_BITRATE_LIMITS[config.extension]!!
+        val filteredRates = baseRates.filter {
+            config.bitrate in limits[it]!![0]..limits[it]!![1]
+        } as ArrayList
+        return filteredRates
+    }
+
+    private fun adjustSamplingRate() {
+        val availableSamplingRates = getSamplingRatesArray()
+        if (!availableSamplingRates.contains(config.samplingRate)) {
+            if (availableSamplingRates.contains(DEFAULT_SAMPLING_RATE)) {
+                config.samplingRate = DEFAULT_SAMPLING_RATE
+            } else {
+                config.samplingRate = availableSamplingRates.last()
+            }
+            binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
+        }
     }
 
     private fun setupRecordAfterLaunch() {

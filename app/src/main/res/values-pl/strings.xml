@@ -21,6 +21,7 @@
     <string name="bitrate">Przepływność</string>
     <string name="record_after_launch">Rozpoczynaj nagrywanie automatycznie przy uruchomieniu aplikacji</string>
     <string name="keep_screen_on">Pozostawiaj ekran włączony podczas nagrywania</string>
+    <string name="sample_rate">Częstotliwość próbkowania</string>
     <string name="audio_source_camcorder">Aparat</string>
     <string name="audio_source_default">Domyślne systemowe</string>
     <string name="audio_source_unprocessed">Nieprzetworzone</string>

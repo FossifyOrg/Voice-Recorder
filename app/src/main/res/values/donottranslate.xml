@@ -7,4 +7,5 @@
     <string name="ogg">ogg</string>
     <string name="ogg_opus">ogg (Opus)</string>
     <string name="bitrate_value">%d kbps</string>
+    <string name="sampling_rate_value">%d Hz</string>
 </resources>
