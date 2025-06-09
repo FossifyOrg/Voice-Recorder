@@ -216,7 +216,8 @@ class SettingsActivity : SimpleActivity() {
     private fun setupBitrate() {
         binding.settingsBitrate.text = getBitrateText(config.bitrate)
         binding.settingsBitrateHolder.setOnClickListener {
-            val items = BITRATES[config.extension]!!.map { RadioItem(it, getBitrateText(it)) } as ArrayList
+            val items = BITRATES[config.extension]!!
+                .map { RadioItem(it, getBitrateText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.bitrate) {
                 config.bitrate = it as Int
@@ -241,7 +242,8 @@ class SettingsActivity : SimpleActivity() {
     private fun setupSamplingRate() {
         binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
         binding.settingsSamplingRateHolder.setOnClickListener {
-            val items = getSamplingRatesArray().map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
+            val items = getSamplingRatesArray()
+                .map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.samplingRate) {
                 config.samplingRate = it as Int

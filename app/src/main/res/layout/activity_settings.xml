@@ -295,7 +295,7 @@
                     style="@style/SettingsTextLabelStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sampling_rate" />
+                    android:text="@string/sample_rate" />
 
                 <org.fossify.commons.views.MyTextView
                     android:id="@+id/settings_sampling_rate"
