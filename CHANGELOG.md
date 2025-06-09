@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Option to choose audio sample rate in recording settings ([#33])
+- Option to choose recording sample rate ([#33])
 
 ### Changed
 
