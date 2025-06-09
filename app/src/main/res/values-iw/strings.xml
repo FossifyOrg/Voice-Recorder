@@ -35,4 +35,5 @@
     <string name="confirm_recording_folder">עליך לאשר את התיקיה שבה ברצונך לשמור את ההקלטות שלך. אנא לחץ על אישור כדי להמשיך.</string>
     <string name="discard_recording">ביטול הקלטה</string>
     <string name="discard_recording_confirmation">האם אתה בטוח שברצונך לבטל את ההקלטה הנוכחית? לא ניתן לבטל פעולה זו.</string>
+    <string name="sample_rate">קצב דגימה</string>
 </resources>
