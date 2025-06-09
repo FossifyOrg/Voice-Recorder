@@ -13,8 +13,8 @@
     <string name="recorder">Recorder</string>
     <string name="player">Player</string>
     <!-- Confirmation dialog -->
-    <string name="cancel_recording">Cancel recording</string>
-    <string name="cancel_recording_confirmation">Are you sure you want to cancel the current recording? This cannot be undone.</string>
+    <string name="discard_recording">Discard recording</string>
+    <string name="discard_recording_confirmation">Are you sure you want to discard the current recording? This cannot be undone.</string>
     <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Delete %s\?</string>
     <plurals name="delete_recordings">
