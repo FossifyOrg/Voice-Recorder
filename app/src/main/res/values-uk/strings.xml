@@ -38,4 +38,5 @@
     <string name="move_recordings_to_new_folder_desc">У вас існують записи. Хочете перемістити їх до нової теки?</string>
     <string name="discard_recording">Скасувати записування</string>
     <string name="discard_recording_confirmation">Ви впевнені, що хочете скасувати поточний запис? Це не можна скасувати.</string>
+    <string name="sample_rate">Частота дискретизації</string>
 </resources>
