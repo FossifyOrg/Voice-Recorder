@@ -34,6 +34,6 @@
     <string name="confirm_recording_folder">Bevestig de map waarin de opnames moeten worden opgeslagen en klik op OK om door te gaan.</string>
     <string name="move_recordings">Opnames verplaatsen</string>
     <string name="move_recordings_to_new_folder_desc">Wil je de bestaande opnames verplaatsen naar de nieuwe map?</string>
-    <string name="cancel_recording">Opname annuleren</string>
-    <string name="cancel_recording_confirmation">Weet je zeker dat je de huidige opname wilt annuleren? Dit kan niet worden teruggedraaid.</string>
+    <string name="discard_recording">Opname annuleren</string>
+    <string name="discard_recording_confirmation">Weet je zeker dat je de huidige opname wilt annuleren? Dit kan niet worden teruggedraaid.</string>
 </resources>

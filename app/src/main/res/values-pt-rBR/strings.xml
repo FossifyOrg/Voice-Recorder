@@ -35,6 +35,6 @@
     <string name="confirm_recording_folder">Você deve confirmar a pasta onde deseja salvar suas gravações. Pressione OK para continuar.</string>
     <string name="move_recordings_to_new_folder_desc">Você tem gravações existentes. Quer movê-las para sua nova pasta?</string>
     <string name="recording_too_short">A gravação foi muito curta para gravar!</string>
-    <string name="cancel_recording">Cancelar gravação</string>
-    <string name="cancel_recording_confirmation">Você tem certeza que quer cancelar a gravação atual? Isso não poderá ser desfeito.</string>
+    <string name="discard_recording">Cancelar gravação</string>
+    <string name="discard_recording_confirmation">Você tem certeza que quer cancelar a gravação atual? Isso não poderá ser desfeito.</string>
 </resources>

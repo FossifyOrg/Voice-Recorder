@@ -171,8 +171,8 @@ class RecorderFragment(
         val activity = context as? BaseSimpleActivity ?: return
         ConfirmationDialog(
             activity = activity,
-            message = activity.getString(R.string.cancel_recording_confirmation),
-            dialogTitle = activity.getString(R.string.cancel_recording)
+            message = activity.getString(R.string.discard_recording_confirmation),
+            dialogTitle = activity.getString(R.string.discard_recording)
         ) {
             cancelRecording()
         }

@@ -33,6 +33,6 @@
     <string name="confirm_recording_folder">您必须确认要保存录制的文件夹。请按“确定”继续。</string>
     <string name="move_recordings">移动录音</string>
     <string name="move_recordings_to_new_folder_desc">您有现有的录音。是否要将它们移动到新文件夹？</string>
-    <string name="cancel_recording_confirmation">是否确定要取消当前录制？此操作无法撤销。</string>
-    <string name="cancel_recording">取消录制</string>
+    <string name="discard_recording_confirmation">是否确定要取消当前录制？此操作无法撤销。</string>
+    <string name="discard_recording">取消录制</string>
 </resources>

@@ -25,9 +25,9 @@
     <string name="audio_source_voice_performance">Hiệu suất giọng nói</string>
     <string name="faq_1_title">Tôi có thể ẩn biểu tượng thông báo trong khi ghi không\?</string>
     <string name="faq_1_text">Dạ, nó phụ thuộc. Khi bạn sử dụng thiết bị của mình, bạn không thể ẩn hoàn toàn thông báo của các ứng dụng như thế này nữa. Nếu bạn chọn mục cài đặt phù hợp, ứng dụng sẽ cố gắng hết sức để ẩn mục đó. Tuy nhiên, bạn có thể ẩn nó trên màn hình khóa nếu bạn tắt hiển thị các thông báo nhạy cảm trong cài đặt thiết bị của mình.</string>
-    <string name="cancel_recording_confirmation">Bạn có chắc muốn hủy bản ghi âm này? Bản ghi âm sẽ không thể được phục hồi.</string>
+    <string name="discard_recording_confirmation">Bạn có chắc muốn hủy bản ghi âm này? Bản ghi âm sẽ không thể được phục hồi.</string>
     <string name="bitrate">Bitrate</string>
-    <string name="cancel_recording">Hủy ghi âm</string>
+    <string name="discard_recording">Hủy ghi âm</string>
     <string name="keep_screen_on">Giữ màn hình sáng trong khi ghi âm</string>
     <string name="confirm_recording_folder">Bạn cần chọn thư mục để lưu các bản ghi âm. Nhấn OK để chọn.</string>
     <string name="move_recordings">Chuyển bản ghi âm hiện có</string>
