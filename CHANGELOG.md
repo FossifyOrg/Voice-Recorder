@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Improved wording in the recording cancellation dialog ([#141])
 - Updated translations
-- Renamed "cancel recording" to "discard recording" ([#141])
 
 ## [1.2.0] - 2025-05-20
 
