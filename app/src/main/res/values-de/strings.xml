@@ -34,4 +34,5 @@
     <string name="move_recordings">Aufnahmen verschieben</string>
     <string name="discard_recording">Aufnahme abbrechen</string>
     <string name="discard_recording_confirmation">Soll die aktuelle Aufnahme wirklich verworfen werden? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="sample_rate">Abtastrate</string>
 </resources>
