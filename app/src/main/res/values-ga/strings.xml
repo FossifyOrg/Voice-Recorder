@@ -37,4 +37,5 @@
     <string name="move_recordings">Bog taifeadtaí</string>
     <string name="discard_recording">Cealaigh an taifeadadh</string>
     <string name="discard_recording_confirmation">An bhfuil tú cinnte gur mhaith leat an taifeadadh reatha a chealú? Ní féidir é seo a chealú.</string>
+    <string name="sample_rate">Ráta samplach</string>
 </resources>
