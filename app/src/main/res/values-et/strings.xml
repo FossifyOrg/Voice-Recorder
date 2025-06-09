@@ -36,4 +36,5 @@
     <string name="move_recordings">Salvestuste teisaldamine</string>
     <string name="discard_recording">Katkesta salvestamine</string>
     <string name="discard_recording_confirmation">Kas sa oled kindel, et soovid salvestamise katkestada? Seda tegevust ei saa hiljem tagasi pöörata.</string>
+    <string name="sample_rate">Diskreetimissagedus</string>
 </resources>
