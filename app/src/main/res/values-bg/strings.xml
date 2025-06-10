@@ -13,7 +13,6 @@
         <item quantity="one">%d запис</item>
         <item quantity="other">%d записа</item>
     </plurals>
-    <string name="try_hiding_notification">Опитайте да скриете известието за запис</string>
     <string name="save_recordings_in">Местоположение на записите</string>
     <string name="audio_source">Източник на звука</string>
     <string name="bitrate">Скорост на данните</string>

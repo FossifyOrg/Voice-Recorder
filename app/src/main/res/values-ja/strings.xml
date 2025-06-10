@@ -14,7 +14,6 @@
     <plurals name="delete_recordings">
         <item quantity="other">%d 件の録音</item>
     </plurals>
-    <string name="try_hiding_notification">録音通知を隠す</string>
     <string name="save_recordings_in">録音の保存場所</string>
     <string name="audio_source">オーディオソース (AudioSource)</string>
     <string name="bitrate">ビットレート</string>

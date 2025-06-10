@@ -14,7 +14,6 @@
     <plurals name="delete_recordings">
         <item quantity="other">%d 개</item>
     </plurals>
-    <string name="try_hiding_notification">녹음 알림 숨기기</string>
     <string name="save_recordings_in">녹음 저장 위치</string>
     <string name="audio_source">오디오 소스</string>
     <string name="bitrate">비트레이트</string>

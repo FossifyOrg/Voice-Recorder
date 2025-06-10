@@ -16,7 +16,6 @@
         <item quantity="few">%d nahrávky</item>
         <item quantity="other">%d nahrávek</item>
     </plurals>
-    <string name="try_hiding_notification">Zkusit skrýt oznámení o nahrávání</string>
     <string name="save_recordings_in">Uložit nahrávky v</string>
     <string name="audio_source">Zdroj zvuku</string>
     <string name="bitrate">Bitový tok</string>

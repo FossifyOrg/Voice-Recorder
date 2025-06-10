@@ -15,7 +15,6 @@
         <item quantity="one">%d felvételt</item>
         <item quantity="other">%d felvételt</item>
     </plurals>
-    <string name="try_hiding_notification">Próbálja elrejteni a rögzítési értesítéseket</string>
     <string name="save_recordings_in">Felvételek mentési helye</string>
     <string name="audio_source">Hangforrás</string>
     <string name="bitrate">Bitsebesség</string>

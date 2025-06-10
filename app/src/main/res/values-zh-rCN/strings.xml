@@ -14,7 +14,6 @@
     <plurals name="delete_recordings">
         <item quantity="other">%d 个录音</item>
     </plurals>
-    <string name="try_hiding_notification">尝试隐藏录音通知提示</string>
     <string name="save_recordings_in">保存录音至</string>
     <string name="audio_source">音频来源</string>
     <string name="bitrate">比特率</string>

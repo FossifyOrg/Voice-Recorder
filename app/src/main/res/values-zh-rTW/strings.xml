@@ -12,7 +12,6 @@
     <plurals name="delete_recordings">
         <item quantity="other">%d 段錄音</item>
     </plurals>
-    <string name="try_hiding_notification">儘量隱藏錄音通知</string>
     <string name="save_recordings_in">錄音儲存至</string>
     <string name="audio_source">音訊來源</string>
     <string name="bitrate">位元率</string>

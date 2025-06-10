@@ -14,7 +14,6 @@
         <item quantity="many">%d taifeadtaí</item>
         <item quantity="other">%d taifeadtaí</item>
     </plurals>
-    <string name="try_hiding_notification">Bain triail as an bhfógra taifeadta a chur i bhfolach</string>
     <string name="save_recordings_in">Sábháil taifeadtaí i</string>
     <string name="audio_source">Foinse fuaime</string>
     <string name="bitrate">Ráta giotán</string>

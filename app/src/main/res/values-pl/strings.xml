@@ -15,7 +15,6 @@
         <item quantity="many">%d nagrań</item>
         <item quantity="other">%d nagrań</item>
     </plurals>
-    <string name="try_hiding_notification">Próbuj ukrywać powiadomienie o nagrywaniu</string>
     <string name="save_recordings_in">Zapisuj nagrania w</string>
     <string name="audio_source">Źródło dźwięku</string>
     <string name="bitrate">Przepływność</string>

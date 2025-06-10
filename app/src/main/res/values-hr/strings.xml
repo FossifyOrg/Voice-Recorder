@@ -16,7 +16,6 @@
         <item quantity="few">%d snimke</item>
         <item quantity="other">%d snimki</item>
     </plurals>
-    <string name="try_hiding_notification">Pokušaj sakriti obavijesti snimanja</string>
     <string name="save_recordings_in">Spremi snimanja u</string>
     <string name="audio_source">Izvor zvuka</string>
     <string name="bitrate">Brzina prijenosa</string>

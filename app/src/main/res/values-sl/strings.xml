@@ -17,7 +17,6 @@
         <item quantity="few">%d posnetki</item>
         <item quantity="other">%d posnetkov</item>
     </plurals>
-    <string name="try_hiding_notification">Poizkusi skriti obvestilo o snemanju</string>
     <string name="save_recordings_in">Shrani posnetke v</string>
     <string name="audio_source">Vir zvoka</string>
     <string name="bitrate">Bitna hitrost</string>

@@ -14,7 +14,6 @@
         <item quantity="few">%d înregistrări</item>
         <item quantity="other">%d înregistrări</item>
     </plurals>
-    <string name="try_hiding_notification">Încercați să ascundeți notificarea de înregistrare</string>
     <string name="save_recordings_in">Salvați înregistrările în</string>
     <string name="bitrate">Rata de biți</string>
     <string name="record_after_launch">Începeți înregistrarea în mod automat după lansarea aplicației</string>
