@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Improved wording in the recording cancellation dialog ([#141])
+- Moved recording-related preferences to a new "Recording" section ([#147])
 - Updated translations
 
 ## [1.2.0] - 2025-05-20
@@ -100,3 +101,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#81]: https://github.com/FossifyOrg/Voice-Recorder/issues/81
 [#106]: https://github.com/FossifyOrg/Voice-Recorder/issues/106
 [#141]: https://github.com/FossifyOrg/Voice-Recorder/issues/141
+[#147]: https://github.com/FossifyOrg/Voice-Recorder/issues/147
