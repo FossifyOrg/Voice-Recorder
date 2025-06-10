@@ -15,7 +15,6 @@
         <item quantity="one">%d salvestus</item>
         <item quantity="other">%d salvestust</item>
     </plurals>
-    <string name="try_hiding_notification">Proovi peita salvestamise teavitust</string>
     <string name="save_recordings_in">Salvesta failid kausta</string>
     <string name="audio_source">Heliallikas</string>
     <string name="bitrate">Bitikiirus</string>

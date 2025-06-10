@@ -15,7 +15,6 @@
         <item quantity="one">%d äänite</item>
         <item quantity="other">%d äänitettä</item>
     </plurals>
-    <string name="try_hiding_notification">Pyri piilottamaan äänitysilmoitus</string>
     <string name="save_recordings_in">Tallenna äänitteet kohteeseen</string>
     <string name="audio_source">Äänilähde</string>
     <string name="bitrate">Bittinopeus</string>

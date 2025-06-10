@@ -16,7 +16,6 @@
         <item quantity="many">%d enregistrements</item>
         <item quantity="other">%d enregistrements</item>
     </plurals>
-    <string name="try_hiding_notification">Essayez de masquer la notification d’enregistrement</string>
     <string name="save_recordings_in">Sauvegarder les enregistrements dans</string>
     <string name="audio_source">Source audio</string>
     <string name="bitrate">Débit binaire</string>

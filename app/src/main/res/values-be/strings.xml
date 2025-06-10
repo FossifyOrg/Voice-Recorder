@@ -17,7 +17,6 @@
         <item quantity="many">%d запісаў</item>
         <item quantity="other">%d запісаў</item>
     </plurals>
-    <string name="try_hiding_notification">Спрабаваць схаваць апавяшчэнне пры запісу</string>
     <string name="save_recordings_in">Месца захавання запісаў</string>
     <string name="audio_source">Крыніца гуку</string>
     <string name="bitrate">Бітрэйт</string>

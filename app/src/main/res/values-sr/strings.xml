@@ -14,7 +14,6 @@
         <item quantity="few">%d снимањa</item>
         <item quantity="other">%d снимањa</item>
     </plurals>
-    <string name="try_hiding_notification">Покушајте да сакријете обавештење о снимању</string>
     <string name="save_recordings_in">Сачувајте снимке у</string>
     <string name="audio_source">Аудио извор</string>
     <string name="bitrate">Битна брзина</string>

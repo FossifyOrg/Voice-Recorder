@@ -16,7 +16,6 @@
         <item quantity="many">%d gravações</item>
         <item quantity="other">%d gravações</item>
     </plurals>
-    <string name="try_hiding_notification">Tentar ocultar a notificação de gravação</string>
     <string name="save_recordings_in">Salvar gravações em</string>
     <string name="audio_source">Fonte de áudio</string>
     <string name="record_after_launch">Começar a gravar automaticamente após iniciar o aplicativo</string>

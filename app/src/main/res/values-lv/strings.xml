@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="try_hiding_notification">Mēģināt paslēpt ierakstīšanas paziņojumu</string>
     <string name="save_recordings_in">Saglabāt ierakstus</string>
     <string name="faq_1_title">Vai es ierakstīšanas laikā varu paslēpt paziņojuma ikonu?</string>
     <string name="confirm_recording_folder">Ir jāapstiprina mape, kurā saglabāt savus ierakstus. Lūgums spiest \"Labi\", lai turpinātu.</string>

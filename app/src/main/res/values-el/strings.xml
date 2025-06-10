@@ -14,7 +14,6 @@
         <item quantity="one">%d εγγραφή</item>
         <item quantity="other">%d εγγραφές</item>
     </plurals>
-    <string name="try_hiding_notification">Δοκιμάστε να αποκρύψετε την ειδοποίηση εγγραφής</string>
     <string name="save_recordings_in">Αποθήκευση εγγραφών σε</string>
     <string name="audio_source">Πηγή ήχου</string>
     <string name="bitrate">Ρυθμός bit</string>

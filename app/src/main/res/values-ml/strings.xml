@@ -8,7 +8,6 @@
 \nin the selected folder</string>
     <string name="paused">താൽക്കാലികമായി നിർത്തി</string>
     <string name="delete_recordings_confirmation">%s ഇല്ലാതാക്കണോ\?</string>
-    <string name="try_hiding_notification">റെക്കോർഡിംഗ് അറിയിപ്പ് മറയ്ക്കാൻ ശ്രമിക്കുക</string>
     <string name="save_recordings_in">റെക്കോർഡിംഗുകൾ ഇതിൽ സംരക്ഷിക്കുക</string>
     <string name="audio_source">ഓഡിയോ ഉറവിടം</string>
     <string name="bitrate">ബിറ്റ്റേറ്റ്</string>

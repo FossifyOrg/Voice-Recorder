@@ -16,7 +16,6 @@
         <item quantity="few">%d nahrávky</item>
         <item quantity="other">%d nahrávok</item>
     </plurals>
-    <string name="try_hiding_notification">Skúsiť ukryť nahrávaciu notifikáciu</string>
     <string name="save_recordings_in">Ukladať nahrávky do</string>
     <string name="audio_source">Zdroj audia</string>
     <string name="record_after_launch">Zapnúť nahrávanie automaticky po spustení apky</string>

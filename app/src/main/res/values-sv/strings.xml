@@ -15,7 +15,6 @@
         <item quantity="one">%d inspelning</item>
         <item quantity="other">%d inspelningar</item>
     </plurals>
-    <string name="try_hiding_notification">Försök dölja inspelningsaviseringen</string>
     <string name="save_recordings_in">Spara inspelningar i</string>
     <string name="audio_source">Ljudkälla</string>
     <string name="bitrate">Bithastighet</string>

@@ -15,7 +15,6 @@
         <item quantity="one">%d kayıt</item>
         <item quantity="other">%d kayıt</item>
     </plurals>
-    <string name="try_hiding_notification">Kayıt bildirimini gizlemeyi dene</string>
     <string name="save_recordings_in">Kayıt klasörü:</string>
     <string name="audio_source">Ses kaynağı</string>
     <string name="bitrate">Bit hızı</string>

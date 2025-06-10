@@ -8,7 +8,6 @@
         <item quantity="one">%d registro</item>
         <item quantity="other">%d registros</item>
     </plurals>
-    <string name="try_hiding_notification">Tenta celar le notification de registration</string>
     <string name="save_recordings_in">Salveguardar registros in</string>
     <string name="audio_source">Fonte de audio</string>
     <string name="bitrate">Taxa de bits</string>

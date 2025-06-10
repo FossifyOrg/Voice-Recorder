@@ -15,7 +15,6 @@
         <item quantity="one">Grabazio %d</item>
         <item quantity="other">%d grabazio</item>
     </plurals>
-    <string name="try_hiding_notification">Saiatu grabazioaren jakinarazpena ezkutatzen</string>
     <string name="save_recordings_in">Gorde grabaketak hemen</string>
     <string name="audio_source">Audio iturria</string>
     <string name="bitrate">Bit-tasa</string>
