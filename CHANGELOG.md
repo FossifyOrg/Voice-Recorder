@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved recording-related preferences to a new "Recording" section ([#147])
 - Updated translations
 
+### Removed
+
+- Removed outdated option for hiding notification ([#150])
+
 ## [1.2.0] - 2025-05-20
 
 ### Added
@@ -102,3 +106,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#106]: https://github.com/FossifyOrg/Voice-Recorder/issues/106
 [#141]: https://github.com/FossifyOrg/Voice-Recorder/issues/141
 [#147]: https://github.com/FossifyOrg/Voice-Recorder/issues/147
+[#150]: https://github.com/FossifyOrg/Voice-Recorder/issues/150

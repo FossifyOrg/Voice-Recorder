@@ -267,37 +267,22 @@ class RecorderService : Service() {
     }
 
     private fun showNotification(): Notification {
-        val hideNotification = config.hideNotification
         val channelId = "simple_recorder"
         val label = getString(R.string.app_name)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val importance = if (hideNotification) {
-            NotificationManager.IMPORTANCE_MIN
-        } else {
-            NotificationManager.IMPORTANCE_DEFAULT
-        }
 
-        NotificationChannel(channelId, label, importance).apply {
+        NotificationChannel(channelId, label, NotificationManager.IMPORTANCE_DEFAULT).apply {
             setSound(null, null)
             notificationManager.createNotificationChannel(this)
         }
 
-        var priority = NotificationManager.IMPORTANCE_DEFAULT
-        var icon = R.drawable.ic_graphic_eq_vector
-        var title = label
-        var visibility = NotificationCompat.VISIBILITY_PUBLIC
+        val icon = R.drawable.ic_graphic_eq_vector
+        val title = label
+        val visibility = NotificationCompat.VISIBILITY_PUBLIC
         var text = getString(R.string.recording)
         if (status == RECORDING_PAUSED) {
             text += " (${getString(R.string.paused)})"
-        }
-
-        if (hideNotification) {
-            priority = NotificationManager.IMPORTANCE_MIN
-            icon = R.drawable.ic_empty
-            title = ""
-            text = ""
-            visibility = NotificationCompat.VISIBILITY_SECRET
         }
 
         val builder = NotificationCompat.Builder(this, channelId)
@@ -305,7 +290,7 @@ class RecorderService : Service() {
             .setContentText(text)
             .setSmallIcon(icon)
             .setContentIntent(getOpenAppIntent())
-            .setPriority(priority)
+            .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
             .setVisibility(visibility)
             .setSound(null)
             .setOngoing(true)

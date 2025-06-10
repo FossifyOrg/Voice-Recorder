@@ -22,7 +22,6 @@
         <item quantity="other">%d recordings</item>
     </plurals>
     <!-- Settings -->
-    <string name="try_hiding_notification">Try hiding the recording notification</string>
     <string name="save_recordings_in">Save recordings in</string>
     <string name="audio_source">Audio source</string>
     <string name="bitrate">Bitrate</string>

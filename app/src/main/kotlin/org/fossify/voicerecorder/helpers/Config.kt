@@ -12,10 +12,6 @@ class Config(context: Context) : BaseConfig(context) {
         fun newInstance(context: Context) = Config(context)
     }
 
-    var hideNotification: Boolean
-        get() = prefs.getBoolean(HIDE_NOTIFICATION, false)
-        set(hideNotification) = prefs.edit().putBoolean(HIDE_NOTIFICATION, hideNotification).apply()
-
     var saveRecordingsFolder: String
         get() = prefs.getString(SAVE_RECORDINGS, context.getDefaultRecordingsFolder())!!
         set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder)

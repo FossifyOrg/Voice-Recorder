@@ -76,7 +76,6 @@ class SettingsActivity : SimpleActivity() {
         setupUseEnglish()
         setupLanguage()
         setupChangeDateTimeFormat()
-        setupHideNotification()
         setupSaveRecordingsFolder()
         setupExtension()
         setupBitrate()
@@ -149,14 +148,6 @@ class SettingsActivity : SimpleActivity() {
     private fun setupChangeDateTimeFormat() {
         binding.settingsChangeDateTimeFormatHolder.setOnClickListener {
             ChangeDateTimeFormatDialog(this) {}
-        }
-    }
-
-    private fun setupHideNotification() {
-        binding.settingsHideNotification.isChecked = config.hideNotification
-        binding.settingsHideNotificationHolder.setOnClickListener {
-            binding.settingsHideNotification.toggle()
-            config.hideNotification = binding.settingsHideNotification.isChecked
         }
     }
 
