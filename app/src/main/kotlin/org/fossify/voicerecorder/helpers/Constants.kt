@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package org.fossify.voicerecorder.helpers
 
 const val REPOSITORY_NAME = "Voice-Recorder"

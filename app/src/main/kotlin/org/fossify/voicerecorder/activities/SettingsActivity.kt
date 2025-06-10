@@ -45,6 +45,7 @@ import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
 import org.greenrobot.eventbus.EventBus
 import java.util.Locale
+import kotlin.math.abs
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
@@ -226,7 +227,11 @@ class SettingsActivity : SimpleActivity() {
     private fun adjustBitrate() {
         val availableBitrates = BITRATES[config.extension]!!
         if (!availableBitrates.contains(config.bitrate)) {
-            config.bitrate = DEFAULT_BITRATE
+            val currentBitrate = config.bitrate
+            val closestBitrate = availableBitrates.minByOrNull { abs(it - currentBitrate) }
+                ?: DEFAULT_BITRATE
+            
+            config.bitrate = closestBitrate
             binding.settingsBitrate.text = getBitrateText(config.bitrate)
         }
     }
