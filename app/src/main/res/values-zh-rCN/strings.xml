@@ -7,7 +7,7 @@
 \n创建的录音</string>
     <string name="no_recordings_in_folder_found">未在所选的文件夹中找到
 \n录音</string>
-    <string name="paused">暂停</string>
+    <string name="paused">已暂停</string>
     <string name="recorder">录音机</string>
     <string name="player">播放器</string>
     <string name="delete_recordings_confirmation">删除 %s？</string>
@@ -20,7 +20,7 @@
     <string name="bitrate">比特率</string>
     <string name="record_after_launch">启动应用程序后自动开始录制</string>
     <string name="audio_source_camcorder">相机</string>
-    <string name="audio_source_default">安卓默认</string>
+    <string name="audio_source_default">Android 默认</string>
     <string name="audio_source_unprocessed">未处理的</string>
     <string name="audio_source_microphone">麦克风</string>
     <string name="audio_source_voice_recognition">语音识别</string>
@@ -35,4 +35,5 @@
     <string name="move_recordings_to_new_folder_desc">您有现有的录音。是否要将它们移动到新文件夹？</string>
     <string name="discard_recording_confirmation">是否确定要取消当前录制？此操作无法撤销。</string>
     <string name="discard_recording">取消录制</string>
+    <string name="sample_rate">采样率</string>
 </resources>
