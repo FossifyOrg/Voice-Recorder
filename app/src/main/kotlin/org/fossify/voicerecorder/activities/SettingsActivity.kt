@@ -91,6 +91,7 @@ class SettingsActivity : SimpleActivity() {
         arrayOf(
             binding.settingsColorCustomizationSectionLabel,
             binding.settingsGeneralSettingsLabel,
+            binding.settingsRecordingSectionLabel,
             binding.settingsRecycleBinLabel
         ).forEach {
             it.setTextColor(getProperPrimaryColor())

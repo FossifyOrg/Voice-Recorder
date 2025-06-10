@@ -163,6 +163,17 @@
 
             </RelativeLayout>
 
+            <include
+                android:id="@+id/settings_general_settings_divider"
+                layout="@layout/divider" />
+
+            <TextView
+                android:id="@+id/settings_recording_section_label"
+                style="@style/SettingsSectionLabelStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recording" />
+
             <RelativeLayout
                 android:id="@+id/settings_record_after_launch_holder"
                 style="@style/SettingsHolderSwitchStyle"
@@ -308,7 +319,7 @@
             </RelativeLayout>
 
             <include
-                android:id="@+id/settings_general_settings_divider"
+                android:id="@+id/settings_recording_divider"
                 layout="@layout/divider" />
 
             <TextView
