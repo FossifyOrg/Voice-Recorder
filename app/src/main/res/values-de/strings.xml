@@ -33,5 +33,5 @@
     <string name="move_recordings_to_new_folder_desc">Du hast bereits vorhandene Aufnahmen. Möchtest du diese in den neuen Ordner verschieben?</string>
     <string name="move_recordings">Aufnahmen verschieben</string>
     <string name="discard_recording">Aufnahme abbrechen</string>
-    <string name="discard_recording_confirmation">Soll die laufende Aufnahme wirklich abgebrochen werden? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="discard_recording_confirmation">Soll die aktuelle Aufnahme wirklich verworfen werden? Dies kann nicht rückgängig gemacht werden.</string>
 </resources>
