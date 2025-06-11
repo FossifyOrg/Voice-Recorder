@@ -35,4 +35,5 @@
     <string name="move_recordings_to_new_folder_desc">Kayıtlarınız mevcut. Yeni klasörünüze taşımak istiyor musunuz?</string>
     <string name="discard_recording">Kaydı iptal et</string>
     <string name="discard_recording_confirmation">Şu anda yapılan kaydı iptal etmek istediğinize emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="sample_rate">Örnekleme hızı</string>
 </resources>
