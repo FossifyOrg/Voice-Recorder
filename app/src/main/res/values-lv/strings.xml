@@ -31,7 +31,7 @@
     <string name="keep_screen_on">Ierakstīšanas laikā paturēt ekrānu ieslēgtu</string>
     <string name="audio_source_default">Android noklusējums</string>
     <string name="recording_too_short">Ieraksts bija pārāk īss.</string>
-    <string name="recording">Ieraksts</string>
+    <string name="recording">Ieraksta</string>
     <string name="move_recordings">Pārvietot ierakstus</string>
     <string name="move_recordings_to_new_folder_desc">Tev ir esoši ieraksti. Vai vēlies pārvietot tos uz jauno mapi?</string>
     <string name="player">Atskaņotājs</string>
