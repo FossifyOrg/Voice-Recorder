@@ -36,4 +36,5 @@
     <string name="recording_too_short">A gravação foi muito curta para gravar!</string>
     <string name="discard_recording">Cancelar gravação</string>
     <string name="discard_recording_confirmation">Você tem certeza que quer cancelar a gravação atual? Isso não poderá ser desfeito.</string>
+    <string name="sample_rate">Taxa de amostragem</string>
 </resources>
