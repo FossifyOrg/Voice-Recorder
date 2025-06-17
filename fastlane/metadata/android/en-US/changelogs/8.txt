@@ -1,0 +1,5 @@
+Changed:
+
+• Marked app as beta
+• Updated translations
+
