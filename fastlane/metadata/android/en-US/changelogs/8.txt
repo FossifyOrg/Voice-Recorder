@@ -1,5 +1,14 @@
+Added:
+
+• Option to choose recording sample rate 
+
 Changed:
 
-• Marked app as beta
+• Improved wording in the recording cancellation dialog 
+• Moved recording-related preferences to a new "Recording" section 
 • Updated translations
+
+Removed:
+
+• Removed outdated option for hiding notification 
 
