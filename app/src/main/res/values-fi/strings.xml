@@ -35,4 +35,5 @@
     <string name="recording_too_short">Nauhoitus oli liian lyhyt!</string>
     <string name="discard_recording">Peruuta tallennus</string>
     <string name="discard_recording_confirmation">Haluatko varmasti perua nykyisen tallennuksen. Tätä ei voi perua.</string>
+    <string name="sample_rate">Näytteenottotaajuus</string>
 </resources>
