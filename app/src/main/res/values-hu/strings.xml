@@ -35,4 +35,5 @@
     <string name="move_recordings">Felvételek áthelyezése</string>
     <string name="discard_recording">Felvétel visszavonása</string>
     <string name="discard_recording_confirmation">Biztos, hogy visszavonod a felvételt? Visszafordíthatatlan művelet.</string>
+    <string name="sample_rate">Mintavételezési gyakoriság</string>
 </resources>
