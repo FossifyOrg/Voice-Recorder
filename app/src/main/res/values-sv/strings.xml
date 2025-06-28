@@ -34,5 +34,6 @@
     <string name="move_recordings">Flytta inspelningar</string>
     <string name="confirm_recording_folder">Du måste bekräfta mappen där du vill spara dina inspelningar. Tryck på OK för att fortsätta.</string>
     <string name="discard_recording">Avbryt inspelning</string>
-    <string name="discard_recording_confirmation">Är du säker på att du vill avbryta nuvarande inspelning. Det går ej att ångra.</string>
+    <string name="discard_recording_confirmation">Är du säker på att du vill ta bort den aktuella inspelningen? Det går inte att ångra den här åtgärden.</string>
+    <string name="sample_rate">Samplingsfrekvens</string>
 </resources>
