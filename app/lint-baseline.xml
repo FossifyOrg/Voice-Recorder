@@ -7,7 +7,7 @@
         errorLine1="app-build-targetSDK = &quot;34&quot;"
         errorLine2="                      ~~~~">
         <location
-            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
             line="27"
             column="23"/>
     </issue>
@@ -29,9 +29,20 @@
         errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.11.1-bin.zip"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/wrapper/gradle-wrapper.properties"
+            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/wrapper/gradle-wrapper.properties"
             line="3"
             column="17"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.10.1 is available: 8.11.0"
+        errorLine1="gradlePlugins-agp = &quot;8.10.1&quot;"
+        errorLine2="                    ~~~~~~~~">
+        <location
+            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
+            line="24"
+            column="21"/>
     </issue>
 
     <issue
@@ -40,7 +51,7 @@
         errorLine1="app-build-compileSDKVersion = &quot;34&quot;"
         errorLine2="                              ~~~~">
         <location
-            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
             line="26"
             column="31"/>
     </issue>
@@ -65,7 +76,7 @@
         errorLine1="tandroidlame = { module = &quot;com.github.naman14:TAndroidLame&quot;, version.ref = &quot;tandroidlame&quot; }"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
             line="43"
             column="17"/>
     </issue>
