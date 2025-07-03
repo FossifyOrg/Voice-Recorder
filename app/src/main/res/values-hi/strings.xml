@@ -35,4 +35,5 @@
     <string name="confirm_recording_folder">आपको उस फ़ोल्डर की पुष्टि करनी होगी जहां आप अपनी रिकॉर्डिंग सहेजना चाहते हैं। कृपया जारी रखने के लिए OK दबाएँ।</string>
     <string name="recording_too_short">यह रिकार्ड नहीं किया जा सका, यह बहुत छोटा था!</string>
     <string name="move_recordings">रिकॉर्डिंग को मूव करें</string>
+    <string name="sample_rate">दर प्रति सेकंड</string>
 </resources>
