@@ -7,8 +7,8 @@
         errorLine1="app-build-targetSDK = &quot;34&quot;"
         errorLine2="                      ~~~~">
         <location
-            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
-            line="27"
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            line="28"
             column="23"/>
     </issue>
 
@@ -29,7 +29,7 @@
         errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.11.1-bin.zip"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/wrapper/gradle-wrapper.properties"
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/wrapper/gradle-wrapper.properties"
             line="3"
             column="17"/>
     </issue>
@@ -40,9 +40,20 @@
         errorLine1="gradlePlugins-agp = &quot;8.10.1&quot;"
         errorLine2="                    ~~~~~~~~">
         <location
-            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
-            line="24"
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            line="25"
             column="21"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin.android than 2.1.21 is available: 2.2.0"
+        errorLine1="kotlin = &quot;2.1.21&quot;"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            line="3"
+            column="10"/>
     </issue>
 
     <issue
@@ -51,8 +62,8 @@
         errorLine1="app-build-compileSDKVersion = &quot;34&quot;"
         errorLine2="                              ~~~~">
         <location
-            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
-            line="26"
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            line="27"
             column="31"/>
     </issue>
 
@@ -60,14 +71,14 @@
         id="Aligned16KB"
         message="The native library `x86_64/libandroidlame.so` (from `com.github.naman14:TAndroidLame:1.1`) is not 16 KB aligned">
         <location
-            file="$GRADLE_USER_HOME/caches/8.11.1/transforms/94a3a2f7bc4ddf8ffe0a8dbe891c7f45/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
+            file="$GRADLE_USER_HOME/caches/8.11.1/transforms/865938d5cceb8e098c463c7b38a51bdf/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
     </issue>
 
     <issue
         id="Aligned16KB"
         message="The native library `x86_64/libandroidlame.so` (from `com.github.naman14:TAndroidLame:1.1`) is not 16 KB aligned">
         <location
-            file="$GRADLE_USER_HOME/caches/8.11.1/transforms/94a3a2f7bc4ddf8ffe0a8dbe891c7f45/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
+            file="$GRADLE_USER_HOME/caches/8.11.1/transforms/865938d5cceb8e098c463c7b38a51bdf/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
     </issue>
 
     <issue
@@ -76,8 +87,8 @@
         errorLine1="tandroidlame = { module = &quot;com.github.naman14:TAndroidLame&quot;, version.ref = &quot;tandroidlame&quot; }"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="$HOME/work/Voice-Recorder/Voice-Recorder/gradle/libs.versions.toml"
-            line="43"
+            file="$HOME/Projects/Fossify/FossifyOrg/Voice-Recorder/gradle/libs.versions.toml"
+            line="46"
             column="17"/>
     </issue>
 
