@@ -35,4 +35,5 @@
     <string name="player">Legilo</string>
     <string name="discard_recording">Nuligi registradon</string>
     <string name="discard_recording_confirmation">Ĉu vi certas, ke vi volas nuligi la nunan registradon? Tio ĉi ne malfareblas.</string>
+    <string name="sample_rate">Specimenrapido</string>
 </resources>
