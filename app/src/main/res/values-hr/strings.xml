@@ -34,4 +34,7 @@
     <string name="move_recordings">Premjesti snimke</string>
     <string name="move_recordings_to_new_folder_desc">Imaš postojeće snimke. Želiš li ih premjestiti u tvoju novu mapu?</string>
     <string name="recording_too_short">Snimka je bila prekratka za snimanje!</string>
+    <string name="discard_recording">Odbaci snimku</string>
+    <string name="discard_recording_confirmation">Stvarno želiš odbaciti trenutačnu snimku? To se ne može poništiti.</string>
+    <string name="sample_rate">Stopa uzorka</string>
 </resources>
