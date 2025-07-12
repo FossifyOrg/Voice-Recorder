@@ -34,4 +34,5 @@
     <string name="move_recordings">移動錄音</string>
     <string name="discard_recording">取消錄製</string>
     <string name="discard_recording_confirmation">您確定要取消目前的錄製嗎？這無法還原。</string>
+    <string name="sample_rate">採樣率</string>
 </resources>
