@@ -22,7 +22,7 @@ tandroidlame = "1.1"
 #AutofitTextView
 autofittextview = "0.2.1"
 #Gradle
-gradlePlugins-agp = "8.11.0"
+gradlePlugins-agp = "8.11.1"
 #build
 app-build-compileSDKVersion = "34"
 app-build-targetSDK = "34"
