@@ -3,8 +3,6 @@ package org.fossify.voicerecorder.services
 import android.content.Intent
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService 
-import org.fossify.commons.extensions.toast
-import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.services.RecorderService
 
 class VoiceRecorderTileService: TileService() {
@@ -18,12 +16,10 @@ class VoiceRecorderTileService: TileService() {
               if (!RecorderService.isRunning) {
                   startService(this)
               }
-              toast("Start")
               qsTile.state = Tile.STATE_ACTIVE
               qsTile.label = "stop recording"
             }
             else {
-              toast("Stop")
               // RecorderService.stopRecording()
               if (RecorderService.isRunning) {
                   stopService(this)
