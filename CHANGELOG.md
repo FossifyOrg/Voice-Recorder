@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed `Open with` not showing app chooser dialog ([#176])
+
 ## [1.3.1] - 2025-06-17
 
 ### Changed
@@ -118,3 +122,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#141]: https://github.com/FossifyOrg/Voice-Recorder/issues/141
 [#147]: https://github.com/FossifyOrg/Voice-Recorder/issues/147
 [#150]: https://github.com/FossifyOrg/Voice-Recorder/issues/150
+[#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
