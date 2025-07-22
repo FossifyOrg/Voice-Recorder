@@ -117,6 +117,19 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".services.VoiceRecorderTileService"
+            android:exported="true"
+            android:label="@string/recording"
+            android:icon="@drawable/ic_start_recording_vector"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE" android:value="true" />
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="true" />
+        </service>
+
         <activity-alias
             android:name=".activities.SplashActivity.Red"
             android:enabled="false"
