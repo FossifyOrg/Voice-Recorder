@@ -1,0 +1,13 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_microphone_vector"
+        android:shortcutId="shortcut_toggle_recording"
+        android:shortcutShortLabel="@string/shortcut_label">
+        <intent
+            android:action="RECORD_ACTION"
+            android:targetClass="org.fossify.voicerecorder.BackgroundRecordActivity"
+            android:targetPackage="org.fossify.voicerecorder" />
+    </shortcut>
+</shortcuts>
