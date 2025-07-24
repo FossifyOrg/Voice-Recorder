@@ -33,4 +33,8 @@
     <string name="move_recordings_to_new_folder_desc">Už máte existujúce nahrávky. Chcete ich presunúť do vášho nového priečinka?</string>
     <string name="recording_too_short">Nahrávka bola príliš krátka pre zaznamenanie!</string>
     <string name="discard_recording">Zrušiť nahrávanie</string>
+    <string name="discard_recording_confirmation">Naozaj chcete zrušiť nahrávanie? Nahrávka sa neuloží.</string>
+    <string name="sample_rate">Vzorkovacia frekvencia</string>
+    <string name="keep_screen_on">Nezhasínať obrazovku počas nahrávania</string>
+    <string name="bitrate">Bitrate</string>
 </resources>
