@@ -28,4 +28,12 @@
     <string name="audio_source">Lydkilde</string>
     <string name="audio_source_camcorder">Kamera</string>
     <string name="audio_source_voice_performance">Stemmepræstation</string>
+    <string name="confirm_recording_folder">Du skal bekræfte den mappe, hvor du vil gemme dine optagelser. Tryk venligst på OK for at fortsætte.</string>
+    <string name="move_recordings">Flyt optagelser</string>
+    <string name="move_recordings_to_new_folder_desc">Du har eksisterende optagelser. Vil du flytte dem til din nye mappe?</string>
+    <string name="recording_too_short">Optagelsen var for kort til at blive optaget!</string>
+    <string name="discard_recording">Kassér optagelse</string>
+    <string name="discard_recording_confirmation">Er du sikker på, at du vil kassere den aktuelle optagelse? Dette kan ikke fortrydes.</string>
+    <string name="keep_screen_on">Hold skærmen tændt under optagelse</string>
+    <string name="sample_rate">Samplingfrekvens</string>
 </resources>
