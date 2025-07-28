@@ -32,4 +32,8 @@
     <string name="confirm_recording_folder">Deve confirmar a pasta selecionada onde quer guardar as suas gravações. Clique OK para continuar.</string>
     <string name="recording_too_short">Esta gravação é demasiado curta para ser guardada.</string>
     <string name="move_recordings">Mover gravações</string>
+    <string name="move_recordings_to_new_folder_desc">Tem gravações existentes. Quer as mover para a sua pasta nova?</string>
+    <string name="discard_recording_confirmation">Tem a certeza que deseja descartar a gravação atual? Isto não pode ser desfeito.</string>
+    <string name="keep_screen_on">Manter o ecrã ligado durante a gravação</string>
+    <string name="sample_rate">Taxa de amostragem</string>
 </resources>
