@@ -60,7 +60,7 @@
 
         <activity
             android:name="org.fossify.voicerecorder.activities.BackgroundRecordActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/AppTheme.NoDisplay" />
 
         <activity
@@ -105,6 +105,20 @@
             android:exported="false"
             android:label="@string/customize_colors"
             android:parentActivityName=".activities.SettingsActivity" />
+
+        <activity
+            android:name=".activities.ShortcutActivity"
+            android:label="@string/shortcut_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+        android:name="android.app.shortcuts"
+        android:resource="@xml/shortcuts" />
 
         <service
             android:name=".services.RecorderService"
