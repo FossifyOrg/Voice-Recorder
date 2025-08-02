@@ -34,4 +34,7 @@
     <string name="confirm_recording_folder">È necessario confermare la cartella dove vuoi salvare le tue registrazioni. Si prega di premere OK per continuare.</string>
     <string name="recording_too_short">La registrazione era troppo corta per essere registrata!</string>
     <string name="keep_screen_on">Mantieni lo schermo acceso durante la registrazione</string>
+    <string name="discard_recording">Scarta la registrazione</string>
+    <string name="discard_recording_confirmation">Sei sicuro di voler eliminare la registrazione corrente? Non è possibile annullare questa operazione.</string>
+    <string name="sample_rate">Frequenza di campionamento</string>
 </resources>
