@@ -19,7 +19,7 @@
     <string name="bitrate">Taxa de bits</string>
     <string name="record_after_launch">Inicia automàticament l\'enregistrament després d\'iniciar l\'aplicació</string>
     <string name="audio_source_camcorder">Càmera</string>
-    <string name="audio_source_unprocessed">Sense processar</string>
+    <string name="audio_source_unprocessed">No processat</string>
     <string name="audio_source_microphone">Micròfon</string>
     <string name="audio_source_voice_recognition">Reconeixement de veu</string>
     <string name="audio_source_voice_communication">Comunicació de veu</string>
