@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_launcher_name">Enregistrador de votz</string>
+    <string name="player">Lector</string>
+    <string name="discard_recording">Anullar l\'enregistrament</string>
+    <string name="audio_source">Font àudio</string>
+    <string name="bitrate">Debit</string>
+    <string name="audio_source_camcorder">Camèra</string>
+    <string name="audio_source_default">Per defaut d\'Android</string>
+    <string name="audio_source_unprocessed">Non tractat</string>
+    <string name="audio_source_microphone">Microfòn</string>
+    <string name="audio_source_voice_performance">Performança de la votz</string>
 </resources>
