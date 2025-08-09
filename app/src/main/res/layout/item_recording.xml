@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:includeFontPadding="false"
-            android:maxLines="1"
+            android:maxLines="2"
             android:paddingEnd="@dimen/activity_margin"
             android:textSize="@dimen/big_text_size"
             app:layout_constraintBottom_toTopOf="@+id/recording_date"
