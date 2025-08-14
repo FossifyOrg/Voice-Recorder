@@ -2,6 +2,8 @@
 
 package org.fossify.voicerecorder.helpers
 
+import android.media.MediaRecorder
+
 const val REPOSITORY_NAME = "Voice-Recorder"
 
 const val RECORDER_RUNNING_NOTIF_ID = 10000
@@ -84,6 +86,8 @@ val SAMPLING_RATE_BITRATE_LIMITS = mapOf(
     EXTENSION_OGG to SAMPLING_RATE_BITRATE_LIMITS_OPUS
 )
 
+const val RECORDING_AUDIO_SOURCE = MediaRecorder.AudioSource.CAMCORDER
+
 const val RECORDING_RUNNING = 0
 const val RECORDING_STOPPED = 1
 const val RECORDING_PAUSED = 2
@@ -94,7 +98,6 @@ const val TOGGLE_WIDGET_UI = "toggle_widget_ui"
 // shared preferences
 const val SAVE_RECORDINGS = "save_recordings"
 const val EXTENSION = "extension"
-const val AUDIO_SOURCE = "audio_source"
 const val BITRATE = "bitrate"
 const val SAMPLING_RATE = "sampling_rate"
 const val RECORD_AFTER_LAUNCH = "record_after_launch"

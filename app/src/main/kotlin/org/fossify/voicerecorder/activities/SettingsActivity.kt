@@ -1,7 +1,6 @@
 package org.fossify.voicerecorder.activities
 
 import android.content.Intent
-import android.media.MediaRecorder
 import android.os.Bundle
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
@@ -81,7 +80,6 @@ class SettingsActivity : SimpleActivity() {
         setupExtension()
         setupBitrate()
         setupSamplingRate()
-        setupAudioSource()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
         setupUseRecycleBin()
@@ -338,44 +336,5 @@ class SettingsActivity : SimpleActivity() {
                 }
             }
         }
-    }
-
-    private fun setupAudioSource() {
-        binding.settingsAudioSource.text = config.getAudioSourceText(config.audioSource)
-        binding.settingsAudioSourceHolder.setOnClickListener {
-            val items = getAudioSources()
-                .map {
-                    RadioItem(
-                        id = it,
-                        title = config.getAudioSourceText(it)
-                    )
-                } as ArrayList
-
-            RadioGroupDialog(
-                activity = this@SettingsActivity,
-                items = items,
-                checkedItemId = config.audioSource
-            ) {
-                config.audioSource = it as Int
-                binding.settingsAudioSource.text = config.getAudioSourceText(config.audioSource)
-            }
-        }
-    }
-
-    private fun getAudioSources(): ArrayList<Int> {
-        val availableSources = arrayListOf(
-            MediaRecorder.AudioSource.CAMCORDER,
-            MediaRecorder.AudioSource.DEFAULT,
-            MediaRecorder.AudioSource.MIC,
-            MediaRecorder.AudioSource.VOICE_RECOGNITION,
-            MediaRecorder.AudioSource.VOICE_COMMUNICATION,
-            MediaRecorder.AudioSource.UNPROCESSED
-        )
-
-        if (isQPlus()) {
-            availableSources.add(MediaRecorder.AudioSource.VOICE_PERFORMANCE)
-        }
-
-        return availableSources
     }
 }

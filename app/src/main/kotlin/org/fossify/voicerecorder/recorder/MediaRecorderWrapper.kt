@@ -5,12 +5,13 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.ParcelFileDescriptor
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.helpers.RECORDING_AUDIO_SOURCE
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
     @Suppress("DEPRECATION")
     private var recorder = MediaRecorder().apply {
-        setAudioSource(context.config.audioSource)
+        setAudioSource(RECORDING_AUDIO_SOURCE)
         setOutputFormat(context.config.getOutputFormat())
         setAudioEncoder(context.config.getAudioEncoder())
         setAudioEncodingBitRate(context.config.bitrate)

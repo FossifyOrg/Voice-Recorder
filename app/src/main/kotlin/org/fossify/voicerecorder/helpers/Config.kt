@@ -21,22 +21,6 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
         set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
 
-    var audioSource: Int
-        get() = prefs.getInt(AUDIO_SOURCE, MediaRecorder.AudioSource.CAMCORDER)
-        set(audioSource) = prefs.edit().putInt(AUDIO_SOURCE, audioSource).apply()
-
-    fun getAudioSourceText(audioSource: Int) = context.getString(
-        when (audioSource) {
-            MediaRecorder.AudioSource.DEFAULT -> R.string.audio_source_default
-            MediaRecorder.AudioSource.MIC -> R.string.audio_source_microphone
-            MediaRecorder.AudioSource.VOICE_RECOGNITION -> R.string.audio_source_voice_recognition
-            MediaRecorder.AudioSource.VOICE_COMMUNICATION -> R.string.audio_source_voice_communication
-            MediaRecorder.AudioSource.UNPROCESSED -> R.string.audio_source_unprocessed
-            MediaRecorder.AudioSource.VOICE_PERFORMANCE -> R.string.audio_source_voice_performance
-            else -> R.string.audio_source_camcorder
-        }
-    )
-
     var bitrate: Int
         get() = prefs.getInt(BITRATE, DEFAULT_BITRATE)
         set(bitrate) = prefs.edit().putInt(BITRATE, bitrate).apply()
