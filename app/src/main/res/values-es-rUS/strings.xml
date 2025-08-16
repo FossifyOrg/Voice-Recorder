@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">Grabadora de voz</string>
+    <string name="confirm_recording_folder">Debe confirmar la carpeta donde desea guardar sus grabaciones. Presione OK para continuar.</string>
+</resources>
