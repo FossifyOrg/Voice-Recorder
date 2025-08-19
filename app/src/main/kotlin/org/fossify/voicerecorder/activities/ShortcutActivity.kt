@@ -10,7 +10,7 @@ class ShortcutActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         val shortcutIntent = Intent(this, BackgroundRecordActivity::class.java).apply {
-            action = "RECORD_ACTION"
+            action = BackgroundRecordActivity.RECORD_INTENT_ACTION
         }
 
         setResult(RESULT_OK, shortcutIntent)
