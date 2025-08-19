@@ -111,14 +111,14 @@
             android:label="@string/toggle_recording"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <meta-data
-        android:name="android.app.shortcuts"
-        android:resource="@xml/shortcuts" />
+            android:name="android.app.shortcuts"
+            android:resource="@xml/shortcuts" />
 
         <service
             android:name=".services.RecorderService"
