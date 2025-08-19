@@ -4,7 +4,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_microphone_vector"
         android:shortcutId="shortcut_toggle_recording"
-        android:shortcutShortLabel="@string/shortcut_label">
+        android:shortcutShortLabel="@string/toggle_recording">
         <intent
             android:action="RECORD_ACTION"
             android:targetClass="org.fossify.voicerecorder.BackgroundRecordActivity"

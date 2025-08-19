@@ -12,7 +12,7 @@
     <string name="paused">Paused</string>
     <string name="recorder">Recorder</string>
     <string name="player">Player</string>
-    <string name="shortcut_label">Toggle Recording</string>
+    <string name="toggle_recording">Toggle recording</string>
     <!-- Confirmation dialog -->
     <string name="discard_recording">Discard recording</string>
     <string name="discard_recording_confirmation">Are you sure you want to discard the current recording? This cannot be undone.</string>

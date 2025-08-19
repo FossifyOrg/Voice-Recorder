@@ -108,7 +108,7 @@
 
         <activity
             android:name=".activities.ShortcutActivity"
-            android:label="@string/shortcut_label"
+            android:label="@string/toggle_recording"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT"/>
