@@ -281,28 +281,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/settings_audio_source_holder"
-                style="@style/SettingsHolderTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <org.fossify.commons.views.MyTextView
-                    android:id="@+id/settings_audio_source_label"
-                    style="@style/SettingsTextLabelStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/audio_source" />
-
-                <org.fossify.commons.views.MyTextView
-                    android:id="@+id/settings_audio_source"
-                    style="@style/SettingsTextValueStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/settings_audio_source_label"
-                    tools:text="Camera" />
-            </RelativeLayout>
-
             <include
                 android:id="@+id/settings_recording_divider"
                 layout="@layout/divider" />

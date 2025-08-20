@@ -5,8 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Fixed
 - Fixed clipped filenames in the recordings list ([#96])
+
+### Removed
+- Removed unnecessary `Audio source` preference ([#16])
 
 ## [1.3.3] - 2025-07-29
 ### Changed
@@ -88,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
+[#16]: https://github.com/FossifyOrg/Voice-Recorder/issues/16
 [#22]: https://github.com/FossifyOrg/Voice-Recorder/issues/22
 [#33]: https://github.com/FossifyOrg/Voice-Recorder/issues/33
 [#40]: https://github.com/FossifyOrg/Voice-Recorder/issues/40

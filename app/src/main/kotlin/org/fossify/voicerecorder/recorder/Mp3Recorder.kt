@@ -10,6 +10,7 @@ import com.naman14.androidlame.LameBuilder
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.helpers.RECORDING_AUDIO_SOURCE
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -35,7 +36,7 @@ class Mp3Recorder(val context: Context) : Recorder {
 
     @SuppressLint("MissingPermission")
     private val audioRecord = AudioRecord(
-        context.config.audioSource,
+        RECORDING_AUDIO_SOURCE,
         context.config.samplingRate,
         AudioFormat.CHANNEL_IN_MONO,
         AudioFormat.ENCODING_PCM_16BIT,
