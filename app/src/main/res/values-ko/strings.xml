@@ -18,13 +18,6 @@
     <string name="audio_source">오디오 소스</string>
     <string name="bitrate">비트레이트</string>
     <string name="record_after_launch">앱 시작 시 녹음 시작</string>
-    <string name="audio_source_camcorder">카메라</string>
-    <string name="audio_source_default">안드로이드 기본값</string>
-    <string name="audio_source_unprocessed">처리되지 않음</string>
-    <string name="audio_source_microphone">마이크</string>
-    <string name="audio_source_voice_recognition">음성 인식</string>
-    <string name="audio_source_voice_performance">음성 품질</string>
     <string name="faq_1_title">녹음 중에 알림 아이콘을 숨길 수 있나요?</string>
     <string name="faq_1_text">글쎄요, 상황에 따라 다릅니다. 기기를 사용하는 도중에 앱의 알림을 완전히 숨길 수 없습니다. 설정에서 적절한 항목을 선택하면 앱이 알림을 최대한 숨길 것입니다. 기기 설정에서 알림 내용 숨기기를 설정하면 적어도 잠금 화면에서 숨길 수 있습니다.</string>
-    <string name="audio_source_voice_communication">음성 통신</string>
 </resources>

@@ -21,13 +21,6 @@
     <string name="record_after_launch">Rozpoczynaj nagrywanie automatycznie przy uruchomieniu aplikacji</string>
     <string name="keep_screen_on">Pozostawiaj ekran włączony podczas nagrywania</string>
     <string name="sample_rate">Częstotliwość próbkowania</string>
-    <string name="audio_source_camcorder">Aparat</string>
-    <string name="audio_source_default">Domyślne systemowe</string>
-    <string name="audio_source_unprocessed">Nieprzetworzone</string>
-    <string name="audio_source_microphone">Mikrofon</string>
-    <string name="audio_source_voice_recognition">Rozpoznawanie głosu</string>
-    <string name="audio_source_voice_communication">Komunikacja głosowa</string>
-    <string name="audio_source_voice_performance">Wydajność głosu</string>
     <string name="faq_1_title">Czy mogę ukryć ikonę powiadomienia podczas nagrywania?</string>
     <string name="faq_1_text">To zależy. Podczas korzystania z urządzenia nie da się już całkowicie ukryć powiadomień aplikacji takich jak ta. Jeśli zaznaczysz odpowiednie ustawienie, aplikacja spróbuje to zrobić. Możesz jednak ukryć ikonę powiadomienia na ekranie blokady w ustawieniach bezpieczeństwa z ustawień urządzenia.</string>
     <string name="recording_too_short">Nagranie było za krótkie, aby je zapisać!</string>

@@ -19,13 +19,6 @@
     <string name="audio_source">Äänilähde</string>
     <string name="bitrate">Bittinopeus</string>
     <string name="record_after_launch">Käynnistä äänitys automaattisesti sovelluksen käynnistyessä</string>
-    <string name="audio_source_camcorder">Kamera</string>
-    <string name="audio_source_default">Androidin oletus</string>
-    <string name="audio_source_unprocessed">Käsittelemätön</string>
-    <string name="audio_source_microphone">Mikrofoni</string>
-    <string name="audio_source_voice_recognition">Äänitunnistus</string>
-    <string name="audio_source_voice_communication">Ääniviestintä</string>
-    <string name="audio_source_voice_performance">Ääniesitys</string>
     <string name="faq_1_title">Voinko piilottaa ilmoituskuvakkeen tallennuksen aikana\?</string>
     <string name="faq_1_text">No, se riippuu. Laitetta käytettäessä tällaisten sovellusten ilmoituksia ei ole enää mahdollista piilottaa täysin. Jos valitset kyseiseisen asetuksen, sovellus pyrkii parhaansa mukaan piilottamaan sen. Voit tosin piilottaa sen lukitusnäytöstä, jos poistat arkaluontoisten ilmoitusten näytön käytöstä laitteen asetuksista.</string>
     <string name="move_recordings">Siirrä nauhoitukset</string>

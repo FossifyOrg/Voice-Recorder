@@ -20,13 +20,6 @@
     <string name="audio_source">Izvor zvuka</string>
     <string name="bitrate">Brzina prijenosa</string>
     <string name="record_after_launch">Započni automatsko snimanje nakon pokretanja aplikacije</string>
-    <string name="audio_source_camcorder">Kamera</string>
-    <string name="audio_source_default">Standard Androida</string>
-    <string name="audio_source_unprocessed">Neobrađeno</string>
-    <string name="audio_source_microphone">Mikrofon</string>
-    <string name="audio_source_voice_recognition">Prepoznavanje glasa</string>
-    <string name="audio_source_voice_communication">Glasovna komunikacija</string>
-    <string name="audio_source_voice_performance">Glasovna izvedba</string>
     <string name="faq_1_title">Mogu li sakriti ikonu obavijesti tijekom snimanja\?</string>
     <string name="faq_1_text">Ovisi. Dok koristiš svoj uređaj više nije moguće u potpunosti sakriti obavijesti ovakvih aplikacija. Ako označiš ispravnu stavku postavke, aplikacija će je pokušati sakriti. Možeš je sakriti na zaključanom ekranu, ako isključiš prikaz osobnih obavijesti u postavkama uređaja.</string>
     <string name="keep_screen_on">Ostavi ekran uključen tijekom snimanja</string>

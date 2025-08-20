@@ -12,7 +12,4 @@
     <string name="audio_source">Fonte de audio</string>
     <string name="bitrate">Taxa de bits</string>
     <string name="record_after_launch">Initiar le registration automaticamente depost de lancear le application</string>
-    <string name="audio_source_camcorder">Camera</string>
-    <string name="audio_source_default">Predefinite de Android</string>
-    <string name="audio_source_microphone">Microphono</string>
 </resources>

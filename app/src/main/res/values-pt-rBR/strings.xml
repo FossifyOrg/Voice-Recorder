@@ -19,13 +19,6 @@
     <string name="save_recordings_in">Salvar gravações em</string>
     <string name="audio_source">Fonte de áudio</string>
     <string name="record_after_launch">Começar a gravar automaticamente após iniciar o aplicativo</string>
-    <string name="audio_source_camcorder">Câmera</string>
-    <string name="audio_source_default">Padrão do Android</string>
-    <string name="audio_source_unprocessed">Não processado</string>
-    <string name="audio_source_microphone">Microfone</string>
-    <string name="audio_source_voice_recognition">Reconhecimento de voz</string>
-    <string name="audio_source_voice_communication">Comunicação por voz</string>
-    <string name="audio_source_voice_performance">Desempenho da voz</string>
     <string name="faq_1_title">Posso ocultar o ícone de notificação durante a gravação\?</string>
     <string name="faq_1_text">Bem, depende. Enquanto você usa seu dispositivo, não é mais possível ocultar totalmente as notificações de aplicativos como este. Se você verificar o item de configuração adequado, o aplicativo fará o seu melhor para escondê-lo. Você pode escondê-lo na tela de bloqueio desativando a exibição de notificações confidenciais nas configurações do dispositivo.</string>
     <string name="bitrate">Taxa de bits</string>

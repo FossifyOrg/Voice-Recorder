@@ -19,13 +19,6 @@
     <string name="audio_source">Hangforrás</string>
     <string name="bitrate">Bitsebesség</string>
     <string name="record_after_launch">Rögzítés automatikus indítása az alkalmazás indításakor</string>
-    <string name="audio_source_camcorder">Kamera</string>
-    <string name="audio_source_default">Az Android alapértelmezése</string>
-    <string name="audio_source_unprocessed">Feldolgozatlan</string>
-    <string name="audio_source_microphone">Mikrofon</string>
-    <string name="audio_source_voice_recognition">Hangfelismerés</string>
-    <string name="audio_source_voice_communication">Hangkommunikáció</string>
-    <string name="audio_source_voice_performance">Hangteljesítmény</string>
     <string name="faq_1_title">Elrejthetem az értesítéseket rögzítés közben\?</string>
     <string name="faq_1_text">Az attól függ. Amíg használja az eszközt, addig nem lehetséges az ehhez hasonló alkalmazások értesítéseinek elrejtése. Ha bekapcsolja a megfelelő beállítást, akkor az alkalmazás megpróbálja elrejteni őket. A zárképernyőn viszont elrejtheti őket, ha letiltja az érzékeny értesítéseket az eszköz beállításaiban.</string>
     <string name="keep_screen_on">Tartsa bekapcsolva a képernyőt felvétel közben</string>

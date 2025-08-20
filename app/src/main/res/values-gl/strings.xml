@@ -17,13 +17,6 @@
     <string name="save_recordings_in">Gardar gravacións en</string>
     <string name="audio_source">Fonte do audio</string>
     <string name="record_after_launch">Comeza a gravar automaticamente despois de iniciala aplicación</string>
-    <string name="audio_source_camcorder">Cámara</string>
-    <string name="audio_source_default">Android por defecto</string>
-    <string name="audio_source_unprocessed">Sen procesar</string>
-    <string name="audio_source_microphone">Micrófono</string>
-    <string name="audio_source_voice_recognition">Recoñecemento da voz</string>
-    <string name="audio_source_voice_communication">Comunicación mediante a voz</string>
-    <string name="audio_source_voice_performance">Actuación mediante a voz</string>
     <string name="faq_1_title">Podo agochar a icona da notificación mentres estou gravando\?</string>
     <string name="faq_1_text">Ben, depende. Mentres uses o teu dispositivo, non será posible agochar enteiramente as notificacións como as deste aplicativo. Se revisas os axustes deste elemento, o aplicativo intentará agochalo. Si que o podes agochar da pantalla de bloqueo, se o desactivas o amosador das notificacións sensibles nos axustes do teu dispositivo.</string>
 </resources>
