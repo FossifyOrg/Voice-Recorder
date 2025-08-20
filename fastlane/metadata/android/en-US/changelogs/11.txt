@@ -1,0 +1,12 @@
+Changed:
+
+• Updated translations
+
+Removed:
+
+• Removed unnecessary `Audio source` preference 
+
+Fixed:
+
+• Fixed clipped filenames in the recordings list 
+

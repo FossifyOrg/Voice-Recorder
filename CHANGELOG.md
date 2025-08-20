@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- Fixed clipped filenames in the recordings list ([#96])
+## [1.3.4] - 2025-08-20
+### Changed
+- Updated translations
 
 ### Removed
 - Removed unnecessary `Audio source` preference ([#16])
+
+### Fixed
+- Fixed clipped filenames in the recordings list ([#96])
 
 ## [1.3.3] - 2025-07-29
 ### Changed
@@ -108,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
 [#185]: https://github.com/FossifyOrg/Voice-Recorder/issues/185
 
-[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.3...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.4...HEAD
+[1.3.4]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.0...1.3.1
