@@ -19,15 +19,8 @@
     <string name="save_recordings_in">Guardar gravações em</string>
     <string name="bitrate">Taxa de dados</string>
     <string name="record_after_launch">Iniciar gravação automaticamente ao iniciar a aplicação</string>
-    <string name="audio_source_camcorder">Câmera</string>
-    <string name="audio_source_default">Predefinição Android</string>
-    <string name="audio_source_unprocessed">Não processado</string>
-    <string name="audio_source_microphone">Microfone</string>
-    <string name="audio_source_voice_recognition">Reconhecimento de voz</string>
-    <string name="audio_source_voice_communication">Comunicação por voz</string>
     <string name="faq_1_title">Posso ocultar o ícone de notificação durante a gravação\?</string>
     <string name="faq_1_text">Depende. Actuamente, já não possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a alinea correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
-    <string name="audio_source_voice_performance">Desempenho de voz</string>
     <string name="audio_source">Fonte de áudio</string>
     <string name="confirm_recording_folder">Deve confirmar a pasta selecionada onde quer guardar as suas gravações. Clique OK para continuar.</string>
     <string name="recording_too_short">Esta gravação é demasiado curta para ser guardada.</string>

@@ -21,13 +21,6 @@
     <string name="audio_source">Vir zvoka</string>
     <string name="bitrate">Bitna hitrost</string>
     <string name="record_after_launch">Prični s samodejnim snemanjem takoj po zagonu aplikacije</string>
-    <string name="audio_source_camcorder">Kamera</string>
-    <string name="audio_source_default">Android privzeto</string>
-    <string name="audio_source_unprocessed">Neobdelano</string>
-    <string name="audio_source_microphone">Mikrofon</string>
-    <string name="audio_source_voice_recognition">Prepoznava glasu</string>
-    <string name="audio_source_voice_communication">Glasovna komunikacija</string>
-    <string name="audio_source_voice_performance">Glasovni nastop</string>
     <string name="faq_1_title">Ali lahko med snemanjem skrijem ikono obvestila\?</string>
     <string name="faq_1_text">Odvisno. Med uporabo naprave ni več mogoče v celoti skriti obvestil aplikacij, kot je ta. Če označite ustrezen element nastavitve, se bo aplikacija potrudila, da ga skrije. Lahko pa ga skrijete na zaklenjenem zaslonu, če v nastavitvah naprave onemogočite prikazovanje občutljivih obvestil.</string>
 </resources>

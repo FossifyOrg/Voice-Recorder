@@ -15,13 +15,6 @@
     <string name="save_recordings_in">Thư mục lưu bản ghi âm</string>
     <string name="audio_source">Nguồn âm thanh</string>
     <string name="record_after_launch">Tự động ghi âm ngay sau khi chạy ứng dụng</string>
-    <string name="audio_source_camcorder">Máy ảnh</string>
-    <string name="audio_source_default">Mặc định Android</string>
-    <string name="audio_source_unprocessed">Chưa qua xử lý</string>
-    <string name="audio_source_microphone">Micrô</string>
-    <string name="audio_source_voice_recognition">Nhận diện giọng nói</string>
-    <string name="audio_source_voice_communication">Âm thanh giao tiếp</string>
-    <string name="audio_source_voice_performance">Hiệu suất giọng nói</string>
     <string name="faq_1_title">Tôi có thể ẩn biểu tượng thông báo trong khi ghi không\?</string>
     <string name="faq_1_text">Dạ, nó phụ thuộc. Khi bạn sử dụng thiết bị của mình, bạn không thể ẩn hoàn toàn thông báo của các ứng dụng như thế này nữa. Nếu bạn chọn mục cài đặt phù hợp, ứng dụng sẽ cố gắng hết sức để ẩn mục đó. Tuy nhiên, bạn có thể ẩn nó trên màn hình khóa nếu bạn tắt hiển thị các thông báo nhạy cảm trong cài đặt thiết bị của mình.</string>
     <string name="discard_recording_confirmation">Bạn có chắc muốn hủy bản ghi âm này? Bản ghi âm sẽ không thể được phục hồi.</string>

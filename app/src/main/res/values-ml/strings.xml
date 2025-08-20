@@ -11,13 +11,6 @@
     <string name="save_recordings_in">റെക്കോർഡിംഗുകൾ ഇതിൽ സംരക്ഷിക്കുക</string>
     <string name="audio_source">ഓഡിയോ ഉറവിടം</string>
     <string name="bitrate">ബിറ്റ്റേറ്റ്</string>
-    <string name="audio_source_camcorder">ക്യാമറ</string>
-    <string name="audio_source_default">ആൻഡ്രോയിഡ് സ്ഥിരസ്ഥിതി</string>
-    <string name="audio_source_unprocessed">പ്രക്രിയ ചെയ്യാത്തത്</string>
-    <string name="audio_source_microphone">നാദവികാസിനി</string>
-    <string name="audio_source_voice_recognition">ശബ്ദം തിരിച്ചറിയൽ</string>
-    <string name="audio_source_voice_communication">ശബ്ദ ആശയവിനിമയം</string>
-    <string name="audio_source_voice_performance">ശബ്ദം പ്രകടനം</string>
     <string name="faq_1_title">റെക്കോർഡിംഗ് സമയത്ത് എനിക്ക് അറിയിപ്പ് ബിംബം മറയ്ക്കാൻ കഴിയുമോ\?</string>
     <string name="faq_1_text">ശരി, അത് ആശ്രയിച്ചിരിക്കുന്നു. നിങ്ങൾ ഉപകരണം ഉപയോഗിക്കുമ്പോൾ ഇതുപോലുള്ള ആപ്പുകളുടെ അറിയിപ്പുകൾ പൂർണ്ണമായി മറയ്ക്കാൻ ഇനി സാധ്യമല്ല. നിങ്ങൾ ശരിയായ ക്രമീകരണ ഇനം പരിശോധിക്കുകയാണെങ്കിൽ, അത് മറയ്ക്കാൻ ആപ്പ് പരമാവധി ശ്രമിക്കും. നിങ്ങളുടെ ഉപകരണ ക്രമീകരണങ്ങളിൽ സെൻസിറ്റീവ് അറിയിപ്പുകൾ പ്രദർശിപ്പിക്കുന്നത് പ്രവർത്തനരഹിതമാക്കിയാൽ, നിങ്ങൾക്ക് അത് ലോക്ക് സ്ക്രീനിൽ മറയ്ക്കാം.</string>
 </resources>

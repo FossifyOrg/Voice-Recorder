@@ -20,13 +20,6 @@
     <string name="save_recordings_in">रिकॉर्डिंग्स को इसमें सहेजें</string>
     <string name="bitrate">बिटरेट</string>
     <string name="record_after_launch">ऐप लॉन्च करने के बाद स्वचालित रूप से रिकॉर्डिंग शुरू करें</string>
-    <string name="audio_source_camcorder">कैमरा</string>
-    <string name="audio_source_unprocessed">असंसाधित</string>
-    <string name="audio_source_default">Android डिफॉल्ट</string>
-    <string name="audio_source_microphone">माइक्रोफ़ोन</string>
-    <string name="audio_source_voice_recognition">आवाज की पहचान</string>
-    <string name="audio_source_voice_communication">आवाज संचार</string>
-    <string name="audio_source_voice_performance">आवाज़ का प्रदर्शन</string>
     <string name="faq_1_title">क्या मैं रिकॉर्डिंग के दौरान अधिसूचना आइकन छुपा सकता हूँ?</string>
     <string name="move_recordings_to_new_folder_desc">आपके पास पहले से रिकॉर्डिंग हैं। क्या आप उन्हें अपने नए फ़ोल्डर में ले जाना चाहते हैं?</string>
     <string name="discard_recording">रिकॉर्डिंग रद्द करें</string>

@@ -21,13 +21,6 @@
     <string name="audio_source">Джерело звуку</string>
     <string name="bitrate">Бітова швидкість</string>
     <string name="record_after_launch">Автоматично розпочинати запис після запуску програми</string>
-    <string name="audio_source_camcorder">Камера</string>
-    <string name="audio_source_default">Android за замовчуванням</string>
-    <string name="audio_source_unprocessed">Не оброблено</string>
-    <string name="audio_source_microphone">Мікрофон</string>
-    <string name="audio_source_voice_recognition">Розпізнавання голосу</string>
-    <string name="audio_source_voice_communication">Голосовий зв\'язок</string>
-    <string name="audio_source_voice_performance">Виконання голосу</string>
     <string name="faq_1_title">Чи можна приховати значок сповіщення під час запису\?</string>
     <string name="faq_1_text">Ну, це залежить від обставин. Доки ви використовуєте свій пристрій, повністю приховати сповіщення з таких застосунків неможливо. Якщо ви встановите відповідний пункт в настройках, застосунок зробить все можливе, щоб приховати сповіщення. Також можна приховати його на екрані блокування, якщо відключити відображення конфіденційних сповіщень в налаштуваннях пристрою.</string>
     <string name="keep_screen_on">Під час запису тримайте екран увімкненим</string>
