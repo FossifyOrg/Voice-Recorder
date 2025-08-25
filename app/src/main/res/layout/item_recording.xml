@@ -23,7 +23,7 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:paddingEnd="@dimen/activity_margin"
-            android:textSize="@dimen/big_text_size"
+            android:textSize="@dimen/bigger_text_size"
             app:layout_constraintBottom_toTopOf="@+id/recording_date"
             app:layout_constraintEnd_toStartOf="@+id/recording_duration"
             app:layout_constraintStart_toStartOf="parent"
