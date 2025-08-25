@@ -1,0 +1,5 @@
+Changed:
+
+• Reduced recording label size to align with material guidelines 
+• Updated translations
+
