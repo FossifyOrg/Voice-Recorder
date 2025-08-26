@@ -1,0 +1,9 @@
+Changed:
+
+• Reduced recording label size to align with material guidelines 
+• Updated translations
+
+Fixed:
+
+• Fixed issue recording with external microphones 
+
