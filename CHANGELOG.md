@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.5] - 2025-08-26
 ### Changed
 - Reduced recording label size to align with material guidelines ([#96])
-- Updated translations
 
 ### Fixed
 - Fixed issue recording with external microphones ([#16])
