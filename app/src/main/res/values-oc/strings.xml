@@ -5,4 +5,24 @@
     <string name="discard_recording">Anullar l\'enregistrament</string>
     <string name="audio_source">Font àudio</string>
     <string name="bitrate">Debit</string>
+    <string name="confirm_recording_folder">Vos cal confirmar lo dossièr ont volètz salvar vòstres enregistraments. Quichatz sus D’acòrd per contunhar.</string>
+    <string name="move_recordings">Desplaçar los enregistraments</string>
+    <string name="move_recordings_to_new_folder_desc">Avètz d\'enregistraments existents. Los volètz desplaçar dins vòstre dossièr novèl?</string>
+    <string name="recording_saved_successfully">Salvagarda de l’enregistrament capitat</string>
+    <string name="recording_too_short">L’enregistrament es tròp cort !</string>
+    <string name="no_recordings_found">Cap d’enregistrament creat per aquesta aplicacion\npas trobat</string>
+    <string name="no_recordings_in_folder_found">Cap d’enregistrament pas trobat\ndins lo dossièr seleccionat</string>
+    <string name="paused">En pausa</string>
+    <string name="discard_recording_confirmation">Volètz vertadièrament anullar l’enregistrament en cors ? Aquesta accion se pòt pas desfar.</string>
+    <string name="delete_recordings_confirmation">Suprimir %s ?</string>
+    <plurals name="delete_recordings">
+        <item quantity="one">%d enregistrament</item>
+        <item quantity="other">%d enregistraments</item>
+    </plurals>
+    <string name="save_recordings_in">Gardar los enregistraments dins</string>
+    <string name="record_after_launch">Lançar l’enregistrament automaticament aprèp l’aviada de l’aplicacion</string>
+    <string name="keep_screen_on">Manténer l’ecran alucat pendent l’enregistrament</string>
+    <string name="sample_rate"></string>
+    <string name="faq_1_title">Pòdi amagar l’icòna de notificacion pendent l’enregistrament ?</string>
+    <string name="faq_1_text">Òc ben, depend. Pendent qu\'utilizatz vòstre aparelh, es pas mai possible d\'amagar complètament las notificacions d\'aplicacions coma aquesta. Se causissètz l\'element de reglatge apropriat, l\'aplicacion farà de son melhor per las amagar. Podètz ça que la l\'amagar sus l\'ecran de verrolhatge, se desactivatz l\'afichatge de las notificacions sensiblas dins los paramètres de vòstre aparelh.</string>
 </resources>
