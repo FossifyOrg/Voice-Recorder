@@ -35,4 +35,6 @@
     <string name="discard_recording">Cealaigh an taifeadadh</string>
     <string name="discard_recording_confirmation">An bhfuil tú cinnte gur mhaith leat an taifeadadh reatha a chealú? Ní féidir é seo a chealú.</string>
     <string name="sample_rate">Ráta samplach</string>
+    <string name="change_microphone_mode_confirmation">Athraíonn sé seo an chaoi a ndéanann do ghléas fuaim a threorú agus a phróiseáil. Athraíonn na torthaí de réir an ghléis agus is féidir leo tionchar a imirt ar an toirt, ar an torann agus ar fhachtóirí eile.</string>
+    <string name="microphone_mode">Mód micreafóin</string>
 </resources>
