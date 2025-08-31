@@ -19,6 +19,11 @@
     <string name="save_recordings_in">Ukladať nahrávky do</string>
     <string name="audio_source">Zdroj audia</string>
     <string name="record_after_launch">Zapnúť nahrávanie automaticky po spustení apky</string>
+    <string name="microphone_mode_camcorder">Fotoaparát</string>
+    <string name="microphone_mode_unprocessed">Nespracovaný</string>
+    <string name="microphone_mode_voice_recognition">Rozpoznávanie hlasu</string>
+    <string name="microphone_mode_voice_communication">Hlasová komunikácia</string>
+    <string name="microphone_mode_voice_performance">Hlasový výkon</string>
     <string name="faq_1_title">Viem nejakým spôsobom ukryť notifikačnú ikonku počas nahrávania\?</string>
     <string name="faq_1_text">Kedy ako. Ak používate vaše zariadenie, úplné ukrytie ikonky pri takých apkách nie je možné. Ak ale zapnete príslušnú položku v nastaveniach apky, posnaží sa notifikáciu čím lepšie ukryť. Viete ju ukryť aj na uzamknutej obrazovke ak vypnete zobrazovanie citlivých pripomienok v nastaveniach zariadenia.</string>
     <string name="confirm_recording_folder">Prosím potvrďte priečinok, kde chcete uložiť vaše nahrávky. Potom stlačte OK pre pokračovanie.</string>

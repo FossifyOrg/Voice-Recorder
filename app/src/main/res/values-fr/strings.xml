@@ -20,6 +20,11 @@
     <string name="audio_source">Source audio</string>
     <string name="bitrate">Débit binaire</string>
     <string name="record_after_launch">Démarrer l’enregistrement automatiquement après le lancement de l’application</string>
+    <string name="microphone_mode_camcorder">Objectif vidéo</string>
+    <string name="microphone_mode_unprocessed">Non traitée</string>
+    <string name="microphone_mode_voice_recognition">Reconnaissance vocale</string>
+    <string name="microphone_mode_voice_communication">Communication vocale</string>
+    <string name="microphone_mode_voice_performance">Performance vocale</string>
     <string name="faq_1_title">Puis-je masquer l’icône de notification pendant l’enregistrement \?</string>
     <string name="faq_1_text">Et bien, ça dépend. Pendant que vous utilisez votre appareil, il n’est plus possible de masquer complètement les notifications d’applications comme celle-ci. Si vous cochez l’élément de réglage approprié, l’application fera de son mieux pour les masquer. Vous pouvez cependant la masquer sur l’écran de verrouillage, si vous désactivez l’affichage des notifications sensibles dans les paramètres de votre appareil.</string>
     <string name="move_recordings">Déplacer les enregistrements</string>

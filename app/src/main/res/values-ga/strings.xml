@@ -17,7 +17,12 @@
     <string name="save_recordings_in">Sábháil taifeadtaí i</string>
     <string name="audio_source">Foinse fuaime</string>
     <string name="bitrate">Ráta giotán</string>
+    <string name="microphone_mode_voice_recognition">Aitheantas gutha</string>
+    <string name="microphone_mode_voice_communication">Cumarsáid gutha</string>
     <string name="record_after_launch">Tosaigh taifeadadh go huathoibríoch tar éis seoladh an aip</string>
+    <string name="microphone_mode_camcorder">Ceamara</string>
+    <string name="microphone_mode_unprocessed">Neamhphróiseáilte</string>
+    <string name="microphone_mode_voice_performance">Feidhmíocht gutha</string>
     <string name="faq_1_title">An féidir liom an deilbhín fógra a cheilt le linn taifeadta?</string>
     <string name="faq_1_text">Bhuel, braitheann sé. Cé go n-úsáideann tú do ghléas ní féidir fógraí aipeanna mar seo a cheilt go hiomlán a thuilleadh. Má dhéanann tú seiceáil ar an mír socruithe cuí, déanfaidh an app a dhícheall é a cheilt. Is féidir leat é a cheilt ar an scáileán glas, áfach, má dhíchumasaíonn tú taispeáint fógraí íogaire i socruithe do ghléis.</string>
     <string name="recording_saved_successfully">D\'éirigh leis an taifeadadh a shábháil</string>

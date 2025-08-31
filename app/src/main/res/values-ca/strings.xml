@@ -18,10 +18,15 @@
     <string name="save_recordings_in">Desa els enregistraments a</string>
     <string name="bitrate">Taxa de bits</string>
     <string name="record_after_launch">Inicia automàticament l\'enregistrament després d\'iniciar l\'aplicació</string>
+    <string name="microphone_mode_camcorder">Càmera</string>
+    <string name="microphone_mode_unprocessed">No processat</string>
+    <string name="microphone_mode_voice_recognition">Reconeixement de veu</string>
+    <string name="microphone_mode_voice_communication">Comunicació de veu</string>
     <string name="faq_1_title">Puc ocultar la icona de notificació durant l\'enregistrament\?</string>
     <string name="faq_1_text">Bé, depèn. Mentre feu servir el dispositiu, ja no és possible amagar completament les notificacions d\'aplicacions com aquesta. Si activeu l\'element de configuració adequat, l\'aplicació farà tot el possible per a ocultar-la. Tanmateix, podeu ocultar-la a la pantalla de bloqueig si desactiveu la visualització de notificacions confidencials a la configuració del dispositiu.</string>
     <string name="recorder">Enregistrador</string>
     <string name="audio_source">Font d\'àudio</string>
+    <string name="microphone_mode_voice_performance">Actuació de veu</string>
     <string name="keep_screen_on">Mantén la pantalla activada durant l\'enregistrament</string>
     <string name="recording_too_short">L\'enregistrament ha estat massa curt per a gravar!</string>
     <string name="confirm_recording_folder">Cal confirmar la carpeta on voleu desar les vostres gravacions. Premeu D\'acord per a continuar.</string>

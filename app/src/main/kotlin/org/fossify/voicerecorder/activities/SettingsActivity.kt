@@ -1,19 +1,18 @@
 package org.fossify.voicerecorder.activities
 
 import android.content.Intent
+import android.media.MediaRecorder
 import android.os.Bundle
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
 import org.fossify.commons.extensions.addLockedLabelIfNeeded
 import org.fossify.commons.extensions.beGone
-import org.fossify.commons.extensions.beGoneIf
 import org.fossify.commons.extensions.beVisible
 import org.fossify.commons.extensions.beVisibleIf
 import org.fossify.commons.extensions.formatSize
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.humanizePath
-import org.fossify.commons.extensions.isOrWasThankYouInstalled
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.extensions.updateTextColors
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
@@ -77,6 +76,7 @@ class SettingsActivity : SimpleActivity() {
         setupExtension()
         setupBitrate()
         setupSamplingRate()
+        setupMicrophoneMode()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
         setupUseRecycleBin()
@@ -295,7 +295,7 @@ class SettingsActivity : SimpleActivity() {
         ensureBackgroundThread {
             try {
                 recycleBinContentSize = getAllRecordings(trashed = true).sumByInt { it.size }
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
             }
 
             runOnUiThread {
@@ -324,6 +324,60 @@ class SettingsActivity : SimpleActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setupMicrophoneMode() {
+        binding.settingsMicrophoneMode.text = config.getMicrophoneModeText(config.microphoneMode)
+        binding.settingsMicrophoneModeHolder.setOnClickListener {
+            if (config.wasMicModeWarningShown) {
+                showMicrophoneModeDialog()
+            } else {
+                ConfirmationDialog(
+                    activity = this,
+                    dialogTitle = getString(R.string.microphone_mode),
+                    message = getString(R.string.change_microphone_mode_confirmation),
+                    negative = 0,
+                    positive = org.fossify.commons.R.string.ok
+                ) {
+                    config.wasMicModeWarningShown = true
+                    showMicrophoneModeDialog()
+                }
+            }
+        }
+    }
+
+    private fun showMicrophoneModeDialog() {
+        val items = getMediaRecorderAudioSources()
+            .map { microphoneMode ->
+                RadioItem(
+                    id = microphoneMode,
+                    title = config.getMicrophoneModeText(microphoneMode)
+                )
+            } as ArrayList
+
+        RadioGroupDialog(
+            activity = this@SettingsActivity,
+            items = items,
+            checkedItemId = config.microphoneMode
+        ) {
+            config.microphoneMode = it as Int
+            binding.settingsMicrophoneMode.text = config.getMicrophoneModeText(config.microphoneMode)
+        }
+    }
+
+    private fun getMediaRecorderAudioSources(): List<Int> {
+        return buildList {
+            add(MediaRecorder.AudioSource.DEFAULT)
+            add(MediaRecorder.AudioSource.CAMCORDER)
+            add(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
+
+            if (isQPlus()) {
+                add(MediaRecorder.AudioSource.VOICE_PERFORMANCE)
+            }
+
+            add(MediaRecorder.AudioSource.VOICE_RECOGNITION)
+            add(MediaRecorder.AudioSource.UNPROCESSED)
         }
     }
 }
