@@ -28,15 +28,12 @@ class Config(context: Context) : BaseConfig(context) {
 
     fun getMicrophoneModeText(mode: Int) = context.getString(
         when (mode) {
-            MediaRecorder.AudioSource.DEFAULT -> org.fossify.commons.R.string.system_default
             MediaRecorder.AudioSource.CAMCORDER -> R.string.microphone_mode_camcorder
             MediaRecorder.AudioSource.VOICE_COMMUNICATION -> R.string.microphone_mode_voice_communication
             MediaRecorder.AudioSource.VOICE_PERFORMANCE -> R.string.microphone_mode_voice_performance
             MediaRecorder.AudioSource.VOICE_RECOGNITION -> R.string.microphone_mode_voice_recognition
             MediaRecorder.AudioSource.UNPROCESSED -> R.string.microphone_mode_unprocessed
-            else -> throw IllegalArgumentException(
-                "Unsupported audio source: $mode"
-            )
+            else -> org.fossify.commons.R.string.system_default
         }
     )
 
