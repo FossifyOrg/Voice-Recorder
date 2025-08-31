@@ -21,11 +21,11 @@
     <string name="record_after_launch">Rozpoczynaj nagrywanie automatycznie przy uruchomieniu aplikacji</string>
     <string name="keep_screen_on">Pozostawiaj ekran włączony podczas nagrywania</string>
     <string name="sample_rate">Częstotliwość próbkowania</string>
-    <string name="microphone_mode_camcorder">Aparat</string>
-    <string name="microphone_mode_unprocessed">Nieprzetworzone</string>
+    <string name="microphone_mode_camcorder">Aparat (wideo)</string>
+    <string name="microphone_mode_unprocessed">Nieprzetworzony</string>
     <string name="microphone_mode_voice_recognition">Rozpoznawanie głosu</string>
-    <string name="microphone_mode_voice_communication">Komunikacja głosowa</string>
-    <string name="microphone_mode_voice_performance">Wydajność głosu</string>
+    <string name="microphone_mode_voice_communication">Komunikacja głosowa (auto-wzmocnienie)</string>
+    <string name="microphone_mode_voice_performance">Wydajność głosu (niskie opóźnienie)</string>
     <string name="faq_1_title">Czy mogę ukryć ikonę powiadomienia podczas nagrywania?</string>
     <string name="faq_1_text">To zależy. Podczas korzystania z urządzenia nie da się już całkowicie ukryć powiadomień aplikacji takich jak ta. Jeśli zaznaczysz odpowiednie ustawienie, aplikacja spróbuje to zrobić. Możesz jednak ukryć ikonę powiadomienia na ekranie blokady w ustawieniach bezpieczeństwa z ustawień urządzenia.</string>
     <string name="recording_too_short">Nagranie było za krótkie, aby je zapisać!</string>
@@ -34,4 +34,6 @@
     <string name="move_recordings">Przenieś nagrania</string>
     <string name="discard_recording">Anuluj nagrywanie</string>
     <string name="discard_recording_confirmation">Czy anulować bieżące nagrywanie? Tego nie można cofnąć.</string>
+    <string name="change_microphone_mode_confirmation">Zmienia to sposób kierowania i przetwarzania dźwięku przez Twoje urządzenie. Wyniki są zależne od urządzenia i mogą się różnić głośnością, zaszumieniem i innymi czynnikami.</string>
+    <string name="microphone_mode">Tryb mikrofonu</string>
 </resources>
