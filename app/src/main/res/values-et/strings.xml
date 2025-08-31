@@ -34,4 +34,6 @@
     <string name="discard_recording">Katkesta salvestamine</string>
     <string name="discard_recording_confirmation">Kas sa oled kindel, et soovid salvestamise katkestada? Seda tegevust ei saa hiljem tagasi pöörata.</string>
     <string name="sample_rate">Diskreetimissagedus</string>
+    <string name="change_microphone_mode_confirmation">See muudab viisi, kuidas sinu nutiseade suunab ja töötleb heli. Tulemused võivad erinevates seadmetes olla erinevad, kuid see võib mõjutada helivaljust, müra ja muid faktoreid.</string>
+    <string name="microphone_mode">Mikrofoni režiim</string>
 </resources>
