@@ -36,4 +36,6 @@
     <string name="discard_recording">Скасувати записування</string>
     <string name="discard_recording_confirmation">Ви впевнені, що хочете скасувати поточний запис? Це не можна скасувати.</string>
     <string name="sample_rate">Частота дискретизації</string>
+    <string name="change_microphone_mode_confirmation">Це змінює спосіб направляння та обробки аудіо вашим пристроєм. Результати залежать від пристрою та можуть впливати на гучність, шум та інші фактори.</string>
+    <string name="microphone_mode">Режим мікрофона</string>
 </resources>
