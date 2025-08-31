@@ -24,7 +24,7 @@ class Config(context: Context) : BaseConfig(context) {
 
     var microphoneMode: Int
         get() = prefs.getInt(MICROPHONE_MODE, MediaRecorder.AudioSource.DEFAULT)
-        set(audioSource) = prefs.edit().putInt(MICROPHONE_MODE, audioSource).apply()
+        set(audioSource) = prefs.edit { putInt(MICROPHONE_MODE, audioSource) }
 
     fun getMicrophoneModeText(mode: Int) = context.getString(
         when (mode) {
