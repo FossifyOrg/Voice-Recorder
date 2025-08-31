@@ -21,6 +21,11 @@
     <string name="audio_source">Источник звука</string>
     <string name="bitrate">Битрейт</string>
     <string name="record_after_launch">Автоматически начинать запись при запуске приложения</string>
+    <string name="microphone_mode_camcorder">Камера</string>
+    <string name="microphone_mode_unprocessed">Необработанный</string>
+    <string name="microphone_mode_voice_recognition">Распознавание голоса</string>
+    <string name="microphone_mode_voice_communication">Голосовая связь</string>
+    <string name="microphone_mode_voice_performance">Голосовое исполнение</string>
     <string name="faq_1_title">Можно ли скрыть значок уведомления во время записи\?</string>
     <string name="faq_1_text">Ну, это зависит от обстоятельств. Пока вы используете своё устройство, полностью скрыть уведомления о таких приложениях уже невозможно. Если вы установите соответствующий пункт в настройках, приложение сделает всё возможное, чтобы скрыть его. Также можно скрыть уведомление на экране блокировки, если отключить отображение конфиденциальных уведомлений в настройках устройства.</string>
     <string name="keep_screen_on">Не отключать экран во время записи</string>

@@ -15,6 +15,7 @@
     <!-- Confirmation dialog -->
     <string name="discard_recording">Discard recording</string>
     <string name="discard_recording_confirmation">Are you sure you want to discard the current recording? This cannot be undone.</string>
+    <string name="change_microphone_mode_confirmation">This changes how your device routes and processes audio. Results vary by device and can impact volume, noise, and other factors.</string>
     <!-- Are you sure you want to delete 5 recordings? -->
     <string name="delete_recordings_confirmation">Delete %s\?</string>
     <plurals name="delete_recordings">
@@ -24,10 +25,17 @@
     <!-- Settings -->
     <string name="save_recordings_in">Save recordings in</string>
     <string name="audio_source">Audio source</string>
+    <string name="microphone_mode">Microphone mode</string>
     <string name="bitrate">Bitrate</string>
     <string name="record_after_launch">Start recording automatically after launching the app</string>
     <string name="keep_screen_on">Keep the screen on during recording</string>
     <string name="sample_rate">Sample rate</string>
+    <!-- Settings Microphone mode selection -->
+    <string name="microphone_mode_camcorder">Camera (video)</string>
+    <string name="microphone_mode_voice_communication">Voice communication (auto gain)</string>
+    <string name="microphone_mode_voice_performance">Voice performance (low-latency)</string>
+    <string name="microphone_mode_voice_recognition">Voice recognition</string>
+    <string name="microphone_mode_unprocessed">Unprocessed (raw)</string>
     <!-- FAQ -->
     <string name="faq_1_title">Can I hide the notification icon during recording?</string>
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this.

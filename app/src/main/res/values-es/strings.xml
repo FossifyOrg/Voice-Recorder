@@ -17,9 +17,14 @@
     <string name="save_recordings_in">Guardar grabaciones en</string>
     <string name="bitrate">Velocidad de bits</string>
     <string name="record_after_launch">Comienza a grabar automáticamente después de iniciar la aplicación</string>
+    <string name="microphone_mode_camcorder">Cámara</string>
+    <string name="microphone_mode_unprocessed">Sin procesar</string>
+    <string name="microphone_mode_voice_recognition">Reconocimiento de la voz</string>
+    <string name="microphone_mode_voice_communication">Comunicación por voz</string>
     <string name="faq_1_title">¿Puedo ocultar el icono de las notificaciones durante la grabación\?</string>
     <string name="faq_1_text">Bueno, eso depende. Mientras usa su dispositivo, ya no es posible ocultar completamente las notificaciones de aplicaciones como esta. Si marca el elemento de configuración adecuado, la aplicación hará todo lo posible para ocultarlo. Sin embargo, puede ocultarlo en la pantalla de bloqueo si deshabilita la visualización de notificaciones confidenciales en la configuración de su dispositivo.</string>
     <string name="audio_source">Fuente de audio</string>
+    <string name="microphone_mode_voice_performance">Interpretación de la voz</string>
     <string name="confirm_recording_folder">Debes confirmar la carpeta donde quieres guardar tus grabaciones. Pulsa OK para continuar.</string>
     <string name="move_recordings">Mover grabaciones</string>
     <string name="move_recordings_to_new_folder_desc">Tienes grabaciones existentes. ¿Quieres moverlas a tu nueva carpeta?</string>

@@ -6,6 +6,7 @@ import android.media.MediaRecorder
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.extensions.getDefaultRecordingsFolder
+import androidx.core.content.edit
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -20,6 +21,24 @@ class Config(context: Context) : BaseConfig(context) {
     var extension: Int
         get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
         set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
+
+    var microphoneMode: Int
+        get() = prefs.getInt(MICROPHONE_MODE, MediaRecorder.AudioSource.DEFAULT)
+        set(audioSource) = prefs.edit().putInt(MICROPHONE_MODE, audioSource).apply()
+
+    fun getMicrophoneModeText(mode: Int) = context.getString(
+        when (mode) {
+            MediaRecorder.AudioSource.DEFAULT -> org.fossify.commons.R.string.system_default
+            MediaRecorder.AudioSource.CAMCORDER -> R.string.microphone_mode_camcorder
+            MediaRecorder.AudioSource.VOICE_COMMUNICATION -> R.string.microphone_mode_voice_communication
+            MediaRecorder.AudioSource.VOICE_PERFORMANCE -> R.string.microphone_mode_voice_performance
+            MediaRecorder.AudioSource.VOICE_RECOGNITION -> R.string.microphone_mode_voice_recognition
+            MediaRecorder.AudioSource.UNPROCESSED -> R.string.microphone_mode_unprocessed
+            else -> throw IllegalArgumentException(
+                "Unsupported audio source: $mode"
+            )
+        }
+    )
 
     var bitrate: Int
         get() = prefs.getInt(BITRATE, DEFAULT_BITRATE)
@@ -74,4 +93,10 @@ class Config(context: Context) : BaseConfig(context) {
     var keepScreenOn: Boolean
         get() = prefs.getBoolean(KEEP_SCREEN_ON, true)
         set(keepScreenOn) = prefs.edit().putBoolean(KEEP_SCREEN_ON, keepScreenOn).apply()
+
+    var wasMicModeWarningShown: Boolean
+        get() = prefs.getBoolean(WAS_MIC_MODE_WARNING_SHOWN, false)
+        set(wasMicModeWarningShown) = prefs.edit {
+            putBoolean(WAS_MIC_MODE_WARNING_SHOWN, wasMicModeWarningShown)
+        }
 }

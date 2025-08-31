@@ -17,6 +17,11 @@
     <string name="audio_source">Източник на звука</string>
     <string name="bitrate">Скорост на данните</string>
     <string name="record_after_launch">Автоматично записване при старт на приложението</string>
+    <string name="microphone_mode_camcorder">Камера</string>
+    <string name="microphone_mode_unprocessed">Необработени</string>
+    <string name="microphone_mode_voice_recognition">Гласово разпознаване</string>
+    <string name="microphone_mode_voice_communication">Гласова връзка</string>
+    <string name="microphone_mode_voice_performance">Гласово изпълнение</string>
     <string name="faq_1_title">Мога ли да скрия пиктограмата на известието по време на запис?</string>
     <string name="faq_1_text">Е, зависи. Докато използвате устройството си, вече не е възможно да скриете напълно известията на подобни приложения. Ако поставите отметка на съответния елемент от настройката, приложението ще направи всичко възможно да го скрие. Все пак можете да го скриете на заключения екран, ако забраните показването на чувствителни известия в настройките на устройството си.</string>
     <string name="recording_too_short">Записът е твърде къс!</string>

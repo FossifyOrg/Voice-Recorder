@@ -20,6 +20,11 @@
     <string name="audio_source">Zdroj zvuku</string>
     <string name="bitrate">Bitový tok</string>
     <string name="record_after_launch">Začít nahrávat automaticky při spuštění aplikace</string>
+    <string name="microphone_mode_camcorder">Kamera</string>
+    <string name="microphone_mode_unprocessed">Nezpracovaný</string>
+    <string name="microphone_mode_voice_recognition">Rozpoznání řeči</string>
+    <string name="microphone_mode_voice_communication">Hlasová komunikace</string>
+    <string name="microphone_mode_voice_performance">Hlasový výkon</string>
     <string name="faq_1_title">Mohu během nahrávání skrýt ikonu oznámení\?</string>
     <string name="faq_1_text">No, přijde na to. Při používání vašeho zařízení již není možné plně skrýt oznámení o takových aplikacích. Pokud zkontrolujete příslušnou položku nastavení, aplikace udělá vše pro to, aby ji skryla. Můžete jí však skrýt na zamykací obrazovce, pokud v nastavení vašeho zařízení deaktivujete zobrazování citlivých oznámení.</string>
     <string name="keep_screen_on">Ponechat zapnutou obrazovku během nahrávání</string>

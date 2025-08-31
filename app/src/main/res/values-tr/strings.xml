@@ -19,6 +19,11 @@
     <string name="audio_source">Ses kaynağı</string>
     <string name="bitrate">Bit hızı</string>
     <string name="record_after_launch">Uygulama başladıktan sonra otomatik olarak kaydetmeye başla</string>
+    <string name="microphone_mode_camcorder">Kamera</string>
+    <string name="microphone_mode_unprocessed">İşlenmemiş</string>
+    <string name="microphone_mode_voice_recognition">Ses tanıma</string>
+    <string name="microphone_mode_voice_communication">Sesli iletişim</string>
+    <string name="microphone_mode_voice_performance">Ses performansı</string>
     <string name="faq_1_title">Kayıt sırasında bildirim simgesini gizleyebilir miyim\?</string>
     <string name="faq_1_text">Duruma göre değişir. Aygıtınızı kullanırken, bunun gibi uygulamaların bildirimlerini tamamen gizlemek artık mümkün değildir. Doğru ayar ögesini seçerseniz, uygulama onu gizlemek için elinden geleni yapacaktır. Aygıt ayarlarınızda hassas bildirimlerin görüntülenmesini devre dışı bırakırsanız, bunu kilit ekranında gizleyebilirsiniz.</string>
     <string name="keep_screen_on">Kayıt yaparken ekranı açık tut</string>

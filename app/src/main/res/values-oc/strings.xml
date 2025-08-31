@@ -5,6 +5,9 @@
     <string name="discard_recording">Anullar l\'enregistrament</string>
     <string name="audio_source">Font àudio</string>
     <string name="bitrate">Debit</string>
+    <string name="microphone_mode_camcorder">Camèra</string>
+    <string name="microphone_mode_unprocessed">Non tractat</string>
+    <string name="microphone_mode_voice_performance">Performança de la votz</string>
     <string name="confirm_recording_folder">Vos cal confirmar lo dossièr ont volètz salvar vòstres enregistraments. Quichatz sus D’acòrd per contunhar.</string>
     <string name="move_recordings">Desplaçar los enregistraments</string>
     <string name="move_recordings_to_new_folder_desc">Avètz d\'enregistraments existents. Los volètz desplaçar dins vòstre dossièr novèl?</string>

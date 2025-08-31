@@ -20,7 +20,12 @@
     <string name="recorder">Optager</string>
     <string name="player">Afspiller</string>
     <string name="bitrate">Bitrate</string>
+    <string name="microphone_mode_unprocessed">Ubehandlet</string>
+    <string name="microphone_mode_voice_recognition">Stemmegenkendelse</string>
+    <string name="microphone_mode_voice_communication">Stemmekommunikation</string>
     <string name="audio_source">Lydkilde</string>
+    <string name="microphone_mode_camcorder">Kamera</string>
+    <string name="microphone_mode_voice_performance">Stemmepræstation</string>
     <string name="confirm_recording_folder">Du skal bekræfte den mappe, hvor du vil gemme dine optagelser. Tryk venligst på OK for at fortsætte.</string>
     <string name="move_recordings">Flyt optagelser</string>
     <string name="move_recordings_to_new_folder_desc">Du har eksisterende optagelser. Vil du flytte dem til din nye mappe?</string>

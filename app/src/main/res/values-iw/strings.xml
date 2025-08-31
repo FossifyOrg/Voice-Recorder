@@ -20,8 +20,13 @@
     <string name="audio_source">מקור שמע</string>
     <string name="keep_screen_on">השאר את המסך דולק במהלך הקלטה</string>
     <string name="recording_too_short">משך ההקלטה היה קצר מדי בשביל להקליט!</string>
+    <string name="microphone_mode_unprocessed">לא מעובד</string>
     <string name="recorder">מקליט</string>
     <string name="player">נגן</string>
+    <string name="microphone_mode_voice_recognition">זיהוי קולי</string>
+    <string name="microphone_mode_voice_performance">ביצועי קול</string>
+    <string name="microphone_mode_voice_communication">תקשורת קולית</string>
+    <string name="microphone_mode_camcorder">מצלמה</string>
     <string name="move_recordings">העברת ההקלטות</string>
     <string name="move_recordings_to_new_folder_desc">יש לך הקלטות קיימות. האם אתה רוצה להעביר אותם לתיקיה החדשה שלך?</string>
     <string name="confirm_recording_folder">יש לאשר את התיקייה שבה ברצונך לשמור את ההקלטות שלך. נא ללחוץ על אישור כדי להמשיך.</string>
