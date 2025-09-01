@@ -18,14 +18,14 @@
     <string name="save_recordings_in">Opnames bewaren in</string>
     <string name="audio_source">Geluidsbron</string>
     <string name="record_after_launch">Bij het starten van de app direct een opname beginnen</string>
-    <string name="microphone_mode_unprocessed">Onbewerkt</string>
+    <string name="microphone_mode_unprocessed">Onbewerkt (raw)</string>
     <string name="microphone_mode_voice_recognition">Spraakherkenning</string>
-    <string name="microphone_mode_voice_communication">Gesproken communicatie</string>
-    <string name="microphone_mode_voice_performance">Optreden</string>
+    <string name="microphone_mode_voice_communication">Gesproken communicatie (automatische versterking)</string>
+    <string name="microphone_mode_voice_performance">Optreden (minimale vertraging)</string>
     <string name="faq_1_title">Kan ik het meldingsicoon verbergen tijdens het opnemen?</string>
     <string name="faq_1_text">Niet helemaal. Terwijl u het apparaat gebruikt is het niet langer mogelijk om meldingen van apps zoals deze volledig te verbergen. Met de juiste instelling aangevinkt zal de app ze proberen ze te verbergen. U kunt ze wel verbergen op het vergrendelscherm, als u het weergeven van gevoelige meldingen uitschakelt in de instellingen van uw apparaat.</string>
     <string name="bitrate">Bitrate</string>
-    <string name="microphone_mode_camcorder">Camera</string>
+    <string name="microphone_mode_camcorder">Camera (video)</string>
     <string name="recording_too_short">De opname was te kort!</string>
     <string name="keep_screen_on">Scherm ingeschakeld houden tijdens het opnemen</string>
     <string name="confirm_recording_folder">Bevestig de map waarin de opnames moeten worden opgeslagen en klik op OK om door te gaan.</string>
@@ -34,4 +34,6 @@
     <string name="discard_recording">Opname annuleren</string>
     <string name="discard_recording_confirmation">Weet je zeker dat je de huidige opname wilt annuleren? Dit kan niet worden teruggedraaid.</string>
     <string name="sample_rate">Sample rate</string>
+    <string name="change_microphone_mode_confirmation">Dit verandert de manier waarop de audio wordt gerouteerd en verwerkt. De resultaten variëren per apparaat en kunnen van invloed zijn op o.a. volume en ruis.</string>
+    <string name="microphone_mode">Microfoonmodus</string>
 </resources>
