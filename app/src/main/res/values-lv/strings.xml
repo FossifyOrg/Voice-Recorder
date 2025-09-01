@@ -16,12 +16,12 @@
         <item quantity="other">%d ieraksti</item>
     </plurals>
     <string name="delete_recordings_confirmation">Izdzēst %s?</string>
-    <string name="microphone_mode_camcorder">Kamera</string>
+    <string name="microphone_mode_camcorder">Kamera (video)</string>
     <string name="bitrate">Bitu ātrums</string>
     <string name="record_after_launch">Automātiski uzsākt ierakstīšanu pēc lietotnes palaišanas</string>
     <string name="microphone_mode_voice_recognition">Balss atpazīšana</string>
-    <string name="microphone_mode_voice_communication">Balss saziņa</string>
-    <string name="microphone_mode_voice_performance">Balss priekšnesums</string>
+    <string name="microphone_mode_voice_communication">Balss saziņa (automātisks pastiprinājums)</string>
+    <string name="microphone_mode_voice_performance">Balss priekšnesums (zemas aiztures)</string>
     <string name="sample_rate">Izlases ātrums</string>
     <string name="faq_1_text">Kā kurā gadījumā. Kamēr izmanto savu ierīci, vairs nav iespējams pilnībā paslēpt tādu lietotņu kā šī paziņojumus. Ja atzīmē atbilstošu iestatījuma vienumu, lietotne darīs iespējamo, lai to paslēptu. To gan var paslēpt aizslēgšanas ekrānā, ja ierīces iestatījumos atspējo jūtīgu paziņojumu attēlošanu.</string>
     <string name="discard_recording">Atmest ierakstu</string>
@@ -33,4 +33,6 @@
     <string name="move_recordings">Pārvietot ierakstus</string>
     <string name="move_recordings_to_new_folder_desc">Tev ir esoši ieraksti. Vai vēlies pārvietot tos uz jauno mapi?</string>
     <string name="player">Atskaņotājs</string>
+    <string name="change_microphone_mode_confirmation">Tas izmaina, kā ierīce maršrutē un apstrādā skaņu. Iznākums starp ierīcēm var atšķirties, un var tikt ietekmēts skaļums, troksnis un citi raksturlielumi.</string>
+    <string name="microphone_mode">Mikrofona režīms</string>
 </resources>
