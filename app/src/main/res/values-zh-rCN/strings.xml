@@ -33,4 +33,6 @@
     <string name="discard_recording_confirmation">是否确定要取消当前录制？此操作无法撤销。</string>
     <string name="discard_recording">取消录制</string>
     <string name="sample_rate">采样率</string>
+    <string name="microphone_mode">麦克风模式</string>
+    <string name="change_microphone_mode_confirmation">这会改变您的设备音频路由及处理方式。结果因设备而异，可能对音量、噪音等因素产生影响。</string>
 </resources>
