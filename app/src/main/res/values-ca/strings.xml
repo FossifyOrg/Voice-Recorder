@@ -35,4 +35,6 @@
     <string name="discard_recording">Cancel·la l\'enregistrament</string>
     <string name="discard_recording_confirmation">Segur que voleu cancel·lar l\'enregistrament actual? Això no es pot desfer.</string>
     <string name="sample_rate">Freqüència de mostreig</string>
+    <string name="change_microphone_mode_confirmation">Això canvia la manera en què el dispositiu encamina i processa l\'àudio. Els resultats varien segons el dispositiu i poden afectar el volum, el soroll i altres factors.</string>
+    <string name="microphone_mode">Mode del micròfon</string>
 </resources>
