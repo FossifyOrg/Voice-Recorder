@@ -35,4 +35,6 @@
     <string name="discard_recording">Zrušit nahrávání</string>
     <string name="discard_recording_confirmation">Opravdu chcete zrušit aktuální nahrávání? Tato akce je nevratná.</string>
     <string name="sample_rate">Vzorkovací frekvence</string>
+    <string name="change_microphone_mode_confirmation">Tato možnost změní, jak vaše zařízení směruje a zpracovává zvuk. Výsledky se mohou lišit podle zařízení a mohou ovlivnit hlasitost, šum a další faktory.</string>
+    <string name="microphone_mode">Režim mikrofonu</string>
 </resources>
