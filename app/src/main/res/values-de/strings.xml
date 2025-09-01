@@ -15,11 +15,11 @@
     <string name="save_recordings_in">Aufnahmen speichern in</string>
     <string name="audio_source">Tonquelle</string>
     <string name="record_after_launch">Aufnahme startet automatisch beim Öffnen der App</string>
-    <string name="microphone_mode_camcorder">Kamera</string>
-    <string name="microphone_mode_unprocessed">Unverarbeitet</string>
+    <string name="microphone_mode_camcorder">Kamera (Video)</string>
+    <string name="microphone_mode_unprocessed">Unverarbeitet (roh)</string>
     <string name="microphone_mode_voice_recognition">Stimmerkennung</string>
-    <string name="microphone_mode_voice_communication">Sprachkommunikation</string>
-    <string name="microphone_mode_voice_performance">Sprachleistung</string>
+    <string name="microphone_mode_voice_communication">Sprachkommunikation (automatische Verstärkung)</string>
+    <string name="microphone_mode_voice_performance">Sprachwiedergabe (geringe Latenz)</string>
     <string name="faq_1_title">Kann ich das Benachrichtigungssymbol während der Aufnahme ausblenden\?</string>
     <string name="faq_1_text">Naja, das kommt darauf an. Während der Nutzung des Geräts ist es nicht mehr möglich, die Benachrichtigungen von Apps wie dieser vollständig auszublenden. Wenn du die Option in den Einstellungen aktivierst, wird die App ihr Bestes tun, es auszublenden. Du kannst es jedoch auf dem Sperrbildschirm ausblenden, indem du die Anzeige vertraulicher Benachrichtigungen in den Geräteeinstellungen verbietest.</string>
     <string name="player">Player</string>
@@ -32,4 +32,6 @@
     <string name="discard_recording">Aufnahme abbrechen</string>
     <string name="discard_recording_confirmation">Soll die aktuelle Aufnahme wirklich verworfen werden? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="sample_rate">Abtastrate</string>
+    <string name="change_microphone_mode_confirmation">Dadurch ändert sich die Art und Weise, wie dein Gerät Audio weiterleitet und verarbeitet. Die Ergebnisse variieren je nach Gerät und können sich auf Lautstärke, Rauschen und andere Faktoren auswirken.</string>
+    <string name="microphone_mode">Mikrofonmodus</string>
 </resources>
