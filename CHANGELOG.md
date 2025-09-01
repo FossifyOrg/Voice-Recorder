@@ -5,8 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.4.0] - 2025-09-01
 ### Added
 - Added "Microphone mode" option (replacement for "Audio source" option) ([#16])
+
+### Changed
+- Updated translations
 
 ## [1.3.5] - 2025-08-26
 ### Changed
@@ -121,7 +126,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
 [#185]: https://github.com/FossifyOrg/Voice-Recorder/issues/185
 
-[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.5...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.5...1.4.0
 [1.3.5]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.4...1.3.5
 [1.3.4]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.2...1.3.3
