@@ -33,4 +33,6 @@
     <string name="discard_recording">取消錄製</string>
     <string name="discard_recording_confirmation">您確定要取消目前的錄製嗎？這無法還原。</string>
     <string name="sample_rate">採樣率</string>
+    <string name="change_microphone_mode_confirmation">此設定將改變裝置路由與處理音訊的方式。效果因裝置而異，可能影響音量、雜訊及其他因素。</string>
+    <string name="microphone_mode">麥克風模式</string>
 </resources>
