@@ -31,7 +31,8 @@
     <string name="move_recordings_to_new_folder_desc">Du har befintliga inspelningar. Vill du flytta dem till den nya mappen?</string>
     <string name="move_recordings">Flytta inspelningar</string>
     <string name="confirm_recording_folder">Du måste bekräfta mappen där du vill spara dina inspelningar. Tryck på OK för att fortsätta.</string>
-    <string name="discard_recording">Avbryt inspelning</string>
+    <string name="discard_recording">Ta bort inspelning</string>
     <string name="discard_recording_confirmation">Är du säker på att du vill ta bort den aktuella inspelningen? Det går inte att ångra den här åtgärden.</string>
     <string name="sample_rate">Samplingsfrekvens</string>
+    <string name="microphone_mode">Mikrofonläge</string>
 </resources>
