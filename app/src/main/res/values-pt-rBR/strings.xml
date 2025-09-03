@@ -35,4 +35,6 @@
     <string name="discard_recording">Cancelar gravação</string>
     <string name="discard_recording_confirmation">Você tem certeza que quer cancelar a gravação atual? Isso não poderá ser desfeito.</string>
     <string name="sample_rate">Taxa de amostragem</string>
+    <string name="change_microphone_mode_confirmation">Isso altera a forma como seu dispositivo encaminha e processa o áudio. Os resultados variam de acordo com o dispositivo e podem afetar o volume, o ruído e outros fatores.</string>
+    <string name="microphone_mode">Modo microfone</string>
 </resources>
