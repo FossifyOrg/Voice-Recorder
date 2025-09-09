@@ -19,11 +19,11 @@
     <string name="audio_source">Ses kaynağı</string>
     <string name="bitrate">Bit hızı</string>
     <string name="record_after_launch">Uygulama başladıktan sonra otomatik olarak kaydetmeye başla</string>
-    <string name="microphone_mode_camcorder">Kamera</string>
-    <string name="microphone_mode_unprocessed">İşlenmemiş</string>
+    <string name="microphone_mode_camcorder">Kamera (video)</string>
+    <string name="microphone_mode_unprocessed">İşlenmemiş (saf)</string>
     <string name="microphone_mode_voice_recognition">Ses tanıma</string>
-    <string name="microphone_mode_voice_communication">Sesli iletişim</string>
-    <string name="microphone_mode_voice_performance">Ses performansı</string>
+    <string name="microphone_mode_voice_communication">Sesli iletişim (otomatik algılama)</string>
+    <string name="microphone_mode_voice_performance">Ses performansı (düşük gecikme)</string>
     <string name="faq_1_title">Kayıt sırasında bildirim simgesini gizleyebilir miyim\?</string>
     <string name="faq_1_text">Duruma göre değişir. Aygıtınızı kullanırken, bunun gibi uygulamaların bildirimlerini tamamen gizlemek artık mümkün değildir. Doğru ayar ögesini seçerseniz, uygulama onu gizlemek için elinden geleni yapacaktır. Aygıt ayarlarınızda hassas bildirimlerin görüntülenmesini devre dışı bırakırsanız, bunu kilit ekranında gizleyebilirsiniz.</string>
     <string name="keep_screen_on">Kayıt yaparken ekranı açık tut</string>
@@ -34,4 +34,6 @@
     <string name="discard_recording">Kaydı iptal et</string>
     <string name="discard_recording_confirmation">Şu anda yapılan kaydı iptal etmek istediğinize emin misiniz? Bu işlem geri alınamaz.</string>
     <string name="sample_rate">Örnekleme hızı</string>
+    <string name="change_microphone_mode_confirmation">Cihazınızın sesi iletme ve işleme şeklini değiştirir. Her cihazda farklı sonuçları olabilir ve ses, gürültü ve diğer faktörlere etki edebilir.</string>
+    <string name="microphone_mode">Mikrofon modu</string>
 </resources>
