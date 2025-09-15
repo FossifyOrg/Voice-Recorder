@@ -35,4 +35,5 @@
     <string name="discard_recording_confirmation">Är du säker på att du vill ta bort den aktuella inspelningen? Det går inte att ångra den här åtgärden.</string>
     <string name="sample_rate">Samplingsfrekvens</string>
     <string name="microphone_mode">Mikrofonläge</string>
+    <string name="change_microphone_mode_confirmation">Detta ändrar hur enheten dirigerar och bearbetar ljud. Resultaten varierar beroende på enhet och kan påverka volym, brus och andra faktorer.</string>
 </resources>
