@@ -25,4 +25,11 @@
     <string name="microphone_mode_voice_performance">Гласовне перформансе</string>
     <string name="faq_1_title">Могу ли да сакријем икону обавештења током снимања\?</string>
     <string name="faq_1_text">Добро то зависи. Док користите свој уређај, више није могуће у потпуности сакрити обавештења оваквих апликација. Ако означите одговарајућу ставку подешавања, апликација ће дати све од себе да је сакрије. Међутим, можете га сакрити на закључаном екрану ако онемогућите приказивање осетљивих обавештења у подешавањима уређаја.</string>
+    <string name="confirm_recording_folder">Морате потврдити фасциклу у који ће снимци бити сачувани. Притисните ‘OK’ за наставак.</string>
+    <string name="move_recordings">Премести снимке</string>
+    <string name="move_recordings_to_new_folder_desc">Имате постојеће снимке. Да ли желите их преместите у нову фасциклу?</string>
+    <string name="recording_too_short">Снимак је прекратак да би се снимио!</string>
+    <string name="discard_recording">Одбаци снимак</string>
+    <string name="discard_recording_confirmation">Да ли сте сигурни да желите да одбаците тренутни снимак? Не може се вратити после.</string>
+    <string name="change_microphone_mode_confirmation">Ово мења начин на који ваш уређај усмерава и обрађује звук. Резултати се разликују у зависности од уређаја и могу утицати на гласноћу, шум и друге факторе.</string>
 </resources>
