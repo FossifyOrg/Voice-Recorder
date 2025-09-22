@@ -33,4 +33,7 @@
     <string name="move_recordings_to_new_folder_desc">Grabazioak dituzu. Karpeta berrira mugitu nahi dituzu?</string>
     <string name="discard_recording">Utzi grabazioa</string>
     <string name="discard_recording_confirmation">Ziur al zaude uneko grabazioa utzi nahi duzula? Hau ezin da desegin.</string>
+    <string name="change_microphone_mode_confirmation">Honek zure gailuak audioa nola bideratzen eta prozesatzen duen aldatzen du. Emaitzak gailuaren arabera aldatzen dira eta bolumena, zarata eta beste faktore batzuk eragin ditzakete.</string>
+    <string name="microphone_mode">Mikrofonoaren modua</string>
+    <string name="sample_rate">Laginketa-maiztasuna</string>
 </resources>
