@@ -1,2 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">錄音機</string>
+    <string name="confirm_recording_folder">您必須確認要儲存錄音的資料夾。請按確定繼續。</string>
+    <string name="move_recordings">移動錄音</string>
+    <string name="move_recordings_to_new_folder_desc">您有既有的錄音。您想要將它們移動到新的資料夾嗎？</string>
+    <string name="recording_saved_successfully">成功儲存錄音</string>
+    <string name="recording_too_short">錄音時間太短，無法錄製！</string>
+    <string name="recording">錄音中</string>
+    <string name="no_recordings_found">未找到以此 app \n產生的錄音</string>
+    <string name="no_recordings_in_folder_found">在所選的資料夾內 \n未找到錄音</string>
+    <string name="paused">已暫停</string>
+    <string name="recorder">錄音機</string>
+    <string name="player">播放器</string>
+    <string name="discard_recording">取消錄製</string>
+    <string name="discard_recording_confirmation">您確定要取消目前的錄製嗎？這無法還原。</string>
+    <string name="change_microphone_mode_confirmation">此設定將改變裝置路由與處理音訊的方式。效果因裝置而異，可能影響音量、雜訊及其他因素。</string>
+    <string name="delete_recordings_confirmation">要刪除 %s 嗎？</string>
+    <plurals name="delete_recordings">
+        <item quantity="other">%d 段錄音</item>
+    </plurals>
+    <string name="save_recordings_in">錄音儲存至</string>
+    <string name="audio_source">音訊來源</string>
+    <string name="microphone_mode">麥克風模式</string>
+    <string name="bitrate">位元率</string>
+    <string name="record_after_launch">啟動 app 後自動開始錄音</string>
+    <string name="keep_screen_on">錄製時維持螢幕開啟</string>
+    <string name="sample_rate">採樣率</string>
+    <string name="microphone_mode_camcorder">相機</string>
+    <string name="microphone_mode_voice_communication">語音通訊</string>
+    <string name="microphone_mode_voice_performance">聲音表現</string>
+    <string name="microphone_mode_voice_recognition">語音辨識</string>
+    <string name="microphone_mode_unprocessed">未經處理</string>
+    <string name="faq_1_title">有沒有方法隱藏錄音時出現的通知圖示嗎？</string>
+    <string name="faq_1_text">嗯……看情況。當您正在使用裝置時，沒辦法完全隱藏這類 app 的通知。若您有開啟相應的選項，本 app 會盡其所能來隱藏。不過鎖定畫面上的可以隱藏，只要在裝置的設定中停用「敏感通知」即可。</string>
+</resources>
