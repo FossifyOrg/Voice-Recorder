@@ -3,11 +3,9 @@
     <string name="app_launcher_name">Lydoptager</string>
     <string name="recording_saved_successfully">Optagelse gemt</string>
     <string name="recording">Optager</string>
-    <string name="no_recordings_found">Ingen optagelser lavet af denne app
-\ner blevet fundet</string>
-    <string name="no_recordings_in_folder_found">Ingen optagelser er blevet fundet
-\ni den valgte mappe</string>
-    <string name="paused">Sat på pause</string>
+    <string name="no_recordings_found">Ingen optagelser lavet af denne app \nblev fundet</string>
+    <string name="no_recordings_in_folder_found">Ingen optagelser blev fundet \ni den valgte mappe</string>
+    <string name="paused">På pause</string>
     <string name="delete_recordings_confirmation">Slet %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d optagelse</item>
@@ -26,7 +24,7 @@
     <string name="audio_source">Lydkilde</string>
     <string name="microphone_mode_camcorder">Kamera</string>
     <string name="microphone_mode_voice_performance">Stemmepræstation</string>
-    <string name="confirm_recording_folder">Du skal bekræfte den mappe, hvor du vil gemme dine optagelser. Tryk venligst på OK for at fortsætte.</string>
+    <string name="confirm_recording_folder">Du skal bekræfte den mappe, hvor dine optagelser skal gemmes. Tryk på OK for at fortsætte.</string>
     <string name="move_recordings">Flyt optagelser</string>
     <string name="move_recordings_to_new_folder_desc">Du har eksisterende optagelser. Vil du flytte dem til din nye mappe?</string>
     <string name="recording_too_short">Optagelsen var for kort til at blive optaget!</string>
