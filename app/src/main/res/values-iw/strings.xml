@@ -33,4 +33,6 @@
     <string name="discard_recording">ביטול הקלטה</string>
     <string name="discard_recording_confirmation">האם אתה בטוח שברצונך לבטל את ההקלטה הנוכחית? לא ניתן לבטל פעולה זו.</string>
     <string name="sample_rate">קצב דגימה</string>
+    <string name="change_microphone_mode_confirmation">זה משנה את האופן שבו המכשיר שלך מנתב ומעבד אודיו. התוצאות משתנות בהתאם למכשיר ויכולות להשפיע על עוצמת הקול, הרעש וגורמים אחרים.</string>
+    <string name="microphone_mode">מצב מיקרופון</string>
 </resources>
