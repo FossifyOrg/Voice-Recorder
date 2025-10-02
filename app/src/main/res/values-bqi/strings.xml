@@ -1,3 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_launcher_name">زفت دونگ</string>
+    <string name="recording_saved_successfully">زفت دونگ و خۊوی زفت وابی</string>
 </resources>
