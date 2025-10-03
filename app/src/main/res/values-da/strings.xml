@@ -14,7 +14,7 @@
     <string name="save_recordings_in">Gem optagelser i</string>
     <string name="record_after_launch">Start optagelsen automatisk efter start af appen</string>
     <string name="faq_1_title">Kan jeg skjule notifikationsikonet under optagelse\?</string>
-    <string name="faq_1_text">Mens du bruger din enhed, er det ikke længere muligt helt at skjule notifikationer fra apps som denne. Hvis du markerer det rigtige indstillingselement, gør appen sit bedste for at skjule den. Du kan dog skjule den på låseskærmen, hvis du deaktiverer visning af følsomme meddelelser i enhedens indstillinger.</string>
+    <string name="faq_1_text">Det afhænger. Mens du bruger enheden, er det ikke muligt helt at skjule notifikationer fra apps som denne. Hvis du vælger den rette indstilling, vil appen gøre sit bedste for at skjule dem. På låseskærmen kan du dog skjule dem ved at slå visning af følsomme notifikationer fra i enhedens indstillinger.</string>
     <string name="recorder">Optager</string>
     <string name="player">Afspiller</string>
     <string name="bitrate">Bitrate</string>
@@ -32,4 +32,5 @@
     <string name="discard_recording_confirmation">Er du sikker på, at du vil kassere den aktuelle optagelse? Dette kan ikke fortrydes.</string>
     <string name="keep_screen_on">Hold skærmen tændt under optagelse</string>
     <string name="sample_rate">Samplingfrekvens</string>
+    <string name="microphone_mode">Mikrofontilstand</string>
 </resources>
