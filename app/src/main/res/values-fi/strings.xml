@@ -34,4 +34,6 @@
     <string name="discard_recording">Peruuta tallennus</string>
     <string name="discard_recording_confirmation">Haluatko varmasti perua nykyisen tallennuksen. Tätä ei voi perua.</string>
     <string name="sample_rate">Näytteenottotaajuus</string>
+    <string name="change_microphone_mode_confirmation">Tämä muuttaa laitteen äänen reititystä ja käsittelyä. Tulokset vaihtelevat laitteittain ja voivat vaikuttaa äänenvoimakkuuteen, kohinaan ja muihin tekijöihin.</string>
+    <string name="microphone_mode">Mikrofonitila</string>
 </resources>
