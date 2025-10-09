@@ -35,4 +35,6 @@
     <string name="discard_recording">Scarta la registrazione</string>
     <string name="discard_recording_confirmation">Sei sicuro di voler eliminare la registrazione corrente? Non è possibile annullare questa operazione.</string>
     <string name="sample_rate">Frequenza di campionamento</string>
+    <string name="change_microphone_mode_confirmation">Questo cambia il modo in cui il tuo dispositivo routes e processa l\'audio. I risultati possono variare in base al dispositivo e possono influire su volume, rumore e altri fattori.</string>
+    <string name="microphone_mode">Modalità microfono</string>
 </resources>
