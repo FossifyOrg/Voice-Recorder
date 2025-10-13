@@ -4,4 +4,12 @@
     <string name="recording_saved_successfully">زفت دونگ و خۊوی زفت وابی</string>
     <string name="move_recordings">جا گورو کردن زفتا</string>
     <string name="recording">هونی زفت اکونه</string>
+    <string name="no_recordings_found">هیچ زفتی و دست ای برنومه وورکل نوابیڌه\nجۊرسته</string>
+    <string name="no_recordings_in_folder_found">هیچ زفتی نجۊرست\nمن دوبلگه پسند وابیڌه</string>
+    <string name="paused">مکس کرد</string>
+    <string name="recorder">زفت کون</string>
+    <string name="player">پشک کوننده</string>
+    <string name="delete_recordings_confirmation">الن اخۊین %s موورد ن پاک کۊنین؟</string>
+    <string name="save_recordings_in">زفت کردن فایل زفت وابیڌه من</string>
+    <string name="audio_source">بونچک آرنگی</string>
 </resources>
