@@ -43,10 +43,12 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : SimpleActivity() {
 
     private var bus: EventBus? = null
+
+    override var isSearchBarEnabled = true
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isMaterialActivity = true
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,11 +56,10 @@ class MainActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(
-            mainCoordinatorLayout = binding.mainCoordinator,
-            nestedView = binding.mainHolder,
-            useTransparentNavigation = false,
-            useTopSearchMenu = true
+        updateEdgeToEdge(
+            topAppBar = binding.mainMenu.getToolbar(),
+            scrollingView = binding.viewPager,
+            bottomBar = binding.mainTabsHolder
         )
 
         if (checkAppSideloading()) {
