@@ -56,11 +56,7 @@ class MainActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateEdgeToEdge(
-            topAppBar = binding.mainMenu.getToolbar(),
-            scrollingView = binding.viewPager,
-            bottomBar = binding.mainTabsHolder
-        )
+        setupEdgeToEdge(padBottomImeAndSystem = listOf(binding.mainTabsHolder))
 
         if (checkAppSideloading()) {
             return
@@ -134,7 +130,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun refreshMenuItems() {
-        binding.mainMenu.getToolbar().menu.apply {
+        binding.mainMenu.requireToolbar().menu.apply {
             findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(
                 org.fossify.commons.R.bool.hide_google_relations
             )
@@ -142,7 +138,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun setupOptionsMenu() {
-        binding.mainMenu.getToolbar().inflateMenu(R.menu.menu)
+        binding.mainMenu.requireToolbar().inflateMenu(R.menu.menu)
         binding.mainMenu.toggleHideOnScroll(false)
         binding.mainMenu.setupMenu()
 
@@ -156,7 +152,7 @@ class MainActivity : SimpleActivity() {
             getPagerAdapter()?.searchTextChanged(text)
         }
 
-        binding.mainMenu.getToolbar().setOnMenuItemClickListener { menuItem ->
+        binding.mainMenu.requireToolbar().setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
                 R.id.settings -> launchSettings()
@@ -168,7 +164,6 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun updateMenuColors() {
-        updateStatusbarColor(getProperBackgroundColor())
         binding.mainMenu.updateColors()
     }
 
@@ -271,7 +266,6 @@ class MainActivity : SimpleActivity() {
         binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.select()
         val bottomBarColor = getBottomNavigationBackgroundColor()
         binding.mainTabsHolder.setBackgroundColor(bottomBarColor)
-        updateNavigationBarColor(bottomBarColor)
     }
 
     private fun getPagerAdapter() = (binding.viewPager.adapter as? ViewPagerAdapter)
