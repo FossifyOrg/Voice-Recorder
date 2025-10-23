@@ -35,6 +35,6 @@
     <string name="discard_recording">Annuler l\'enregistrement</string>
     <string name="discard_recording_confirmation">Êtes-vous sûr(e) de vouloir annuler l\'enregistrement en cours ? Cette action est irrémédiable.</string>
     <string name="sample_rate">Fréquence d\'échantillonnage</string>
-    <string name="change_microphone_mode_confirmation">Cela change la façon dont votre appareil achemine et traite le son. Les résultats peuvent varier selon l\'appareil et peut impacter le volume, le bruit ainsi que d\'autres facteurs.</string>
+    <string name="change_microphone_mode_confirmation">Ceci change la façon dont votre appareil achemine et traite le son. Les résultats peuvent varier selon l\'appareil et peut impacter le volume, le bruit ainsi que d\'autres facteurs.</string>
     <string name="microphone_mode">Mode microphone</string>
 </resources>
