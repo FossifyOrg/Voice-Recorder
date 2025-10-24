@@ -14,4 +14,6 @@
     <string name="audio_source">بونچک آرنگی</string>
     <string name="move_recordings_to_new_folder_desc">ایسا فایلا زفت وابیڌه پؽشی ن دارین. اخۊین هونوو ن و دوبلگه نۊ خوتووݩ جاگورو کۊنین؟</string>
     <string name="recording_too_short">زفت قلوه کۊتال بی سی زفت وابیڌن!</string>
+    <string name="bitrate">بیت ریت</string>
+    <string name="faq_1_title">تروم آیکون وارسۊوی ن مجال زفت کردن بؽڌار کونوم؟</string>
 </resources>
