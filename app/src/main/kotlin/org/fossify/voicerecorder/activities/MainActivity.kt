@@ -116,16 +116,15 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (binding.mainMenu.isSearchOpen) {
+    override fun onBackPressedCompat(): Boolean {
+        return if (binding.mainMenu.isSearchOpen) {
             binding.mainMenu.closeSearch()
+            true
         } else if (isThirdPartyIntent()) {
             setResult(Activity.RESULT_CANCELED, null)
-            super.onBackPressed()
+            false
         } else {
-            super.onBackPressed()
+            false
         }
     }
 
