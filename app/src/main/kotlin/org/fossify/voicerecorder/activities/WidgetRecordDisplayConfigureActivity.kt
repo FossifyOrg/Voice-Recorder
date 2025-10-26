@@ -37,7 +37,7 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         setResult(Activity.RESULT_CANCELED)
         binding = WidgetRecordDisplayConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupEdgeToEdge(padTopSystem = listOf(binding.root), padBottomSystem = listOf(binding.root))
+        setupEdgeToEdge(padTopSystem = listOf(binding.configHolder), padBottomSystem = listOf(binding.root))
         initVariables()
 
         val isCustomizingColors = intent.extras?.getBoolean(IS_CUSTOMIZING_COLORS) ?: false
