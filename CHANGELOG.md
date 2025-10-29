@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-10-29
 ### Changed
-
 - Compatibility updates for Android 15 & 16
+- Updated translations
 
 ## [1.4.0] - 2025-09-01
 ### Added
@@ -130,7 +131,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
 [#185]: https://github.com/FossifyOrg/Voice-Recorder/issues/185
 
-[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.5...1.4.0
 [1.3.5]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.4...1.3.5
 [1.3.4]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.3.3...1.3.4
