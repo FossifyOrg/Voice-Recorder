@@ -35,4 +35,6 @@
     <string name="discard_recording">Odbaci snimku</string>
     <string name="discard_recording_confirmation">Stvarno želiš odbaciti trenutačnu snimku? To se ne može poništiti.</string>
     <string name="sample_rate">Stopa uzorka</string>
+    <string name="change_microphone_mode_confirmation">Ovo mijenja način na koji vaš uređaj usmjerava i obrađuje zvuk. Rezultati se razlikuju ovisno o uređaju i mogu utjecati na glasnoću, buku i druge faktore.</string>
+    <string name="microphone_mode">Modus mikrofona</string>
 </resources>
