@@ -36,6 +36,8 @@ import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.EXTENSION_OGG
+import org.fossify.voicerecorder.helpers.RECORD_AUDIO_MONO
+import org.fossify.voicerecorder.helpers.RECORD_AUDIO_STEREO
 import org.fossify.voicerecorder.helpers.SAMPLING_RATES
 import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
@@ -70,6 +72,7 @@ class SettingsActivity : SimpleActivity() {
         setupExtension()
         setupBitrate()
         setupSamplingRate()
+        setupChannelCount()
         setupMicrophoneMode()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
@@ -252,6 +255,29 @@ class SettingsActivity : SimpleActivity() {
                 config.samplingRate = availableSamplingRates.last()
             }
             binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
+        }
+    }
+
+    private fun setupChannelCount() {
+        binding.settingsChannelCount.text = getChannelCountText(config.channelCount)
+        binding.settingsChannelCountHolder.setOnClickListener {
+            val items = arrayListOf(
+                RadioItem(RECORD_AUDIO_MONO, getString(R.string.mono)),
+                RadioItem(RECORD_AUDIO_STEREO, getString(R.string.stereo))
+            )
+
+            RadioGroupDialog(this@SettingsActivity, items, config.channelCount) {
+                config.channelCount = it as Int
+                binding.settingsChannelCount.text = getChannelCountText(config.channelCount)
+            }
+        }
+    }
+
+    private fun getChannelCountText(value: Int): String {
+        return when (value) {
+            RECORD_AUDIO_MONO -> getString(R.string.mono)
+            RECORD_AUDIO_STEREO -> getString(R.string.stereo)
+            else -> getString(R.string.stereo)
         }
     }
 

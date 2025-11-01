@@ -97,6 +97,7 @@ const val EXTENSION = "extension"
 const val MICROPHONE_MODE = "microphone_mode"
 const val BITRATE = "bitrate"
 const val SAMPLING_RATE = "sampling_rate"
+const val CHANNEL_COUNT = "channel_count"
 const val RECORD_AFTER_LAUNCH = "record_after_launch"
 const val USE_RECYCLE_BIN = "use_recycle_bin"
 const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
@@ -104,3 +105,8 @@ const val KEEP_SCREEN_ON = "keep_screen_on"
 const val WAS_MIC_MODE_WARNING_SHOWN = "was_mic_mode_warning_shown"
 
 const val DEFAULT_RECORDINGS_FOLDER = "Recordings"
+
+// Audio channel configuration
+const val RECORD_AUDIO_MONO = 1
+const val RECORD_AUDIO_STEREO = 2
+const val DEFAULT_CHANNEL_COUNT = RECORD_AUDIO_STEREO

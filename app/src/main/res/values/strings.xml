@@ -30,6 +30,9 @@
     <string name="record_after_launch">Start recording automatically after launching the app</string>
     <string name="keep_screen_on">Keep the screen on during recording</string>
     <string name="sample_rate">Sample rate</string>
+    <string name="channel_count">Channel count</string>
+    <string name="mono">Mono</string>
+    <string name="stereo">Stereo</string>
     <!-- Settings Microphone mode selection -->
     <string name="microphone_mode_camcorder">Camera (video)</string>
     <string name="microphone_mode_voice_communication">Voice communication (auto gain)</string>

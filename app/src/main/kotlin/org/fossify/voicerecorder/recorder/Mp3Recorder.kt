@@ -27,9 +27,15 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var androidLame: AndroidLame? = null
     private var fileDescriptor: ParcelFileDescriptor? = null
     private var outputStream: FileOutputStream? = null
+    private val channelConfig = if (context.config.channelCount == 2) {
+        AudioFormat.CHANNEL_IN_STEREO
+    } else {
+        AudioFormat.CHANNEL_IN_MONO
+    }
+
     private val minBufferSize = AudioRecord.getMinBufferSize(
         context.config.samplingRate,
-        AudioFormat.CHANNEL_IN_MONO,
+        channelConfig,
         AudioFormat.ENCODING_PCM_16BIT
     )
 
@@ -37,7 +43,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     private val audioRecord = AudioRecord(
         context.config.microphoneMode,
         context.config.samplingRate,
-        AudioFormat.CHANNEL_IN_MONO,
+        channelConfig,
         AudioFormat.ENCODING_PCM_16BIT,
         minBufferSize * 2
     )
@@ -67,7 +73,7 @@ class Mp3Recorder(val context: Context) : Recorder {
             .setInSampleRate(context.config.samplingRate)
             .setOutBitrate(context.config.bitrate / 1000)
             .setOutSampleRate(context.config.samplingRate)
-            .setOutChannels(1)
+            .setOutChannels(context.config.channelCount)
             .build()
 
         ensureBackgroundThread {
