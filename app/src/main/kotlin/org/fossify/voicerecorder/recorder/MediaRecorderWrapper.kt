@@ -9,15 +9,13 @@ import org.fossify.voicerecorder.extensions.config
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
     @Suppress("DEPRECATION")
-    private var recorder = MediaRecorder()
-
-    init {
-        recorder.setAudioSource(context.config.microphoneMode)
-        recorder.setOutputFormat(context.config.getOutputFormat())
-        recorder.setAudioEncoder(context.config.getAudioEncoder())
-        recorder.setAudioChannels(context.config.channelCount)
-        recorder.setAudioSamplingRate(context.config.samplingRate)
-        recorder.setAudioEncodingBitRate(context.config.bitrate)
+    private var recorder = MediaRecorder().apply {
+        setAudioSource(context.config.microphoneMode)
+        setOutputFormat(context.config.getOutputFormat())
+        setAudioEncoder(context.config.getAudioEncoder())
+        setAudioChannels(context.config.channelCount)
+        setAudioEncodingBitRate(context.config.bitrate)
+        setAudioSamplingRate(context.config.samplingRate)
     }
 
     override fun setOutputFile(path: String) {
