@@ -42,6 +42,10 @@ class WavRecorder(val context: Context) : Recorder {
         fileDescriptor = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
     }
 
+    fun setOutputFilePath(path: String) {
+        recordFile = File(path)
+    }
+
     override fun prepare() {
         val sampleRate = context.config.samplingRate
         val channelConfig = AudioFormat.CHANNEL_IN_MONO
@@ -156,19 +160,51 @@ class WavRecorder(val context: Context) : Recorder {
 
             try {
                 fos.flush()
-                fos.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
 
-            // Write the WAV header with correct file size
-            val file = if (fileDescriptor != null) {
-                // For file descriptor, we need to get the file from the path
-                recordFile
-            } else {
-                recordFile
+            // Calculate file size (total written - header size)
+            var totalBytesWritten = 0L
+            try {
+                // Get the current file size
+                if (fileDescriptor != null) {
+                    totalBytesWritten = android.system.Os.lseek(fileDescriptor!!.fileDescriptor, 0, android.system.OsConstants.SEEK_CUR)
+                } else {
+                    totalBytesWritten = recordFile?.length() ?: 0
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            file?.let { setWaveFileHeader(it, 1) } // mono channel
+            
+            val fileSize = totalBytesWritten - 44
+            val totalSize = fileSize + 36
+            val sampleRate = context.config.samplingRate.toLong()
+            val channels = 1
+            val byteRate = sampleRate * channels * (RECORDER_BPP / 8)
+            
+            // Update the header at the beginning of the file
+            try {
+                // Seek to the beginning and write the header
+                if (fileDescriptor != null) {
+                    android.system.Os.lseek(fileDescriptor!!.fileDescriptor, 0, android.system.OsConstants.SEEK_SET)
+                    val headerBytes = generateHeader(fileSize, totalSize, sampleRate, channels, byteRate)
+                    android.system.Os.write(fileDescriptor!!.fileDescriptor, headerBytes, 0, headerBytes.size)
+                } else if (recordFile != null) {
+                    val raf = RandomAccessFile(recordFile!!, "rw")
+                    raf.seek(0)
+                    raf.write(generateHeader(fileSize, totalSize, sampleRate, channels, byteRate))
+                    raf.close()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            
+            try {
+                fos.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 

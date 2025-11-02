@@ -115,12 +115,24 @@ class RecorderService : Service() {
                 val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingFile)
                 createSAFFileSdk30(recordingFile)
                 contentResolver.openFileDescriptor(fileUri, "w")!!
-                    .use { recorder?.setOutputFile(it) }
+                    .use { 
+                        recorder?.setOutputFile(it)
+                        // For WavRecorder, also set the file path so it can update the header
+                        if (recorder is WavRecorder) {
+                            (recorder as WavRecorder).setOutputFilePath(recordingFile)
+                        }
+                    }
             } else if (isPathOnSD(recordingFile)) {
                 var document = getDocumentFile(recordingFile.getParentPath())
                 document = document?.createFile("", recordingFile.getFilenameFromPath())
                 contentResolver.openFileDescriptor(document!!.uri, "w")!!
-                    .use { recorder?.setOutputFile(it) }
+                    .use { 
+                        recorder?.setOutputFile(it)
+                        // For WavRecorder, also set the file path so it can update the header
+                        if (recorder is WavRecorder) {
+                            (recorder as WavRecorder).setOutputFilePath(recordingFile)
+                        }
+                    }
             } else {
                 recorder?.setOutputFile(recordingFile)
             }
