@@ -6,6 +6,8 @@
     <string name="mp3_experimental">mp3 (Experimental)</string>
     <string name="ogg">ogg</string>
     <string name="ogg_opus">ogg (Opus)</string>
+    <string name="wav">wav</string>
+    <string name="wav_lossless">wav (Lossless)</string>
     <string name="bitrate_value">%d kbps</string>
     <string name="sampling_rate_value">%d Hz</string>
 </resources>

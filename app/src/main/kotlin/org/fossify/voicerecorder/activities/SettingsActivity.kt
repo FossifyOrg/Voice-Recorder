@@ -36,6 +36,7 @@ import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
 import org.fossify.voicerecorder.helpers.EXTENSION_M4A
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.EXTENSION_OGG
+import org.fossify.voicerecorder.helpers.EXTENSION_WAV
 import org.fossify.voicerecorder.helpers.SAMPLING_RATES
 import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
@@ -75,6 +76,7 @@ class SettingsActivity : SimpleActivity() {
         setupKeepScreenOn()
         setupUseRecycleBin()
         setupEmptyRecycleBin()
+        updateBitrateVisibility()
         updateTextColors(binding.settingsNestedScrollview)
 
         arrayOf(
@@ -171,7 +173,8 @@ class SettingsActivity : SimpleActivity() {
         binding.settingsExtensionHolder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(EXTENSION_M4A, getString(R.string.m4a)),
-                RadioItem(EXTENSION_MP3, getString(R.string.mp3_experimental))
+                RadioItem(EXTENSION_MP3, getString(R.string.mp3_experimental)),
+                RadioItem(EXTENSION_WAV, getString(R.string.wav_lossless))
             )
 
             if (isQPlus()) {
@@ -183,6 +186,7 @@ class SettingsActivity : SimpleActivity() {
                 binding.settingsExtension.text = config.getExtensionText()
                 adjustBitrate()
                 adjustSamplingRate()
+                updateBitrateVisibility()
             }
         }
     }
@@ -206,6 +210,9 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun adjustBitrate() {
+        if (config.extension == EXTENSION_WAV) {
+            return // WAV doesn't use bitrate
+        }
         val availableBitrates = BITRATES[config.extension]!!
         if (!availableBitrates.contains(config.bitrate)) {
             val currentBitrate = config.bitrate
@@ -214,6 +221,15 @@ class SettingsActivity : SimpleActivity() {
             
             config.bitrate = closestBitrate
             binding.settingsBitrate.text = getBitrateText(config.bitrate)
+        }
+    }
+
+    private fun updateBitrateVisibility() {
+        // WAV is lossless and doesn't use bitrate
+        if (config.extension == EXTENSION_WAV) {
+            binding.settingsBitrateHolder.beGone()
+        } else {
+            binding.settingsBitrateHolder.beVisible()
         }
     }
 
@@ -236,6 +252,10 @@ class SettingsActivity : SimpleActivity() {
 
     private fun getSamplingRatesArray(): ArrayList<Int> {
         val baseRates = SAMPLING_RATES[config.extension]!!
+        // WAV doesn't have bitrate limits, return all available rates
+        if (config.extension == EXTENSION_WAV) {
+            return baseRates
+        }
         val limits = SAMPLING_RATE_BITRATE_LIMITS[config.extension]!!
         val filteredRates = baseRates.filter {
             config.bitrate in limits[it]!![0]..limits[it]!![1]

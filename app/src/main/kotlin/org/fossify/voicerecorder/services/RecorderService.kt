@@ -43,6 +43,7 @@ import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
 import org.fossify.voicerecorder.recorder.Recorder
+import org.fossify.voicerecorder.recorder.WavRecorder
 import org.greenrobot.eventbus.EventBus
 import java.io.File
 import java.util.Timer
@@ -104,10 +105,10 @@ class RecorderService : Service() {
         recordingFile = "$recordingFolder/${getCurrentFormattedDateTime()}.${config.getExtension()}"
 
         try {
-            recorder = if (recordMp3()) {
-                Mp3Recorder(this)
-            } else {
-                MediaRecorderWrapper(this)
+            recorder = when {
+                config.recordWav() -> WavRecorder(this)
+                recordMp3() -> Mp3Recorder(this)
+                else -> MediaRecorderWrapper(this)
             }
 
             if (isRPlus()) {

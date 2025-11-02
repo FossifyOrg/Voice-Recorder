@@ -54,6 +54,7 @@ class Config(context: Context) : BaseConfig(context) {
         when (extension) {
             EXTENSION_M4A -> R.string.m4a
             EXTENSION_OGG -> R.string.ogg_opus
+            EXTENSION_WAV -> R.string.wav
             else -> R.string.mp3_experimental
         }
     )
@@ -62,9 +63,12 @@ class Config(context: Context) : BaseConfig(context) {
         when (extension) {
             EXTENSION_M4A -> R.string.m4a
             EXTENSION_OGG -> R.string.ogg
+            EXTENSION_WAV -> R.string.wav
             else -> R.string.mp3
         }
     )
+
+    fun recordWav() = extension == EXTENSION_WAV
 
     @SuppressLint("InlinedApi")
     fun getOutputFormat() = when (extension) {
