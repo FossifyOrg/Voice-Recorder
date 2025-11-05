@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Garso Įrašytuvas</string>
+    <string name="app_launcher_name">Garso įrašytuvas</string>
     <string name="recording_saved_successfully">Įrašas sėkmingai išsaugotas</string>
     <string name="recording">Įrašoma</string>
-    <string name="no_recordings_found">Nerasta įrašų įrašytų su šia programėle
-\nbuvo rasta</string>
-    <string name="no_recordings_in_folder_found">Įrašų nerasta
-\npasirinktame aplanke</string>
+    <string name="no_recordings_found">Nerasta įrašų, sukurtų\nšia programa.</string>
+    <string name="no_recordings_in_folder_found">Nerasta įrašų\npasirinktame aplanke.</string>
     <string name="paused">Pristabdyta</string>
-    <string name="recorder">Diktofonas</string>
+    <string name="recorder">Įrašytuvas</string>
     <string name="delete_recordings_confirmation">Ištrinti %s\?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d įrašą</item>
         <item quantity="few">%d įrašus</item>
-        <item quantity="other"/>
+        <item quantity="many">%d įrašų</item>
+        <item quantity="other">%d įrašų</item>
     </plurals>
-    <string name="save_recordings_in">Išsaugoti įrašus</string>
-    <string name="record_after_launch">Pradėkite įrašinėti automatiškai paleidę programėlę</string>
-    <string name="faq_1_title">Ar galiu paslėpti pranešimo ikonėlę įrašinėjant\?</string>
-    <string name="faq_1_text">Na, tai priklauso nuo to. Kol naudojatės įrenginiu, visiškai paslėpti tokių programų pranešimų nebeįmanoma. Jei pažymėsite tinkamą nustatymo elementą, programa padarys viską, kad jį paslėptų. Tačiau galite jį paslėpti užrakintame ekrane, jei prietaiso nustatymuose išjungsite jautrių pranešimų rodymą.</string>
+    <string name="save_recordings_in">Išsaugoti įrašus paskirtyje</string>
+    <string name="record_after_launch">Pradėti įrašyti automatiškai paleidus programą</string>
+    <string name="faq_1_title">Ar galiu paslėpti pranešimo piktogramą įrašant?</string>
+    <string name="faq_1_text">Na, tai priklauso. Kol naudojate savo įrenginį, tokių programų pranešimų visiškai paslėpti nebegalima. Jei pažymėsite tinkamą nustatymą, programa stengsis juos paslėpti. Vis dėlto galite juos paslėpti užrakintame ekrane, jei įrenginio nustatymuose išjungsite jautrių pranešimų rodymą.</string>
+    <string name="confirm_recording_folder">Turite patvirtinti aplanką, kuriame norite išsaugoti įrašus. Paspauskite Gerai, kad tęstumėte.</string>
+    <string name="move_recordings">Perkelti įrašus</string>
+    <string name="move_recordings_to_new_folder_desc">Turite esamus įrašus. Ar norite juos perkelti į naują aplanką?</string>
+    <string name="recording_too_short">Įrašas buvo per trumpas įrašyti.</string>
+    <string name="player">Grotuvas</string>
+    <string name="discard_recording">Atsisakyti įrašo</string>
+    <string name="discard_recording_confirmation">Ar tikrai norite atsisakyti dabartinio įrašo? Šio veiksmo negalima anuliuoti.</string>
+    <string name="change_microphone_mode_confirmation">Tai pakeičia, kaip jūsų įrenginys nukreipia ir apdoroja garso įrašus. Rezultatai skiriasi priklausomai nuo įrenginio ir gali paveikti garsumą, triukšmą ir kitus veiksnius.</string>
+    <string name="microphone_mode_unprocessed">Neapdorotas („raw“)</string>
+    <string name="microphone_mode_voice_recognition">Balso atpažinimas</string>
+    <string name="microphone_mode_voice_performance">Balso veikimas (maža delsa)</string>
+    <string name="audio_source">Garso šaltinis</string>
+    <string name="microphone_mode">Mikrofono režimas</string>
+    <string name="bitrate">Bitų srautas</string>
+    <string name="keep_screen_on">Išlaikyti ekraną įjungtą įrašymo metu</string>
+    <string name="sample_rate">Skaitmeninimo dažnis</string>
+    <string name="microphone_mode_camcorder">Fotoaparatas (vaizdas)</string>
+    <string name="microphone_mode_voice_communication">Balsinis ryšys (automatinis stiprinimas)</string>
 </resources>
