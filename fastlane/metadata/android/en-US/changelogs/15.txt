@@ -1,0 +1,5 @@
+Changed:
+
+• Playback is now paused when external audio devices are disconnected 
+• Updated translations
+
