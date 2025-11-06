@@ -2,8 +2,11 @@ package org.fossify.voicerecorder.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.RECEIVER_NOT_EXPORTED
+import android.content.IntentFilter
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +27,7 @@ import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.updateTextColors
 import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.isQPlus
+import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
@@ -32,6 +36,7 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.receivers.BecomingNoisyReceiver
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -59,6 +64,9 @@ class PlayerFragment(
     private var playOnPreparation = true
     private lateinit var binding: FragmentPlayerBinding
 
+    private var becomingNoisyReceiver: BecomingNoisyReceiver? = null
+    private var isReceiverRegistered = false
+
     override fun onFinishInflate() {
         super.onFinishInflate()
         binding = FragmentPlayerBinding.bind(this)
@@ -76,6 +84,7 @@ class PlayerFragment(
     }
 
     override fun onDestroy() {
+        unregisterNoisyAudioReceiver()
         player?.stop()
         player?.release()
         player = null
@@ -219,6 +228,7 @@ class PlayerFragment(
 
             setOnCompletionListener {
                 progressTimer.cancel()
+                unregisterNoisyAudioReceiver()
                 binding.playerProgressbar.progress = binding.playerProgressbar.max
                 binding.playerProgressCurrent.text = binding.playerProgressMax.text
                 binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(false))
@@ -226,8 +236,7 @@ class PlayerFragment(
 
             setOnPreparedListener {
                 if (playOnPreparation) {
-                    setupProgressTimer()
-                    player?.start()
+                    resumePlayback()
                 }
 
                 playOnPreparation = true
@@ -323,12 +332,14 @@ class PlayerFragment(
     }
 
     private fun pausePlayback() {
+        unregisterNoisyAudioReceiver()
         player?.pause()
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(false))
         progressTimer.cancel()
     }
 
     private fun resumePlayback() {
+        registerNoisyAudioReceiver()
         player?.start()
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(true))
         setupProgressTimer()
@@ -399,5 +410,30 @@ class PlayerFragment(
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun recordingMovedToRecycleBin(@Suppress("UNUSED_PARAMETER") event: Events.RecordingTrashUpdated) {
         refreshRecordings()
+    }
+
+    private fun registerNoisyAudioReceiver() {
+        if (isReceiverRegistered) return
+        if (becomingNoisyReceiver == null) {
+            becomingNoisyReceiver = BecomingNoisyReceiver(onBecomingNoisy = ::pausePlayback)
+        }
+
+        val filter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        if (isTiramisuPlus()) {
+            context.registerReceiver(becomingNoisyReceiver, filter, RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(becomingNoisyReceiver, filter)
+        }
+
+        isReceiverRegistered = true
+    }
+
+    private fun unregisterNoisyAudioReceiver() {
+        if (!isReceiverRegistered || becomingNoisyReceiver == null) return
+        try {
+            isReceiverRegistered = false
+            context.unregisterReceiver(becomingNoisyReceiver)
+        } catch (ignored: IllegalArgumentException) {
+        }
     }
 }
