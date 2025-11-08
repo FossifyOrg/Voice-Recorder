@@ -33,4 +33,5 @@
     <string name="keep_screen_on">Hold skærmen tændt under optagelse</string>
     <string name="sample_rate">Samplingfrekvens</string>
     <string name="microphone_mode">Mikrofontilstand</string>
+    <string name="change_microphone_mode_confirmation">Dette ændrer, hvordan din enhed dirigerer og behandler lyd. Resultaterne varierer fra enhed til enhed og kan påvirke lydstyrke, støj og andre faktorer.</string>
 </resources>
