@@ -27,4 +27,11 @@
     <string name="keep_screen_on">Manténer l’ecran alucat pendent l’enregistrament</string>
     <string name="faq_1_title">Pòdi amagar l’icòna de notificacion pendent l’enregistrament ?</string>
     <string name="faq_1_text">Òc ben, depend. Pendent qu\'utilizatz vòstre aparelh, es pas mai possible d\'amagar complètament las notificacions d\'aplicacions coma aquesta. Se causissètz l\'element de reglatge apropriat, l\'aplicacion farà de son melhor per las amagar. Podètz ça que la l\'amagar sus l\'ecran de verrolhatge, se desactivatz l\'afichatge de las notificacions sensiblas dins los paramètres de vòstre aparelh.</string>
+    <string name="recording">Enregistrament</string>
+    <string name="recorder">Enregistrador</string>
+    <string name="change_microphone_mode_confirmation">Aquò modifica lo biais que vòstre aparelh acamina e tracta l\'àudio. Los resultats vàrian segon l\'aparelh e pòdon afectar lo volum, lo bruch e d\'autres factors.</string>
+    <string name="microphone_mode">Mòde microfòn</string>
+    <string name="sample_rate">Taus d\'escandalhatge</string>
+    <string name="microphone_mode_voice_communication">Comunicacion vocala</string>
+    <string name="microphone_mode_voice_recognition">Reconeissença vocala</string>
 </resources>
