@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="player">Ameɣri</string>
+    <string name="recorder">Amseklas</string>
+    <string name="app_launcher_name">Amseklas n taɣect</string>
+    <string name="delete_recordings_confirmation">Kkes %s?</string>
+    <string name="audio_source">Aɣbalu n umeslaw</string>
 </resources>
