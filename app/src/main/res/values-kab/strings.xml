@@ -5,4 +5,9 @@
     <string name="app_launcher_name">Amseklas n taɣect</string>
     <string name="delete_recordings_confirmation">Kkes %s?</string>
     <string name="audio_source">Aɣbalu n umeslaw</string>
+    <string name="recording_saved_successfully">Asekles yettwaskelsen akken iwata</string>
+    <string name="recording_too_short">Asekles wezzil aṭas akken ad yettwakles!</string>
+    <string name="recording">Asekles</string>
+    <string name="no_recordings_in_folder_found">Ulac ikalasen yettwafen\nDeg ukaram yettwafernen</string>
+    <string name="paused">Yeḥbes</string>
 </resources>
