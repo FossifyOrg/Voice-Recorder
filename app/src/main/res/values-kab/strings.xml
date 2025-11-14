@@ -10,4 +10,6 @@
     <string name="recording">Asekles</string>
     <string name="no_recordings_in_folder_found">Ulac ikalasen yettwafen\nDeg ukaram yettwafernen</string>
     <string name="paused">Yeḥbes</string>
+    <string name="change_microphone_mode_confirmation">Aya yettbeddil amek ay tteddun yibriden d ukala n umeslaw n yibenk-nnek-nnem. Igmaḍ mgaraden s yibenk ɣer wayeḍ, aya yezmer ad yesɛu tazrirt ɣef ubleɣ, lḥess d yimgan-iḍen.</string>
+    <string name="save_recordings_in">Sekles ikalasen deg</string>
 </resources>
