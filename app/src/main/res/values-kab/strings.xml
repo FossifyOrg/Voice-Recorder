@@ -15,4 +15,7 @@
     <string name="record_after_launch">Bdu asekles awurman seld asenker n usnas</string>
     <string name="keep_screen_on">Eǧǧ agdil deg lawan n usekles</string>
     <string name="microphone_mode_camcorder">Takamiṛat (tavidyut)</string>
+    <string name="microphone_mode_voice_communication">Taɣwalt n taɣect</string>
+    <string name="microphone_mode_voice_performance">Tamellit n taɣect</string>
+    <string name="faq_1_text">Ihi, ilmend n waya. Skud tesseqdaceḍ ibenk-ik, ur yezmir ara ad yeffer ilɣuten n yisnasen am wigi. Ma tesneqdeḍ aferdis n usbadu iwatan, asnas ad yeg ayen yezmer akken ad t-yeffer. Ɣas akka, tzemreḍ ad t-teffreḍ ɣef tsekkaṛt n ugdil, ma yella tekkseḍ askan n yilɣa imḥulfuyen deg yiɣewwaren-ik n yibenk.</string>
 </resources>
