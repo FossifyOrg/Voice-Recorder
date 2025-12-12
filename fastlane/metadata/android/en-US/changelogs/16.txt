@@ -1,0 +1,8 @@
+Changed:
+
+• Updated translations
+
+Fixed:
+
+• Fixed recording from external apps 
+
