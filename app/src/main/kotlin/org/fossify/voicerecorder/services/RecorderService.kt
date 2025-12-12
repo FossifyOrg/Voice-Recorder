@@ -27,6 +27,7 @@ import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isRPlus
+import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
@@ -128,7 +129,7 @@ class RecorderService : Service() {
             } else {
                 recorder?.setOutputFile(recordingPath)
                 resultUri = FileProvider.getUriForFile(
-                    this, "$packageName.provider", File(recordingPath)
+                    this, "${BuildConfig.APPLICATION_ID}.provider", File(recordingPath)
                 )
             }
 
