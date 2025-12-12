@@ -106,6 +106,7 @@ class RecorderService : Service() {
 
         val recordingFolder = defaultFolder.absolutePath
         recordingPath = "$recordingFolder/${getCurrentFormattedDateTime()}.${config.getExtension()}"
+        resultUri = null
 
         try {
             recorder = if (recordMp3()) {
