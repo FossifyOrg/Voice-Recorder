@@ -11,7 +11,6 @@ import me.grantland.widget.AutofitHelper
 import org.fossify.commons.extensions.appLaunched
 import org.fossify.commons.extensions.checkAppSideloading
 import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
-import org.fossify.commons.extensions.getProperBackgroundColor
 import org.fossify.commons.extensions.hideKeyboard
 import org.fossify.commons.extensions.launchMoreAppsFromUsIntent
 import org.fossify.commons.extensions.onPageChangeListener

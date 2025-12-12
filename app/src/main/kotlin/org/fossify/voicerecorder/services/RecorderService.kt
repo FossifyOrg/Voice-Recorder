@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.IBinder
 import android.provider.DocumentsContract
 import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
 import org.fossify.commons.extensions.createSAFFileSdk30
 import org.fossify.commons.extensions.getCurrentFormattedDateTime
@@ -56,7 +57,9 @@ class RecorderService : Service() {
     }
 
 
-    private var recordingFile = ""
+    private var recordingPath = ""
+    private var resultUri: Uri? = null
+
     private var duration = 0
     private var status = RECORDING_STOPPED
     private var durationTimer = Timer()
@@ -101,7 +104,7 @@ class RecorderService : Service() {
         }
 
         val recordingFolder = defaultFolder.absolutePath
-        recordingFile = "$recordingFolder/${getCurrentFormattedDateTime()}.${config.getExtension()}"
+        recordingPath = "$recordingFolder/${getCurrentFormattedDateTime()}.${config.getExtension()}"
 
         try {
             recorder = if (recordMp3()) {
@@ -111,17 +114,22 @@ class RecorderService : Service() {
             }
 
             if (isRPlus()) {
-                val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingFile)
-                createSAFFileSdk30(recordingFile)
+                val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingPath)
+                createSAFFileSdk30(recordingPath)
+                resultUri = fileUri
                 contentResolver.openFileDescriptor(fileUri, "w")!!
                     .use { recorder?.setOutputFile(it) }
-            } else if (isPathOnSD(recordingFile)) {
-                var document = getDocumentFile(recordingFile.getParentPath())
-                document = document?.createFile("", recordingFile.getFilenameFromPath())
+            } else if (isPathOnSD(recordingPath)) {
+                var document = getDocumentFile(recordingPath.getParentPath())
+                document = document?.createFile("", recordingPath.getFilenameFromPath())
+                resultUri = document?.uri
                 contentResolver.openFileDescriptor(document!!.uri, "w")!!
                     .use { recorder?.setOutputFile(it) }
             } else {
-                recorder?.setOutputFile(recordingFile)
+                recorder?.setOutputFile(recordingPath)
+                resultUri = FileProvider.getUriForFile(
+                    this, "$packageName.provider", File(recordingPath)
+                )
             }
 
             recorder?.prepare()
@@ -185,10 +193,10 @@ class RecorderService : Service() {
 
         recorder = null
         if (isRPlus()) {
-            val recordingUri = createDocumentUriUsingFirstParentTreeUri(recordingFile)
+            val recordingUri = createDocumentUriUsingFirstParentTreeUri(recordingPath)
             DocumentsContract.deleteDocument(contentResolver, recordingUri)
         } else {
-            File(recordingFile).delete()
+            File(recordingPath).delete()
         }
 
         EventBus.getDefault().post(Events.RecordingCompleted())
@@ -228,15 +236,15 @@ class RecorderService : Service() {
     private fun scanRecording() {
         MediaScannerConnection.scanFile(
             this,
-            arrayOf(recordingFile),
-            arrayOf(recordingFile.getMimeType())
+            arrayOf(recordingPath),
+            arrayOf(recordingPath.getMimeType())
         ) { _, uri ->
             if (uri == null) {
                 toast(org.fossify.commons.R.string.unknown_error_occurred)
                 return@scanFile
             }
 
-            recordingSavedSuccessfully(uri)
+            recordingSavedSuccessfully(resultUri ?: uri)
         }
     }
 

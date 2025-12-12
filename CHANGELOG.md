@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Fixed recording from external apps ([#273])
 
 ## [1.5.1] - 2025-11-06
 ### Changed
@@ -136,6 +138,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
 [#185]: https://github.com/FossifyOrg/Voice-Recorder/issues/185
 [#247]: https://github.com/FossifyOrg/Voice-Recorder/issues/247
+[#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
 
 [Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.5.1...HEAD
 [1.5.1]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.5.0...1.5.1
