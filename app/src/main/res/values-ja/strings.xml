@@ -25,4 +25,14 @@
     <string name="microphone_mode_voice_performance">ボイスパフォーマンス</string>
     <string name="faq_1_title">録音中に通知を非表示にすることはできますか？</string>
     <string name="faq_1_text">場合によります。デバイスの使用中は、このようなアプリの通知を完全に非表示にすることはできなくなりました。適切な設定項目にチェックを入れれば、通知を可能な限り隠せます。ロック画面上での非表示は、デバイスの設定から通知の表示を無効にすることで可能です。</string>
+    <string name="recording_too_short">録音時間が短すぎるため、録音に失敗しました!</string>
+    <string name="discard_recording">破棄する</string>
+    <string name="keep_screen_on">録音中は画面をONのままにする</string>
+    <string name="sample_rate">サンプリングレート</string>
+    <string name="discard_recording_confirmation">現在の録音を破棄してもよろしいですか? この操作を元に戻すことはできません。</string>
+    <string name="change_microphone_mode_confirmation">これにより、 デバイス のルーティングと処理 によるオーディオ 方法が変更されます。結果は デバイス によって異なり、音量、ノイズ、その他の要素に影響を与える可能性があります。</string>
+    <string name="move_recordings">録音を移動する</string>
+    <string name="move_recordings_to_new_folder_desc">既存の録音があります。 新しいフォルダに録音を移動しますか?</string>
+    <string name="confirm_recording_folder">録音をフォルダに保存するには確認する必要があります。 OKを押して続行してください。</string>
+    <string name="microphone_mode">マイクモード</string>
 </resources>

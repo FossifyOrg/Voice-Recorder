@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">Səs Yazıçısı</string>
+    <string name="confirm_recording_folder">Siz səs yazmaların saxlanılacağı faylı təsdiqləməlisiniz. Davam etmək üçün \"OK\"-ə basın.</string>
+    <string name="move_recordings">Səsyazmaların yerini dəyişin</string>
+</resources>
