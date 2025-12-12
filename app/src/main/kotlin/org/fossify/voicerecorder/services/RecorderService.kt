@@ -124,8 +124,7 @@ class RecorderService : Service() {
             } else if (isPathOnSD(recordingPath)) {
                 var document = getDocumentFile(recordingPath.getParentPath())
                 document = document?.createFile("", recordingPath.getFilenameFromPath())
-                    ?: throw IllegalStateException("Failed to create document on SD Card")
-
+                check(document != null) { "Failed to create document on SD Card" }
                 resultUri = document.uri
                 contentResolver.openFileDescriptor(document.uri, "w")!!
                     .use { recorder?.setOutputFile(it) }
