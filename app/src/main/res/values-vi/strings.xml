@@ -26,7 +26,7 @@
     <string name="bitrate">Bitrate</string>
     <string name="discard_recording">Hủy ghi âm</string>
     <string name="keep_screen_on">Giữ màn hình sáng trong khi ghi âm</string>
-    <string name="confirm_recording_folder">Bạn cần chọn thư mục để lưu các bản ghi âm. Nhấn OK để chọn.</string>
+    <string name="confirm_recording_folder">Bạn cần chọn thư mục để lưu các bản ghi âm. Nhấn Đồng ý để chọn.</string>
     <string name="move_recordings">Chuyển bản ghi âm hiện có</string>
     <string name="move_recordings_to_new_folder_desc">Bạn còn bản ghi âm trong thư mục cũ. Bạn có muốn chuyển chúng sang thư mục mới không?</string>
     <string name="recording_too_short">Bản ghi âm quá ngắn!</string>
