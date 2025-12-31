@@ -26,7 +26,7 @@
     <string name="microphone_mode_voice_recognition">Reconhecimento de voz</string>
     <string name="microphone_mode_voice_communication">Comunicação por voz</string>
     <string name="microphone_mode_voice_performance">Desempenho de voz</string>
-    <string name="faq_1_text">Depende. Actuamente, já não possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a alinea correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
+    <string name="faq_1_text">Depende. Atuamente, já não é possível ocultar totalmente as notificações em aplicações deste tipo. Tente nas Definições da aplicação, habilitar a opção correspondente e nas Definições do sistema, desabilitar a apresentação de notificações desta natureza no ecrã de bloqueio.</string>
     <string name="discard_recording">Cancelar gravação</string>
     <string name="discard_recording_confirmation">Tem certeza que quer cancelar a gravação? Não pode ser desfeito.</string>
     <string name="keep_screen_on">Manter o ecrã ligado durante a gravação</string>
@@ -34,4 +34,7 @@
     <string name="move_recordings">Mover gravações</string>
     <string name="move_recordings_to_new_folder_desc">Tem gravações existentes. Quer as mover para a sua pasta nova?</string>
     <string name="recording_too_short">Esta gravação é demasiado curta para ser guardada!</string>
+    <string name="change_microphone_mode_confirmation">Isto altera a forma como o seu dispositivo encaminha e processa o áudio. Os resultados variam de acordo com o dispositivo e podem afetar o volume, o ruído e outros fatores.</string>
+    <string name="microphone_mode">Modo de microfone</string>
+    <string name="sample_rate">Taxa de amostragem</string>
 </resources>
