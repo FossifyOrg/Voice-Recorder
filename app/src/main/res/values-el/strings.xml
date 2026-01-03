@@ -34,4 +34,6 @@
     <string name="discard_recording">Διαγραφή εγγραφής</string>
     <string name="discard_recording_confirmation">Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την εγγραφή; Αυτή η ενέργεια δεν μπορεί να αντιστραφεί.</string>
     <string name="change_microphone_mode_confirmation">Αυτό αλλάξει τον τρόπο που η συσκευή σας επεξεργάζεται τον ήχο. Το αποτέλεσμα μπορεί να είναι διαφορετικό ανά συσκευή και μπορεί να επηρεάσει το επίπεδο του ήχου, το θόρυβο και άλλες παραμέτρους.</string>
+    <string name="move_recordings_to_new_folder_desc">Έχετε υπάρχουσες εγγραφές. Θα θέλατε να τις μετακινήσετε στον νέο σας φάκελο;</string>
+    <string name="sample_rate">Δείγμα</string>
 </resources>
