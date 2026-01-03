@@ -24,4 +24,16 @@
     <string name="microphone_mode_voice_performance">Actuación mediante a voz</string>
     <string name="faq_1_title">Podo agochar a icona da notificación mentres estou gravando\?</string>
     <string name="faq_1_text">Ben, depende. Mentres uses o teu dispositivo, non será posible agochar enteiramente as notificacións como as deste aplicativo. Se revisas os axustes deste elemento, o aplicativo intentará agochalo. Si que o podes agochar da pantalla de bloqueo, se o desactivas o amosador das notificacións sensibles nos axustes do teu dispositivo.</string>
+    <string name="move_recordings">Mover gravacións</string>
+    <string name="move_recordings_to_new_folder_desc">Ten gravacións existentes. Desexa movelas ao seu novo cartafol?</string>
+    <string name="recording_too_short">A gravación foi curta de máis para gravar!</string>
+    <string name="recorder">Gravadora</string>
+    <string name="confirm_recording_folder">Debe confirmar o cartafol onde gardar as súas gravacións. Prema OK para continuar.</string>
+    <string name="discard_recording">Descartar gravación</string>
+    <string name="discard_recording_confirmation">Está certo de querer descartar a gravación actual? Isto no se pode desfacer.</string>
+    <string name="change_microphone_mode_confirmation">Isto cambia como o teu dispositivo enruta e precesa audio. Os resultados varían segundo o dispositivo e poden afectar a volume, ruído e outros factores.</string>
+    <string name="microphone_mode">Modo micrófono</string>
+    <string name="bitrate">Taxa de bits</string>
+    <string name="keep_screen_on">Manter a pantalla acesa durante a gravación</string>
+    <string name="sample_rate">Taxa de mostraxe</string>
 </resources>

@@ -29,4 +29,9 @@
     <string name="recording_too_short">Η ηχογράφηση ήταν πολύ σύντομη για να ηχογραφηθεί!</string>
     <string name="microphone_mode">Λειτουργία μικροφώνου</string>
     <string name="keep_screen_on">Διατήρησε την οθόνη ενεργοποιημένη κατά την εγγραφή</string>
+    <string name="confirm_recording_folder">Πρέπει να επιβεβαιώσετε το φάκελο που θέλετε να αποθηκευτούν οι ηχογραφήσεις σας. Παρακαλώ Πατήστε ΟΚ για να συνεχίσετε.</string>
+    <string name="player">Αναπαραγωγέας</string>
+    <string name="discard_recording">Διαγραφή εγγραφής</string>
+    <string name="discard_recording_confirmation">Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την εγγραφή; Αυτή η ενέργεια δεν μπορεί να αντιστραφεί.</string>
+    <string name="change_microphone_mode_confirmation">Αυτό αλλάξει τον τρόπο που η συσκευή σας επεξεργάζεται τον ήχο. Το αποτέλεσμα μπορεί να είναι διαφορετικό ανά συσκευή και μπορεί να επηρεάσει το επίπεδο του ήχου, το θόρυβο και άλλες παραμέτρους.</string>
 </resources>
