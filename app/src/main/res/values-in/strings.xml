@@ -30,4 +30,9 @@
     <string name="move_recordings">Pindahkan rekaman</string>
     <string name="recording_too_short">Rekaman terlalu pendek untuk disimpan!</string>
     <string name="keep_screen_on">Biarkan layar tetap menyala selama perekaman</string>
+    <string name="discard_recording">Buang rekaman</string>
+    <string name="discard_recording_confirmation">Apakah Anda yakin ingin membuang rekaman saat ini? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="change_microphone_mode_confirmation">Ini mengubah cara perangkat Anda merutekan dan memproses audio. Hasilnya bervariasi tergantung perangkat dan dapat memengaruhi volume, noise, dan faktor lainnya.</string>
+    <string name="microphone_mode">Mode mikrofon</string>
+    <string name="sample_rate">Laju sampel</string>
 </resources>
