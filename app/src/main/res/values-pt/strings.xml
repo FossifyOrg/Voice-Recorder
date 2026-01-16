@@ -34,4 +34,7 @@
     <string name="discard_recording_confirmation">Tem a certeza que deseja descartar a gravação atual? Isto não pode ser desfeito.</string>
     <string name="keep_screen_on">Manter o ecrã ligado durante a gravação</string>
     <string name="sample_rate">Taxa de amostragem</string>
+    <string name="discard_recording">Descartar gravação</string>
+    <string name="change_microphone_mode_confirmation">Isto altera com o seu dispositivo processa e encaminha o áudio. Os resultados podem variar por dispositivo e pode afetar volume, ruído e outros fatores.</string>
+    <string name="microphone_mode">Modo do microfone</string>
 </resources>
