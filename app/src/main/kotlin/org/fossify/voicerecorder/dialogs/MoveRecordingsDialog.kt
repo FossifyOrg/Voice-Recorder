@@ -1,5 +1,6 @@
 package org.fossify.voicerecorder.dialogs
 
+import android.net.Uri
 import androidx.appcompat.app.AlertDialog
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.getAlertDialogBuilder
@@ -11,11 +12,12 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
 import org.fossify.voicerecorder.extensions.getAllRecordings
 import org.fossify.voicerecorder.extensions.moveRecordings
+import org.fossify.voicerecorder.helpers.buildParentDocumentUri
 
 class MoveRecordingsDialog(
     private val activity: BaseSimpleActivity,
-    private val previousFolder: String,
-    private val newFolder: String,
+    private val oldFolder: Uri,
+    private val newFolder: Uri,
     private val callback: () -> Unit
 ) {
     private lateinit var dialog: AlertDialog
@@ -66,8 +68,8 @@ class MoveRecordingsDialog(
         ensureBackgroundThread {
             activity.moveRecordings(
                 recordingsToMove = activity.getAllRecordings(),
-                sourceParent = previousFolder,
-                destinationParent = newFolder
+                sourceParent = buildParentDocumentUri(oldFolder),
+                targetParent = buildParentDocumentUri(newFolder)
             ) {
                 activity.runOnUiThread {
                     callback()
