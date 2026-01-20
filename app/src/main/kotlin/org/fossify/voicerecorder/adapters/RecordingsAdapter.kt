@@ -126,9 +126,8 @@ class RecordingsAdapter(
 
     private fun openRecordingWith() {
         val recording = getItemWithKey(selectedKeys.first()) ?: return
-        val path = recording.path
         activity.openPathIntent(
-            path = path,
+            path = recording.uri.toString(),
             forceChooser = true,
             applicationId = BuildConfig.APPLICATION_ID,
             forceMimeType = "audio/*"
@@ -137,7 +136,7 @@ class RecordingsAdapter(
 
     private fun shareRecordings() {
         val selectedItems = getSelectedItems()
-        val paths = selectedItems.map { it.path }
+        val paths = selectedItems.map { it.uri.toString() }
         activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 

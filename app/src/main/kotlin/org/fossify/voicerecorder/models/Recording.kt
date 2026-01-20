@@ -1,6 +1,7 @@
 package org.fossify.voicerecorder.models
 
 import android.content.Context
+import android.net.Uri
 import android.webkit.MimeTypeMap
 import org.fossify.commons.helpers.isOreoPlus
 import org.fossify.voicerecorder.R
@@ -8,7 +9,7 @@ import org.fossify.voicerecorder.R
 data class Recording(
     val id: Int,
     val title: String,
-    val path: String,
+    val uri: Uri,
     val timestamp: Long,
     val duration: Int,
     val size: Int

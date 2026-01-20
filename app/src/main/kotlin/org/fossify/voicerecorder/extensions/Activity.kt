@@ -4,7 +4,6 @@ import android.app.Activity
 import android.net.Uri
 import android.provider.DocumentsContract
 import android.view.WindowManager
-import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.helpers.DAY_SECONDS
@@ -28,7 +27,7 @@ fun BaseSimpleActivity.deleteRecordings(
     ensureBackgroundThread {
         val resolver = contentResolver
         recordingsToRemove.forEach {
-            DocumentsContract.deleteDocument(resolver, it.path.toUri())
+            DocumentsContract.deleteDocument(resolver, it.uri)
         }
 
         callback(true)
@@ -69,17 +68,17 @@ fun BaseSimpleActivity.moveRecordings(
                 try {
                     DocumentsContract.moveDocument(
                         contentResolver,
-                        recording.path.toUri(),
+                        recording.uri,
                         sourceParent,
                         targetParent
                     )
                 } catch (@Suppress("SwallowedException") e: IllegalStateException) {
-                    moveDocumentFallback(recording.path.toUri(), sourceParent)
+                    moveDocumentFallback(recording.uri, sourceParent)
                 }
             }
         } else {
             for (recording in recordingsToMove) {
-                moveDocumentFallback(recording.path.toUri(), sourceParent)
+                moveDocumentFallback(recording.uri, sourceParent)
             }
         }
 
