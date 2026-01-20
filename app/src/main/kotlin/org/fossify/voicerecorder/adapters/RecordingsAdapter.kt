@@ -1,18 +1,11 @@
 package org.fossify.voicerecorder.adapters
 
 import android.annotation.SuppressLint
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
-import org.fossify.commons.extensions.formatDate
-import org.fossify.commons.extensions.formatSize
-import org.fossify.commons.extensions.getFormattedDuration
-import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.openPathIntent
-import org.fossify.commons.extensions.setupViewBackground
-import org.fossify.commons.extensions.sharePathsIntent
+import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
@@ -22,8 +15,7 @@ import org.fossify.voicerecorder.databinding.ItemRecordingBinding
 import org.fossify.voicerecorder.dialogs.DeleteConfirmationDialog
 import org.fossify.voicerecorder.dialogs.RenameRecordingDialog
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.deleteRecordings
-import org.fossify.voicerecorder.extensions.trashRecordings
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
@@ -179,11 +171,12 @@ class RecordingsAdapter(
 
         val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
         val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+            .filter { selectedKeys.contains(it.id) }
+            .toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.deleteRecordings(recordingsToRemove) { success ->
+        activity.recordingStore.delete(recordingsToRemove) { success ->
             if (success) {
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
             }
@@ -197,11 +190,12 @@ class RecordingsAdapter(
 
         val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
         val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+            .filter { selectedKeys.contains(it.id) }
+            .toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.trashRecordings(recordingsToRemove) { success ->
+        activity.recordingStore.trash(recordingsToRemove) { success ->
             if (success) {
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())
@@ -211,7 +205,7 @@ class RecordingsAdapter(
 
     private fun doDeleteAnimation(
         oldRecordingIndex: Int,
-        recordingsToRemove: ArrayList<Recording>,
+        recordingsToRemove: List<Recording>,
         positions: ArrayList<Int>
     ) {
         recordings.removeAll(recordingsToRemove.toSet())

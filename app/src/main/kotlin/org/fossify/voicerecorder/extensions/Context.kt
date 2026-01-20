@@ -7,34 +7,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.provider.DocumentsContract
 import androidx.core.graphics.createBitmap
-import androidx.documentfile.provider.DocumentFile
-import org.fossify.voicerecorder.helpers.Config
-import org.fossify.voicerecorder.helpers.IS_RECORDING
-import org.fossify.voicerecorder.helpers.MyWidgetRecordDisplayProvider
-import org.fossify.voicerecorder.helpers.TOGGLE_WIDGET_UI
-import org.fossify.voicerecorder.helpers.findChildDocument
-import org.fossify.voicerecorder.helpers.getOrCreateDocument
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.helpers.*
 import java.util.Calendar
 import java.util.Locale
-import kotlin.math.roundToLong
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 
-private const val TRASH_FOLDER_NAME = ".trash"
+val Context.recordingStore: RecordingStore get() = recordingStoreFor(config.saveRecordingsFolder)
 
-/**
- * Returns the URI of the trash folder as a sub-folder of the save recordings folder. The trash folder itself might not yet exists. Returns null if the save
- * recordings folder is not defined.
- */
-val Context.trashFolder: Uri?
-    get() = config.saveRecordingsFolder?.let {
-        findChildDocument(contentResolver, it, TRASH_FOLDER_NAME)
-    }
+fun Context.recordingStoreFor(uri: Uri): RecordingStore = RecordingStore(this, uri)
 
 fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
     val size = (60 * resources.displayMetrics.density).toInt()
@@ -58,72 +41,6 @@ fun Context.updateWidgets(isRecording: Boolean) {
             putExtra(IS_RECORDING, isRecording)
             sendBroadcast(this)
         }
-    }
-}
-
-/**
- * Returns the URI of the trash folder. Creates the folder if it doesn't yet exist. Returns null if the save recording folder is not defined or if the trash
- * folder creation failed.
- *
- * @see [trashFolder]
- */
-fun Context.getOrCreateTrashFolder(): Uri? = config.saveRecordingsFolder?.let {
-    getOrCreateDocument(contentResolver, it, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME)
-}
-
-fun Context.hasRecordings(): Boolean = config.saveRecordingsFolder?.let { uri ->
-    DocumentFile.fromTreeUri(this, uri)?.listFiles()?.any { it.isAudioRecording() }
-} == true
-
-fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
-    val recordings = arrayListOf<Recording>()
-
-    recordings.addAll(getRecordings(trashed))
-
-    if (trashed) {
-        // Return recordings trashed using MediaStore, this won't be needed in the future
-        @Suppress("DEPRECATION") recordings.addAll(getMediaStoreTrashedRecordings())
-    }
-
-    return recordings
-}
-
-private fun Context.getRecordings(trashed: Boolean = false): List<Recording> {
-    val uri = if (trashed) trashFolder else config.saveRecordingsFolder
-    val folder = uri?.let { DocumentFile.fromTreeUri(this, it) }
-
-    return folder?.listFiles()?.filter { it.isAudioRecording() }?.map { readRecordingFromFile(it) }?.toList() ?: emptyList()
-}
-
-@Deprecated(
-    message = "Use getRecordings instead. This method is only here for backward compatibility.", replaceWith = ReplaceWith("getRecordings(trashed = true)")
-)
-private fun Context.getMediaStoreTrashedRecordings(): List<Recording> {
-    val trashedRegex = "^\\.trashed-\\d+-".toRegex()
-
-    return config.saveRecordingsFolder?.let { DocumentFile.fromTreeUri(this, it) }?.listFiles()?.filter { it.isTrashedMediaStoreRecording() }?.map {
-            readRecordingFromFile(it).copy(title = trashedRegex.replace(it.name!!, ""))
-        }?.toList() ?: emptyList()
-}
-
-private fun Context.readRecordingFromFile(file: DocumentFile): Recording = Recording(
-    id = file.hashCode(),
-    title = file.name!!,
-    uri = file.uri,
-    timestamp = file.lastModified(),
-    duration = getDurationFromUri(file.uri).toInt(),
-    size = file.length().toInt()
-)
-
-
-private fun Context.getDurationFromUri(uri: Uri): Long {
-    return try {
-        val retriever = MediaMetadataRetriever()
-        retriever.setDataSource(this, uri)
-        val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!
-        (time.toLong() / 1000.toDouble()).roundToLong()
-    } catch (_: Exception) {
-        0L
     }
 }
 

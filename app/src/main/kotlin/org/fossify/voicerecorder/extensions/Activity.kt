@@ -1,16 +1,11 @@
 package org.fossify.voicerecorder.extensions
 
 import android.app.Activity
-import android.net.Uri
-import android.provider.DocumentsContract
 import android.view.WindowManager
-import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.helpers.DAY_SECONDS
 import org.fossify.commons.helpers.MONTH_SECONDS
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.voicerecorder.helpers.buildParentDocumentUri
-import org.fossify.voicerecorder.models.Recording
 
 fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
     if (keepScreenOn) {
@@ -18,103 +13,6 @@ fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
     } else {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
-}
-
-fun BaseSimpleActivity.deleteRecordings(
-    recordingsToRemove: Collection<Recording>,
-    callback: (success: Boolean) -> Unit
-) {
-    ensureBackgroundThread {
-        val resolver = contentResolver
-        recordingsToRemove.forEach {
-            DocumentsContract.deleteDocument(resolver, it.uri)
-        }
-
-        callback(true)
-    }
-}
-
-fun BaseSimpleActivity.trashRecordings(
-    recordingsToMove: Collection<Recording>,
-    callback: (success: Boolean) -> Unit
-) = moveRecordings(
-    recordingsToMove = recordingsToMove,
-    sourceParent = config.saveRecordingsFolder?.let(::buildParentDocumentUri)!!,
-    targetParent = getOrCreateTrashFolder()!!,
-    callback = callback
-)
-
-fun BaseSimpleActivity.restoreRecordings(
-    recordingsToRestore: Collection<Recording>,
-    callback: (success: Boolean) -> Unit
-) = moveRecordings(
-    recordingsToMove = recordingsToRestore,
-    sourceParent = getOrCreateTrashFolder()!!,
-    targetParent = config.saveRecordingsFolder?.let(::buildParentDocumentUri)!!,
-    callback = callback
-)
-
-fun BaseSimpleActivity.moveRecordings(
-    recordingsToMove: Collection<Recording>,
-    sourceParent: Uri,
-    targetParent: Uri,
-    callback: (success: Boolean) -> Unit
-) {
-    ensureBackgroundThread {
-        val contentResolver = contentResolver
-
-        if (sourceParent.authority == targetParent.authority) {
-            for (recording in recordingsToMove) {
-                try {
-                    DocumentsContract.moveDocument(
-                        contentResolver,
-                        recording.uri,
-                        sourceParent,
-                        targetParent
-                    )
-                } catch (@Suppress("SwallowedException") e: IllegalStateException) {
-                    moveDocumentFallback(recording.uri, sourceParent)
-                }
-            }
-        } else {
-            for (recording in recordingsToMove) {
-                moveDocumentFallback(recording.uri, sourceParent)
-            }
-        }
-
-        callback(true)
-    }
-}
-
-// Copy source to target, then delete source. Use as fallback when `DocumentsContract.moveDocument` can't used (e.g., when moving between different authorities)
-private fun BaseSimpleActivity.moveDocumentFallback(
-    sourceUri: Uri,
-    targetParentUri: Uri,
-) {
-    val sourceFile = DocumentFile.fromSingleUri(this, sourceUri)!!
-    val sourceName = requireNotNull(sourceFile.name)
-    val sourceType = requireNotNull(sourceFile.type)
-
-    val targetUri = requireNotNull(
-        DocumentsContract.createDocument(
-            contentResolver,
-            targetParentUri,
-            sourceType,
-            sourceName
-        )
-    )
-
-    contentResolver.openInputStream(sourceUri)?.use { inputStream ->
-        contentResolver.openOutputStream(targetUri)?.use { outputStream ->
-            inputStream.copyTo(outputStream)
-        }
-    }
-
-    DocumentsContract.deleteDocument(contentResolver, sourceUri)
-}
-
-fun BaseSimpleActivity.deleteTrashedRecordings() {
-    deleteRecordings(getAllRecordings(trashed = true)) {}
 }
 
 fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
@@ -125,10 +23,11 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
         config.lastRecycleBinCheck = System.currentTimeMillis()
         ensureBackgroundThread {
             try {
-                val recordingsToRemove = getAllRecordings(trashed = true)
+                val store = recordingStore
+                val recordingsToRemove = store.getAll(trashed = true)
                     .filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }
                 if (recordingsToRemove.isNotEmpty()) {
-                    deleteRecordings(recordingsToRemove) {}
+                    store.delete(recordingsToRemove)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
