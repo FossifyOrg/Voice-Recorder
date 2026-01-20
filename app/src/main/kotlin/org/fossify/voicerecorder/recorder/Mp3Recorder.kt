@@ -10,8 +10,6 @@ import com.naman14.androidlame.LameBuilder
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
-import java.io.File
-import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
@@ -23,10 +21,8 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var isPaused = AtomicBoolean(false)
     private var isStopped = AtomicBoolean(false)
     private var amplitude = AtomicInteger(0)
-    private var outputPath: String? = null
     private var androidLame: AndroidLame? = null
-    private var fileDescriptor: ParcelFileDescriptor? = null
-    private var outputStream: FileOutputStream? = null
+    private var outputFileDescriptor: ParcelFileDescriptor? = null
     private val minBufferSize = AudioRecord.getMinBufferSize(
         context.config.samplingRate,
         AudioFormat.CHANNEL_IN_MONO,
@@ -42,26 +38,14 @@ class Mp3Recorder(val context: Context) : Recorder {
         minBufferSize * 2
     )
 
-    override fun setOutputFile(path: String) {
-        outputPath = path
-    }
-
     override fun prepare() {}
 
     override fun start() {
         val rawData = ShortArray(minBufferSize)
         mp3buffer = ByteArray((7200 + rawData.size * 2 * 1.25).toInt())
 
-        outputStream = try {
-            if (fileDescriptor != null) {
-                FileOutputStream(fileDescriptor!!.fileDescriptor)
-            } else {
-                FileOutputStream(File(outputPath!!))
-            }
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            return
-        }
+        val outputFileDescriptor = requireNotNull(this.outputFileDescriptor)
+        val outputStream = FileOutputStream(outputFileDescriptor.fileDescriptor)
 
         androidLame = LameBuilder()
             .setInSampleRate(context.config.samplingRate)
@@ -78,17 +62,20 @@ class Mp3Recorder(val context: Context) : Recorder {
                 return@ensureBackgroundThread
             }
 
-            while (!isStopped.get()) {
-                if (!isPaused.get()) {
-                    val count = audioRecord.read(rawData, 0, minBufferSize)
-                    if (count > 0) {
-                        val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
-                        if (encoded > 0) {
-                            try {
-                                updateAmplitude(rawData)
-                                outputStream!!.write(mp3buffer, 0, encoded)
-                            } catch (e: IOException) {
-                                e.printStackTrace()
+            outputStream.use { outputStream ->
+                while (!isStopped.get()) {
+                    // FIXME: does this busy-loop when `isPaused` is true?
+                    if (!isPaused.get()) {
+                        val count = audioRecord.read(rawData, 0, minBufferSize)
+                        if (count > 0) {
+                            val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
+                            if (encoded > 0) {
+                                try {
+                                    updateAmplitude(rawData)
+                                    outputStream.write(mp3buffer, 0, encoded)
+                                } catch (e: IOException) {
+                                    e.printStackTrace()
+                                }
                             }
                         }
                     }
@@ -113,7 +100,6 @@ class Mp3Recorder(val context: Context) : Recorder {
 
     override fun release() {
         androidLame?.flush(mp3buffer)
-        outputStream?.close()
         audioRecord.release()
     }
 
@@ -122,7 +108,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     }
 
     override fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor) {
-        this.fileDescriptor = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
+        this.outputFileDescriptor = parcelFileDescriptor
     }
 
     private fun updateAmplitude(data: ShortArray) {

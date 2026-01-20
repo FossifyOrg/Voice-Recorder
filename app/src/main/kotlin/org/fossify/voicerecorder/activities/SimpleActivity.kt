@@ -5,6 +5,8 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.REPOSITORY_NAME
 
 open class SimpleActivity : BaseSimpleActivity() {
+
+
     override fun getAppIconIDs() = arrayListOf(
         R.mipmap.ic_launcher_red,
         R.mipmap.ic_launcher_pink,

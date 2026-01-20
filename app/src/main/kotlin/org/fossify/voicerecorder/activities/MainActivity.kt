@@ -8,22 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
-import org.fossify.commons.extensions.appLaunched
-import org.fossify.commons.extensions.checkAppSideloading
-import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
-import org.fossify.commons.extensions.hideKeyboard
-import org.fossify.commons.extensions.launchMoreAppsFromUsIntent
-import org.fossify.commons.extensions.onPageChangeListener
-import org.fossify.commons.extensions.onTabSelectionChanged
-import org.fossify.commons.extensions.toast
-import org.fossify.commons.extensions.updateBottomTabItemColors
-import org.fossify.commons.helpers.LICENSE_ANDROID_LAME
-import org.fossify.commons.helpers.LICENSE_AUDIO_RECORD_VIEW
-import org.fossify.commons.helpers.LICENSE_AUTOFITTEXTVIEW
-import org.fossify.commons.helpers.LICENSE_EVENT_BUS
-import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
-import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
-import org.fossify.commons.helpers.isRPlus
+import org.fossify.commons.extensions.*
+import org.fossify.commons.helpers.*
 import org.fossify.commons.models.FAQItem
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
@@ -31,7 +17,6 @@ import org.fossify.voicerecorder.adapters.ViewPagerAdapter
 import org.fossify.voicerecorder.databinding.ActivityMainBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
-import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -40,6 +25,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : SimpleActivity() {
+    companion object {
+        const val TAG = "MainActivity"
+    }
 
     private var bus: EventBus? = null
 
@@ -166,25 +154,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun tryInitVoiceRecorder() {
-        if (isRPlus()) {
-            ensureStoragePermission { granted ->
-                if (granted) {
-                    setupViewPager()
-                } else {
-                    toast(org.fossify.commons.R.string.no_storage_permissions)
-                    finish()
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    setupViewPager()
-                } else {
-                    toast(org.fossify.commons.R.string.no_storage_permissions)
-                    finish()
-                }
-            }
-        }
+        setupViewPager()
     }
 
     private fun setupViewPager() {

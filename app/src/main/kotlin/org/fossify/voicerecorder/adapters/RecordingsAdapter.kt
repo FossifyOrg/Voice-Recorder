@@ -32,7 +32,7 @@ import kotlin.math.min
 
 class RecordingsAdapter(
     activity: SimpleActivity,
-    var recordings: ArrayList<Recording>,
+    var recordings: MutableList<Recording>,
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit

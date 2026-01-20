@@ -5,25 +5,32 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.ParcelFileDescriptor
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.models.RecordingFormat
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 
     @Suppress("DEPRECATION")
     private var recorder = MediaRecorder().apply {
         setAudioSource(context.config.microphoneMode)
-        setOutputFormat(context.config.getOutputFormat())
-        setAudioEncoder(context.config.getAudioEncoder())
+
+        when (context.config.recordingFormat) {
+            RecordingFormat.M4A -> {
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            }
+            RecordingFormat.OGG -> {
+                setOutputFormat(MediaRecorder.OutputFormat.OGG)
+                setAudioEncoder(MediaRecorder.AudioEncoder.OPUS)
+            }
+            else -> error("unsupported format for MediaRecorder: ${context.config.recordingFormat}")
+        }
+
         setAudioEncodingBitRate(context.config.bitrate)
         setAudioSamplingRate(context.config.samplingRate)
     }
 
-    override fun setOutputFile(path: String) {
-        recorder.setOutputFile(path)
-    }
-
     override fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor) {
-        val pFD = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
-        recorder.setOutputFile(pFD.fileDescriptor)
+        recorder.setOutputFile(parcelFileDescriptor.fileDescriptor)
     }
 
     override fun prepare() {
