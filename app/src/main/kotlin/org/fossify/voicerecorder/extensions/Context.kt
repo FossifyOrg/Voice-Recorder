@@ -9,13 +9,9 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.media.MediaMetadataRetriever
 import android.net.Uri
-import android.os.Environment
 import android.provider.DocumentsContract
 import androidx.core.graphics.createBitmap
 import androidx.documentfile.provider.DocumentFile
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.isQPlus
-import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Recording
 import java.util.Calendar
@@ -72,19 +68,6 @@ fun Context.getOrCreateTrashFolder(): Uri? = config.saveRecordingsFolder?.let {
     getOrCreateDocument(contentResolver, it,DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME)
 }
 
-fun Context.getDefaultRecordingsFolder(): String {
-    val defaultPath = getDefaultRecordingsRelativePath()
-    return "$internalStoragePath/$defaultPath"
-}
-
-fun Context.getDefaultRecordingsRelativePath(): String {
-    return if (isQPlus()) {
-        "${Environment.DIRECTORY_MUSIC}/$DEFAULT_RECORDINGS_FOLDER"
-    } else {
-        getString(R.string.app_name)
-    }
-}
-
 fun Context.hasRecordings(): Boolean = config.saveRecordingsFolder?.let { uri ->
     DocumentFile.fromTreeUri(this, uri)?.listFiles()?.any { it.isAudioRecording() }
 } == true
@@ -112,7 +95,7 @@ private fun Context.getRecordings(trashed: Boolean = false): List<Recording> {
         ?.filter { it.isAudioRecording() }
         ?.map { readRecordingFromFile(it) }
         ?.toList()
-        ?: emptyList<Recording>()
+        ?: emptyList()
 }
 
 @Deprecated(
@@ -131,7 +114,7 @@ private fun Context.getMediaStoreTrashedRecordings(): List<Recording> {
             readRecordingFromFile(it).copy(title = trashedRegex.replace(it.name!!, ""))
         }
         ?.toList()
-        ?: emptyList<Recording>()
+        ?: emptyList()
 }
 
 private fun Context.readRecordingFromFile(file: DocumentFile): Recording {
@@ -157,30 +140,8 @@ private fun Context.getDurationFromUri(uri: Uri): Long {
         retriever.setDataSource(this, uri)
         val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!
         (time.toLong() / 1000.toDouble()).roundToLong()
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         0L
-    }
-}
-
-// Based on common's `Context.createSAFFileSdk30` extension
-fun Context.createDocumentFile(path: String): Uri? {
-    return try {
-        val treeUri = createFirstParentTreeUri(path)
-        val parentPath = path.getParentPath()
-        if (!getDoesFilePathExistSdk30(parentPath)) {
-            createSAFDirectorySdk30(parentPath)
-        }
-
-        val documentId = getSAFDocumentId(parentPath)
-        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
-        DocumentsContract.createDocument(
-            contentResolver,
-            parentUri,
-            path.getMimeType(),
-            path.getFilenameFromPath()
-        )
-    } catch (@Suppress("SwallowedException") e: IllegalStateException) {
-        null
     }
 }
 

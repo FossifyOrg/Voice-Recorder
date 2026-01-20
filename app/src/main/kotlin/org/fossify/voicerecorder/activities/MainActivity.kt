@@ -1,6 +1,5 @@
 package org.fossify.voicerecorder.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -25,10 +24,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : SimpleActivity() {
-    companion object {
-        const val TAG = "MainActivity"
-    }
-
     private var bus: EventBus? = null
 
     override var isSearchBarEnabled = true
@@ -68,7 +63,7 @@ class MainActivity : SimpleActivity() {
             Intent(this@MainActivity, RecorderService::class.java).apply {
                 try {
                     startService(this)
-                } catch (ignored: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }
@@ -98,7 +93,7 @@ class MainActivity : SimpleActivity() {
             action = STOP_AMPLITUDE_UPDATE
             try {
                 startService(this)
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -108,7 +103,7 @@ class MainActivity : SimpleActivity() {
             binding.mainMenu.closeSearch()
             true
         } else if (isThirdPartyIntent()) {
-            setResult(Activity.RESULT_CANCELED, null)
+            setResult(RESULT_CANCELED, null)
             false
         } else {
             false
@@ -293,7 +288,7 @@ class MainActivity : SimpleActivity() {
             Intent().apply {
                 data = event.uri!!
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                setResult(Activity.RESULT_OK, this)
+                setResult(RESULT_OK, this)
             }
             finish()
         }
