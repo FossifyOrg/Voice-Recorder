@@ -14,7 +14,6 @@ import android.os.Looper
 import android.os.PowerManager
 import android.util.AttributeSet
 import android.widget.SeekBar
-import androidx.core.net.toUri
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.areSystemAnimationsEnabled
 import org.fossify.commons.extensions.beVisibleIf
@@ -254,7 +253,7 @@ class PlayerFragment(
             reset()
 
             try {
-                setDataSource(context, recording.path.toUri())
+                setDataSource(context, recording.uri)
             } catch (e: Exception) {
                 context?.showErrorToast(e)
                 return
@@ -434,7 +433,7 @@ class PlayerFragment(
         try {
             isReceiverRegistered = false
             context.unregisterReceiver(becomingNoisyReceiver)
-        } catch (ignored: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
     }
 }

@@ -12,7 +12,12 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.core.graphics.createBitmap
 import androidx.documentfile.provider.DocumentFile
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.Config
+import org.fossify.voicerecorder.helpers.IS_RECORDING
+import org.fossify.voicerecorder.helpers.MyWidgetRecordDisplayProvider
+import org.fossify.voicerecorder.helpers.TOGGLE_WIDGET_UI
+import org.fossify.voicerecorder.helpers.findChildDocument
+import org.fossify.voicerecorder.helpers.getOrCreateDocument
 import org.fossify.voicerecorder.models.Recording
 import java.util.Calendar
 import java.util.Locale
@@ -41,11 +46,9 @@ fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
 }
 
 fun Context.updateWidgets(isRecording: Boolean) {
-    val widgetIDs = AppWidgetManager.getInstance(applicationContext)
-        ?.getAppWidgetIds(
+    val widgetIDs = AppWidgetManager.getInstance(applicationContext)?.getAppWidgetIds(
             ComponentName(
-                applicationContext,
-                MyWidgetRecordDisplayProvider::class.java
+                applicationContext, MyWidgetRecordDisplayProvider::class.java
             )
         ) ?: return
 
@@ -65,7 +68,7 @@ fun Context.updateWidgets(isRecording: Boolean) {
  * @see [trashFolder]
  */
 fun Context.getOrCreateTrashFolder(): Uri? = config.saveRecordingsFolder?.let {
-    getOrCreateDocument(contentResolver, it,DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME)
+    getOrCreateDocument(contentResolver, it, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME)
 }
 
 fun Context.hasRecordings(): Boolean = config.saveRecordingsFolder?.let { uri ->
@@ -79,8 +82,7 @@ fun Context.getAllRecordings(trashed: Boolean = false): ArrayList<Recording> {
 
     if (trashed) {
         // Return recordings trashed using MediaStore, this won't be needed in the future
-        @Suppress("DEPRECATION")
-        recordings.addAll(getMediaStoreTrashedRecordings())
+        @Suppress("DEPRECATION") recordings.addAll(getMediaStoreTrashedRecordings())
     }
 
     return recordings
@@ -90,49 +92,29 @@ private fun Context.getRecordings(trashed: Boolean = false): List<Recording> {
     val uri = if (trashed) trashFolder else config.saveRecordingsFolder
     val folder = uri?.let { DocumentFile.fromTreeUri(this, it) }
 
-    return folder
-        ?.listFiles()
-        ?.filter { it.isAudioRecording() }
-        ?.map { readRecordingFromFile(it) }
-        ?.toList()
-        ?: emptyList()
+    return folder?.listFiles()?.filter { it.isAudioRecording() }?.map { readRecordingFromFile(it) }?.toList() ?: emptyList()
 }
 
 @Deprecated(
-    message = "Use getRecordings instead. This method is only here for backward compatibility.",
-    replaceWith = ReplaceWith("getRecordings(trashed = true)")
+    message = "Use getRecordings instead. This method is only here for backward compatibility.", replaceWith = ReplaceWith("getRecordings(trashed = true)")
 )
 private fun Context.getMediaStoreTrashedRecordings(): List<Recording> {
     val trashedRegex = "^\\.trashed-\\d+-".toRegex()
 
-    return config
-        .saveRecordingsFolder
-        ?.let { DocumentFile.fromTreeUri(this, it) }
-        ?.listFiles()
-        ?.filter { it.isTrashedMediaStoreRecording() }
-        ?.map {
+    return config.saveRecordingsFolder?.let { DocumentFile.fromTreeUri(this, it) }?.listFiles()?.filter { it.isTrashedMediaStoreRecording() }?.map {
             readRecordingFromFile(it).copy(title = trashedRegex.replace(it.name!!, ""))
-        }
-        ?.toList()
-        ?: emptyList()
+        }?.toList() ?: emptyList()
 }
 
-private fun Context.readRecordingFromFile(file: DocumentFile): Recording {
-    val id = file.hashCode()
-    val title = file.name!!
-    val path = file.uri.toString()
-    val timestamp = file.lastModified()
-    val duration = getDurationFromUri(file.uri)
-    val size = file.length().toInt()
-    return Recording(
-        id = id,
-        title = title,
-        path = path,
-        timestamp = timestamp,
-        duration = duration.toInt(),
-        size = size
-    )
-}
+private fun Context.readRecordingFromFile(file: DocumentFile): Recording = Recording(
+    id = file.hashCode(),
+    title = file.name!!,
+    uri = file.uri,
+    timestamp = file.lastModified(),
+    duration = getDurationFromUri(file.uri).toInt(),
+    size = file.length().toInt()
+)
+
 
 private fun Context.getDurationFromUri(uri: Uri): Long {
     return try {
