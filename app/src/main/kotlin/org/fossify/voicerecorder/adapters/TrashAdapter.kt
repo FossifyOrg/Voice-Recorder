@@ -1,23 +1,18 @@
 package org.fossify.voicerecorder.adapters
 
 import android.annotation.SuppressLint
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.dialogs.ConfirmationDialog
-import org.fossify.commons.extensions.formatDate
-import org.fossify.commons.extensions.formatSize
-import org.fossify.commons.extensions.getFormattedDuration
-import org.fossify.commons.extensions.setupViewBackground
+import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.ItemRecordingBinding
-import org.fossify.voicerecorder.extensions.deleteRecordings
-import org.fossify.voicerecorder.extensions.restoreRecordings
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.Recording
@@ -99,11 +94,12 @@ class TrashAdapter(
         }
 
         val recordingsToRestore = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+            .filter { selectedKeys.contains(it.id) }
+            .toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.restoreRecordings(recordingsToRestore) { success ->
+        activity.recordingStore.restore(recordingsToRestore) { success ->
             if (success) {
                 doDeleteAnimation(recordingsToRestore, positions)
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())
@@ -136,11 +132,12 @@ class TrashAdapter(
         }
 
         val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+            .filter { selectedKeys.contains(it.id) }
+            .toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.deleteRecordings(recordingsToRemove) { success ->
+        activity.recordingStore.delete(recordingsToRemove) { success ->
             if (success) {
                 doDeleteAnimation(recordingsToRemove, positions)
             }
@@ -148,7 +145,7 @@ class TrashAdapter(
     }
 
     private fun doDeleteAnimation(
-        recordingsToRemove: ArrayList<Recording>,
+        recordingsToRemove: List<Recording>,
         positions: ArrayList<Int>
     ) {
         recordings.removeAll(recordingsToRemove.toSet())

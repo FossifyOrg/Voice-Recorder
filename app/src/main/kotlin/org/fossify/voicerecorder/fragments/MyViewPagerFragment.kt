@@ -5,11 +5,10 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.voicerecorder.extensions.getAllRecordings
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.models.Recording
 
-abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet) :
-    ConstraintLayout(context, attributeSet) {
+abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet) {
     abstract fun onResume()
 
     abstract fun onDestroy()
@@ -21,8 +20,7 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
     open fun loadRecordings(trashed: Boolean = false) {
         onLoadingStart()
         ensureBackgroundThread {
-            val recordings = context.getAllRecordings(trashed)
-                .apply { sortByDescending { it.timestamp } }
+            val recordings = context.recordingStore.getAll(trashed).sortedByDescending { it.timestamp }.let { ArrayList(it) }
 
             (context as? Activity)?.runOnUiThread {
                 onLoadingEnd(recordings)

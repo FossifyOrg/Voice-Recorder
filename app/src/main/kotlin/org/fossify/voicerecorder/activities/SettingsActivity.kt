@@ -4,40 +4,22 @@ import android.content.Intent
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
-import org.fossify.commons.extensions.addLockedLabelIfNeeded
-import org.fossify.commons.extensions.beGone
-import org.fossify.commons.extensions.beVisible
-import org.fossify.commons.extensions.beVisibleIf
-import org.fossify.commons.extensions.formatSize
-import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.toast
-import org.fossify.commons.extensions.updateTextColors
-import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
-import org.fossify.commons.helpers.NavigationIcon
-import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.commons.helpers.isQPlus
-import org.fossify.commons.helpers.isTiramisuPlus
-import org.fossify.commons.helpers.sumByInt
+import org.fossify.commons.extensions.*
+import org.fossify.commons.helpers.*
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
 import org.fossify.voicerecorder.dialogs.FilenamePatternDialog
 import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
-import org.fossify.voicerecorder.extensions.getAllRecordings
-import org.fossify.voicerecorder.extensions.hasRecordings
-import org.fossify.voicerecorder.helpers.BITRATES
-import org.fossify.voicerecorder.helpers.DEFAULT_BITRATE
-import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
-import org.fossify.voicerecorder.helpers.SAMPLING_RATES
-import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
+import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.extensions.recordingStoreFor
+import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.RecordingFormat
 import org.greenrobot.eventbus.EventBus
@@ -61,10 +43,9 @@ class SettingsActivity : SimpleActivity() {
             )
 
             ensureBackgroundThread {
-                val hasRecordings = hasRecordings()
-
+                val hasRecordings = recordingStore.isNotEmpty()
                 runOnUiThread {
-                    if (oldUri != null && newUri != oldUri && hasRecordings) {
+                    if (newUri != oldUri && hasRecordings) {
                         MoveRecordingsDialog(
                             activity = this,
                             oldFolder = oldUri,
@@ -179,26 +160,25 @@ class SettingsActivity : SimpleActivity() {
         updateSaveRecordingsFolder(config.saveRecordingsFolder)
     }
 
-    private fun updateSaveRecordingsFolder(uri: Uri?) {
-        if (uri != null) {
-            val documentId = DocumentsContract.getTreeDocumentId(uri)
-            binding.settingsSaveRecordings.text = documentId.substringAfter(":").trimEnd('/')
+    private fun updateSaveRecordingsFolder(uri: Uri) {
+        val store = recordingStoreFor(uri)
+        binding.settingsSaveRecordings.text = store.shortName
 
-            val authority = uri.authority ?: return
-            val providerInfo = packageManager.resolveContentProvider(authority, 0) ?: return
+        val providerInfo = store.providerInfo
 
+        if (providerInfo != null) {
             val providerIcon = providerInfo.loadIcon(packageManager)
             val providerLabel = providerInfo.loadLabel(packageManager)
 
             binding.settingsSaveRecordingsProviderIcon.apply {
-                setVisibility(View.VISIBLE)
+                visibility = View.VISIBLE
+                contentDescription = providerLabel
                 setImageDrawable(providerIcon)
-                setContentDescription(providerLabel)
             }
         } else {
-            binding.settingsSaveRecordings.text = ""
-            binding.settingsSaveRecordingsProviderIcon.setVisibility(View.GONE)
+            binding.settingsSaveRecordingsProviderIcon.visibility = View.GONE
         }
+
     }
 
     private fun setupFilenamePattern() {
@@ -330,7 +310,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupEmptyRecycleBin() {
         ensureBackgroundThread {
             try {
-                recycleBinContentSize = getAllRecordings(trashed = true).sumByInt { it.size }
+                recycleBinContentSize = recordingStore.getAll(trashed = true).sumByInt { it.size }
             } catch (_: Exception) {
             }
 
@@ -351,7 +331,7 @@ class SettingsActivity : SimpleActivity() {
                     negative = org.fossify.commons.R.string.no
                 ) {
                     ensureBackgroundThread {
-                        deleteTrashedRecordings()
+                        recordingStore.deleteTrashed()
                         runOnUiThread {
                             recycleBinContentSize = 0
                             binding.settingsEmptyRecycleBinSize.text = 0.formatSize()

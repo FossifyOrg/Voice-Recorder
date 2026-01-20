@@ -10,15 +10,10 @@ import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
-import org.fossify.voicerecorder.extensions.getAllRecordings
-import org.fossify.voicerecorder.extensions.moveRecordings
-import org.fossify.voicerecorder.helpers.buildParentDocumentUri
+import org.fossify.voicerecorder.extensions.recordingStore
 
 class MoveRecordingsDialog(
-    private val activity: BaseSimpleActivity,
-    private val oldFolder: Uri,
-    private val newFolder: Uri,
-    private val callback: () -> Unit
+    private val activity: BaseSimpleActivity, private val oldFolder: Uri, private val newFolder: Uri, private val callback: () -> Unit
 ) {
     private lateinit var dialog: AlertDialog
     private val binding = DialogMoveRecordingsBinding.inflate(activity.layoutInflater).apply {
@@ -27,14 +22,10 @@ class MoveRecordingsDialog(
     }
 
     init {
-        activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.yes, null)
-            .setNegativeButton(org.fossify.commons.R.string.no, null)
+        activity.getAlertDialogBuilder().setPositiveButton(org.fossify.commons.R.string.yes, null).setNegativeButton(org.fossify.commons.R.string.no, null)
             .apply {
                 activity.setupDialogStuff(
-                    view = binding.root,
-                    dialog = this,
-                    titleId = R.string.move_recordings
+                    view = binding.root, dialog = this, titleId = R.string.move_recordings
                 ) {
                     dialog = it
                     dialog.setOnDismissListener { callback() }
@@ -49,9 +40,7 @@ class MoveRecordingsDialog(
                             setCancelable(false)
                             setCanceledOnTouchOutside(false)
                             arrayOf(
-                                binding.message,
-                                getButton(AlertDialog.BUTTON_POSITIVE),
-                                getButton(AlertDialog.BUTTON_NEGATIVE)
+                                binding.message, getButton(AlertDialog.BUTTON_POSITIVE), getButton(AlertDialog.BUTTON_NEGATIVE)
                             ).forEach { button ->
                                 button.isEnabled = false
                                 button.alpha = MEDIUM_ALPHA
@@ -64,13 +53,9 @@ class MoveRecordingsDialog(
             }
     }
 
-    private fun moveAllRecordings() {
-        ensureBackgroundThread {
-            activity.moveRecordings(
-                recordingsToMove = activity.getAllRecordings(),
-                sourceParent = buildParentDocumentUri(oldFolder),
-                targetParent = buildParentDocumentUri(newFolder)
-            ) {
+    private fun moveAllRecordings() = ensureBackgroundThread {
+        activity.recordingStore.let { store ->
+            store.move(store.getAll(), oldFolder, newFolder) {
                 activity.runOnUiThread {
                     callback()
                     dialog.dismiss()
@@ -78,4 +63,5 @@ class MoveRecordingsDialog(
             }
         }
     }
+
 }

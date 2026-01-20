@@ -3,7 +3,9 @@ package org.fossify.voicerecorder.helpers
 import android.content.Context
 import android.media.MediaRecorder
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import org.fossify.commons.extensions.createFirstParentTreeUri
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
@@ -14,17 +16,17 @@ class Config(context: Context) : BaseConfig(context) {
         fun newInstance(context: Context) = Config(context)
     }
 
-    var saveRecordingsFolder: Uri?
+    var saveRecordingsFolder: Uri
         get() = when (val value = prefs.getString(SAVE_RECORDINGS, null)) {
-            is String if value.startsWith("content:") -> Uri.parse(value)
+            is String if value.startsWith("content:") -> value.toUri()
             is String -> context.createFirstParentTreeUri(value)
-            null -> null /*MediaStore.Audio.Media.EXTERNAL_CONTENT_URI*/
+            null -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         }
         set(uri) = prefs.edit { putString(SAVE_RECORDINGS, uri.toString()) }
 
     var recordingFormat: RecordingFormat
         get() = prefs.getInt(EXTENSION, -1).let(RecordingFormat::fromInt) ?: RecordingFormat.M4A
-        set(format) = prefs.edit().putInt(EXTENSION, format.value).apply()
+        set(format) = prefs.edit { putInt(EXTENSION, format.value) }
 
     var microphoneMode: Int
         get() = prefs.getInt(MICROPHONE_MODE, MediaRecorder.AudioSource.DEFAULT)

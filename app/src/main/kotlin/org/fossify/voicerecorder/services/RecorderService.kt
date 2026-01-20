@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import org.fossify.commons.extensions.getCurrentFormattedDateTime
 import org.fossify.commons.extensions.getLaunchIntent
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.toast
@@ -16,6 +15,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.getFormattedFilename
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.updateWidgets
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
@@ -85,9 +85,7 @@ class RecorderService : Service() {
                 RecordingFormat.MP3 -> Mp3Recorder(this)
             }
 
-            val writer = RecordingWriter.create(
-                this,
-                recordingFolder,
+            val writer = recordingStore.createWriter(
                 getFormattedFilename(),
                 recordingFormat
             ).also {
