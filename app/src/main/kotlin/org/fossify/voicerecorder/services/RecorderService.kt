@@ -130,10 +130,11 @@ class RecorderService : Service() {
                 "SwallowedException"
             ) e: RuntimeException
         ) {
+            Log.e(TAG, "failed to stop recorder", e)
             toast(R.string.recording_too_short)
         } catch (e: Exception) {
+            Log.e(TAG, "failed to stop recorder", e)
             showErrorToast(e)
-            e.printStackTrace()
         } finally {
             recorder = null
         }
@@ -167,7 +168,7 @@ class RecorderService : Service() {
                 stop()
                 release()
             }
-        } catch (ignored: Exception) {
+        } catch (_: Exception) {
         }
 
         recorder = null
@@ -245,7 +246,7 @@ class RecorderService : Service() {
                 try {
                     EventBus.getDefault()
                         .post(Events.RecordingAmplitude(recorder!!.getMaxAmplitude()))
-                } catch (ignored: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }
@@ -254,7 +255,8 @@ class RecorderService : Service() {
     private fun showNotification(): Notification {
         val channelId = "simple_recorder"
         val label = getString(R.string.app_name)
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         NotificationChannel(channelId, label, NotificationManager.IMPORTANCE_DEFAULT).apply {
             setSound(null, null)
@@ -262,7 +264,6 @@ class RecorderService : Service() {
         }
 
         val icon = R.drawable.ic_graphic_eq_vector
-        val title = label
         val visibility = NotificationCompat.VISIBILITY_PUBLIC
         var text = getString(R.string.recording)
         if (status == RECORDING_PAUSED) {
@@ -270,7 +271,7 @@ class RecorderService : Service() {
         }
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(title)
+            .setContentTitle(label)
             .setContentText(text)
             .setSmallIcon(icon)
             .setContentIntent(getOpenAppIntent())

@@ -73,13 +73,13 @@ fun BaseSimpleActivity.moveRecordings(
                         sourceParent,
                         targetParent
                     )
-                } catch (e: IllegalStateException) {
-                    moveDocumentFallback(recording.path.toUri(), sourceParent, targetParent)
+                } catch (@Suppress("SwallowedException") e: IllegalStateException) {
+                    moveDocumentFallback(recording.path.toUri(), sourceParent)
                 }
             }
         } else {
             for (recording in recordingsToMove) {
-                moveDocumentFallback(recording.path.toUri(), sourceParent, targetParent)
+                moveDocumentFallback(recording.path.toUri(), sourceParent)
             }
         }
 
@@ -90,19 +90,20 @@ fun BaseSimpleActivity.moveRecordings(
 // Copy source to target, then delete source. Use as fallback when `DocumentsContract.moveDocument` can't used (e.g., when moving between different authorities)
 private fun BaseSimpleActivity.moveDocumentFallback(
     sourceUri: Uri,
-    sourceParent: Uri,
-    targetParent: Uri,
+    targetParentUri: Uri,
 ) {
     val sourceFile = DocumentFile.fromSingleUri(this, sourceUri)!!
     val sourceName = requireNotNull(sourceFile.name)
     val sourceType = requireNotNull(sourceFile.type)
 
-    val targetUri = requireNotNull(DocumentsContract.createDocument(
-        contentResolver,
-        targetParent,
-        sourceType,
-        sourceName
-    ))
+    val targetUri = requireNotNull(
+        DocumentsContract.createDocument(
+            contentResolver,
+            targetParentUri,
+            sourceType,
+            sourceName
+        )
+    )
 
     contentResolver.openInputStream(sourceUri)?.use { inputStream ->
         contentResolver.openOutputStream(targetUri)?.use { outputStream ->

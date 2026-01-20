@@ -10,8 +10,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.*
+import org.fossify.commons.extensions.addLockedLabelIfNeeded
+import org.fossify.commons.extensions.beGone
+import org.fossify.commons.extensions.beVisible
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
+import org.fossify.commons.helpers.NavigationIcon
+import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.isQPlus
+import org.fossify.commons.helpers.isTiramisuPlus
+import org.fossify.commons.helpers.sumByInt
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
@@ -21,7 +33,11 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
 import org.fossify.voicerecorder.extensions.getAllRecordings
 import org.fossify.voicerecorder.extensions.hasRecordings
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.BITRATES
+import org.fossify.voicerecorder.helpers.DEFAULT_BITRATE
+import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
+import org.fossify.voicerecorder.helpers.SAMPLING_RATES
+import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.models.RecordingFormat
 import org.greenrobot.eventbus.EventBus
@@ -168,23 +184,21 @@ class SettingsActivity : SimpleActivity() {
             val documentId = DocumentsContract.getTreeDocumentId(uri)
             binding.settingsSaveRecordings.text = documentId.substringAfter(":").trimEnd('/')
 
-            uri.authority?.let { authority ->
-                packageManager.resolveContentProvider(authority, 0)?.let { providerInfo ->
-                    val providerIcon = providerInfo.loadIcon(packageManager)
-                    val providerLabel = providerInfo.loadLabel(packageManager)
+            val authority = uri.authority ?: return
+            val providerInfo = packageManager.resolveContentProvider(authority, 0) ?: return
 
-                    binding.settingsSaveRecordingsProviderIcon.apply {
-                        setVisibility(View.VISIBLE)
-                        setImageDrawable(providerIcon)
-                        setContentDescription(providerLabel)
-                    }
-                }
+            val providerIcon = providerInfo.loadIcon(packageManager)
+            val providerLabel = providerInfo.loadLabel(packageManager)
+
+            binding.settingsSaveRecordingsProviderIcon.apply {
+                setVisibility(View.VISIBLE)
+                setImageDrawable(providerIcon)
+                setContentDescription(providerLabel)
             }
         } else {
             binding.settingsSaveRecordings.text = ""
             binding.settingsSaveRecordingsProviderIcon.setVisibility(View.GONE)
         }
-
     }
 
     private fun setupFilenamePattern() {

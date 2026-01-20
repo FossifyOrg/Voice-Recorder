@@ -12,10 +12,10 @@ import java.io.FileInputStream
 /**
  * Helper class to write recordings to the device.
  *
- * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a bug in [android.provider.MediaStore] (TODO: link to the bugreport)
- * which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
+ * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a bug in [android.provider.MediaStore] (TODO: link to the
+ * bugreport) which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
  */
-sealed class RecordingWriter() {
+sealed class RecordingWriter {
     companion object {
         fun create(context: Context, parentTreeUri: Uri, name: String, format: RecordingFormat): RecordingWriter {
             val direct = DIRECT_FORMATS.contains(format) or DIRECT_AUTHORITIES.contains(parentTreeUri.authority)
@@ -38,8 +38,6 @@ sealed class RecordingWriter() {
 
         // Document providers not affected by the MediaStore bug
         private val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents")
-
-        private const val TAG = "RecordingWriter"
     }
 
     /**
