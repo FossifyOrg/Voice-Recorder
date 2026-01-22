@@ -1,12 +1,15 @@
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.FileInputStream
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
 
 plugins {
     alias(libs.plugins.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
+
+
 }
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
@@ -37,6 +40,8 @@ android {
         versionName = project.property("VERSION_NAME").toString()
         versionCode = project.property("VERSION_CODE").toString().toInt()
         vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -147,4 +152,6 @@ dependencies {
     implementation(libs.tandroidlame)
     implementation(libs.autofittextview)
     detektPlugins(libs.compose.detekt)
+
+    androidTestImplementation(libs.androidx.test.runner)
 }

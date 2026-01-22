@@ -55,13 +55,12 @@ class MoveRecordingsDialog(
 
     private fun moveAllRecordings() = ensureBackgroundThread {
         activity.recordingStore.let { store ->
-            store.move(store.getAll(), oldFolder, newFolder) {
-                activity.runOnUiThread {
-                    callback()
-                    dialog.dismiss()
-                }
+            store.move(store.getAll(), oldFolder, newFolder)
+
+            activity.runOnUiThread {
+                callback()
+                dialog.dismiss()
             }
         }
     }
-
 }

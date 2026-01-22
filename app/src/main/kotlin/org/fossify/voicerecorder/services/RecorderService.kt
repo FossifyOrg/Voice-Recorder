@@ -75,9 +75,7 @@ class RecorderService : Service() {
             return
         }
 
-        val recordingFolder = config.saveRecordingsFolder ?: return
         val recordingFormat = config.recordingFormat
-
 
         try {
             recorder = when (recordingFormat) {

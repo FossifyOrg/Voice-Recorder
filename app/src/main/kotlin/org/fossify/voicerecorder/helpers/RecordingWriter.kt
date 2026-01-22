@@ -1,10 +1,13 @@
 package org.fossify.voicerecorder.helpers
 
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import org.fossify.voicerecorder.models.RecordingFormat
 import java.io.File
 import java.io.FileInputStream
@@ -17,18 +20,18 @@ import java.io.FileInputStream
  */
 sealed class RecordingWriter {
     companion object {
-        fun create(context: Context, parentTreeUri: Uri, name: String, format: RecordingFormat): RecordingWriter {
-            val direct = DIRECT_FORMATS.contains(format) or DIRECT_AUTHORITIES.contains(parentTreeUri.authority)
+        fun create(context: Context, parentUri: Uri, name: String, format: RecordingFormat): RecordingWriter {
+            val direct = DIRECT_FORMATS.contains(format) or DIRECT_AUTHORITIES.contains(parentUri.authority)
 
             if (direct) {
-                val uri = createDocument(context, parentTreeUri, name, format)
+                val uri = createDocument(context, parentUri, name, format)
                 val fileDescriptor = requireNotNull(context.contentResolver.openFileDescriptor(uri, "w")) {
                     "failed to open file descriptor at $uri"
                 }
 
                 return Direct(context.contentResolver, uri, fileDescriptor)
             } else {
-                return Workaround(context, parentTreeUri, name, format)
+                return Workaround(context, parentUri, name, format)
             }
         }
 
@@ -37,7 +40,7 @@ sealed class RecordingWriter {
         private val DIRECT_FORMATS = arrayOf(RecordingFormat.MP3)
 
         // Document providers not affected by the MediaStore bug
-        private val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents")
+        private val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents", MediaStore.AUTHORITY)
     }
 
     /**
@@ -103,19 +106,30 @@ sealed class RecordingWriter {
     }
 }
 
-private fun createDocument(context: Context, parentTreeUri: Uri, name: String, format: RecordingFormat): Uri {
-    val parentDocumentUri = buildParentDocumentUri(parentTreeUri)
+private fun createDocument(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
     val displayName = "$name.${format.getExtension(context)}"
-    val uri = requireNotNull(
+
+    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
+        val values = ContentValues().apply {
+            put(MediaStore.Audio.Media.DISPLAY_NAME, displayName)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
+            }
+        }
+
+        context.contentResolver.insert(parentUri, values)
+    } else {
+        val parentDocumentUri = buildParentDocumentUri(parentUri)
         DocumentsContract.createDocument(
             context.contentResolver,
             parentDocumentUri,
             format.getMimeType(context),
             displayName,
         )
-    ) {
-        "failed to create document '$displayName' in $parentDocumentUri"
     }
 
-    return uri
+    return requireNotNull(uri) {
+        "failed to create document '$displayName' in $parentUri"
+    }
 }

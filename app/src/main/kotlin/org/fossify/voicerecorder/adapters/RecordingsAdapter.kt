@@ -28,8 +28,7 @@ class RecordingsAdapter(
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, itemClick),
-    RecyclerViewFastScroller.OnPopupTextUpdate {
+) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     var currRecordingId = 0
 
@@ -85,9 +84,7 @@ class RecordingsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recording = recordings[position]
         holder.bindView(
-            any = recording,
-            allowSingleClick = true,
-            allowLongClick = true
+            any = recording, allowSingleClick = true, allowLongClick = true
         ) { itemView, _ ->
             setupView(itemView, recording)
         }
@@ -119,10 +116,7 @@ class RecordingsAdapter(
     private fun openRecordingWith() {
         val recording = getItemWithKey(selectedKeys.first()) ?: return
         activity.openPathIntent(
-            path = recording.uri.toString(),
-            forceChooser = true,
-            applicationId = BuildConfig.APPLICATION_ID,
-            forceMimeType = "audio/*"
+            path = recording.uri.toString(), forceChooser = true, applicationId = BuildConfig.APPLICATION_ID, forceMimeType = "audio/*"
         )
     }
 
@@ -149,9 +143,7 @@ class RecordingsAdapter(
         val question = String.format(resources.getString(baseString), items)
 
         DeleteConfirmationDialog(
-            activity = activity,
-            message = question,
-            showSkipRecycleBinOption = activity.config.useRecycleBin
+            activity = activity, message = question, showSkipRecycleBinOption = activity.config.useRecycleBin
         ) { skipRecycleBin ->
             ensureBackgroundThread {
                 val toRecycleBin = !skipRecycleBin && activity.config.useRecycleBin
@@ -170,14 +162,12 @@ class RecordingsAdapter(
         }
 
         val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) }
-            .toList()
+        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.recordingStore.delete(recordingsToRemove) { success ->
-            if (success) {
+        ensureBackgroundThread {
+            if (activity.recordingStore.delete(recordingsToRemove)) {
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
             }
         }
@@ -189,14 +179,12 @@ class RecordingsAdapter(
         }
 
         val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) }
-            .toList()
+        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.recordingStore.trash(recordingsToRemove) { success ->
-            if (success) {
+        ensureBackgroundThread {
+            if (activity.recordingStore.trash(recordingsToRemove)) {
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())
             }
@@ -204,9 +192,7 @@ class RecordingsAdapter(
     }
 
     private fun doDeleteAnimation(
-        oldRecordingIndex: Int,
-        recordingsToRemove: List<Recording>,
-        positions: ArrayList<Int>
+        oldRecordingIndex: Int, recordingsToRemove: List<Recording>, positions: ArrayList<Int>
     ) {
         recordings.removeAll(recordingsToRemove.toSet())
         activity.runOnUiThread {
@@ -242,10 +228,7 @@ class RecordingsAdapter(
             recordingFrame.isSelected = selectedKeys.contains(recording.id)
 
             arrayListOf(
-                recordingTitle,
-                recordingDate,
-                recordingDuration,
-                recordingSize
+                recordingTitle, recordingDate, recordingDuration, recordingSize
             ).forEach {
                 it.setTextColor(textColor)
             }
