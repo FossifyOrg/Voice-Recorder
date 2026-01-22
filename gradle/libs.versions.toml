@@ -10,6 +10,7 @@ detektCompose = "0.4.28"
 androidx-constraintlayout = "2.2.1"
 androidx-documentfile = "1.1.0"
 androidx-swiperefreshlayout = "1.2.0"
+androidx-test-runner = "1.7.0"
 #Eventbus
 eventbus = "3.3.1"
 #Fossify
@@ -34,6 +35,7 @@ app-build-kotlinJVMTarget = "17"
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidx-documentfile" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 #Compose
 compose-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 #Fossify
