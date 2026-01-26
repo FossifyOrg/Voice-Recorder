@@ -36,12 +36,15 @@ class RecordingStoreTest {
     fun setup() {
         tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
         tempDir.mkdirs()
+
+        val mockDocumentsProvider = context.contentResolver.acquireContentProviderClient(MOCK_PROVIDER_AUTHORITY)?.localContentProvider as
+            MockDocumentsProvider
+        mockDocumentsProvider.root = tempDir
     }
 
     @After
     fun teardown() {
         deleteTestFiles()
-
         tempDir.deleteRecursively()
     }
 
@@ -134,7 +137,7 @@ class RecordingStoreTest {
     }
 
     private val testMediaSuffix
-        get() = ".${context.packageName}.test"
+        get() = ".${context.packageName}"
 
     private val contentObserverHandler = Handler(HandlerThread("contentObserver").apply { start() }.looper)
 
@@ -187,19 +190,23 @@ class RecordingStoreTest {
         context.contentResolver.unregisterContentObserver(observer)
     }
 
-    private fun getSize(uri: Uri): Long = when (uri.authority) {
-        MediaStore.AUTHORITY -> {
-            val projection = arrayOf(MediaStore.Audio.Media.SIZE)
-            context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-                val iSize = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
-                if (cursor.moveToNext()) {
-                    cursor.getLong(iSize)
-                } else {
-                    null
-                }
-            } ?: 0
+    private fun getSize(uri: Uri): Long {
+        val column = when (uri.authority) {
+            MediaStore.AUTHORITY -> MediaStore.Audio.Media.SIZE
+            else -> DocumentsContract.Document.COLUMN_SIZE
         }
 
-        else -> TODO()
+        val projection = arrayOf(column)
+
+        val size = context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+            val iSize = cursor.getColumnIndexOrThrow(column)
+            if (cursor.moveToNext()) {
+                cursor.getLong(iSize)
+            } else {
+                null
+            }
+        } ?: 0
+
+        return size
     }
 }

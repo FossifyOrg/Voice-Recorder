@@ -227,7 +227,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         callback: (success: Boolean) -> Unit = {}
     ) = ensureBackgroundThread { callback(delete(getAll(trashed = true))) }
 
-    fun move(recordings: Collection<Recording>, sourceParent: Uri, targetParent: Uri):Boolean {
+    fun move(recordings: Collection<Recording>, sourceParent: Uri, targetParent: Uri): Boolean {
         // TODO: handle media
         return moveDocuments(recordings, sourceParent, targetParent)
     }
