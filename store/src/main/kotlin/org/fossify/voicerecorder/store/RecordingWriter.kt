@@ -23,7 +23,7 @@ sealed class RecordingWriter {
             val direct = DIRECT_FORMATS.contains(format) or DIRECT_AUTHORITIES.contains(parentUri.authority)
 
             if (direct) {
-                val uri = createDocument(context, parentUri, name, format)
+                val uri = createFile(context, parentUri, name, format)
                 val fileDescriptor = requireNotNull(context.contentResolver.openFileDescriptor(uri, "w")) {
                     "failed to open file descriptor at $uri"
                 }
@@ -61,7 +61,7 @@ sealed class RecordingWriter {
 
         override fun cancel() {
             fileDescriptor.close()
-            DocumentsContract.deleteDocument(contentResolver, uri)
+            contentResolver.delete(uri, null, null)
         }
     }
 
@@ -81,7 +81,7 @@ sealed class RecordingWriter {
             )
 
         override fun commit(): Uri {
-            val dstUri = createDocument(context, parentTreeUri, name, format)
+            val dstUri = createFile(context, parentTreeUri, name, format)
             val dst = requireNotNull(context.contentResolver.openOutputStream(dstUri)) {
                 "failed to open output stream at $dstUri"
             }
@@ -105,12 +105,11 @@ sealed class RecordingWriter {
     }
 }
 
-private fun createDocument(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
-    val displayName = "$name.${format.getExtension(context)}"
-
+private fun createFile(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
     val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
         val values = ContentValues().apply {
-            put(MediaStore.Audio.Media.DISPLAY_NAME, displayName)
+            put(MediaStore.Audio.Media.DISPLAY_NAME, name)
+            put(MediaStore.Audio.Media.MIME_TYPE, format.getMimeType(context))
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
@@ -120,6 +119,8 @@ private fun createDocument(context: Context, parentUri: Uri, name: String, forma
         context.contentResolver.insert(parentUri, values)
     } else {
         val parentDocumentUri = buildParentDocumentUri(parentUri)
+        val displayName = "$name.${format.getExtension(context)}"
+
         DocumentsContract.createDocument(
             context.contentResolver,
             parentDocumentUri,
@@ -129,6 +130,6 @@ private fun createDocument(context: Context, parentUri: Uri, name: String, forma
     }
 
     return requireNotNull(uri) {
-        "failed to create document '$displayName' in $parentUri"
+        "failed to create file '$name' in $parentUri"
     }
 }
