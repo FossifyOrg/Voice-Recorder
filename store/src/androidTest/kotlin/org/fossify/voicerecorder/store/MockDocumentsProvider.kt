@@ -66,11 +66,13 @@ class MockDocumentsProvider() : DocumentsProvider() {
         }
 
         if (projection.contains(DocumentsContract.Document.COLUMN_MIME_TYPE)) {
-            row.add(DocumentsContract.Document.COLUMN_MIME_TYPE, if (file.isDirectory()) {
-                DocumentsContract.Document.MIME_TYPE_DIR
-            } else {
-                URLConnection.guessContentTypeFromName(file.name)
-            })
+            row.add(
+                DocumentsContract.Document.COLUMN_MIME_TYPE, if (file.isDirectory()) {
+                    DocumentsContract.Document.MIME_TYPE_DIR
+                } else {
+                    URLConnection.guessContentTypeFromName(file.name)
+                }
+            )
         }
 
         if (projection.contains(DocumentsContract.Document.COLUMN_SIZE)) {
@@ -80,7 +82,8 @@ class MockDocumentsProvider() : DocumentsProvider() {
         return result
     }
 
-    override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean = File(documentId).parent == parentDocumentId
+    override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean =
+        documentId.startsWith("$parentDocumentId/")
 
     override fun openDocument(documentId: String, mode: String, cancellationSignal: CancellationSignal?): ParcelFileDescriptor {
         val root = requireNotNull(root)
@@ -103,5 +106,23 @@ class MockDocumentsProvider() : DocumentsProvider() {
         }
 
         return documentId
+    }
+
+    override fun moveDocument(
+        sourceDocumentId: String, sourceParentDocumentId: String, targetParentDocumentId: String
+    ): String {
+        val root = requireNotNull(root)
+        val srcFile = File(root, sourceDocumentId)
+        val dstFile = File(root, "$targetParentDocumentId/${srcFile.name}")
+
+        srcFile.renameTo(dstFile)
+
+        return dstFile.relativeTo(root).path
+    }
+
+    override fun deleteDocument(documentId: String) {
+        val root = requireNotNull(root)
+        val file = File(root, documentId)
+        file.deleteRecursively()
     }
 }

@@ -69,8 +69,13 @@ class RecordingStoreTest {
     }
 
     @Test
-    fun trashRecording_MediaStore() {
-        val store = RecordingStore(context, DEFAULT_MEDIA_URI)
+    fun trashRecording_MediaStore() = trashRecording(DEFAULT_MEDIA_URI)
+
+    @Test
+    fun trashRecording_SAF() = trashRecording(DEFAULT_DOCUMENTS_URI)
+
+    private fun trashRecording(uri: Uri) {
+        val store = RecordingStore(context, uri)
 
         val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
@@ -86,8 +91,13 @@ class RecordingStoreTest {
     }
 
     @Test
-    fun restoreRecording_MediaStore() {
-        val store = RecordingStore(context, DEFAULT_MEDIA_URI)
+    fun restoreRecording_MediaStore() = restoreRecording(DEFAULT_MEDIA_URI)
+
+    @Test
+    fun restoreRecording_SAF() = restoreRecording(DEFAULT_DOCUMENTS_URI)
+
+    private fun restoreRecording(uri: Uri) {
+        val store = RecordingStore(context, uri)
 
         val uri = store.createRecording(makeTestName("sample"), RecordingFormat.OGG)
         val recording = store.getAll(trashed = false).find { it.uri == uri }!!
@@ -101,13 +111,30 @@ class RecordingStoreTest {
     }
 
     @Test
-    fun deleteRecording_MediaStore() {
-        val store = RecordingStore(context, DEFAULT_MEDIA_URI)
+    fun deleteNormalRecording_MediaStore() = deleteRecording(DEFAULT_MEDIA_URI, trashed = false)
+
+    @Test
+    fun deleteNormalRecording_SAF() = deleteRecording(DEFAULT_DOCUMENTS_URI, trashed = false)
+
+    @Test
+    fun deleteTrashedRecording_MediaStore() = deleteRecording(DEFAULT_MEDIA_URI, trashed = true)
+
+    @Test
+    fun deleteTrashedRecording_SAF() = deleteRecording(DEFAULT_DOCUMENTS_URI, trashed = true)
+
+    private fun deleteRecording(uri: Uri, trashed: Boolean) {
+        val store = RecordingStore(context, uri)
 
         val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
-        val recording = store.getAll().find { it.uri == uri }!!
+        var recording = store.getAll().find { it.uri == uri }!!
+
+        if (trashed) {
+            store.trash(listOf(recording))
+            recording = store.getAll(trashed = true).find { it.title == recording.title }!!
+        }
+
         store.delete(listOf(recording))
 
         assertFalse(store.getAll(trashed = false).any { it.title == recording.title })
