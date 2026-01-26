@@ -1,6 +1,5 @@
-package org.fossify.voicerecorder
+package org.fossify.voicerecorder.store
 
-/*
 import android.database.Cursor
 import android.os.CancellationSignal
 import android.os.ParcelFileDescriptor
@@ -14,14 +13,10 @@ class MockDocumentsProvider(): DocumentsProvider() {
         private const val TAG = "MockDocumentsProvider"
     }
 
-    private lateinit var root: File
+    private var root: File? = null
 
     override fun onCreate(): Boolean {
         Log.d(TAG, "onCreate")
-
-        root = File(requireNotNull(context).cacheDir, "mock-provider-${System.currentTimeMillis()}")
-        root.mkdirs()
-
         return true
     }
 
@@ -50,4 +45,3 @@ class MockDocumentsProvider(): DocumentsProvider() {
         throw NotImplementedError()
     }
 }
-*/

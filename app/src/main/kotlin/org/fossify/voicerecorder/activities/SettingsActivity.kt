@@ -21,7 +21,7 @@ import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.recordingStoreFor
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.RecordingFormat
+import org.fossify.voicerecorder.store.RecordingFormat
 import org.greenrobot.eventbus.EventBus
 import java.util.Locale
 import kotlin.math.abs

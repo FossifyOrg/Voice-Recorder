@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.recordingStore
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 
 abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet) {
     abstract fun onResume()

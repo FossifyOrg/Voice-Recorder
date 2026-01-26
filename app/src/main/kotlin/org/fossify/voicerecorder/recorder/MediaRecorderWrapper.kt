@@ -5,7 +5,7 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.ParcelFileDescriptor
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.models.RecordingFormat
+import org.fossify.voicerecorder.store.RecordingFormat
 
 class MediaRecorderWrapper(val context: Context) : Recorder {
 

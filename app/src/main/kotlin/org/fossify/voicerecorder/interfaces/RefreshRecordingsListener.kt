@@ -1,6 +1,7 @@
 package org.fossify.voicerecorder.interfaces
 
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
+
 
 interface RefreshRecordingsListener {
     fun refreshRecordings()

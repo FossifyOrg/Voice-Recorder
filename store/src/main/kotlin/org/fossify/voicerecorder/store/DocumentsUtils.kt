@@ -1,4 +1,4 @@
-package org.fossify.voicerecorder.helpers
+package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
 import android.net.Uri

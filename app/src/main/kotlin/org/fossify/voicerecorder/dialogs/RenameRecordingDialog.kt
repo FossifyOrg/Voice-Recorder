@@ -14,7 +14,7 @@ import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.databinding.DialogRenameRecordingBinding
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 
 class RenameRecordingDialog(
