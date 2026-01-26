@@ -18,7 +18,7 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import kotlin.math.min
 

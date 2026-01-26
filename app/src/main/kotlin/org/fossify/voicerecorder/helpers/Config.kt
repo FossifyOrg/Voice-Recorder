@@ -9,7 +9,7 @@ import androidx.core.net.toUri
 import org.fossify.commons.extensions.createFirstParentTreeUri
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
-import org.fossify.voicerecorder.models.RecordingFormat
+import org.fossify.voicerecorder.store.RecordingFormat
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {

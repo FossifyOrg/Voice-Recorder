@@ -1,4 +1,4 @@
-package org.fossify.voicerecorder.helpers
+package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
 import android.content.ContentUris
@@ -14,9 +14,6 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.voicerecorder.extensions.isAudioRecording
-import org.fossify.voicerecorder.models.Recording
-import org.fossify.voicerecorder.models.RecordingFormat
 import kotlin.math.roundToLong
 
 /**
@@ -266,10 +263,11 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         val resolver = context.contentResolver
 
         recordings.forEach {
-            when (Kind.of(it.uri)) {
-                Kind.DOCUMENT -> DocumentsContract.deleteDocument(resolver, it.uri)
-                Kind.MEDIA -> resolver.delete(it.uri, null, null)
-            }
+            resolver.delete(it.uri, null, null)
+//            when (Kind.of(it.uri)) {
+//                Kind.DOCUMENT -> DocumentsContract.deleteDocument(resolver, it.uri)
+//                Kind.MEDIA -> resolver.delete(it.uri, null, null)
+//            }
         }
 
         return true
@@ -350,6 +348,7 @@ private fun ensureParentDocumentUri(context: Context, uri: Uri): Uri = when {
     else -> error("invalid URI, must be document or tree: $uri")
 }
 
+internal fun DocumentFile.isAudioRecording() = type.let { it != null && it.startsWith("audio") } && name.let { it != null && !it.startsWith(".") }
 
 //@Deprecated(
 //    message = "Use getRecordings instead. This method is only here for backward compatibility.", replaceWith = ReplaceWith("getRecordings(trashed = true)")

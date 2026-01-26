@@ -1,4 +1,4 @@
-package org.fossify.voicerecorder
+package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
 import android.content.Context
@@ -8,45 +8,53 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.test.platform.app.InstrumentationRegistry
-import org.fossify.voicerecorder.helpers.RecordingStore
-import org.fossify.voicerecorder.models.RecordingFormat
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.File
 import java.io.FileOutputStream
 import java.util.concurrent.CountDownLatch
 
 class RecordingStoreTest {
     companion object {
-        private const val MOCK_PROVIDER_AUTHORITY = "org.fossify.voicerecorder.mockprovider"
+        // TODO
+        private const val MOCK_PROVIDER_AUTHORITY = "org.fossify.voicerecorder.store.mock.provider"
         private val DEFAULT_MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        private val DEFAULT_DOCUMENTS_URI = DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Recordings")
         private const val TAG = "RecordingStoreTest"
     }
 
+    private lateinit var tempDir: File
+
     @Before
     fun setup() {
-        deleteTestMedia()
+        tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
+        tempDir.mkdirs()
     }
 
     @After
     fun teardown() {
-        deleteTestMedia()
+        deleteTestFiles()
+
+        tempDir.deleteRecursively()
     }
 
-//    @Test
-//    fun createRecording_SAF() {
-//    }
+    @Test
+    fun createRecording_MediaStore() = createRecording(DEFAULT_MEDIA_URI)
 
     @Test
-    fun createRecording_MediaStore() {
-        val store = RecordingStore(context, DEFAULT_MEDIA_URI)
+    fun createRecording_SAF() = createRecording(DEFAULT_DOCUMENTS_URI)
 
-        val name = makeTestMediaName("sample")
+    private fun createRecording(uri: Uri) {
+        val store = RecordingStore(context, uri)
+
+        val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
         val recordings = store.getAll()
@@ -61,7 +69,7 @@ class RecordingStoreTest {
     fun trashRecording_MediaStore() {
         val store = RecordingStore(context, DEFAULT_MEDIA_URI)
 
-        val name = makeTestMediaName("sample")
+        val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
         val recording = store.getAll().find { it.uri == uri }!!
@@ -78,7 +86,7 @@ class RecordingStoreTest {
     fun restoreRecording_MediaStore() {
         val store = RecordingStore(context, DEFAULT_MEDIA_URI)
 
-        val uri = store.createRecording(makeTestMediaName("sample"), RecordingFormat.OGG)
+        val uri = store.createRecording(makeTestName("sample"), RecordingFormat.OGG)
         val recording = store.getAll(trashed = false).find { it.uri == uri }!!
 
         store.trash(listOf(recording))
@@ -89,15 +97,29 @@ class RecordingStoreTest {
         assertFalse(store.getAll(trashed = true).any { it.title == recording.title })
     }
 
+    @Test
+    fun deleteRecording_MediaStore() {
+        val store = RecordingStore(context, DEFAULT_MEDIA_URI)
+
+        val name = makeTestName("sample")
+        val uri = store.createRecording(name, RecordingFormat.OGG)
+
+        val recording = store.getAll().find { it.uri == uri }!!
+        store.delete(listOf(recording))
+
+        assertFalse(store.getAll(trashed = false).any { it.title == recording.title })
+        assertFalse(store.getAll(trashed = true).any { it.title == recording.title })
+    }
+
     private val context: Context
         get() = instrumentation.targetContext
 
     private val instrumentation
         get() = InstrumentationRegistry.getInstrumentation()
 
-    private fun makeTestMediaName(name: String): String = "$name$testMediaSuffix.${System.currentTimeMillis()}"
+    private fun makeTestName(name: String): String = "$name$testMediaSuffix.${System.currentTimeMillis()}"
 
-    private fun deleteTestMedia() {
+    private fun deleteTestFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val queryArgs = Bundle().apply {
                 putInt(MediaStore.QUERY_ARG_MATCH_TRASHED, MediaStore.MATCH_INCLUDE)
@@ -177,6 +199,7 @@ class RecordingStoreTest {
                 }
             } ?: 0
         }
+
         else -> TODO()
     }
 }

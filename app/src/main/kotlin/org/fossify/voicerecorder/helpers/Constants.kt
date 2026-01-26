@@ -2,9 +2,7 @@
 
 package org.fossify.voicerecorder.helpers
 
-import android.os.Build
-import android.os.Environment
-import org.fossify.voicerecorder.models.RecordingFormat
+import org.fossify.voicerecorder.store.RecordingFormat
 
 const val REPOSITORY_NAME = "Voice-Recorder"
 
@@ -103,11 +101,5 @@ const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
 const val KEEP_SCREEN_ON = "keep_screen_on"
 const val WAS_MIC_MODE_WARNING_SHOWN = "was_mic_mode_warning_shown"
 const val FILENAME_PATTERN = "filename_pattern"
-
-val DEFAULT_RECORDINGS_FOLDER = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-    Environment.DIRECTORY_RECORDINGS
-} else {
-    "Recordings"
-}
 
 const val DEFAULT_FILENAME_PATTERN = "%Y%M%D_%h%m%s"

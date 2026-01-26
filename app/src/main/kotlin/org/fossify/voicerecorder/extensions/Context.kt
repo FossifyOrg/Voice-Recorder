@@ -10,8 +10,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.core.graphics.createBitmap
 import org.fossify.voicerecorder.helpers.*
-import java.util.Calendar
-import java.util.Locale
+import org.fossify.voicerecorder.store.RecordingStore
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
 

@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileInputStream
 
 plugins {
-    alias(libs.plugins.android)
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
@@ -37,8 +37,6 @@ android {
         versionCode = project.property("VERSION_CODE").toString().toInt()
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "voicerecorder-$versionCode")
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -150,5 +148,5 @@ dependencies {
     implementation(libs.autofittextview)
     detektPlugins(libs.compose.detekt)
 
-    androidTestImplementation(libs.androidx.test.runner)
+    implementation(project(":store"))
 }

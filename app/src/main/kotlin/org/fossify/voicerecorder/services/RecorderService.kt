@@ -19,10 +19,11 @@ import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.updateWidgets
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.RecordingFormat
 import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
 import org.fossify.voicerecorder.recorder.Recorder
+import org.fossify.voicerecorder.store.RecordingFormat
+import org.fossify.voicerecorder.store.RecordingWriter
 import org.greenrobot.eventbus.EventBus
 import java.util.Timer
 import java.util.TimerTask

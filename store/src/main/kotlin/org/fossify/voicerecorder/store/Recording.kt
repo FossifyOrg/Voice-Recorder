@@ -1,10 +1,9 @@
-package org.fossify.voicerecorder.models
+package org.fossify.voicerecorder.store
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.webkit.MimeTypeMap
-import org.fossify.commons.helpers.isOreoPlus
-import org.fossify.voicerecorder.R
 
 data class Recording(
     val id: Int,
@@ -32,7 +31,7 @@ enum class RecordingFormat(val value: Int) {
          * Return formats that are available on the current platform
          */
         val available: List<RecordingFormat> = arrayListOf(M4A, MP3).apply {
-            if (isOreoPlus()) add(OGG)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) add(OGG)
         }
     }
 

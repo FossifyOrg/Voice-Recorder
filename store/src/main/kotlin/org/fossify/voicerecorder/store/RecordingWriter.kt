@@ -1,4 +1,4 @@
-package org.fossify.voicerecorder.helpers
+package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -8,14 +8,13 @@ import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import org.fossify.voicerecorder.models.RecordingFormat
 import java.io.File
 import java.io.FileInputStream
 
 /**
  * Helper class to write recordings to the device.
  *
- * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a bug in [android.provider.MediaStore] (TODO: link to the
+ * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a bug in [MediaStore] (TODO: link to the
  * bugreport) which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
  */
 sealed class RecordingWriter {
