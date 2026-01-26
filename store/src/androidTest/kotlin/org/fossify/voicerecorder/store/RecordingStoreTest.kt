@@ -37,8 +37,7 @@ class RecordingStoreTest {
         tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
         tempDir.mkdirs()
 
-        val mockDocumentsProvider = context.contentResolver.acquireContentProviderClient(MOCK_PROVIDER_AUTHORITY)?.localContentProvider as
-            MockDocumentsProvider
+        val mockDocumentsProvider = context.contentResolver.acquireContentProviderClient(MOCK_PROVIDER_AUTHORITY)?.localContentProvider as MockDocumentsProvider
         mockDocumentsProvider.root = tempDir
     }
 
@@ -60,8 +59,7 @@ class RecordingStoreTest {
         val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
-        val recordings = store.getAll()
-        val recording = recordings.find { it.uri == uri }
+        val recording = store.all().find { it.uri == uri }
         assertNotNull(recording)
 
         val size = getSize(uri)
@@ -80,14 +78,14 @@ class RecordingStoreTest {
         val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
-        val recording = store.getAll().find { it.uri == uri }!!
+        val recording = store.all().find { it.uri == uri }!!
 
-        assertFalse(store.getAll(trashed = true).any { it.title == recording.title })
+        assertFalse(store.all(trashed = true).any { it.title == recording.title })
 
         store.trash(listOf(recording))
 
-        assertFalse(store.getAll(trashed = false).any { it.title == recording.title })
-        assertTrue(store.getAll(trashed = true).any { it.title == recording.title })
+        assertFalse(store.all(trashed = false).any { it.title == recording.title })
+        assertTrue(store.all(trashed = true).any { it.title == recording.title })
     }
 
     @Test
@@ -100,14 +98,14 @@ class RecordingStoreTest {
         val store = RecordingStore(context, uri)
 
         val uri = store.createRecording(makeTestName("sample"), RecordingFormat.OGG)
-        val recording = store.getAll(trashed = false).find { it.uri == uri }!!
+        val recording = store.all(trashed = false).find { it.uri == uri }!!
 
         store.trash(listOf(recording))
-        val trashedRecording = store.getAll(trashed = true).find { it.title == recording.title }!!
+        val trashedRecording = store.all(trashed = true).find { it.title == recording.title }!!
 
         store.restore(listOf(trashedRecording))
-        assertTrue(store.getAll(trashed = false).any { it.title == recording.title })
-        assertFalse(store.getAll(trashed = true).any { it.title == recording.title })
+        assertTrue(store.all(trashed = false).any { it.title == recording.title })
+        assertFalse(store.all(trashed = true).any { it.title == recording.title })
     }
 
     @Test
@@ -128,17 +126,55 @@ class RecordingStoreTest {
         val name = makeTestName("sample")
         val uri = store.createRecording(name, RecordingFormat.OGG)
 
-        var recording = store.getAll().find { it.uri == uri }!!
+        var recording = store.all().find { it.uri == uri }!!
 
         if (trashed) {
             store.trash(listOf(recording))
-            recording = store.getAll(trashed = true).find { it.title == recording.title }!!
+            recording = store.all(trashed = true).find { it.title == recording.title }!!
         }
 
         store.delete(listOf(recording))
 
-        assertFalse(store.getAll(trashed = false).any { it.title == recording.title })
-        assertFalse(store.getAll(trashed = true).any { it.title == recording.title })
+        assertFalse(store.all(trashed = false).any { it.title == recording.title })
+        assertFalse(store.all(trashed = true).any { it.title == recording.title })
+    }
+
+    @Test
+    fun moveRecordings_SAF_to_SAF() = moveRecordings(
+        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Old audio"),
+        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "New audio")
+    )
+
+    @Test
+    fun moveRecordings_SAF_to_MediaStore() = moveRecordings(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI)
+
+    @Test
+    fun moveRecordings_MediaStore_to_SAF() = moveRecordings(DEFAULT_MEDIA_URI, DEFAULT_DOCUMENTS_URI)
+
+    private fun moveRecordings(srcUri: Uri, dstUri: Uri) {
+        val srcStore = RecordingStore(context, srcUri)
+
+        val normalRecording = srcStore.createRecording(makeTestName("recording-1"), RecordingFormat.OGG).let { uri ->
+            srcStore.all().find { it.uri == uri }!!
+        }
+
+        val trashedRecording = srcStore.createRecording(makeTestName("recording-2"), RecordingFormat.OGG).let { uri ->
+            val recording = srcStore.all().find { it.uri == uri }!!
+            srcStore.trash(listOf(recording))
+            srcStore.all(trashed = true).find { it.title == recording.title }!!
+        }
+
+        srcStore.move(listOf(normalRecording, trashedRecording), srcUri, dstUri)
+
+        assertFalse(srcStore.all(trashed = false).any { it.title == normalRecording.title })
+        assertFalse(srcStore.all(trashed = true).any { it.title == normalRecording.title })
+        assertFalse(srcStore.all(trashed = false).any { it.title == trashedRecording.title })
+        assertFalse(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
+
+        val dstStore = RecordingStore(context, dstUri)
+
+        assertTrue(dstStore.all(trashed = false).any { it.title == normalRecording.title })
+        assertTrue(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
     }
 
     private val context: Context

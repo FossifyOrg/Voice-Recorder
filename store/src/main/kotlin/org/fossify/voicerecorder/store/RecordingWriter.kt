@@ -1,16 +1,13 @@
 package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import java.io.File
 import java.io.FileInputStream
-import java.nio.file.Files.createFile
 
 /**
  * Helper class to write recordings to the device.
@@ -41,6 +38,8 @@ sealed class RecordingWriter {
 
         // Document providers not affected by the MediaStore bug
         private val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents", MediaStore.AUTHORITY)
+
+        private const val TAG = "RecordingWriter"
     }
 
     /**
