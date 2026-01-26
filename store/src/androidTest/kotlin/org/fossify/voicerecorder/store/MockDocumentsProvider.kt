@@ -6,13 +6,15 @@ import android.os.CancellationSignal
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.DocumentsProvider
-import android.util.Log
 import java.io.File
 import java.net.URLConnection
 
 class MockDocumentsProvider() : DocumentsProvider() {
     companion object {
-        const val ROOT = "root"
+        val DEFAULT_PROJECTION = arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE
+        )
+
         private const val TAG = "MockDocumentsProvider"
 
     }
@@ -22,7 +24,6 @@ class MockDocumentsProvider() : DocumentsProvider() {
     override fun onCreate(): Boolean = true
 
     override fun queryRoots(projection: Array<out String>): Cursor {
-        Log.d(TAG, "queryRoots")
         throw NotImplementedError()
     }
 
@@ -30,42 +31,35 @@ class MockDocumentsProvider() : DocumentsProvider() {
         val root = requireNotNull(root)
         val parent = File(root, parentDocumentId)
 
-        val projection = projection ?: arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME)
-        val result = MatrixCursor(projection)
-
-        for (file in parent.listFiles() ?: emptyArray<File>()) {
-            val row = result.newRow()
-            val documentId = file.relativeTo(root).path
-
-            if (projection.contains(DocumentsContract.Document.COLUMN_DOCUMENT_ID)) {
-                row.add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, documentId)
-            }
-
-            if (projection.contains(DocumentsContract.Document.COLUMN_DISPLAY_NAME)) {
-                row.add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, file.name)
+        return MatrixCursor(projection ?: DEFAULT_PROJECTION).apply {
+            for (file in parent.listFiles() ?: emptyArray<File>()) {
+                val documentId = file.relativeTo(root).path
+                addFile(documentId, file)
             }
         }
-
-        return result
     }
 
     override fun queryDocument(documentId: String, projection: Array<out String>?): Cursor {
         val root = requireNotNull(root)
         val file = File(root, documentId)
 
-        val projection = projection ?: arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME)
-        val result = MatrixCursor(projection)
-        val row = result.newRow()
+        return MatrixCursor(projection ?: DEFAULT_PROJECTION).apply {
+            addFile(documentId, file)
+        }
+    }
 
-        if (projection.contains(DocumentsContract.Document.COLUMN_DOCUMENT_ID)) {
+    private fun MatrixCursor.addFile(documentId: String, file: File) {
+        val row = newRow()
+
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_DOCUMENT_ID)) {
             row.add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, documentId)
         }
 
-        if (projection.contains(DocumentsContract.Document.COLUMN_DISPLAY_NAME)) {
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_DISPLAY_NAME)) {
             row.add(DocumentsContract.Document.COLUMN_DISPLAY_NAME, file.name)
         }
 
-        if (projection.contains(DocumentsContract.Document.COLUMN_MIME_TYPE)) {
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_MIME_TYPE)) {
             row.add(
                 DocumentsContract.Document.COLUMN_MIME_TYPE, if (file.isDirectory()) {
                     DocumentsContract.Document.MIME_TYPE_DIR
@@ -75,15 +69,13 @@ class MockDocumentsProvider() : DocumentsProvider() {
             )
         }
 
-        if (projection.contains(DocumentsContract.Document.COLUMN_SIZE)) {
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_SIZE)) {
             row.add(DocumentsContract.Document.COLUMN_SIZE, file.length())
         }
 
-        return result
     }
 
-    override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean =
-        documentId.startsWith("$parentDocumentId/")
+    override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean = documentId.startsWith("$parentDocumentId/")
 
     override fun openDocument(documentId: String, mode: String, cancellationSignal: CancellationSignal?): ParcelFileDescriptor {
         val root = requireNotNull(root)

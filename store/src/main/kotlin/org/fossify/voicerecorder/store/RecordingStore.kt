@@ -51,38 +51,77 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     /**
      *  Are there no recordings in this store?
      */
-    fun isEmpty(): Boolean = when (kind) {
-        Kind.DOCUMENT -> DocumentFile.fromTreeUri(context, uri)?.listFiles()?.any { it.isAudioRecording() } != true
-        Kind.MEDIA -> true
-    }
+    fun isEmpty(): Boolean = !isNotEmpty()
 
     /**
      *  Are there any recordings in this store?
      */
-    fun isNotEmpty(): Boolean = !isEmpty()
+    fun isNotEmpty(): Boolean = all().any()
 
     /**
-     * Returns all recordings in this store.
+     * Returns all recordings in this store as sequence.
      */
-    fun getAll(trashed: Boolean = false): List<Recording> = when (kind) {
-        Kind.DOCUMENT -> getAllDocuments(trashed)
-        Kind.MEDIA -> getAllMedia(trashed)
+    fun all(trashed: Boolean = false): Sequence<Recording> = when (kind) {
+        Kind.DOCUMENT -> allDocuments(trashed)
+        Kind.MEDIA -> allMedia(trashed)
     }
 
-    private fun getAllDocuments(trashed: Boolean): List<Recording> {
-        val parentUri = if (trashed) {
+    private fun allDocuments(trashed: Boolean): Sequence<Recording> {
+        val treeUri = if (trashed) {
             trashFolder
         } else {
             uri
         }
 
-        Log.d(TAG, "getAllDocuments($parentUri)")
+        val projection = arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED,
+            DocumentsContract.Document.COLUMN_SIZE
+        )
 
-        return parentUri?.let { DocumentFile.fromTreeUri(context, it) }?.listFiles()?.filter { it.isAudioRecording() }?.map { readRecordingFromFile(it) }
-            ?.toList() ?: emptyList()
+        val treeDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
+        val childDocumentsUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, treeDocumentId)
+
+        val contentResolver = context.contentResolver
+
+        return sequence {
+            contentResolver.query(childDocumentsUri, projection, null, null, null)?.use { cursor ->
+                val iDocumentId = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+                val iDisplayName = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                val iMimeType = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+                val iLastModified = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_LAST_MODIFIED)
+                val iSize = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_SIZE)
+
+                while (cursor.moveToNext()) {
+                    val documentId = cursor.getString(iDocumentId)
+                    val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+                    val mimeType = cursor.getString(iMimeType)
+                    val displayName = cursor.getString(iDisplayName)
+
+                    if (mimeType?.startsWith("audio") != true || displayName.startsWith(".")) {
+                        continue
+                    }
+
+                    val duration = getDurationFromUri(uri).toInt()
+
+                    yield(
+                        Recording(
+                            id = documentId.hashCode(),
+                            title = displayName,
+                            uri = uri,
+                            timestamp = cursor.getLong(iLastModified),
+                            duration = duration,
+                            size = cursor.getInt(iSize),
+                        )
+                    )
+                }
+            }
+        }
     }
 
-    private fun getAllMedia(trashed: Boolean): List<Recording> {
+    private fun allMedia(trashed: Boolean): Sequence<Recording> {
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.DATE_MODIFIED,
@@ -90,7 +129,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.SIZE,
         )
-
 
         val cursor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val queryArgs = if (trashed) {
@@ -117,38 +155,36 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             context.contentResolver.query(uri, projection, selection, selectionArgs, null)
         }
 
-        val result = mutableListOf<Recording>()
+        return sequence {
+            cursor?.use { cursor ->
+                val iId = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                val iDateModified = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
+                val iDisplayName = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
+                val iDuration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+                val iSize = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
 
-        cursor?.use { cursor ->
-            val idIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-            val timestampIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
-            val nameIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
-            val durationIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
-            val sizeIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(iId)
+                    val name = cursor.getString(iDisplayName)
+                    val size = cursor.getInt(iSize)
+                    val timestamp = cursor.getLong(iDateModified)
+                    val duration = cursor.getInt(iDuration)
 
-            while (cursor.moveToNext()) {
-                val id = cursor.getLong(idIndex)
-                val name = cursor.getString(nameIndex)
-                val size = cursor.getInt(sizeIndex)
-                val timestamp = cursor.getLong(timestampIndex)
-                val duration = cursor.getInt(durationIndex)
+                    val rowUri = ContentUris.withAppendedId(uri, id)
 
-                val rowUri = ContentUris.withAppendedId(uri, id)
-
-                result.add(
-                    Recording(
-                        id = id.toInt(),
-                        title = name,
-                        uri = rowUri,
-                        timestamp = timestamp,
-                        duration = duration,
-                        size = size,
+                    yield(
+                        Recording(
+                            id = id.toInt(),
+                            title = name,
+                            uri = rowUri,
+                            timestamp = timestamp,
+                            duration = duration,
+                            size = size,
+                        )
                     )
-                )
+                }
             }
         }
-
-        return result
     }
 
     fun trash(recordings: Collection<Recording>): Boolean {
@@ -215,7 +251,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
     fun deleteTrashed(
         callback: (success: Boolean) -> Unit = {}
-    ) = ensureBackgroundThread { callback(delete(getAll(trashed = true))) }
+    ) = ensureBackgroundThread { callback(delete(all(trashed = true).toList())) }
 
     fun move(recordings: Collection<Recording>, sourceParent: Uri, targetParent: Uri): Boolean {
         // TODO: handle media
@@ -228,7 +264,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         val targetParentDocumentUri = ensureParentDocumentUri(context, targetParent)
 
         if (sourceParent.authority == targetParent.authority) {
-
             for (recording in recordings) {
                 try {
                     DocumentsContract.moveDocument(
@@ -268,18 +303,8 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         Kind.DOCUMENT -> getOrCreateDocument(
             context.contentResolver, uri, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME
         )
-
         Kind.MEDIA -> null
     }
-
-    private fun readRecordingFromFile(file: DocumentFile): Recording = Recording(
-        id = file.hashCode(),
-        title = file.name!!,
-        uri = file.uri,
-        timestamp = file.lastModified(),
-        duration = getDurationFromUri(file.uri).toInt(),
-        size = file.length().toInt()
-    )
 
     private fun getDurationFromUri(uri: Uri): Long {
         return try {
@@ -378,15 +403,3 @@ private fun ensureParentDocumentUri(context: Context, uri: Uri): Uri = when {
     else -> error("invalid URI, must be document or tree: $uri")
 }
 
-internal fun DocumentFile.isAudioRecording() = type.let { it != null && it.startsWith("audio") } && name.let { it != null && !it.startsWith(".") }
-
-//@Deprecated(
-//    message = "Use getRecordings instead. This method is only here for backward compatibility.", replaceWith = ReplaceWith("getRecordings(trashed = true)")
-//)
-//private fun Context.getMediaStoreTrashedRecordings(): List<Recording> {
-//    val trashedRegex = "^\\.trashed-\\d+-".toRegex()
-//
-//    return config.saveRecordingsFolder?.let { DocumentFile.fromTreeUri(this, it) }?.listFiles()?.filter { it.isTrashedMediaStoreRecording() }?.map {
-//            readRecordingFromFile(it).copy(title = trashedRegex.replace(it.name!!, ""))
-//        }?.toList() ?: emptyList()
-//}
