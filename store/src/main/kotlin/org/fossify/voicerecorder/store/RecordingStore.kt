@@ -28,18 +28,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         require(uri.scheme == ContentResolver.SCHEME_CONTENT) { "Invalid URI '$uri' - must have 'content' scheme" }
     }
 
-    enum class Kind {
-        DOCUMENT, MEDIA;
-
-        companion object {
-            fun of(uri: Uri): Kind = if (uri.authority == MediaStore.AUTHORITY) {
-                MEDIA
-            } else {
-                DOCUMENT
-            }
-        }
-    }
-
     /**
      * Short, human-readable name of this store
      */
@@ -87,6 +75,8 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         } else {
             uri
         }
+
+        Log.d(TAG, "getAllDocuments($parentUri)")
 
         return parentUri?.let { DocumentFile.fromTreeUri(context, it) }?.listFiles()?.filter { it.isAudioRecording() }?.map { readRecordingFromFile(it) }
             ?.toList() ?: emptyList()
@@ -241,8 +231,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
             for (recording in recordings) {
                 try {
-                    // TODO: convert to document URI only if not already document URI
-
                     DocumentsContract.moveDocument(
                         contentResolver, recording.uri, sourceParentDocumentUri, targetParentDocumentUri
                     )
@@ -263,11 +251,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         val resolver = context.contentResolver
 
         recordings.forEach {
-            resolver.delete(it.uri, null, null)
-//            when (Kind.of(it.uri)) {
-//                Kind.DOCUMENT -> DocumentsContract.deleteDocument(resolver, it.uri)
-//                Kind.MEDIA -> resolver.delete(it.uri, null, null)
-//            }
+            deleteFile(resolver, it.uri)
         }
 
         return true
@@ -341,6 +325,52 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
 private const val TRASH_FOLDER_NAME = ".trash"
 private const val TRASHED_PREFIX = ".trashed-"
+
+private enum class Kind {
+    DOCUMENT, MEDIA;
+
+    companion object {
+        fun of(uri: Uri): Kind = if (uri.authority == MediaStore.AUTHORITY) {
+            MEDIA
+        } else {
+            DOCUMENT
+        }
+    }
+}
+
+internal fun createFile(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
+    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
+        val values = ContentValues().apply {
+            put(MediaStore.Audio.Media.DISPLAY_NAME, name)
+            put(MediaStore.Audio.Media.MIME_TYPE, format.getMimeType(context))
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
+            }
+        }
+
+        context.contentResolver.insert(parentUri, values)
+    } else {
+        val parentDocumentUri = buildParentDocumentUri(parentUri)
+        val displayName = "$name.${format.getExtension(context)}"
+
+        DocumentsContract.createDocument(
+            context.contentResolver,
+            parentDocumentUri,
+            format.getMimeType(context),
+            displayName,
+        )
+    }
+
+    return requireNotNull(uri) {
+        "failed to create file '$name' in $parentUri"
+    }
+}
+
+internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Kind.of(uri)) {
+    Kind.MEDIA -> contentResolver.delete(uri, null, null)
+    Kind.DOCUMENT -> DocumentsContract.deleteDocument(contentResolver, uri)
+}
 
 private fun ensureParentDocumentUri(context: Context, uri: Uri): Uri = when {
     DocumentsContract.isDocumentUri(context, uri) -> uri

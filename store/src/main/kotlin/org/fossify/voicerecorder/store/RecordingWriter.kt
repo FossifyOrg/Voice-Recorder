@@ -10,6 +10,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Files.createFile
 
 /**
  * Helper class to write recordings to the device.
@@ -61,7 +62,7 @@ sealed class RecordingWriter {
 
         override fun cancel() {
             fileDescriptor.close()
-            contentResolver.delete(uri, null, null)
+            deleteFile(contentResolver, uri)
         }
     }
 
@@ -102,34 +103,5 @@ sealed class RecordingWriter {
         override fun cancel() {
             tempFile.delete()
         }
-    }
-}
-
-private fun createFile(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
-    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
-        val values = ContentValues().apply {
-            put(MediaStore.Audio.Media.DISPLAY_NAME, name)
-            put(MediaStore.Audio.Media.MIME_TYPE, format.getMimeType(context))
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
-            }
-        }
-
-        context.contentResolver.insert(parentUri, values)
-    } else {
-        val parentDocumentUri = buildParentDocumentUri(parentUri)
-        val displayName = "$name.${format.getExtension(context)}"
-
-        DocumentsContract.createDocument(
-            context.contentResolver,
-            parentDocumentUri,
-            format.getMimeType(context),
-            displayName,
-        )
-    }
-
-    return requireNotNull(uri) {
-        "failed to create file '$name' in $parentUri"
     }
 }
