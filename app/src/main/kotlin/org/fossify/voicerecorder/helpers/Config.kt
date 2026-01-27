@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import org.fossify.commons.extensions.createFirstParentTreeUri
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.store.DEFAULT_MEDIA_URI
 import org.fossify.voicerecorder.store.RecordingFormat
 
 class Config(context: Context) : BaseConfig(context) {
@@ -20,7 +21,7 @@ class Config(context: Context) : BaseConfig(context) {
         get() = when (val value = prefs.getString(SAVE_RECORDINGS, null)) {
             is String if value.startsWith("content:") -> value.toUri()
             is String -> context.createFirstParentTreeUri(value)
-            null -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+            null -> DEFAULT_MEDIA_URI
         }
         set(uri) = prefs.edit { putString(SAVE_RECORDINGS, uri.toString()) }
 

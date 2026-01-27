@@ -9,15 +9,25 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import kotlin.math.roundToLong
+
+val DEFAULT_MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+
+val DEFAULT_MEDIA_DIRECTORY = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    Environment.DIRECTORY_RECORDINGS
+} else {
+    Environment.DIRECTORY_MUSIC
+}
 
 /**
  * Utility to manage stored recordings
  */
 class RecordingStore(private val context: Context, val uri: Uri) {
     companion object {
+
         private const val TAG = "RecordingStore"
     }
 
@@ -35,7 +45,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                 documentId.substringAfter(":").trimEnd('/')
             }
 
-            Kind.MEDIA -> DEFAULT_RECORDINGS_FOLDER
+            Kind.MEDIA -> DEFAULT_MEDIA_DIRECTORY
         }
 
     /**
@@ -392,7 +402,7 @@ internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name:
         put(MediaStore.Audio.Media.MIME_TYPE, mimeType)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
+            put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_MEDIA_DIRECTORY)
             put(MediaStore.Audio.Media.IS_PENDING, 1)
         }
     }

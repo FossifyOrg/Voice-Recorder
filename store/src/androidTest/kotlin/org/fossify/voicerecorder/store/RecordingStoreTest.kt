@@ -1,5 +1,6 @@
 package org.fossify.voicerecorder.store
 
+import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
@@ -22,9 +23,7 @@ import java.io.FileOutputStream
 
 class RecordingStoreTest {
     companion object {
-        // TODO
         private const val MOCK_PROVIDER_AUTHORITY = "org.fossify.voicerecorder.store.mock.provider"
-        private val DEFAULT_MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         private val DEFAULT_DOCUMENTS_URI = DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Recordings")
         private const val TAG = "RecordingStoreTest"
     }
@@ -33,6 +32,10 @@ class RecordingStoreTest {
 
     @Before
     fun setup() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            instrumentation.uiAutomation.grantRuntimePermission(context.packageName, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
         tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
         tempDir.mkdirs()
 
