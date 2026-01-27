@@ -192,7 +192,19 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
     fun deleteTrashed(): Boolean = delete(all(trashed = true).toList())
 
-    fun move(recordings: Collection<Recording>, dstUri: Uri? = null, fromTrash: Boolean = false, toTrash: Boolean = false) {
+    /**
+     * Move all recordings in this store (including the trashed ones) into the new store.
+     */
+    fun migrate(dstUri: Uri) {
+        if (dstUri == uri) {
+            return
+        }
+
+        move(all(trashed = false).toList(), dstUri, fromTrash = false, toTrash = false)
+        move(all(trashed = true).toList(), dstUri, fromTrash = true, toTrash = true)
+    }
+
+    private fun move(recordings: Collection<Recording>, dstUri: Uri? = null, fromTrash: Boolean = false, toTrash: Boolean = false) {
         if (recordings.isEmpty()) {
             return
         }
@@ -260,21 +272,19 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
     private fun moveDocumentsToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
-        for (recording in recordings) {
-            moveDocumentToMedia(recording, dstUri, toTrash)
-        }
-    }
-
-    private fun moveDocumentToMedia(recording: Recording, dstParentUri: Uri, toTrash: Boolean) {
         val contentResolver = context.contentResolver
-        val dstUri = createMedia(contentResolver, dstParentUri, recording.title, recording.mimeType)!!
+        for (recording in recordings) {
+            val dstUri = createMedia(contentResolver, dstUri, recording.title, recording.mimeType)!!
 
-        copyFile(contentResolver, recording.uri, dstUri)
+            copyFile(contentResolver, recording.uri, dstUri)
 
-        DocumentsContract.deleteDocument(contentResolver, recording.uri)
+            DocumentsContract.deleteDocument(contentResolver, recording.uri)
 
-        if (toTrash) {
-            updateMediaTrashed(dstUri, recording.title, trash = true)
+            completeMedia(contentResolver, dstUri)
+
+            if (toTrash) {
+                updateMediaTrashed(dstUri, recording.title, trash = true)
+            }
         }
     }
 
@@ -295,7 +305,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
     private fun moveMediaToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
         if (dstUri != uri) {
-            throw UnsupportedOperationException("moving recordings between different media stores not supported")
+            throw UnsupportedOperationException("moving recordings between different media stores is not supported")
         }
 
         for (recording in recordings) {
@@ -383,10 +393,23 @@ internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name:
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
+            put(MediaStore.Audio.Media.IS_PENDING, 1)
         }
     }
 
     return contentResolver.insert(parentUri, values)
+}
+
+internal fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        return
+    }
+
+    val values = ContentValues().apply {
+        put(MediaStore.Audio.Media.IS_PENDING, 0)
+    }
+
+    contentResolver.update(uri, values, null, null)
 }
 
 internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Kind.of(uri)) {
