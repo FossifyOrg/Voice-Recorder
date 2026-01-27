@@ -179,11 +179,18 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                     val rowUri = ContentUris.withAppendedId(uri, id)
                     val mimeType = cursor.getString(iMimeType)
 
+                    val title = cursor.getString(iDisplayName).let {
+                        if (trashed) {
+                            it.removePrefix(TRASHED_PREFIX)
+                        } else {
+                            it
+                        }
+                    }
+
                     yield(
                         Recording(
                             id = id.toInt(),
-//                            title = removeExtension(cursor.getString(iDisplayName), mimeType),
-                            title = cursor.getString(iDisplayName),
+                            title = title,
                             uri = rowUri,
                             timestamp = cursor.getLong(iDateModified),
                             duration = cursor.getInt(iDuration),
