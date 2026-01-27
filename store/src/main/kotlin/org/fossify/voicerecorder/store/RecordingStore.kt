@@ -11,9 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.Log
-import androidx.documentfile.provider.DocumentFile
-import org.fossify.commons.helpers.ensureBackgroundThread
 import kotlin.math.roundToLong
 
 /**
@@ -51,12 +48,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     /**
      *  Are there no recordings in this store?
      */
-    fun isEmpty(): Boolean = !isNotEmpty()
-
-    /**
-     *  Are there any recordings in this store?
-     */
-    fun isNotEmpty(): Boolean = all().any()
+    fun isEmpty(): Boolean = all().none()
 
     /**
      * Returns all recordings in this store as sequence.
@@ -68,7 +60,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
     private fun allDocuments(trashed: Boolean): Sequence<Recording> {
         val treeUri = if (trashed) {
-            trashFolder
+            trashFolder ?: return emptySequence()
         } else {
             uri
         }
@@ -81,8 +73,12 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             DocumentsContract.Document.COLUMN_SIZE
         )
 
-        val treeDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
-        val childDocumentsUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, treeDocumentId)
+        val parentDocumentId = if (DocumentsContract.isDocumentUri(context, treeUri)) {
+            DocumentsContract.getDocumentId(treeUri)
+        } else {
+            DocumentsContract.getTreeDocumentId(treeUri)
+        }
+        val childDocumentsUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentDocumentId)
 
         val contentResolver = context.contentResolver
 
@@ -97,10 +93,12 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                 while (cursor.moveToNext()) {
                     val documentId = cursor.getString(iDocumentId)
                     val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
-                    val mimeType = cursor.getString(iMimeType)
+
+
+                    val mimeType = cursor.getString(iMimeType) ?: continue
                     val displayName = cursor.getString(iDisplayName)
 
-                    if (mimeType?.startsWith("audio") != true || displayName.startsWith(".")) {
+                    if (!mimeType.startsWith("audio") || displayName.startsWith(".")) {
                         continue
                     }
 
@@ -114,6 +112,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                             timestamp = cursor.getLong(iLastModified),
                             duration = duration,
                             size = cursor.getInt(iSize),
+                            mimeType = mimeType,
                         )
                     )
                 }
@@ -128,6 +127,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.SIZE,
+            MediaStore.Audio.Media.MIME_TYPE
         )
 
         val cursor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -162,24 +162,23 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                 val iDisplayName = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
                 val iDuration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
                 val iSize = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+                val iMimeType = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.MIME_TYPE)
 
                 while (cursor.moveToNext()) {
                     val id = cursor.getLong(iId)
-                    val name = cursor.getString(iDisplayName)
-                    val size = cursor.getInt(iSize)
-                    val timestamp = cursor.getLong(iDateModified)
-                    val duration = cursor.getInt(iDuration)
-
                     val rowUri = ContentUris.withAppendedId(uri, id)
+                    val mimeType = cursor.getString(iMimeType)
 
                     yield(
                         Recording(
                             id = id.toInt(),
-                            title = name,
+//                            title = removeExtension(cursor.getString(iDisplayName), mimeType),
+                            title = cursor.getString(iDisplayName),
                             uri = rowUri,
-                            timestamp = timestamp,
-                            duration = duration,
-                            size = size,
+                            timestamp = cursor.getLong(iDateModified),
+                            duration = cursor.getInt(iDuration),
+                            size = cursor.getInt(iSize),
+                            mimeType = mimeType
                         )
                     )
                 }
@@ -187,100 +186,147 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         }
     }
 
-    fun trash(recordings: Collection<Recording>): Boolean {
-        val (documents, media) = recordings.partition { Kind.of(it.uri) == Kind.DOCUMENT }
-        var success = true
+    fun trash(recordings: Collection<Recording>) = move(recordings, toTrash = true)
 
-        if (documents.isNotEmpty()) {
-            success = success and moveDocuments(documents, uri, getOrCreateTrashFolder()!!)
+    fun restore(recordings: Collection<Recording>) = move(recordings, fromTrash = true)
+
+    fun deleteTrashed(): Boolean = delete(all(trashed = true).toList())
+
+    fun move(recordings: Collection<Recording>, dstUri: Uri? = null, fromTrash: Boolean = false, toTrash: Boolean = false) {
+        if (recordings.isEmpty()) {
+            return
         }
 
-        if (media.isNotEmpty()) {
-            success = success and updateMediaTrashed(media, trash = true)
-        }
+        val dstUri = dstUri ?: uri
 
-        return success
-    }
+        when (kind) {
+            Kind.DOCUMENT -> when (Kind.of(dstUri)) {
+                Kind.DOCUMENT -> moveDocumentsToDocuments(recordings, dstUri, fromTrash, toTrash)
+                Kind.MEDIA -> moveDocumentsToMedia(recordings, dstUri, toTrash)
+            }
 
-    fun restore(recordings: Collection<Recording>): Boolean {
-        val (documents, media) = recordings.partition { Kind.of(it.uri) == Kind.DOCUMENT }
-        var success = true
-
-        if (documents.isNotEmpty()) {
-            trashFolder?.let { sourceParent ->
-                success = success and move(recordings, sourceParent, uri)
+            Kind.MEDIA -> when (Kind.of(dstUri)) {
+                Kind.DOCUMENT -> moveMediaToDocuments(recordings, dstUri, toTrash)
+                Kind.MEDIA -> moveMediaToMedia(recordings, dstUri, toTrash)
             }
         }
-
-        if (media.isNotEmpty()) {
-            success = success and updateMediaTrashed(media, trash = false)
-        }
-
-        return success
     }
 
-    private fun updateMediaTrashed(recordings: Collection<Recording>, trash: Boolean): Boolean {
+    private fun moveDocumentsToDocuments(recordings: Collection<Recording>, dstUri: Uri, fromTrash: Boolean, toTrash: Boolean) {
         val contentResolver = context.contentResolver
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val values = ContentValues().apply {
-                put(MediaStore.Audio.Media.IS_TRASHED, if (trash) 1 else 0)
+        val srcParentUri = ensureParentDocumentUri(
+            context, if (fromTrash) {
+                requireNotNull(trashFolder)
+            } else {
+                uri
             }
+        )
 
-            for (recording in recordings) {
-                contentResolver.update(recording.uri, values, null, null)
+        val dstParentUri = ensureParentDocumentUri(
+            context, if (toTrash) {
+                getOrCreateTrashFolder(contentResolver, dstUri)!!
+            } else {
+                dstUri
             }
-        } else {
-            for (recording in recordings) {
-                val newName = if (trash) {
-                    "${TRASHED_PREFIX}${recording.title}"
-                } else {
-                    recording.title.removePrefix(TRASHED_PREFIX)
-                }
+        )
 
-                val values = ContentValues().apply {
-                    put(MediaStore.Audio.Media.DISPLAY_NAME, newName)
-                }
-
-                contentResolver.update(recording.uri, values, null, null)
-            }
-        }
-
-        return true
-    }
-
-    fun deleteTrashed(
-        callback: (success: Boolean) -> Unit = {}
-    ) = ensureBackgroundThread { callback(delete(all(trashed = true).toList())) }
-
-    fun move(recordings: Collection<Recording>, sourceParent: Uri, targetParent: Uri): Boolean {
-        // TODO: handle media
-        return moveDocuments(recordings, sourceParent, targetParent)
-    }
-
-    private fun moveDocuments(recordings: Collection<Recording>, sourceParent: Uri, targetParent: Uri): Boolean {
-        val contentResolver = context.contentResolver
-        val sourceParentDocumentUri = ensureParentDocumentUri(context, sourceParent)
-        val targetParentDocumentUri = ensureParentDocumentUri(context, targetParent)
-
-        if (sourceParent.authority == targetParent.authority) {
+        if (srcParentUri.authority == dstParentUri.authority) {
             for (recording in recordings) {
                 try {
                     DocumentsContract.moveDocument(
-                        contentResolver, recording.uri, sourceParentDocumentUri, targetParentDocumentUri
+                        contentResolver, recording.uri, srcParentUri, dstParentUri
                     )
                 } catch (@Suppress("SwallowedException") _: IllegalStateException) {
-                    moveFallback(recording.uri, targetParentDocumentUri)
+                    moveDocumentFallback(recording, dstParentUri)
                 }
             }
         } else {
             for (recording in recordings) {
-                moveFallback(recording.uri, targetParentDocumentUri)
+                moveDocumentFallback(recording, dstParentUri)
+            }
+        }
+    }
+
+    // Copy source to target, then delete source. Use as fallback when `DocumentsContract.moveDocument` can't used (e.g., when moving between different authorities)
+    private fun moveDocumentFallback(
+        src: Recording,
+        dstParentUri: Uri,
+    ) {
+        val contentResolver = context.contentResolver
+        val dstUri = DocumentsContract.createDocument(
+            contentResolver, dstParentUri, src.mimeType, src.title
+        )!!
+
+        copyFile(contentResolver, src.uri, dstUri)
+
+        DocumentsContract.deleteDocument(contentResolver, src.uri)
+    }
+
+    private fun moveDocumentsToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
+        for (recording in recordings) {
+            moveDocumentToMedia(recording, dstUri, toTrash)
+        }
+    }
+
+    private fun moveDocumentToMedia(recording: Recording, dstParentUri: Uri, toTrash: Boolean) {
+        val contentResolver = context.contentResolver
+        val dstUri = createMedia(contentResolver, dstParentUri, recording.title, recording.mimeType)!!
+
+        copyFile(contentResolver, recording.uri, dstUri)
+
+        DocumentsContract.deleteDocument(contentResolver, recording.uri)
+
+        if (toTrash) {
+            updateMediaTrashed(dstUri, recording.title, trash = true)
+        }
+    }
+
+    private fun moveMediaToDocuments(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
+        val contentResolver = context.contentResolver
+        val dstParentUri = if (toTrash) {
+            getOrCreateTrashFolder(contentResolver, dstUri)!!
+        } else {
+            dstUri
+        }
+
+        for (recording in recordings) {
+            val dstUri = createDocument(context, dstParentUri, recording.title, recording.mimeType)!!
+            copyFile(contentResolver, recording.uri, dstUri)
+            contentResolver.delete(recording.uri, null, null)
+        }
+    }
+
+    private fun moveMediaToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
+        if (dstUri != uri) {
+            throw UnsupportedOperationException("moving recordings between different media stores not supported")
+        }
+
+        for (recording in recordings) {
+            updateMediaTrashed(recording.uri, recording.title, trash = toTrash)
+        }
+    }
+
+    private fun updateMediaTrashed(uri: Uri, title: String, trash: Boolean) {
+        val values = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ContentValues().apply {
+                put(MediaStore.Audio.Media.IS_TRASHED, if (trash) 1 else 0)
+            }
+        } else {
+            val newName = if (trash) {
+                "${TRASHED_PREFIX}$title"
+            } else {
+                title.removePrefix(TRASHED_PREFIX)
+            }
+
+            ContentValues().apply {
+                put(MediaStore.Audio.Media.DISPLAY_NAME, newName)
             }
         }
 
-        return true
+        context.contentResolver.update(uri, values, null, null)
     }
+
 
     fun delete(recordings: Collection<Recording>): Boolean {
         val resolver = context.contentResolver
@@ -292,19 +338,12 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         return true
     }
 
-    fun createWriter(name: String, format: RecordingFormat): RecordingWriter = RecordingWriter.create(context, uri, name, format)
+    fun createWriter(name: String): RecordingWriter = RecordingWriter.create(context, uri, name)
 
     private val kind: Kind = Kind.of(uri)
 
     private val trashFolder: Uri?
         get() = findChildDocument(context.contentResolver, uri, TRASH_FOLDER_NAME)
-
-    private fun getOrCreateTrashFolder(): Uri? = when (kind) {
-        Kind.DOCUMENT -> getOrCreateDocument(
-            context.contentResolver, uri, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME
-        )
-        Kind.MEDIA -> null
-    }
 
     private fun getDurationFromUri(uri: Uri): Long {
         return try {
@@ -315,36 +354,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         } catch (_: Exception) {
             0L
         }
-    }
-
-    // Copy source to target, then delete source. Use as fallback when `DocumentsContract.moveDocument` can't used (e.g., when moving between different authorities)
-    private fun moveFallback(
-        sourceUri: Uri,
-        targetParentUri: Uri,
-    ) {
-        Log.d(TAG, "moveFallback: src:$sourceUri dst:$targetParentUri")
-
-        val contentResolver = context.contentResolver
-
-        // TODO: media
-
-        val sourceFile = DocumentFile.fromSingleUri(context, sourceUri)!!
-        val sourceName = requireNotNull(sourceFile.name)
-        val sourceType = requireNotNull(sourceFile.type)
-
-        val targetUri = requireNotNull(
-            DocumentsContract.createDocument(
-                contentResolver, targetParentUri, sourceType, sourceName
-            )
-        )
-
-        contentResolver.openInputStream(sourceUri)?.use { inputStream ->
-            contentResolver.openOutputStream(targetUri)?.use { outputStream ->
-                inputStream.copyTo(outputStream)
-            }
-        }
-
-        DocumentsContract.deleteDocument(contentResolver, sourceUri)
     }
 }
 
@@ -363,33 +372,28 @@ private enum class Kind {
     }
 }
 
-internal fun createFile(context: Context, parentUri: Uri, name: String, format: RecordingFormat): Uri {
-    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
-        val values = ContentValues().apply {
-            put(MediaStore.Audio.Media.DISPLAY_NAME, name)
-            put(MediaStore.Audio.Media.MIME_TYPE, format.getMimeType(context))
+internal fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
+    val parentDocumentUri = ensureParentDocumentUri(context, parentUri)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
-            }
+    return DocumentsContract.createDocument(
+        context.contentResolver,
+        parentDocumentUri,
+        mimeType,
+        name,
+    )
+}
+
+internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name: String, mimeType: String): Uri? {
+    val values = ContentValues().apply {
+        put(MediaStore.Audio.Media.DISPLAY_NAME, name)
+        put(MediaStore.Audio.Media.MIME_TYPE, mimeType)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_RECORDINGS_FOLDER)
         }
-
-        context.contentResolver.insert(parentUri, values)
-    } else {
-        val parentDocumentUri = buildParentDocumentUri(parentUri)
-        val displayName = "$name.${format.getExtension(context)}"
-
-        DocumentsContract.createDocument(
-            context.contentResolver,
-            parentDocumentUri,
-            format.getMimeType(context),
-            displayName,
-        )
     }
 
-    return requireNotNull(uri) {
-        "failed to create file '$name' in $parentUri"
-    }
+    return contentResolver.insert(parentUri, values)
 }
 
 internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Kind.of(uri)) {
@@ -397,9 +401,20 @@ internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Kind
     Kind.DOCUMENT -> DocumentsContract.deleteDocument(contentResolver, uri)
 }
 
+private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri) = contentResolver.openInputStream(srcUri)?.use { inputStream ->
+    contentResolver.openOutputStream(dstUri)?.use { outputStream ->
+        inputStream.copyTo(outputStream)
+    }
+}
+
+
 private fun ensureParentDocumentUri(context: Context, uri: Uri): Uri = when {
     DocumentsContract.isDocumentUri(context, uri) -> uri
     DocumentsContract.isTreeUri(uri) -> buildParentDocumentUri(uri)
     else -> error("invalid URI, must be document or tree: $uri")
 }
+
+private fun getOrCreateTrashFolder(contentResolver: ContentResolver, parentUri: Uri): Uri? = getOrCreateDocument(
+    contentResolver, parentUri, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME
+)
 

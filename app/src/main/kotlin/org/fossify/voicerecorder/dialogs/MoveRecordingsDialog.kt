@@ -10,7 +10,7 @@ import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
-import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.store.RecordingStore
 
 class MoveRecordingsDialog(
     private val activity: BaseSimpleActivity, private val oldFolder: Uri, private val newFolder: Uri, private val callback: () -> Unit
@@ -54,8 +54,9 @@ class MoveRecordingsDialog(
     }
 
     private fun moveAllRecordings() = ensureBackgroundThread {
-        activity.recordingStore.let { store ->
-            store.move(store.getAll(), oldFolder, newFolder)
+        RecordingStore(activity, oldFolder).let { store ->
+            // TODO: move also trash
+            store.move(store.all().toList(), newFolder)
 
             activity.runOnUiThread {
                 callback()

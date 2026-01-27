@@ -20,7 +20,7 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
     open fun loadRecordings(trashed: Boolean = false) {
         onLoadingStart()
         ensureBackgroundThread {
-            val recordings = context.recordingStore.getAll(trashed).sortedByDescending { it.timestamp }.let { ArrayList(it) }
+            val recordings = context.recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
 
             (context as? Activity)?.runOnUiThread {
                 onLoadingEnd(recordings)

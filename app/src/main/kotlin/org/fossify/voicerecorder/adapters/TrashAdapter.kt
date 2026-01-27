@@ -92,10 +92,10 @@ class TrashAdapter(
         val positions = getSelectedItemPositions()
 
         ensureBackgroundThread {
-            if (activity.recordingStore.restore(recordingsToRestore)) {
-                doDeleteAnimation(recordingsToRestore, positions)
-                EventBus.getDefault().post(Events.RecordingTrashUpdated())
-            }
+            activity.recordingStore.restore(recordingsToRestore)
+
+            doDeleteAnimation(recordingsToRestore, positions)
+            EventBus.getDefault().post(Events.RecordingTrashUpdated())
         }
     }
 

@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.webkit.MimeTypeMap
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
 import org.junit.Assert.assertFalse
@@ -56,8 +57,8 @@ class RecordingStoreTest {
     private fun createRecording(uri: Uri) {
         val store = RecordingStore(context, uri)
 
-        val name = makeTestName("sample")
-        val uri = store.createRecording(name, RecordingFormat.OGG)
+        val name = makeTestName("sample.ogg")
+        val uri = store.createRecording(name)
 
         val recording = store.all().find { it.uri == uri }
         assertNotNull(recording)
@@ -75,8 +76,8 @@ class RecordingStoreTest {
     private fun trashRecording(uri: Uri) {
         val store = RecordingStore(context, uri)
 
-        val name = makeTestName("sample")
-        val uri = store.createRecording(name, RecordingFormat.OGG)
+        val name = makeTestName("sample.ogg")
+        val uri = store.createRecording(name)
 
         val recording = store.all().find { it.uri == uri }!!
 
@@ -97,7 +98,7 @@ class RecordingStoreTest {
     private fun restoreRecording(uri: Uri) {
         val store = RecordingStore(context, uri)
 
-        val uri = store.createRecording(makeTestName("sample"), RecordingFormat.OGG)
+        val uri = store.createRecording(makeTestName("sample.ogg"))
         val recording = store.all(trashed = false).find { it.uri == uri }!!
 
         store.trash(listOf(recording))
@@ -123,8 +124,8 @@ class RecordingStoreTest {
     private fun deleteRecording(uri: Uri, trashed: Boolean) {
         val store = RecordingStore(context, uri)
 
-        val name = makeTestName("sample")
-        val uri = store.createRecording(name, RecordingFormat.OGG)
+        val name = makeTestName("sample.ogg")
+        val uri = store.createRecording(name)
 
         var recording = store.all().find { it.uri == uri }!!
 
@@ -142,39 +143,45 @@ class RecordingStoreTest {
     @Test
     fun moveRecordings_SAF_to_SAF() = moveRecordings(
         DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Old audio"),
-        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "New audio")
+        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "New audio"),
+        trash = false,
     )
 
     @Test
-    fun moveRecordings_SAF_to_MediaStore() = moveRecordings(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI)
+    fun moveRecordings_SAF_to_MediaStore() = moveRecordings(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI, trash = false)
 
     @Test
-    fun moveRecordings_MediaStore_to_SAF() = moveRecordings(DEFAULT_MEDIA_URI, DEFAULT_DOCUMENTS_URI)
+    fun moveRecordings_MediaStore_to_SAF() = moveRecordings(DEFAULT_MEDIA_URI, DEFAULT_DOCUMENTS_URI, trash = false)
 
-    private fun moveRecordings(srcUri: Uri, dstUri: Uri) {
+    private fun moveRecordings(srcUri: Uri, dstUri: Uri, trash: Boolean) {
         val srcStore = RecordingStore(context, srcUri)
+        val dstStore = RecordingStore(context, dstUri)
 
-        val normalRecording = srcStore.createRecording(makeTestName("recording-1"), RecordingFormat.OGG).let { uri ->
+        val normalRecording = srcStore.createRecording(makeTestName("recording-1.ogg")).let { uri ->
             srcStore.all().find { it.uri == uri }!!
         }
 
-        val trashedRecording = srcStore.createRecording(makeTestName("recording-2"), RecordingFormat.OGG).let { uri ->
+        val trashedRecording = srcStore.createRecording(makeTestName("recording-2.ogg")).let { uri ->
             val recording = srcStore.all().find { it.uri == uri }!!
             srcStore.trash(listOf(recording))
             srcStore.all(trashed = true).find { it.title == recording.title }!!
         }
 
-        srcStore.move(listOf(normalRecording, trashedRecording), srcUri, dstUri)
+        srcStore.move(srcStore.all(trashed = trash).toList(), dstUri, fromTrash = trash, toTrash = trash)
 
-        assertFalse(srcStore.all(trashed = false).any { it.title == normalRecording.title })
-        assertFalse(srcStore.all(trashed = true).any { it.title == normalRecording.title })
-        assertFalse(srcStore.all(trashed = false).any { it.title == trashedRecording.title })
-        assertFalse(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
+        if (trash) {
+            assertFalse(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
+            assertTrue(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
 
-        val dstStore = RecordingStore(context, dstUri)
+            assertTrue(srcStore.all(trashed = false).any { it.title == normalRecording.title })
+            assertFalse(dstStore.all(trashed = false).any { it.title == normalRecording.title })
+        } else {
+            assertFalse(srcStore.all(trashed = false).any { it.title == normalRecording.title })
+            assertTrue(dstStore.all(trashed = false).any { it.title == normalRecording.title })
 
-        assertTrue(dstStore.all(trashed = false).any { it.title == normalRecording.title })
-        assertTrue(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
+            assertTrue(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
+            assertFalse(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
+        }
     }
 
     private val context: Context
@@ -183,7 +190,16 @@ class RecordingStoreTest {
     private val instrumentation
         get() = InstrumentationRegistry.getInstrumentation()
 
-    private fun makeTestName(name: String): String = "$name$testMediaSuffix.${System.currentTimeMillis()}"
+    private fun makeTestName(name: String): String {
+        val suffix = "$testMediaSuffix.${System.currentTimeMillis()}"
+        val lastDot = name.lastIndexOf('.')
+
+        return if (lastDot >= 0) {
+            "${name.take(lastDot)}$suffix.${name.substring(lastDot + 1)}"
+        } else {
+            "$name$suffix"
+        }
+    }
 
     private fun deleteTestFiles() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -204,17 +220,16 @@ class RecordingStoreTest {
 
     private val contentObserverHandler = Handler(HandlerThread("contentObserver").apply { start() }.looper)
 
-    private fun RecordingStore.createRecording(name: String, format: RecordingFormat): Uri {
-        val inputFd = when (format) {
-            RecordingFormat.M4A -> TODO()
-            RecordingFormat.MP3 -> TODO()
-            RecordingFormat.OGG -> instrumentation.context.assets.openFd("sample.ogg")
+    private fun RecordingStore.createRecording(name: String): Uri {
+        val inputFd = when (MimeTypeMap.getFileExtensionFromUrl(name)) {
+            "ogg", "oga" -> instrumentation.context.assets.openFd("sample.ogg")
+            else -> throw NotImplementedError()
         }
 
         val inputSize = inputFd.length
         val input = inputFd.createInputStream()
 
-        val uri = createWriter(name, format).run {
+        val uri = createWriter(name).run {
             input.use { input ->
                 FileOutputStream(fileDescriptor.fileDescriptor).use { output ->
                     input.copyTo(output)
