@@ -215,21 +215,17 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     private fun moveDocumentsToDocuments(recordings: Collection<Recording>, dstUri: Uri, fromTrash: Boolean, toTrash: Boolean) {
         val contentResolver = context.contentResolver
 
-        val srcParentUri = ensureParentDocumentUri(
-            context, if (fromTrash) {
-                requireNotNull(trashFolder)
-            } else {
-                uri
-            }
-        )
+        val srcParentUri = if (fromTrash) {
+            requireNotNull(trashFolder)
+        } else {
+            buildParentDocumentUri(uri)
+        }
 
-        val dstParentUri = ensureParentDocumentUri(
-            context, if (toTrash) {
-                getOrCreateTrashFolder(contentResolver, dstUri)!!
-            } else {
-                dstUri
-            }
-        )
+        val dstParentUri = if (toTrash) {
+            getOrCreateTrashFolder(contentResolver, dstUri)!!
+        } else {
+            buildParentDocumentUri(dstUri)
+        }
 
         if (srcParentUri.authority == dstParentUri.authority) {
             for (recording in recordings) {
@@ -287,7 +283,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         val dstParentUri = if (toTrash) {
             getOrCreateTrashFolder(contentResolver, dstUri)!!
         } else {
-            dstUri
+            buildParentDocumentUri(dstUri)
         }
 
         for (recording in recordings) {
@@ -372,16 +368,13 @@ private enum class Kind {
     }
 }
 
-internal fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
-    val parentDocumentUri = ensureParentDocumentUri(context, parentUri)
+internal fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = DocumentsContract.createDocument(
+    context.contentResolver,
+    parentUri,
+    mimeType,
+    name,
+)
 
-    return DocumentsContract.createDocument(
-        context.contentResolver,
-        parentDocumentUri,
-        mimeType,
-        name,
-    )
-}
 
 internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name: String, mimeType: String): Uri? {
     val values = ContentValues().apply {
@@ -405,13 +398,6 @@ private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri)
     contentResolver.openOutputStream(dstUri)?.use { outputStream ->
         inputStream.copyTo(outputStream)
     }
-}
-
-
-private fun ensureParentDocumentUri(context: Context, uri: Uri): Uri = when {
-    DocumentsContract.isDocumentUri(context, uri) -> uri
-    DocumentsContract.isTreeUri(uri) -> buildParentDocumentUri(uri)
-    else -> error("invalid URI, must be document or tree: $uri")
 }
 
 private fun getOrCreateTrashFolder(contentResolver: ContentResolver, parentUri: Uri): Uri? = getOrCreateDocument(

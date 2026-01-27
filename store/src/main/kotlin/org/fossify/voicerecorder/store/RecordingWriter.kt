@@ -113,7 +113,7 @@ private fun createFile(context: Context, parentUri: Uri, name: String, mimeType:
     val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
         createMedia(context.contentResolver, parentUri, name, mimeType)
     } else {
-        createDocument(context, parentUri, name, mimeType)
+        createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
     }
 
     return requireNotNull(uri) {

@@ -6,14 +6,17 @@ import android.provider.DocumentsContract
 
 /**
  * Given a tree URI of some directory (such as obtained with `ACTION_OPEN_DOCUMENT_TREE` intent),
- * returns a corresponding parent URI to create child documents in that directory.
+ * returns a corresponding parent URI that can be used to create child documents in it.
  */
-fun buildParentDocumentUri(treeUri: Uri): Uri {
+internal fun buildParentDocumentUri(treeUri: Uri): Uri {
     val parentDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
     return DocumentsContract.buildDocumentUriUsingTree(treeUri, parentDocumentId)
 }
 
-fun findChildDocument(contentResolver: ContentResolver, treeUri: Uri, displayName: String): Uri? {
+/**
+ * Finds the child document with the given name
+ */
+internal fun findChildDocument(contentResolver: ContentResolver, treeUri: Uri, displayName: String): Uri? {
     val parentDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
     val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentDocumentId)
 
@@ -39,6 +42,9 @@ fun findChildDocument(contentResolver: ContentResolver, treeUri: Uri, displayNam
     return null
 }
 
+/**
+ * Returns the child document with the given name or creates it if it doesn't exists.
+ */
 fun getOrCreateDocument(contentResolver: ContentResolver, treeUri: Uri, mimeType: String, displayName: String): Uri? {
     val uri = findChildDocument(contentResolver, treeUri, displayName)
     if (uri != null) return uri
