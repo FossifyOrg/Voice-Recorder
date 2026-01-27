@@ -1,11 +1,10 @@
 package org.fossify.voicerecorder.extensions
 
 import android.app.Activity
+import android.os.Build
 import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
-import org.fossify.commons.helpers.DAY_SECONDS
-import org.fossify.commons.helpers.MONTH_SECONDS
-import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.*
 
 fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
     if (keepScreenOn) {
@@ -30,4 +29,22 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
             }
         }
     }
+}
+
+fun BaseSimpleActivity.handleStoragePermission(permission: StoragePermission, callback: (Boolean) -> Unit) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        handlePermission(permission.id, callback)
+    } else {
+        callback(true)
+    }
+}
+
+enum class StoragePermission {
+    READ, WRITE;
+
+    val id: Int
+        get() = when (this) {
+            READ -> PERMISSION_READ_STORAGE
+            WRITE -> PERMISSION_WRITE_STORAGE
+        }
 }
