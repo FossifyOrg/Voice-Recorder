@@ -11,9 +11,13 @@ import java.net.URLConnection
 
 class MockDocumentsProvider() : DocumentsProvider() {
     companion object {
-        val DEFAULT_PROJECTION = arrayOf(
+        val DEFAULT_DOCUMENT_PROJECTION = arrayOf(
             DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE
         )
+
+        val DEFAULT_ROOT_PROJECTION = arrayOf(DocumentsContract.Root.COLUMN_ROOT_ID, DocumentsContract.Root.COLUMN_DOCUMENT_ID)
+
+        const val ROOT_ID = "main"
 
         private const val TAG = "MockDocumentsProvider"
 
@@ -23,15 +27,18 @@ class MockDocumentsProvider() : DocumentsProvider() {
 
     override fun onCreate(): Boolean = true
 
-    override fun queryRoots(projection: Array<out String>): Cursor {
-        throw NotImplementedError()
+    override fun queryRoots(projection: Array<out String>?): Cursor = MatrixCursor(projection ?: DEFAULT_ROOT_PROJECTION).apply {
+        newRow().apply {
+            add(DocumentsContract.Root.COLUMN_ROOT_ID, ROOT_ID)
+            add(DocumentsContract.Root.COLUMN_DOCUMENT_ID, "")
+        }
     }
 
     override fun queryChildDocuments(parentDocumentId: String, projection: Array<out String>?, sortOrder: String?): Cursor {
         val root = requireNotNull(root)
         val parent = File(root, parentDocumentId)
 
-        return MatrixCursor(projection ?: DEFAULT_PROJECTION).apply {
+        return MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION).apply {
             for (file in parent.listFiles() ?: emptyArray<File>()) {
                 val documentId = file.relativeTo(root).path
                 addFile(documentId, file)
@@ -43,7 +50,7 @@ class MockDocumentsProvider() : DocumentsProvider() {
         val root = requireNotNull(root)
         val file = File(root, documentId)
 
-        return MatrixCursor(projection ?: DEFAULT_PROJECTION).apply {
+        return MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION).apply {
             addFile(documentId, file)
         }
     }
