@@ -33,6 +33,7 @@ class RecordingStoreTest {
     @Before
     fun setup() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            instrumentation.uiAutomation.grantRuntimePermission(context.packageName, Manifest.permission.READ_EXTERNAL_STORAGE)
             instrumentation.uiAutomation.grantRuntimePermission(context.packageName, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
 

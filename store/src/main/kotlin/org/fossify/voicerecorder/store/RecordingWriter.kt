@@ -120,7 +120,7 @@ sealed class RecordingWriter {
 
 private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri {
     val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
-        createMedia(context.contentResolver, parentUri, name, mimeType)
+        createMedia(context, parentUri, name, mimeType)
     } else {
         createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
     }

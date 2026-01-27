@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import java.io.File
 import kotlin.math.roundToLong
 
 val DEFAULT_MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
@@ -289,15 +290,14 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
     private fun moveDocumentsToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
-        val contentResolver = context.contentResolver
         for (recording in recordings) {
-            val dstUri = createMedia(contentResolver, dstUri, recording.title, recording.mimeType)!!
+            val dstUri = createMedia(context, dstUri, recording.title, recording.mimeType)!!
 
-            copyFile(contentResolver, recording.uri, dstUri)
+            copyFile(context.contentResolver, recording.uri, dstUri)
 
-            DocumentsContract.deleteDocument(contentResolver, recording.uri)
+            DocumentsContract.deleteDocument(context.contentResolver, recording.uri)
 
-            completeMedia(contentResolver, dstUri)
+            completeMedia(context.contentResolver, dstUri)
 
             if (toTrash) {
                 updateMediaTrashed(dstUri, recording.title, trash = true)
@@ -403,7 +403,7 @@ internal fun createDocument(context: Context, parentUri: Uri, name: String, mime
 )
 
 
-internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name: String, mimeType: String): Uri? {
+internal fun createMedia(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
     val values = ContentValues().apply {
         put(MediaStore.Audio.Media.DISPLAY_NAME, name)
         put(MediaStore.Audio.Media.MIME_TYPE, mimeType)
@@ -412,9 +412,15 @@ internal fun createMedia(contentResolver: ContentResolver, parentUri: Uri, name:
             put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_MEDIA_DIRECTORY)
             put(MediaStore.Audio.Media.IS_PENDING, 1)
         }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            Environment.getExternalStoragePublicDirectory(DEFAULT_MEDIA_DIRECTORY)?.let { dir ->
+                put(MediaStore.Audio.Media.DATA, File(dir, name).toString())
+            }
+        }
     }
 
-    return contentResolver.insert(parentUri, values)
+    return context.contentResolver.insert(parentUri, values)
 }
 
 internal fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
