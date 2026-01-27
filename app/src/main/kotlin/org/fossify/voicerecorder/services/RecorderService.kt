@@ -32,6 +32,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.updateWidgets
+import org.fossify.voicerecorder.helpers.BluetoothHelper
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
@@ -46,6 +47,8 @@ import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
 import org.fossify.voicerecorder.recorder.Recorder
 import org.greenrobot.eventbus.EventBus
+import android.os.Handler
+import android.os.Looper
 import java.io.File
 import java.util.Timer
 import java.util.TimerTask
@@ -66,6 +69,8 @@ class RecorderService : Service() {
     private var durationTimer = Timer()
     private var amplitudeTimer = Timer()
     private var recorder: Recorder? = null
+    private var bluetoothHelper: BluetoothHelper? = null
+    private var useBluetoothMic = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -99,6 +104,33 @@ class RecorderService : Service() {
             return
         }
 
+        useBluetoothMic = config.useBluetoothMic
+        if (useBluetoothMic) {
+            bluetoothHelper = BluetoothHelper(this)
+            if (bluetoothHelper?.isBluetoothAvailable() == true) {
+                bluetoothHelper?.startBluetoothSco(
+                    onConnected = {
+                        Handler(Looper.getMainLooper()).post {
+                            startRecordingInternal()
+                        }
+                    },
+                    onFailed = {
+                        Handler(Looper.getMainLooper()).post {
+                            toast(R.string.bluetooth_connection_failed)
+                            startRecordingInternal()
+                        }
+                    }
+                )
+            } else {
+                toast(R.string.bluetooth_not_available)
+                startRecordingInternal()
+            }
+        } else {
+            startRecordingInternal()
+        }
+    }
+
+    private fun startRecordingInternal() {
         val defaultFolder = File(config.saveRecordingsFolder)
         if (!defaultFolder.exists()) {
             defaultFolder.mkdir()
@@ -157,6 +189,10 @@ class RecorderService : Service() {
         amplitudeTimer.cancel()
         status = RECORDING_STOPPED
 
+        // Stop Bluetooth SCO if it was enabled
+        bluetoothHelper?.stopBluetoothSco()
+        bluetoothHelper = null
+
         recorder?.apply {
             try {
                 stop()
@@ -185,6 +221,10 @@ class RecorderService : Service() {
         durationTimer.cancel()
         amplitudeTimer.cancel()
         status = RECORDING_STOPPED
+
+        // Stop Bluetooth SCO if it was enabled
+        bluetoothHelper?.stopBluetoothSco()
+        bluetoothHelper = null
 
         recorder?.apply {
             try {

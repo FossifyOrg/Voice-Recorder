@@ -96,4 +96,8 @@ class Config(context: Context) : BaseConfig(context) {
         set(wasMicModeWarningShown) = prefs.edit {
             putBoolean(WAS_MIC_MODE_WARNING_SHOWN, wasMicModeWarningShown)
         }
+
+    var useBluetoothMic: Boolean
+        get() = prefs.getBoolean(USE_BLUETOOTH_MIC, false)
+        set(useBluetoothMic) = prefs.edit { putBoolean(USE_BLUETOOTH_MIC, useBluetoothMic) }
 }

@@ -26,12 +26,23 @@
         android:id="@+id/recording_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bigger_margin"
         android:textSize="@dimen/extra_big_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/toggle_recording_button"
+        app:layout_constraintBottom_toTopOf="@+id/audio_source_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="00:00" />
+
+    <org.fossify.commons.views.MyTextView
+        android:id="@+id/audio_source_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/bigger_margin"
+        android:textSize="@dimen/normal_text_size"
+        android:drawablePadding="@dimen/small_margin"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_recording_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Bluetooth: AirPods Pro" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/cancel_recording_button"

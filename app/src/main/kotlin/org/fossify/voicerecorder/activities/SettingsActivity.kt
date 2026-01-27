@@ -1,8 +1,13 @@
 package org.fossify.voicerecorder.activities
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
@@ -45,6 +50,10 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
+    companion object {
+        private const val BLUETOOTH_PERMISSION_REQUEST_CODE = 1001
+    }
+
     private var recycleBinContentSize = 0
     private lateinit var binding: ActivitySettingsBinding
 
@@ -71,6 +80,7 @@ class SettingsActivity : SimpleActivity() {
         setupBitrate()
         setupSamplingRate()
         setupMicrophoneMode()
+        setupBluetoothMic()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
         setupUseRecycleBin()
@@ -372,6 +382,63 @@ class SettingsActivity : SimpleActivity() {
 
             add(MediaRecorder.AudioSource.VOICE_RECOGNITION)
             add(MediaRecorder.AudioSource.UNPROCESSED)
+        }
+    }
+
+    private fun setupBluetoothMic() {
+        binding.settingsUseBluetoothMic.isChecked = config.useBluetoothMic
+        binding.settingsUseBluetoothMicHolder.setOnClickListener {
+            if (binding.settingsUseBluetoothMic.isChecked) {
+                // Turning off - no permission needed
+                binding.settingsUseBluetoothMic.toggle()
+                config.useBluetoothMic = binding.settingsUseBluetoothMic.isChecked
+            } else {
+                // Turning on - check permission first
+                if (hasBluetoothPermission()) {
+                    binding.settingsUseBluetoothMic.toggle()
+                    config.useBluetoothMic = binding.settingsUseBluetoothMic.isChecked
+                } else {
+                    requestBluetoothPermission()
+                }
+            }
+        }
+    }
+
+    private fun hasBluetoothPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    private fun requestBluetoothPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
+                BLUETOOTH_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == BLUETOOTH_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                binding.settingsUseBluetoothMic.isChecked = true
+                config.useBluetoothMic = true
+            } else {
+                toast(R.string.bluetooth_not_available)
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
+import org.fossify.voicerecorder.helpers.BluetoothHelper
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
 import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
@@ -62,6 +63,7 @@ class RecorderFragment(
         }
 
         refreshView()
+        updateAudioSourceLabel()
     }
 
     override fun onDestroy() {
@@ -76,7 +78,12 @@ class RecorderFragment(
         bus = EventBus.getDefault()
         bus!!.register(this)
 
+        // Pre-fetch Bluetooth device name (async)
+        BluetoothHelper.refreshDeviceName(context)
+        
         updateRecordingDuration(0)
+        // Delay the audio source update to allow Bluetooth profile to connect
+        Handler(Looper.getMainLooper()).postDelayed({ updateAudioSourceLabel() }, 500)
         binding.toggleRecordingButton.setDebouncedClickListener {
             val activity = context as? BaseSimpleActivity
             activity?.ensureStoragePermission {
@@ -123,6 +130,29 @@ class RecorderFragment(
         binding.saveRecordingButton.applyColorFilter(properTextColor)
         binding.recorderVisualizer.chunkColor = properPrimaryColor
         binding.recordingDuration.setTextColor(properTextColor)
+        binding.audioSourceLabel.setTextColor(properTextColor)
+        binding.audioSourceLabel.compoundDrawables.forEach { it?.applyColorFilter(properTextColor) }
+    }
+
+    private fun updateAudioSourceLabel() {
+        val useBluetoothMic = context.config.useBluetoothMic
+        val text = if (useBluetoothMic) {
+            val deviceName = BluetoothHelper.getConnectedBluetoothDeviceName(context)
+            if (deviceName != null) {
+                context.getString(R.string.audio_source_bluetooth, deviceName)
+            } else {
+                context.getString(R.string.audio_source_internal)
+            }
+        } else {
+            context.getString(R.string.audio_source_internal)
+        }
+        binding.audioSourceLabel.text = text
+        
+        // Apply color to drawable
+        val properTextColor = context.getProperTextColor()
+        val drawableRes = if (useBluetoothMic) R.drawable.ic_headset_vector else R.drawable.ic_graphic_eq_vector
+        val drawable = resources.getColoredDrawableWithColor(drawableRes, properTextColor)
+        binding.audioSourceLabel.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
     }
 
     private fun updateRecordingDuration(duration: Int) {

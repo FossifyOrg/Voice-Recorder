@@ -300,6 +300,21 @@
                     tools:text="@string/system_default" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/settings_use_bluetooth_mic_holder"
+                style="@style/SettingsHolderSwitchStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <org.fossify.commons.views.MyMaterialSwitch
+                    android:id="@+id/settings_use_bluetooth_mic"
+                    style="@style/SettingsSwitchStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_bluetooth_mic" />
+
+            </RelativeLayout>
+
             <include
                 android:id="@+id/settings_recording_divider"
                 layout="@layout/divider" />
