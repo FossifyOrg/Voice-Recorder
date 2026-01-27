@@ -2,7 +2,6 @@ package org.fossify.voicerecorder.store
 
 import android.content.ContentResolver
 import android.content.Context
-import android.database.ContentObserver
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,7 +19,6 @@ import org.junit.Before
 import org.junit.Test
 import java.io.File
 import java.io.FileOutputStream
-import java.util.concurrent.CountDownLatch
 
 class RecordingStoreTest {
     companion object {
@@ -141,47 +139,38 @@ class RecordingStoreTest {
     }
 
     @Test
-    fun moveRecordings_SAF_to_SAF() = moveRecordings(
+    fun migrate_SAF_to_SAF() = migrate(
         DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Old audio"),
         DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "New audio"),
-        trash = false,
     )
 
     @Test
-    fun moveRecordings_SAF_to_MediaStore() = moveRecordings(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI, trash = false)
+    fun migrate_SAF_to_MediaStore() = migrate(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI)
 
     @Test
-    fun moveRecordings_MediaStore_to_SAF() = moveRecordings(DEFAULT_MEDIA_URI, DEFAULT_DOCUMENTS_URI, trash = false)
+    fun migrate_MediaStore_to_SAF() = migrate(DEFAULT_MEDIA_URI, DEFAULT_DOCUMENTS_URI)
 
-    private fun moveRecordings(srcUri: Uri, dstUri: Uri, trash: Boolean) {
+    private fun migrate(srcUri: Uri, dstUri: Uri) {
         val srcStore = RecordingStore(context, srcUri)
         val dstStore = RecordingStore(context, dstUri)
 
-        val normalRecording = srcStore.createRecording(makeTestName("recording-1.ogg")).let { uri ->
+        val normalRecording = srcStore.createRecording(makeTestName("one.ogg")).let { uri ->
             srcStore.all().find { it.uri == uri }!!
         }
 
-        val trashedRecording = srcStore.createRecording(makeTestName("recording-2.ogg")).let { uri ->
+        val trashedRecording = srcStore.createRecording(makeTestName("two.ogg")).let { uri ->
             val recording = srcStore.all().find { it.uri == uri }!!
             srcStore.trash(listOf(recording))
             srcStore.all(trashed = true).find { it.title == recording.title }!!
         }
 
-        srcStore.move(srcStore.all(trashed = trash).toList(), dstUri, fromTrash = trash, toTrash = trash)
+        srcStore.migrate(dstUri)
 
-        if (trash) {
-            assertFalse(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
-            assertTrue(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
+        assertFalse(srcStore.all(trashed = false).any { it.title == normalRecording.title })
+        assertFalse(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
 
-            assertTrue(srcStore.all(trashed = false).any { it.title == normalRecording.title })
-            assertFalse(dstStore.all(trashed = false).any { it.title == normalRecording.title })
-        } else {
-            assertFalse(srcStore.all(trashed = false).any { it.title == normalRecording.title })
-            assertTrue(dstStore.all(trashed = false).any { it.title == normalRecording.title })
-
-            assertTrue(srcStore.all(trashed = true).any { it.title == trashedRecording.title })
-            assertFalse(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
-        }
+        assertTrue(dstStore.all(trashed = false).any { it.title == normalRecording.title })
+        assertTrue(dstStore.all(trashed = true).any { it.title == trashedRecording.title })
     }
 
     private val context: Context
@@ -226,7 +215,6 @@ class RecordingStoreTest {
             else -> throw NotImplementedError()
         }
 
-        val inputSize = inputFd.length
         val input = inputFd.createInputStream()
 
         val uri = createWriter(name).run {
@@ -239,35 +227,35 @@ class RecordingStoreTest {
             commit()
         }
 
-        // HACK: Wait until the recording reaches the expected size. This is because sometimes the recording has not been fully written yet at this point for
-        // some reason. This prevents some subsequent operations on the recording (e.g., move to trash) to fail.
-        waitUntilSize(uri, inputSize)
+//        // HACK: Wait until the recording reaches the expected size. This is because sometimes the recording has not been fully written yet at this point for
+//        // some reason. This prevents some subsequent operations on the recording (e.g., move to trash) to fail.
+//        waitUntilSize(uri, inputFd.length)
 
         return uri
     }
 
-    // Waits until the document/media at the given URI reaches the expected size
-    private fun waitUntilSize(uri: Uri, expectedSize: Long) {
-        val latch = CountDownLatch(1)
-        val observer = object : ContentObserver(contentObserverHandler) {
-            override fun onChange(selfChange: Boolean) {
-                super.onChange(selfChange)
-
-                if (getSize(uri) >= expectedSize) {
-                    latch.countDown()
-                }
-            }
-        }
-
-        context.contentResolver.registerContentObserver(uri, false, observer)
-
-        if (getSize(uri) < expectedSize) {
-            latch.await()
-        }
-
-        context.contentResolver.unregisterContentObserver(observer)
-    }
-
+//    // Waits until the document/media at the given URI reaches the expected size
+//    private fun waitUntilSize(uri: Uri, expectedSize: Long) {
+//        val latch = CountDownLatch(1)
+//        val observer = object : ContentObserver(contentObserverHandler) {
+//            override fun onChange(selfChange: Boolean) {
+//                super.onChange(selfChange)
+//
+//                if (getSize(uri) >= expectedSize) {
+//                    latch.countDown()
+//                }
+//            }
+//        }
+//
+//        context.contentResolver.registerContentObserver(uri, false, observer)
+//
+//        if (getSize(uri) < expectedSize) {
+//            latch.await()
+//        }
+//
+//        context.contentResolver.unregisterContentObserver(observer)
+//    }
+//
     private fun getSize(uri: Uri): Long {
         val column = when (uri.authority) {
             MediaStore.AUTHORITY -> MediaStore.Audio.Media.SIZE

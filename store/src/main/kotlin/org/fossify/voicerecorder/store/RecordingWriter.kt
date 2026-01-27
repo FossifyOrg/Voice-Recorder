@@ -60,6 +60,11 @@ sealed class RecordingWriter {
         RecordingWriter() {
         override fun commit(): Uri {
             fileDescriptor.close()
+
+            if (uri.authority == MediaStore.AUTHORITY) {
+                completeMedia(contentResolver, uri)
+            }
+
             return uri
         }
 
@@ -99,6 +104,10 @@ sealed class RecordingWriter {
             }
 
             tempFile.delete()
+
+            if (dstUri.authority == MediaStore.AUTHORITY) {
+                completeMedia(context.contentResolver, dstUri)
+            }
 
             return dstUri
         }
