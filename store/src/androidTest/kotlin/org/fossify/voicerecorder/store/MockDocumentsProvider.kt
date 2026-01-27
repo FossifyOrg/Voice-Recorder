@@ -107,6 +107,7 @@ class MockDocumentsProvider() : DocumentsProvider() {
         val srcFile = File(root, sourceDocumentId)
         val dstFile = File(root, "$targetParentDocumentId/${srcFile.name}")
 
+        dstFile.parentFile?.mkdirs()
         srcFile.renameTo(dstFile)
 
         return dstFile.relativeTo(root).path

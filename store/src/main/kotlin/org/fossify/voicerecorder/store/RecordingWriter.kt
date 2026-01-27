@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.webkit.MimeTypeMap
 import java.io.File
 import java.io.FileInputStream
 
@@ -17,24 +18,27 @@ import java.io.FileInputStream
  */
 sealed class RecordingWriter {
     companion object {
-        fun create(context: Context, parentUri: Uri, name: String, format: RecordingFormat): RecordingWriter {
-            val direct = DIRECT_FORMATS.contains(format) or DIRECT_AUTHORITIES.contains(parentUri.authority)
+        fun create(context: Context, parentUri: Uri, name: String): RecordingWriter {
+            val extension = MimeTypeMap.getFileExtensionFromUrl(name)
+            val mimeType = extension?.let { MimeTypeMap.getSingleton().getMimeTypeFromExtension(it) } ?: "application/octet-stream"
+
+            val direct = DIRECT_EXTENSIONS.contains(extension) or DIRECT_AUTHORITIES.contains(parentUri.authority)
 
             if (direct) {
-                val uri = createFile(context, parentUri, name, format)
-                val fileDescriptor = requireNotNull(context.contentResolver.openFileDescriptor(uri, "w")) {
+                val uri = createFile(context, parentUri, name, mimeType)
+                val fileDescriptor = checkNotNull(context.contentResolver.openFileDescriptor(uri, "w")) {
                     "failed to open file descriptor at $uri"
                 }
 
                 return Direct(context.contentResolver, uri, fileDescriptor)
             } else {
-                return Workaround(context, parentUri, name, format)
+                return Workaround(context, parentUri, name, mimeType)
             }
         }
 
 
-        // Formats not affected by the MediaStore bug
-        private val DIRECT_FORMATS = arrayOf(RecordingFormat.MP3)
+        // Mime types not affected by the MediaStore bug
+        private val DIRECT_EXTENSIONS = arrayOf("mp3")
 
         // Document providers not affected by the MediaStore bug
         private val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents", MediaStore.AUTHORITY)
@@ -70,9 +74,9 @@ sealed class RecordingWriter {
         private val context: Context,
         private val parentTreeUri: Uri,
         private val name: String,
-        private val format: RecordingFormat
+        private val mimeType: String
     ) : RecordingWriter() {
-        private val tempFile: File = File(context.cacheDir, "$name.${format.getExtension(context)}.tmp")
+        private val tempFile: File = File(context.cacheDir, "$name.tmp")
 
         override val fileDescriptor: ParcelFileDescriptor
             get() = ParcelFileDescriptor.open(
@@ -81,7 +85,7 @@ sealed class RecordingWriter {
             )
 
         override fun commit(): Uri {
-            val dstUri = createFile(context, parentTreeUri, name, format)
+            val dstUri = createFile(context, parentTreeUri, name, mimeType)
             val dst = requireNotNull(context.contentResolver.openOutputStream(dstUri)) {
                 "failed to open output stream at $dstUri"
             }
@@ -102,5 +106,17 @@ sealed class RecordingWriter {
         override fun cancel() {
             tempFile.delete()
         }
+    }
+}
+
+private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri {
+    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
+        createMedia(context.contentResolver, parentUri, name, mimeType)
+    } else {
+        createDocument(context, parentUri, name, mimeType)
+    }
+
+    return requireNotNull(uri) {
+        "failed to create file '$name' in $parentUri"
     }
 }

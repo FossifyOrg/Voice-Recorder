@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
 import android.util.Log
+import android.util.Log.e
 import androidx.core.app.NotificationCompat
 import org.fossify.commons.extensions.getLaunchIntent
 import org.fossify.commons.extensions.showErrorToast
@@ -85,8 +86,7 @@ class RecorderService : Service() {
             }
 
             val writer = recordingStore.createWriter(
-                getFormattedFilename(),
-                recordingFormat
+                "${getFormattedFilename()}.${recordingFormat.getExtension(this)}",
             ).also {
                 this.writer = it
             }

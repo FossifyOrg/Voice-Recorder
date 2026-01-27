@@ -16,16 +16,12 @@ fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
 }
 
 fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
-    if (
-        config.useRecycleBin &&
-        config.lastRecycleBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000
-    ) {
+    if (config.useRecycleBin && config.lastRecycleBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000) {
         config.lastRecycleBinCheck = System.currentTimeMillis()
         ensureBackgroundThread {
             try {
                 val store = recordingStore
-                val recordingsToRemove = store.getAll(trashed = true)
-                    .filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }
+                val recordingsToRemove = store.all(trashed = true).filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }.toList()
                 if (recordingsToRemove.isNotEmpty()) {
                     store.delete(recordingsToRemove)
                 }

@@ -184,10 +184,10 @@ class RecordingsAdapter(
         val positions = getSelectedItemPositions()
 
         ensureBackgroundThread {
-            if (activity.recordingStore.trash(recordingsToRemove)) {
-                doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
-                EventBus.getDefault().post(Events.RecordingTrashUpdated())
-            }
+            activity.recordingStore.trash(recordingsToRemove)
+
+            doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
+            EventBus.getDefault().post(Events.RecordingTrashUpdated())
         }
     }
 

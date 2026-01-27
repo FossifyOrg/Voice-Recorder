@@ -38,18 +38,15 @@ class SettingsActivity : SimpleActivity() {
             val oldUri = config.saveRecordingsFolder
 
             contentResolver.takePersistableUriPermission(
-                newUri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                newUri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
 
             ensureBackgroundThread {
-                val hasRecordings = recordingStore.isNotEmpty()
+                val hasRecordings = !recordingStore.isEmpty()
                 runOnUiThread {
                     if (newUri != oldUri && hasRecordings) {
                         MoveRecordingsDialog(
-                            activity = this,
-                            oldFolder = oldUri,
-                            newFolder = newUri
+                            activity = this, oldFolder = oldUri, newFolder = newUri
                         ) {
                             config.saveRecordingsFolder = newUri
                             updateSaveRecordingsFolder(newUri)
@@ -121,8 +118,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupUseEnglish() {
         binding.settingsUseEnglishHolder.beVisibleIf(
-            (config.wasUseEnglishToggled || Locale.getDefault().language != "en")
-                && !isTiramisuPlus()
+            (config.wasUseEnglishToggled || Locale.getDefault().language != "en") && !isTiramisuPlus()
         )
         binding.settingsUseEnglish.isChecked = config.useEnglish
         binding.settingsUseEnglishHolder.setOnClickListener {
@@ -151,8 +147,7 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupSaveRecordingsFolder() {
-        binding.settingsSaveRecordingsLabel.text =
-            addLockedLabelIfNeeded(R.string.save_recordings_in)
+        binding.settingsSaveRecordingsLabel.text = addLockedLabelIfNeeded(R.string.save_recordings_in)
         binding.settingsSaveRecordingsHolder.setOnClickListener {
             saveRecordingsFolderPicker.launch(config.saveRecordingsFolder)
         }
@@ -193,10 +188,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupExtension() {
         binding.settingsExtension.text = config.recordingFormat.getDescription(this)
         binding.settingsExtensionHolder.setOnClickListener {
-            val items = RecordingFormat
-                .available
-                .map { RadioItem(it.value, it.getDescription(this), it) }
-                .let { ArrayList(it) }
+            val items = RecordingFormat.entries.map { RadioItem(it.value, it.getDescription(this), it) }.let { ArrayList(it) }
 
             RadioGroupDialog(this@SettingsActivity, items, config.recordingFormat.value) {
                 val checked = it as RecordingFormat
@@ -212,8 +204,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupBitrate() {
         binding.settingsBitrate.text = getBitrateText(config.bitrate)
         binding.settingsBitrateHolder.setOnClickListener {
-            val items = BITRATES[config.recordingFormat]!!
-                .map { RadioItem(it, getBitrateText(it)) } as ArrayList
+            val items = BITRATES[config.recordingFormat]!!.map { RadioItem(it, getBitrateText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.bitrate) {
                 config.bitrate = it as Int
@@ -231,8 +222,7 @@ class SettingsActivity : SimpleActivity() {
         val availableBitrates = BITRATES[config.recordingFormat]!!
         if (!availableBitrates.contains(config.bitrate)) {
             val currentBitrate = config.bitrate
-            val closestBitrate = availableBitrates.minByOrNull { abs(it - currentBitrate) }
-                ?: DEFAULT_BITRATE
+            val closestBitrate = availableBitrates.minByOrNull { abs(it - currentBitrate) } ?: DEFAULT_BITRATE
 
             config.bitrate = closestBitrate
             binding.settingsBitrate.text = getBitrateText(config.bitrate)
@@ -242,8 +232,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupSamplingRate() {
         binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
         binding.settingsSamplingRateHolder.setOnClickListener {
-            val items = getSamplingRatesArray()
-                .map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
+            val items = getSamplingRatesArray().map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.samplingRate) {
                 config.samplingRate = it as Int
@@ -310,7 +299,7 @@ class SettingsActivity : SimpleActivity() {
     private fun setupEmptyRecycleBin() {
         ensureBackgroundThread {
             try {
-                recycleBinContentSize = recordingStore.getAll(trashed = true).sumByInt { it.size }
+                recycleBinContentSize = recordingStore.all(trashed = true).map { it.size }.sum()
             } catch (_: Exception) {
             }
 
@@ -364,18 +353,14 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun showMicrophoneModeDialog() {
-        val items = getMediaRecorderAudioSources()
-            .map { microphoneMode ->
-                RadioItem(
-                    id = microphoneMode,
-                    title = config.getMicrophoneModeText(microphoneMode)
-                )
-            } as ArrayList
+        val items = getMediaRecorderAudioSources().map { microphoneMode ->
+            RadioItem(
+                id = microphoneMode, title = config.getMicrophoneModeText(microphoneMode)
+            )
+        } as ArrayList
 
         RadioGroupDialog(
-            activity = this@SettingsActivity,
-            items = items,
-            checkedItemId = config.microphoneMode
+            activity = this@SettingsActivity, items = items, checkedItemId = config.microphoneMode
         ) {
             config.microphoneMode = it as Int
             binding.settingsMicrophoneMode.text = config.getMicrophoneModeText(config.microphoneMode)
