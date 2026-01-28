@@ -3,10 +3,9 @@ package org.fossify.voicerecorder.fragments
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
-import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.helpers.ensureBackgroundThread
-import org.fossify.voicerecorder.extensions.StoragePermission
-import org.fossify.voicerecorder.extensions.handleStoragePermission
+import org.fossify.voicerecorder.activities.ExternalStoragePermission
+import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.store.Recording
 
@@ -22,9 +21,9 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
     open fun loadRecordings(trashed: Boolean = false) {
         onLoadingStart()
 
-        (context as? BaseSimpleActivity)?.apply {
-            handleStoragePermission(StoragePermission.READ) { granted ->
-                if (granted) {
+        (context as? SimpleActivity)?.apply {
+            handleExternalStoragePermissions(ExternalStoragePermission.READ) { granted ->
+                if (granted == true) {
                     ensureBackgroundThread {
                         val recordings = recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
 

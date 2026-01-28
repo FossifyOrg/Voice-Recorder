@@ -13,10 +13,10 @@ import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.PermissionRequiredDialog
 import org.fossify.commons.extensions.*
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.ExternalStoragePermission
+import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
-import org.fossify.voicerecorder.extensions.StoragePermission
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.handleStoragePermission
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events
@@ -64,9 +64,9 @@ class RecorderFragment(
 
         updateRecordingDuration(0)
         binding.toggleRecordingButton.setDebouncedClickListener {
-            (context as? BaseSimpleActivity)?.apply {
-                handleStoragePermission(StoragePermission.WRITE) { granted ->
-                    if (granted) {
+            (context as? SimpleActivity)?.apply {
+                handleExternalStoragePermissions(ExternalStoragePermission.WRITE) { granted ->
+                    if (granted == true) {
                         handleNotificationPermission { granted ->
                             if (granted) {
                                 cycleRecordingState()
@@ -78,7 +78,7 @@ class RecorderFragment(
                             }
                         }
                     } else {
-                        // TODO: what do do here?
+                        // TODO: storage permission not granted. What should we do?
                     }
                 }
             }

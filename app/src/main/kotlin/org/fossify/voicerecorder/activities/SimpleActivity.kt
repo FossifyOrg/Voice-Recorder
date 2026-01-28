@@ -1,11 +1,19 @@
 package org.fossify.voicerecorder.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.REPOSITORY_NAME
 
 open class SimpleActivity : BaseSimpleActivity() {
+    companion object {
+        private const val PERMISSIONS_REQUEST_CODE = 10001
+    }
 
+    private var permissionCallback: ((Boolean?) -> Unit)? = null
 
     override fun getAppIconIDs() = arrayListOf(
         R.mipmap.ic_launcher_red,
@@ -32,4 +40,45 @@ open class SimpleActivity : BaseSimpleActivity() {
     override fun getAppLauncherName() = getString(R.string.app_launcher_name)
 
     override fun getRepositoryName() = REPOSITORY_NAME
+
+    // NOTE: Need this instead of using `BaseSimpleActivity.handlePermission` because it doesn't always work correctly (particularly on old SDKs). Possibly
+    // because this app invokes the permission request from multiple places and `BaseSimpleActivity` doesn't handle it correctly? The only thing we do
+    // differently here is that we invoke the callback even when the request gets cancelled (passing `null` to it).
+    fun handleExternalStoragePermissions(externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit) {
+        val permission = when (externalStoragePermission) {
+            ExternalStoragePermission.READ -> Manifest.permission.READ_EXTERNAL_STORAGE
+            ExternalStoragePermission.WRITE -> Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }
+
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            callback(true)
+            return
+        }
+
+        permissionCallback = callback
+
+        ActivityCompat.requestPermissions(
+            this, arrayOf(permission), PERMISSIONS_REQUEST_CODE
+        );
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode != PERMISSIONS_REQUEST_CODE) {
+            return
+        }
+
+        val callback = permissionCallback
+        permissionCallback = null
+
+        callback?.invoke(if (grantResults.isNotEmpty()) grantResults[0] == PackageManager.PERMISSION_GRANTED else null)
+    }
+}
+
+enum class ExternalStoragePermission {
+    READ, WRITE
+
 }

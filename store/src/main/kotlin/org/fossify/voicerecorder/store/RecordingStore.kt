@@ -411,9 +411,7 @@ internal fun createMedia(context: Context, parentUri: Uri, name: String, mimeTyp
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             put(MediaStore.Audio.Media.RELATIVE_PATH, DEFAULT_MEDIA_DIRECTORY)
             put(MediaStore.Audio.Media.IS_PENDING, 1)
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        } else {
             Environment.getExternalStoragePublicDirectory(DEFAULT_MEDIA_DIRECTORY)?.let { dir ->
                 put(MediaStore.Audio.Media.DATA, File(dir, name).toString())
             }
