@@ -1,20 +1,15 @@
 package org.fossify.voicerecorder.adapters
 
 import android.annotation.SuppressLint
-import android.view.ContextThemeWrapper
-import android.view.Gravity
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.extensions.formatDate
 import org.fossify.commons.extensions.formatSize
 import org.fossify.commons.extensions.getFormattedDuration
-import org.fossify.commons.extensions.getPopupMenuTheme
 import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.openPathIntent
 import org.fossify.commons.extensions.setupViewBackground
 import org.fossify.commons.extensions.sharePathsIntent
@@ -270,77 +265,8 @@ class RecordingsAdapter(
             recordingDate.text = recording.timestamp.formatDate(root.context)
             recordingDuration.text = recording.duration.getFormattedDuration()
             recordingSize.text = recording.size.formatSize()
-
-            overflowMenuIcon.drawable.apply {
-                mutate()
-                setTint(activity.getProperTextColor())
-            }
-
-            overflowMenuIcon.setOnClickListener {
-                showPopupMenu(overflowMenuAnchor, recording)
-            }
         }
     }
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun showPopupMenu(view: View, recording: Recording) {
-        if (selectedKeys.isNotEmpty()) {
-            selectedKeys.clear()
-            notifyDataSetChanged()
-        }
-
-        finishActMode()
-        val theme = activity.getPopupMenuTheme()
-        val contextTheme = ContextThemeWrapper(activity, theme)
-
-        PopupMenu(contextTheme, view, Gravity.END).apply {
-            inflate(getActionMenuId())
-            menu.findItem(R.id.cab_select_all).isVisible = false
-            setOnMenuItemClickListener { item ->
-                val recordingId = recording.id
-                when (item.itemId) {
-                    R.id.cab_rename -> {
-                        executeItemMenuOperation(recordingId) {
-                            renameRecording()
-                        }
-                    }
-
-                    R.id.cab_share -> {
-                        executeItemMenuOperation(recordingId) {
-                            shareRecordings()
-                        }
-                    }
-
-                    R.id.cab_open_with -> {
-                        executeItemMenuOperation(recordingId) {
-                            openRecordingWith()
-                        }
-                    }
-
-                    R.id.cab_delete -> {
-                        executeItemMenuOperation(recordingId, removeAfterCallback = false) {
-                            askConfirmDelete()
-                        }
-                    }
-                }
-
-                true
-            }
-            show()
-        }
-    }
-
-    private fun executeItemMenuOperation(
-        callId: Int,
-        removeAfterCallback: Boolean = true,
-        callback: () -> Unit
-    ) {
-        selectedKeys.add(callId)
-        callback()
-        if (removeAfterCallback) {
-            selectedKeys.remove(callId)
-        }
-    }
 }
