@@ -43,13 +43,13 @@ class RecordingStore(private val context: Context, val uri: Uri) {
      * Short, human-readable name of this store
      */
     val shortName: String
-        get() = when (kind) {
-            Kind.DOCUMENT -> {
+        get() = when (backend) {
+            Backend.DOCUMENT -> {
                 val documentId = DocumentsContract.getTreeDocumentId(uri)
                 documentId.substringAfter(":").trimEnd('/')
             }
 
-            Kind.MEDIA -> DEFAULT_MEDIA_DIRECTORY
+            Backend.MEDIA -> DEFAULT_MEDIA_DIRECTORY
         }
 
     /**
@@ -67,9 +67,9 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     /**
      * Returns all recordings in this store as [Sequence].
      */
-    fun all(trashed: Boolean = false): Sequence<Recording> = when (kind) {
-        Kind.DOCUMENT -> allDocuments(trashed)
-        Kind.MEDIA -> allMedia(trashed)
+    fun all(trashed: Boolean = false): Sequence<Recording> = when (backend) {
+        Backend.DOCUMENT -> allDocuments(trashed)
+        Backend.MEDIA -> allMedia(trashed)
     }
 
     private fun allDocuments(trashed: Boolean): Sequence<Recording> {
@@ -241,15 +241,15 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
         val dstUri = dstUri ?: uri
 
-        when (kind) {
-            Kind.DOCUMENT -> when (Kind.of(dstUri)) {
-                Kind.DOCUMENT -> moveDocumentsToDocuments(recordings, dstUri, fromTrash, toTrash)
-                Kind.MEDIA -> moveDocumentsToMedia(recordings, dstUri, toTrash)
+        when (backend) {
+            Backend.DOCUMENT -> when (Backend.of(dstUri)) {
+                Backend.DOCUMENT -> moveDocumentsToDocuments(recordings, dstUri, fromTrash, toTrash)
+                Backend.MEDIA -> moveDocumentsToMedia(recordings, dstUri, toTrash)
             }
 
-            Kind.MEDIA -> when (Kind.of(dstUri)) {
-                Kind.DOCUMENT -> moveMediaToDocuments(recordings, dstUri, toTrash)
-                Kind.MEDIA -> moveMediaToMedia(recordings, dstUri, toTrash)
+            Backend.MEDIA -> when (Backend.of(dstUri)) {
+                Backend.DOCUMENT -> moveMediaToDocuments(recordings, dstUri, toTrash)
+                Backend.MEDIA -> moveMediaToMedia(recordings, dstUri, toTrash)
             }
         }
     }
@@ -382,7 +382,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
      */
     fun createWriter(name: String): RecordingWriter = RecordingWriter.create(context, uri, name)
 
-    private val kind: Kind = Kind.of(uri)
+    private val backend: Backend = Backend.of(uri)
 
     private val trashFolder: Uri?
         get() = findChildDocument(context.contentResolver, uri, TRASH_FOLDER_NAME)
@@ -402,11 +402,12 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 private const val TRASH_FOLDER_NAME = ".trash"
 private const val TRASHED_PREFIX = ".trashed-"
 
-private enum class Kind {
+// Storage backend: Storage Access Framework or Media Store
+private enum class Backend {
     DOCUMENT, MEDIA;
 
     companion object {
-        fun of(uri: Uri): Kind = if (uri.authority == MediaStore.AUTHORITY) {
+        fun of(uri: Uri): Backend = if (uri.authority == MediaStore.AUTHORITY) {
             MEDIA
         } else {
             DOCUMENT
@@ -452,9 +453,9 @@ internal fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
     contentResolver.update(uri, values, null, null)
 }
 
-internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Kind.of(uri)) {
-    Kind.MEDIA -> contentResolver.delete(uri, null, null)
-    Kind.DOCUMENT -> DocumentsContract.deleteDocument(contentResolver, uri)
+internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Backend.of(uri)) {
+    Backend.MEDIA -> contentResolver.delete(uri, null, null)
+    Backend.DOCUMENT -> DocumentsContract.deleteDocument(contentResolver, uri)
 }
 
 private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri) = contentResolver.openInputStream(srcUri)?.use { inputStream ->
