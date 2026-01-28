@@ -2,6 +2,7 @@ package org.fossify.voicerecorder.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import org.fossify.commons.activities.BaseSimpleActivity
@@ -45,6 +46,12 @@ open class SimpleActivity : BaseSimpleActivity() {
     // because this app invokes the permission request from multiple places and `BaseSimpleActivity` doesn't handle it correctly? The only thing we do
     // differently here is that we invoke the callback even when the request gets cancelled (passing `null` to it).
     fun handleExternalStoragePermissions(externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            // External storage permissions to access MediaStore are no longer needed
+            callback(true)
+            return
+        }
+
         val permission = when (externalStoragePermission) {
             ExternalStoragePermission.READ -> Manifest.permission.READ_EXTERNAL_STORAGE
             ExternalStoragePermission.WRITE -> Manifest.permission.WRITE_EXTERNAL_STORAGE

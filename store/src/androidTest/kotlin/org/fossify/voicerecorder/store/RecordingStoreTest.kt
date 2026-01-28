@@ -3,6 +3,7 @@ package org.fossify.voicerecorder.store
 import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +13,8 @@ import android.webkit.MimeTypeMap
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -22,6 +23,7 @@ import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.roundToInt
 
 class RecordingStoreTest {
     companion object {
@@ -64,15 +66,34 @@ class RecordingStoreTest {
 
     private fun createRecording(uri: Uri) {
         val store = RecordingStore(context, uri)
-
         val name = makeTestName("sample.ogg")
+
+        val timeBefore = System.currentTimeMillis()
         val uri = store.createRecording(name)
+        val timeAfter = System.currentTimeMillis()
 
-        val recording = store.all().find { it.uri == uri }
-        assertNotNull(recording)
+        val recording = store.all().find { it.uri == uri }!!
 
-        val size = getSize(uri)
-        assertTrue(size > 0)
+        val orig = instrumentation.context.assets.openFd("sample.ogg")
+        val origSize = orig.length
+
+        val origDuration = MediaMetadataRetriever().run {
+            try {
+                setDataSource(orig.fileDescriptor, orig.startOffset, orig.length)
+                extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            } finally {
+                release()
+            }
+        }?.let {
+            (it.toLong() / 1000.toDouble()).roundToInt()
+        } ?: 0
+
+        assertEquals(origSize, recording.size.toLong())
+        assertEquals(origDuration, recording.duration)
+
+        val tolerance = 1000 // the timestamps are rounded to nearest second, so adding 1-second tolerance to account for that.
+        assertTrue(recording.timestamp > timeBefore - tolerance)
+        assertTrue(recording.timestamp < timeAfter + tolerance)
     }
 
     @Test
@@ -236,26 +257,6 @@ class RecordingStoreTest {
         }
 
         return uri
-    }
-
-    private fun getSize(uri: Uri): Long = when (uri.authority) {
-        MediaStore.AUTHORITY -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                queryLong(uri, MediaStore.Audio.Media.SIZE)
-            } else {
-                // On SDK 28 or lower, querying for SIZE seems to always return 0, but on those SDKs we can get the actual media file and get
-                // its size directly.
-                context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Media.DATA), null, null, null)?.use { cursor ->
-                    if (cursor.moveToNext()) {
-                        cursor.getString(0)
-                    } else {
-                        null
-                    }
-                }?.let { File(it).length() } ?: 0
-            }
-        }
-
-        else -> queryLong(uri, DocumentsContract.Document.COLUMN_SIZE)
     }
 
     private fun queryLong(uri: Uri, column: String): Long = context.contentResolver.query(uri, arrayOf(column), null, null, null)?.use { cursor ->

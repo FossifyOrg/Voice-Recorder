@@ -80,6 +80,9 @@ class MockDocumentsProvider() : DocumentsProvider() {
             row.add(DocumentsContract.Document.COLUMN_SIZE, file.length())
         }
 
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_LAST_MODIFIED)) {
+            row.add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
+        }
     }
 
     override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean = documentId.startsWith("$parentDocumentId/")
