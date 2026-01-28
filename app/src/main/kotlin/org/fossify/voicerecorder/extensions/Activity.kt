@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
+import org.fossify.commons.extensions.hasPermission
 import org.fossify.commons.helpers.*
 
 fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
@@ -15,6 +16,12 @@ fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
 }
 
 fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (!hasPermission(PERMISSION_READ_STORAGE) || !hasPermission(PERMISSION_WRITE_STORAGE)) {
+            return
+            }
+    }
+
     if (config.useRecycleBin && config.lastRecycleBinCheck < System.currentTimeMillis() - DAY_SECONDS * 1000) {
         config.lastRecycleBinCheck = System.currentTimeMillis()
         ensureBackgroundThread {
@@ -31,20 +38,3 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
     }
 }
 
-fun BaseSimpleActivity.handleStoragePermission(permission: StoragePermission, callback: (Boolean) -> Unit) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-        handlePermission(permission.id, callback)
-    } else {
-        callback(true)
-    }
-}
-
-enum class StoragePermission {
-    READ, WRITE;
-
-    val id: Int
-        get() = when (this) {
-            READ -> PERMISSION_READ_STORAGE
-            WRITE -> PERMISSION_WRITE_STORAGE
-        }
-}

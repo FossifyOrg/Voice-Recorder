@@ -6,18 +6,20 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
+import org.junit.rules.TestRule
 import java.io.File
 import java.io.FileOutputStream
 
@@ -28,15 +30,19 @@ class RecordingStoreTest {
         private const val TAG = "RecordingStoreTest"
     }
 
+    @get:Rule
+    val permissionRule: TestRule = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+        GrantPermissionRule.grant(
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    } else {
+        RuleChain.emptyRuleChain()
+    }
+
     private lateinit var tempDir: File
 
     @Before
     fun setup() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            instrumentation.uiAutomation.grantRuntimePermission(context.packageName, Manifest.permission.READ_EXTERNAL_STORAGE)
-            instrumentation.uiAutomation.grantRuntimePermission(context.packageName, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-
         tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
         tempDir.mkdirs()
 
@@ -211,8 +217,6 @@ class RecordingStoreTest {
     private val testMediaSuffix
         get() = ".${context.packageName}"
 
-    private val contentObserverHandler = Handler(HandlerThread("contentObserver").apply { start() }.looper)
-
     private fun RecordingStore.createRecording(name: String): Uri {
         val inputFd = when (MimeTypeMap.getFileExtensionFromUrl(name)) {
             "ogg", "oga" -> instrumentation.context.assets.openFd("sample.ogg")
@@ -231,52 +235,38 @@ class RecordingStoreTest {
             commit()
         }
 
-//        // HACK: Wait until the recording reaches the expected size. This is because sometimes the recording has not been fully written yet at this point for
-//        // some reason. This prevents some subsequent operations on the recording (e.g., move to trash) to fail.
-//        waitUntilSize(uri, inputFd.length)
-
         return uri
     }
 
-//    // Waits until the document/media at the given URI reaches the expected size
-//    private fun waitUntilSize(uri: Uri, expectedSize: Long) {
-//        val latch = CountDownLatch(1)
-//        val observer = object : ContentObserver(contentObserverHandler) {
-//            override fun onChange(selfChange: Boolean) {
-//                super.onChange(selfChange)
-//
-//                if (getSize(uri) >= expectedSize) {
-//                    latch.countDown()
-//                }
-//            }
-//        }
-//
-//        context.contentResolver.registerContentObserver(uri, false, observer)
-//
-//        if (getSize(uri) < expectedSize) {
-//            latch.await()
-//        }
-//
-//        context.contentResolver.unregisterContentObserver(observer)
-//    }
-//
-    private fun getSize(uri: Uri): Long {
-        val column = when (uri.authority) {
-            MediaStore.AUTHORITY -> MediaStore.Audio.Media.SIZE
-            else -> DocumentsContract.Document.COLUMN_SIZE
+    private fun getSize(uri: Uri): Long = when (uri.authority) {
+        MediaStore.AUTHORITY -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                queryLong(uri, MediaStore.Audio.Media.SIZE)
+            } else {
+                // On SDK 28 or lower, querying for SIZE seems to always return 0, but on those SDKs we can get the actual media file and get
+                // its size directly.
+                context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Media.DATA), null, null, null)?.use { cursor ->
+                    if (cursor.moveToNext()) {
+                        cursor.getString(0)
+                    } else {
+                        null
+                    }
+                }?.let { File(it).length() } ?: 0
+            }
         }
 
-        val projection = arrayOf(column)
-
-        val size = context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-            val iSize = cursor.getColumnIndexOrThrow(column)
-            if (cursor.moveToNext()) {
-                cursor.getLong(iSize)
-            } else {
-                null
-            }
-        } ?: 0
-
-        return size
+        else -> queryLong(uri, DocumentsContract.Document.COLUMN_SIZE)
     }
+
+    private fun queryLong(uri: Uri, column: String): Long = context.contentResolver.query(uri, arrayOf(column), null, null, null)?.use { cursor ->
+        if (cursor.moveToNext()) {
+            cursor.getLong(0)
+        } else {
+            null
+        }
+    } ?: 0
 }
+
+
+
+

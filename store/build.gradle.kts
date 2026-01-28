@@ -25,5 +25,6 @@ android {
 dependencies {
     implementation(libs.fossify.commons)
     implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.rules)
     androidTestImplementation(libs.androidx.test.runner)
 }
