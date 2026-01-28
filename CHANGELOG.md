@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added support for custom fonts
 
+### Changed
+- Removed per-item overflow menu from recordings list in favor of long-press options ([#229])
+
 ## [1.6.0] - 2025-12-16
 ### Changed
 - Updated translations
@@ -144,6 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#150]: https://github.com/FossifyOrg/Voice-Recorder/issues/150
 [#176]: https://github.com/FossifyOrg/Voice-Recorder/issues/176
 [#185]: https://github.com/FossifyOrg/Voice-Recorder/issues/185
+[#229]: https://github.com/FossifyOrg/Voice-Recorder/issues/229
 [#247]: https://github.com/FossifyOrg/Voice-Recorder/issues/247
 [#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
 
