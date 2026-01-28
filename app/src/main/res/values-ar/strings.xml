@@ -36,4 +36,6 @@
     <string name="move_recordings">انقل التسجيلات</string>
     <string name="move_recordings_to_new_folder_desc">لديك تسجيلات حالية. هل تريد نقلها إلى مجلدك الجديد؟</string>
     <string name="confirm_recording_folder">يجب عليك تأكيد المجلد الذي تريد حفظ تسجيلاتك فيه. يُرجى الضغط على موافق للمتابعة.</string>
+    <string name="change_microphone_mode_confirmation">يُغيّر هذا من طريقة توجيه و معالجة جهازك للصوت. وتختلف النتائج باختلاف الجهاز، وقد تؤثر على مستوى الصوت والضوضاء وعوامل أخرى.</string>
+    <string name="microphone_mode">وضع الميكروفون</string>
 </resources>
