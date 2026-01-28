@@ -13,11 +13,11 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import java.io.File
-import kotlin.math.roundToLong
+import kotlin.math.roundToInt
 
-val DEFAULT_MEDIA_URI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+val DEFAULT_MEDIA_URI: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 
-val DEFAULT_MEDIA_DIRECTORY = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+val DEFAULT_MEDIA_DIRECTORY: String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
     Environment.DIRECTORY_RECORDINGS
 } else {
     Environment.DIRECTORY_MUSIC
@@ -116,7 +116,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                         continue
                     }
 
-                    val duration = getDurationFromUri(uri).toInt()
+                    val duration = getDuration(MetadataSource.Uri(context, uri))
 
                     yield(
                         Recording(
@@ -137,6 +137,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     private fun allMedia(trashed: Boolean): Sequence<Recording> {
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
+            MediaStore.Audio.Media.DATA,
             MediaStore.Audio.Media.DATE_MODIFIED,
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.DURATION,
@@ -172,6 +173,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         return sequence {
             cursor?.use { cursor ->
                 val iId = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                val iData = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
                 val iDateModified = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
                 val iDisplayName = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
                 val iDuration = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
@@ -191,15 +193,27 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                         }
                     }
 
+
+                    // Note: On SDK 28 and lower, the value of `DATE_MODIFIED`, `DURATION` and `SIZE` columns seem to be always zero for some reason. To
+                    // work around it, we retrieve them from the media file directly (which is still allowed on those SDKs)
+                    val timestamp: Long
+                    val duration: Int
+                    val size: Int
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        timestamp = cursor.getInt(iDateModified).toLong() * 1000
+                        duration = cursor.getLong(iDuration).toSeconds()
+                        size = cursor.getInt(iSize)
+                    } else {
+                        val file = File(cursor.getString(iData))
+                        timestamp = file.lastModified()
+                        duration = getDuration(MetadataSource.Path(file.path))
+                        size = file.length().toInt()
+                    }
+
                     yield(
                         Recording(
-                            id = id.toInt(),
-                            title = title,
-                            uri = rowUri,
-                            timestamp = cursor.getLong(iDateModified),
-                            duration = cursor.getInt(iDuration),
-                            size = cursor.getInt(iSize),
-                            mimeType = mimeType
+                            id = id.toInt(), title = title, uri = rowUri, timestamp = timestamp, duration = duration, size = size, mimeType = mimeType
                         )
                     )
                 }
@@ -386,17 +400,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
     private val trashFolder: Uri?
         get() = findChildDocument(context.contentResolver, uri, TRASH_FOLDER_NAME)
-
-    private fun getDurationFromUri(uri: Uri): Long {
-        return try {
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(context, uri)
-            val time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!
-            (time.toLong() / 1000.toDouble()).roundToLong()
-        } catch (_: Exception) {
-            0L
-        }
-    }
 }
 
 private const val TRASH_FOLDER_NAME = ".trash"
@@ -414,6 +417,26 @@ private enum class Backend {
         }
     }
 }
+
+private sealed class MetadataSource {
+    data class Uri(val context: Context, val uri: android.net.Uri) : MetadataSource()
+    data class Path(val path: String) : MetadataSource()
+}
+
+private fun getDuration(source: MetadataSource): Int = MediaMetadataRetriever().run {
+    try {
+        when (source) {
+            is MetadataSource.Uri -> setDataSource(source.context, source.uri)
+            is MetadataSource.Path -> setDataSource(source.path)
+        }
+        extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)!!.toLong().toSeconds()
+    } catch (_: Exception) {
+        0
+    } finally {
+        release()
+    }
+}
+
 
 internal fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = DocumentsContract.createDocument(
     context.contentResolver,
@@ -467,4 +490,6 @@ private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri)
 private fun getOrCreateTrashFolder(contentResolver: ContentResolver, parentUri: Uri): Uri? = getOrCreateDocument(
     contentResolver, parentUri, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME
 )
+
+private fun Long.toSeconds(): Int = (this / 1000.toDouble()).roundToInt()
 
