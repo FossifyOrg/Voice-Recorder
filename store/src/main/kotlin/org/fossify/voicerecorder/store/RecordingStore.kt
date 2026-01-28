@@ -25,6 +25,9 @@ val DEFAULT_MEDIA_DIRECTORY = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 /**
  * Utility to manage stored recordings
+ *
+ * Provides unified API on top of [Storage Access Framework](https://developer.android.com/guide/topics/providers/document-provider) and
+ * [Media Store](https://developer.android.com/training/data-storage/shared/media).
  */
 class RecordingStore(private val context: Context, val uri: Uri) {
     companion object {
@@ -62,7 +65,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     fun isEmpty(): Boolean = all().none()
 
     /**
-     * Returns all recordings in this store as sequence.
+     * Returns all recordings in this store as [Sequence].
      */
     fun all(trashed: Boolean = false): Sequence<Recording> = when (kind) {
         Kind.DOCUMENT -> allDocuments(trashed)
@@ -204,14 +207,23 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         }
     }
 
+    /**
+     * Move the given recordings to trash.
+     */
     fun trash(recordings: Collection<Recording>) = move(recordings, toTrash = true)
 
+    /**
+     * Restore the given trashed recordings
+     */
     fun restore(recordings: Collection<Recording>) = move(recordings, fromTrash = true)
 
+    /**
+     * Permanently delete all trashed recordings.
+     */
     fun deleteTrashed(): Boolean = delete(all(trashed = true).toList())
 
     /**
-     * Move all recordings in this store (including the trashed ones) into the new store.
+     * Move all recordings in this store (including the trashed ones) into a new store at the given URI.
      */
     fun migrate(dstUri: Uri) {
         if (dstUri == uri) {
@@ -351,6 +363,9 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
 
+    /**
+     * Permanently delete (skipping the trash) the given recordings.
+     */
     fun delete(recordings: Collection<Recording>): Boolean {
         val resolver = context.contentResolver
 
@@ -361,6 +376,10 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         return true
     }
 
+    /**
+     * Create a [RecordingWriter] for writing a new recording with the given name. The name should contain the file extension (ogg, mp3, ...) which is used to
+     * select the format the recording will be stored in.
+     */
     fun createWriter(name: String): RecordingWriter = RecordingWriter.create(context, uri, name)
 
     private val kind: Kind = Kind.of(uri)
