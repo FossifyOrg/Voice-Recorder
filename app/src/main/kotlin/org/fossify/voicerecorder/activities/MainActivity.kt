@@ -191,7 +191,7 @@ class MainActivity : SimpleActivity() {
         binding.mainTabsHolder.removeAllTabs()
         var tabDrawables = arrayOf(
             org.fossify.commons.R.drawable.ic_microphone_vector,
-            R.drawable.ic_headset_vector
+            R.drawable.ic_playlist_play_vector
         )
         var tabLabels = arrayOf(R.string.recorder, R.string.player)
         if (config.useRecycleBin) {
