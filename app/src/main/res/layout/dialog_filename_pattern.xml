@@ -26,7 +26,7 @@
             android:id="@+id/filename_pattern_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
+            android:inputType="textNoSuggestions"
             android:singleLine="true"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/bigger_text_size"
