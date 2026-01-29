@@ -37,4 +37,6 @@
     <string name="sample_rate">Freqüència de mostreig</string>
     <string name="change_microphone_mode_confirmation">Això canvia la manera en què el dispositiu encamina i processa l\'àudio. Els resultats varien segons el dispositiu i poden afectar el volum, el soroll i altres factors.</string>
     <string name="microphone_mode">Mode del micròfon</string>
+    <string name="filename_pattern">Patró del nom de fitxer</string>
+    <string name="filename_pattern_must_contain_all">Cal incloure totes les variables de substitució per a noms de fitxers únics (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
