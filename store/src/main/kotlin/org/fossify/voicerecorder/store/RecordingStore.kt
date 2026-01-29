@@ -107,12 +107,10 @@ class RecordingStore(private val context: Context, val uri: Uri) {
                 while (cursor.moveToNext()) {
                     val documentId = cursor.getString(iDocumentId)
                     val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
-
-
                     val mimeType = cursor.getString(iMimeType) ?: continue
                     val displayName = cursor.getString(iDisplayName)
 
-                    if (!mimeType.startsWith("audio") || displayName.startsWith(".")) {
+                    if (!isMimeAudio(mimeType) || displayName.startsWith(".")) {
                         continue
                     }
 
@@ -493,3 +491,5 @@ private fun getOrCreateTrashFolder(contentResolver: ContentResolver, parentUri: 
 
 private fun Long.toSeconds(): Int = (this / 1000.toDouble()).roundToInt()
 
+// HACK: On SDK 26, 'ogg' is sometimes identified as 'application/ogg' instead of 'audio/ogg'
+private fun isMimeAudio(mime: String): Boolean = mime.startsWith("audio/") || mime == "application/ogg"

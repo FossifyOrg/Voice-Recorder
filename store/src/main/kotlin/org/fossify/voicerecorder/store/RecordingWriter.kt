@@ -105,10 +105,6 @@ sealed class RecordingWriter {
 
             tempFile.delete()
 
-            if (dstUri.authority == MediaStore.AUTHORITY) {
-                completeMedia(context.contentResolver, dstUri)
-            }
-
             return dstUri
         }
 
