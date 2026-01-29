@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Option to customize recording filename pattern with datetime placeholders ([#15])
 - Added support for custom fonts
 
 ### Changed
@@ -132,6 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
+[#15]: https://github.com/FossifyOrg/Voice-Recorder/issues/15
 [#16]: https://github.com/FossifyOrg/Voice-Recorder/issues/16
 [#22]: https://github.com/FossifyOrg/Voice-Recorder/issues/22
 [#33]: https://github.com/FossifyOrg/Voice-Recorder/issues/33

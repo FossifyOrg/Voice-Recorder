@@ -102,5 +102,7 @@ const val USE_RECYCLE_BIN = "use_recycle_bin"
 const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
 const val KEEP_SCREEN_ON = "keep_screen_on"
 const val WAS_MIC_MODE_WARNING_SHOWN = "was_mic_mode_warning_shown"
+const val FILENAME_PATTERN = "filename_pattern"
 
 const val DEFAULT_RECORDINGS_FOLDER = "Recordings"
+const val DEFAULT_FILENAME_PATTERN = "%Y%M%D_%h%m%s"

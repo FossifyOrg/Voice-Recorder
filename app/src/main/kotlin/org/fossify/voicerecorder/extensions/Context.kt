@@ -11,6 +11,7 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
+import androidx.core.graphics.createBitmap
 import androidx.documentfile.provider.DocumentFile
 import org.fossify.commons.extensions.createFirstParentTreeUri
 import org.fossify.commons.extensions.createSAFDirectorySdk30
@@ -33,6 +34,8 @@ import org.fossify.voicerecorder.helpers.MyWidgetRecordDisplayProvider
 import org.fossify.voicerecorder.helpers.TOGGLE_WIDGET_UI
 import org.fossify.voicerecorder.models.Recording
 import java.io.File
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.roundToLong
 
 val Context.config: Config get() = Config.newInstance(applicationContext)
@@ -42,7 +45,7 @@ val Context.trashFolder
 
 fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
     val size = (60 * resources.displayMetrics.density).toInt()
-    val mutableBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+    val mutableBitmap = createBitmap(size, size)
     val canvas = Canvas(mutableBitmap)
     drawable.setBounds(0, 0, size, size)
     drawable.draw(canvas)
@@ -234,4 +237,25 @@ fun Context.createDocumentFile(path: String): Uri? {
     } catch (@Suppress("SwallowedException") e: IllegalStateException) {
         null
     }
+}
+
+// move to commons in the future
+fun Context.getFormattedFilename(): String {
+    val pattern = config.filenamePattern
+    val calendar = Calendar.getInstance()
+
+    val year = calendar.get(Calendar.YEAR).toString()
+    val month = String.format(Locale.ROOT, "%02d", calendar.get(Calendar.MONTH) + 1)
+    val day = String.format(Locale.ROOT, "%02d", calendar.get(Calendar.DAY_OF_MONTH))
+    val hour = String.format(Locale.ROOT, "%02d", calendar.get(Calendar.HOUR_OF_DAY))
+    val minute = String.format(Locale.ROOT, "%02d", calendar.get(Calendar.MINUTE))
+    val second = String.format(Locale.ROOT, "%02d", calendar.get(Calendar.SECOND))
+
+    return pattern
+        .replace("%Y", year, false)
+        .replace("%M", month, false)
+        .replace("%D", day, false)
+        .replace("%h", hour, false)
+        .replace("%m", minute, false)
+        .replace("%s", second, false)
 }
