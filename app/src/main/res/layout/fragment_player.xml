@@ -147,7 +147,7 @@
                 android:layout_marginBottom="@dimen/big_margin"
                 android:background="@drawable/circle_button_background"
                 android:contentDescription="@string/playpause"
-                android:padding="@dimen/activity_margin"
+                android:padding="@dimen/normal_margin"
                 android:src="@drawable/ic_play_vector" />
 
             <ImageView
