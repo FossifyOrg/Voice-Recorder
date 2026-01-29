@@ -13,8 +13,8 @@ import java.io.FileInputStream
 /**
  * Helper class to write recordings to the device.
  *
- * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a bug in [MediaStore] (TODO: link to the
- * bugreport) which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
+ * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a [bug in `MediaRecorder`](https://issuetracker.google.com/issues/479420499)
+ * which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
  */
 sealed class RecordingWriter {
     companion object {
