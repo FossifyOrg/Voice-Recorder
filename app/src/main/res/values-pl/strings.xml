@@ -36,4 +36,6 @@
     <string name="discard_recording_confirmation">Czy anulować bieżące nagrywanie? Tego nie można cofnąć.</string>
     <string name="change_microphone_mode_confirmation">Zmienia to sposób kierowania i przetwarzania dźwięku przez Twoje urządzenie. Wyniki są zależne od urządzenia i mogą się różnić głośnością, zaszumieniem i innymi czynnikami.</string>
     <string name="microphone_mode">Tryb mikrofonu</string>
+    <string name="filename_pattern">Wzorzec nazw plików</string>
+    <string name="filename_pattern_must_contain_all">Należy uwzględnić wszystkie symbole dla zapewnienia unikalnych nazw plików (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
