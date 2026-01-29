@@ -25,6 +25,7 @@
     <!-- Settings -->
     <string name="save_recordings_in">Save recordings in</string>
     <string name="filename_pattern">Filename pattern</string>
+    <string name="filename_pattern_must_contain_all">Must include all placeholders for unique filenames (%Y, %M, %D, %h, %m, %s)</string>
     <string name="audio_source">Audio source</string>
     <string name="microphone_mode">Microphone mode</string>
     <string name="bitrate">Bitrate</string>

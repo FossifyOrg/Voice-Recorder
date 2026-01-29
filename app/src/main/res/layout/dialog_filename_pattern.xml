@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,8 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/filename_pattern"
+        app:boxStrokeErrorColor="@color/color_error"
         app:endIconDrawable="@drawable/ic_info_vector"
-        app:endIconMode="custom">
+        app:endIconMode="custom"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:errorTextColor="@color/color_error">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/filename_pattern_value"
@@ -24,7 +29,8 @@
             android:inputType="textCapSentences"
             android:singleLine="true"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/bigger_text_size" />
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="Recording %Y%M%D_%h%m%s" />
 
     </org.fossify.commons.views.MyTextInputLayout>
 </LinearLayout>

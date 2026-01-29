@@ -1,9 +1,9 @@
 package org.fossify.voicerecorder.dialogs
 
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doAfterTextChanged
 import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.commons.extensions.setupDialogStuff
-import org.fossify.commons.extensions.toast
 import org.fossify.commons.extensions.viewBinding
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
@@ -13,6 +13,7 @@ import org.fossify.voicerecorder.extensions.config
 class FilenamePatternDialog(private val activity: SimpleActivity, private val callback: (String) -> Unit) {
     private val binding by activity.viewBinding(DialogFilenamePatternBinding::inflate)
     private val config = activity.config
+    private var dialog: AlertDialog? = null
 
     init {
         binding.apply {
@@ -24,25 +25,38 @@ class FilenamePatternDialog(private val activity: SimpleActivity, private val ca
                 DateTimePatternInfoDialog(activity)
                 true
             }
+
+            filenamePatternValue.doAfterTextChanged { validatePattern(it?.toString().orEmpty()) }
         }
 
         activity.getAlertDialogBuilder()
             .setPositiveButton(org.fossify.commons.R.string.ok, null)
             .setNegativeButton(org.fossify.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.filename_pattern) { dialog ->
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                activity.setupDialogStuff(binding.root, this, R.string.filename_pattern) { alertDialog ->
+                    dialog = alertDialog
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val newPattern = binding.filenamePatternValue.text.toString()
-                        if (newPattern.isEmpty()) {
-                            activity.toast(org.fossify.commons.R.string.empty_name)
-                            return@setOnClickListener
-                        }
-
                         config.filenamePattern = newPattern
                         callback(newPattern)
-                        dialog.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
             }
+    }
+
+    private fun validatePattern(pattern: String) {
+        binding.filenamePatternHint.error = when {
+            pattern.isEmpty() -> activity.getString(org.fossify.commons.R.string.filename_cannot_be_empty)
+            !containsAllDateTimePlaceholders(pattern) -> activity.getString(R.string.filename_pattern_must_contain_all)
+            else -> null
+        }
+        val isValid = binding.filenamePatternHint.error.isNullOrEmpty()
+        dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = isValid
+    }
+
+    private fun containsAllDateTimePlaceholders(pattern: String): Boolean {
+        return pattern.contains("%Y") && pattern.contains("%M") && pattern.contains("%D") &&
+                pattern.contains("%h") && pattern.contains("%m") && pattern.contains("%s")
     }
 }
