@@ -3,10 +3,10 @@ package org.fossify.voicerecorder.helpers
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaRecorder
+import androidx.core.content.edit
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.extensions.getDefaultRecordingsFolder
-import androidx.core.content.edit
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
@@ -96,4 +96,8 @@ class Config(context: Context) : BaseConfig(context) {
         set(wasMicModeWarningShown) = prefs.edit {
             putBoolean(WAS_MIC_MODE_WARNING_SHOWN, wasMicModeWarningShown)
         }
+
+    var filenamePattern: String
+        get() = prefs.getString(FILENAME_PATTERN, DEFAULT_FILENAME_PATTERN)!!
+        set(filenamePattern) = prefs.edit { putString(FILENAME_PATTERN, filenamePattern) }
 }

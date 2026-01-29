@@ -24,6 +24,7 @@ import org.fossify.commons.helpers.sumByInt
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
+import org.fossify.voicerecorder.dialogs.FilenamePatternDialog
 import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteTrashedRecordings
@@ -67,6 +68,7 @@ class SettingsActivity : SimpleActivity() {
         setupLanguage()
         setupChangeDateTimeFormat()
         setupSaveRecordingsFolder()
+        setupFilenamePattern()
         setupExtension()
         setupBitrate()
         setupSamplingRate()
@@ -166,6 +168,15 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupFilenamePattern() {
+        binding.settingsFilenamePattern.text = config.filenamePattern
+        binding.settingsFilenamePatternHolder.setOnClickListener {
+            FilenamePatternDialog(this) { newPattern ->
+                binding.settingsFilenamePattern.text = newPattern
+            }
+        }
+    }
+
     private fun setupExtension() {
         binding.settingsExtension.text = config.getExtensionText()
         binding.settingsExtensionHolder.setOnClickListener {
@@ -211,7 +222,7 @@ class SettingsActivity : SimpleActivity() {
             val currentBitrate = config.bitrate
             val closestBitrate = availableBitrates.minByOrNull { abs(it - currentBitrate) }
                 ?: DEFAULT_BITRATE
-            
+
             config.bitrate = closestBitrate
             binding.settingsBitrate.text = getBitrateText(config.bitrate)
         }

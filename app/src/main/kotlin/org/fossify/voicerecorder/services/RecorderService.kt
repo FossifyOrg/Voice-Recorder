@@ -6,7 +6,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.media.MediaScannerConnection
 import android.net.Uri
@@ -16,7 +15,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import org.fossify.commons.extensions.createDocumentUriUsingFirstParentTreeUri
 import org.fossify.commons.extensions.createSAFFileSdk30
-import org.fossify.commons.extensions.getCurrentFormattedDateTime
 import org.fossify.commons.extensions.getDocumentFile
 import org.fossify.commons.extensions.getFilenameFromPath
 import org.fossify.commons.extensions.getLaunchIntent
@@ -31,6 +29,7 @@ import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.extensions.getFormattedFilename
 import org.fossify.voicerecorder.extensions.updateWidgets
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.EXTENSION_MP3
@@ -105,7 +104,7 @@ class RecorderService : Service() {
         }
 
         val recordingFolder = defaultFolder.absolutePath
-        recordingPath = "$recordingFolder/${getCurrentFormattedDateTime()}.${config.getExtension()}"
+        recordingPath = "$recordingFolder/${getFormattedFilename()}.${config.getExtension()}"
         resultUri = null
 
         try {
@@ -280,8 +279,7 @@ class RecorderService : Service() {
     private fun showNotification(): Notification {
         val channelId = "simple_recorder"
         val label = getString(R.string.app_name)
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         NotificationChannel(channelId, label, NotificationManager.IMPORTANCE_DEFAULT).apply {
             setSound(null, null)
