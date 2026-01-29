@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Option to customize recording filename with datetime placeholders ([#15])
+- Option to customize recording filename pattern with datetime placeholders ([#15])
 - Added support for custom fonts
 
 ### Changed
