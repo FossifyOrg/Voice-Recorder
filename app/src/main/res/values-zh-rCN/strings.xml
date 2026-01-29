@@ -35,4 +35,6 @@
     <string name="sample_rate">采样率</string>
     <string name="microphone_mode">麦克风模式</string>
     <string name="change_microphone_mode_confirmation">这会改变您的设备音频路由及处理方式。结果因设备而异，可能对音量、噪音等因素产生影响。</string>
+    <string name="filename_pattern">文件名模式</string>
+    <string name="filename_pattern_must_contain_all">必须包含所有唯一文件名的占位符（%Y、%M、%D、%h、%m、%s）</string>
 </resources>
