@@ -36,4 +36,6 @@
     <string name="sample_rate">Diskreetimissagedus</string>
     <string name="change_microphone_mode_confirmation">See muudab viisi, kuidas sinu nutiseade suunab ja töötleb heli. Tulemused võivad erinevates seadmetes olla erinevad, kuid see võib mõjutada helivaljust, müra ja muid faktoreid.</string>
     <string name="microphone_mode">Mikrofoni režiim</string>
+    <string name="filename_pattern">Failinime muster</string>
+    <string name="filename_pattern_must_contain_all">Peab sisaldama kõiki unikaalsete failide kohatäiteid (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
