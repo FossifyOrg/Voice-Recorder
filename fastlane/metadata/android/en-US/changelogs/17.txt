@@ -1,0 +1,9 @@
+Added:
+
+• Added support for custom fonts
+
+Changed:
+
+• Removed per-item overflow menu from recordings list in favor of long-press options 
+• Updated translations
+
