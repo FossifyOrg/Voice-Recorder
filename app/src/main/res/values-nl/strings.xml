@@ -36,4 +36,6 @@
     <string name="sample_rate">Sample rate</string>
     <string name="change_microphone_mode_confirmation">Dit verandert de manier waarop de audio wordt gerouteerd en verwerkt. De resultaten variëren per apparaat en kunnen van invloed zijn op o.a. volume en ruis.</string>
     <string name="microphone_mode">Microfoonmodus</string>
+    <string name="filename_pattern_must_contain_all">Moet alle plaatshouders bevatten voor unieke bestandsnamen (%Y, %M, %D, %h, %m, %s)</string>
+    <string name="filename_pattern">Sjabloon bestandsnaam</string>
 </resources>
