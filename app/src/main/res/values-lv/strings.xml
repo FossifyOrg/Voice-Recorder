@@ -35,4 +35,6 @@
     <string name="player">Atskaņotājs</string>
     <string name="change_microphone_mode_confirmation">Tas izmaina, kā ierīce maršrutē un apstrādā skaņu. Iznākums starp ierīcēm var atšķirties, un var tikt ietekmēts skaļums, troksnis un citi raksturlielumi.</string>
     <string name="microphone_mode">Mikrofona režīms</string>
+    <string name="filename_pattern_must_contain_all">Jāiekļauj visi neatkārtojamu datņu nosaukumu vietturi (%Y, %M, %D, %h, %m, %s)</string>
+    <string name="filename_pattern">Datņu nosaukumu paraugs</string>
 </resources>
