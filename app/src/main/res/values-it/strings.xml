@@ -37,4 +37,6 @@
     <string name="sample_rate">Frequenza di campionamento</string>
     <string name="change_microphone_mode_confirmation">Questo cambia il modo in cui il dispositivo indirizza ed elabora l\'audio. I risultati variano a seconda del dispositivo e possono influire su volume, rumore e altri fattori.</string>
     <string name="microphone_mode">Modalità microfono</string>
+    <string name="filename_pattern">Nome file del modello</string>
+    <string name="filename_pattern_must_contain_all">Deve includere tutti i segnaposto per nomi di file univoci (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
