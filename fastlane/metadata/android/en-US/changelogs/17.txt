@@ -1,0 +1,11 @@
+Added:
+
+• Option to customize recording filename pattern with datetime placeholders 
+• Added support for custom fonts
+
+Changed:
+
+• Removed per-item overflow menu from recordings list in favor of long-press options 
+• Updated player tab icon 
+• Updated translations
+
