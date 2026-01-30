@@ -34,4 +34,6 @@
     <string name="sample_rate">Abtastrate</string>
     <string name="change_microphone_mode_confirmation">Dadurch ändert sich die Art und Weise, wie dein Gerät Audio weiterleitet und verarbeitet. Die Ergebnisse variieren je nach Gerät und können sich auf Lautstärke, Rauschen und andere Faktoren auswirken.</string>
     <string name="microphone_mode">Mikrofonmodus</string>
+    <string name="filename_pattern">Dateinamenmuster</string>
+    <string name="filename_pattern_must_contain_all">Muss alle Platzhalter für eindeutige Dateinamen enthalten (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
