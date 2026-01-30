@@ -37,4 +37,6 @@
     <string name="sample_rate">Vzorkovací frekvence</string>
     <string name="change_microphone_mode_confirmation">Tato možnost změní, jak vaše zařízení směruje a zpracovává zvuk. Výsledky se mohou lišit podle zařízení a mohou ovlivnit hlasitost, šum a další faktory.</string>
     <string name="microphone_mode">Režim mikrofonu</string>
+    <string name="filename_pattern">Vzorec názvu souborů</string>
+    <string name="filename_pattern_must_contain_all">Musí obsahovat všechny zástupné řetězce pro unikátní názvy souborů (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
