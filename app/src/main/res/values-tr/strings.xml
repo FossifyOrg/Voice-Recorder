@@ -36,4 +36,6 @@
     <string name="sample_rate">Örnekleme hızı</string>
     <string name="change_microphone_mode_confirmation">Cihazınızın sesi iletme ve işleme şeklini değiştirir. Her cihazda farklı sonuçları olabilir ve ses, gürültü ve diğer faktörlere etki edebilir.</string>
     <string name="microphone_mode">Mikrofon modu</string>
+    <string name="filename_pattern">Dosya adı düzeni</string>
+    <string name="filename_pattern_must_contain_all">Benzersiz dosya isimleri için tüm değişkenleri içermelidir (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
