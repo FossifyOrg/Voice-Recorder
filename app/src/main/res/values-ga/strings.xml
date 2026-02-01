@@ -37,4 +37,6 @@
     <string name="sample_rate">Ráta samplach</string>
     <string name="change_microphone_mode_confirmation">Athraíonn sé seo an chaoi a ndéanann do ghléas fuaim a threorú agus a phróiseáil. Athraíonn na torthaí de réir an ghléis agus is féidir leo tionchar a imirt ar an toirt, ar an torann agus ar fhachtóirí eile.</string>
     <string name="microphone_mode">Mód micreafóin</string>
+    <string name="filename_pattern">Patrún ainm comhaid</string>
+    <string name="filename_pattern_must_contain_all">Ní mór gach áitchoinneálaí a áireamh le haghaidh ainmneacha comhad uathúla (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
