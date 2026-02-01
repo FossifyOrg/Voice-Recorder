@@ -14,7 +14,7 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of Gradle than 8.13 is available: 8.14.3"
+        message="A newer version of Gradle than 8.13 is available: 8.14.4"
         errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -25,7 +25,7 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.application than 8.11.1 is available: 8.13.2. (There is also a newer version of 8.11.𝑥 available, if upgrading to 8.13.2 is difficult: 8.11.2)"
+        message="A newer version of com.android.application than 8.11.1 is available: 9.0.0. (There is also a newer version of 8.11.𝑥 available, if upgrading to 9.0.0 is difficult: 8.11.2)"
         errorLine1="gradlePlugins-agp = &quot;8.11.1&quot;"
         errorLine2="                    ~~~~~~~~">
         <location
@@ -36,7 +36,7 @@
 
     <issue
         id="NewerVersionAvailable"
-        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.28 is available: 0.5.3"
+        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.28 is available: 0.5.6"
         errorLine1="detektCompose = &quot;0.4.28&quot;"
         errorLine2="                ~~~~~~~~">
         <location
@@ -94,7 +94,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;app_launcher_name&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;app_launcher_name&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh)"
         errorLine1="    &lt;string name=&quot;app_launcher_name&quot;>Voice Recorder_debug&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -105,7 +105,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;app_launcher_name&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;app_launcher_name&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh)"
         errorLine1="    &lt;string name=&quot;app_launcher_name&quot;>Voice Recorder&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -116,7 +116,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;confirm_recording_folder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        message="&quot;confirm_recording_folder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;confirm_recording_folder&quot;>You must confirm the folder where you want to save your recordings. Please press &quot;OK&quot; to continue.&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -127,7 +127,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;move_recordings&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;move_recordings&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;move_recordings&quot;>Move recordings&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -138,7 +138,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;move_recordings_to_new_folder_desc&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;move_recordings_to_new_folder_desc&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;move_recordings_to_new_folder_desc&quot;>You have existing recordings. Do you want to move them to your new folder?&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -149,7 +149,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;recording_saved_successfully&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;recording_saved_successfully&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;recording_saved_successfully&quot;>Recording saved successfully&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -160,7 +160,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;recording_too_short&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;recording_too_short&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;recording_too_short&quot;>Recording was too short to record!&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -171,7 +171,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;recording&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;recording&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh)"
         errorLine1="    &lt;string name=&quot;recording&quot;>Recording&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~">
         <location
@@ -182,7 +182,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;no_recordings_found&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;no_recordings_found&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;no_recordings_found&quot;>No recordings created by this app\nhave been found&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -193,7 +193,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;no_recordings_in_folder_found&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;no_recordings_in_folder_found&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;no_recordings_in_folder_found&quot;>No recordings have been found\nin the selected folder&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -204,7 +204,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;paused&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;paused&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;paused&quot;>Paused&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~">
         <location
@@ -215,7 +215,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;recorder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;recorder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;recorder&quot;>Recorder&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~">
         <location
@@ -226,7 +226,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;player&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;player&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;player&quot;>Player&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~">
         <location
@@ -237,7 +237,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;discard_recording&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        message="&quot;discard_recording&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;discard_recording&quot;>Discard recording&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -248,7 +248,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;discard_recording_confirmation&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        message="&quot;discard_recording_confirmation&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;discard_recording_confirmation&quot;>Are you sure you want to discard the current recording? This cannot be undone.&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -259,7 +259,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;change_microphone_mode_confirmation&quot; is not translated in &quot;hi&quot; (Hindi), &quot;fil&quot; (Filipino; Pilipino), &quot;hu&quot; (Hungarian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        message="&quot;change_microphone_mode_confirmation&quot; is not translated in &quot;hi&quot; (Hindi), &quot;fil&quot; (Filipino; Pilipino), &quot;hu&quot; (Hungarian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;change_microphone_mode_confirmation&quot;>This changes how your device routes and processes audio. Results vary by device and can impact volume, noise, and other factors.&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -270,7 +270,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;delete_recordings_confirmation&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;delete_recordings_confirmation&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;delete_recordings_confirmation&quot;>Delete %s\?&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -281,7 +281,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;delete_recordings&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        message="&quot;delete_recordings&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
         errorLine1="    &lt;plurals name=&quot;delete_recordings&quot;>"
         errorLine2="             ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -292,7 +292,7 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;save_recordings_in&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;save_recordings_in&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;save_recordings_in&quot;>Save recordings in&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -303,9 +303,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;audio_source&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;audio_source&quot;>Audio source&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        message="&quot;filename_pattern&quot; is not translated in &quot;hi&quot; (Hindi), &quot;pt&quot; (Portuguese), &quot;fil&quot; (Filipino; Pilipino), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;eo&quot; (Esperanto), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;oc&quot; (Occitan (post 1500)), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ga&quot; (Irish), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;, &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;filename_pattern&quot;>Filename pattern&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="27"
@@ -314,9 +314,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;microphone_mode&quot; is not translated in &quot;hi&quot; (Hindi), &quot;fil&quot; (Filipino; Pilipino), &quot;hu&quot; (Hungarian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode&quot;>Microphone mode&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;filename_pattern_must_contain_all&quot; is not translated in &quot;hi&quot; (Hindi), &quot;pt&quot; (Portuguese), &quot;fil&quot; (Filipino; Pilipino), &quot;lt&quot; (Lithuanian), &quot;hr&quot; (Croatian), &quot;hu&quot; (Hungarian), &quot;uk&quot; (Ukrainian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;eo&quot; (Esperanto), &quot;is&quot; (Icelandic), &quot;it&quot; (Italian), &quot;my&quot; (Burmese), &quot;es&quot; (Spanish), &quot;iw&quot; (Hebrew), &quot;eu&quot; (Basque), &quot;ar&quot; (Arabic), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ja&quot; (Japanese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;fi&quot; (Finnish), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;fr&quot; (French), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;oc&quot; (Occitan (post 1500)), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;ga&quot; (Irish), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;sv&quot; (Swedish), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;, &quot;da&quot; (Danish), &quot;tr&quot; (Turkish)"
+        errorLine1="    &lt;string name=&quot;filename_pattern_must_contain_all&quot;>Must include all placeholders for unique filenames (%Y, %M, %D, %h, %m, %s)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="28"
@@ -325,9 +325,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;bitrate&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;bitrate&quot;>Bitrate&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~">
+        message="&quot;audio_source&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;audio_source&quot;>Audio source&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="29"
@@ -336,9 +336,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;record_after_launch&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;record_after_launch&quot;>Start recording automatically after launching the app&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;microphone_mode&quot; is not translated in &quot;hi&quot; (Hindi), &quot;fil&quot; (Filipino; Pilipino), &quot;hu&quot; (Hungarian), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sk&quot; (Slovak), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode&quot;>Microphone mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="30"
@@ -347,9 +347,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;keep_screen_on&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;keep_screen_on&quot;>Keep the screen on during recording&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;bitrate&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;bitrate&quot;>Bitrate&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="31"
@@ -358,9 +358,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;sample_rate&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;in&quot; (Indonesian), &quot;ms&quot; (Malay), &quot;el&quot; (Greek), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;gl&quot; (Galician), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;sample_rate&quot;>Sample rate&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        message="&quot;record_after_launch&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;record_after_launch&quot;>Start recording automatically after launching the app&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="32"
@@ -369,9 +369,20 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;microphone_mode_camcorder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode_camcorder&quot;>Camera (video)&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;keep_screen_on&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;keep_screen_on&quot;>Keep the screen on during recording&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="33"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;sample_rate&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ml&quot; (Malayalam), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;vi&quot; (Vietnamese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;ro&quot; (Romanian), &quot;nn&quot; (Norwegian Nynorsk), &quot;be&quot; (Belarusian), &quot;bg&quot; (Bulgarian), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;sl&quot; (Slovenian), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;sr&quot; (Serbian), &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;ko&quot; (Korean), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;sample_rate&quot;>Sample rate&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="34"
@@ -380,20 +391,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;microphone_mode_voice_communication&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode_voice_communication&quot;>Voice communication (auto gain)&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="35"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="MissingTranslation"
-        message="&quot;microphone_mode_voice_performance&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode_voice_performance&quot;>Voice performance (low-latency)&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;microphone_mode_camcorder&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode_camcorder&quot;>Camera (video)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="36"
@@ -402,9 +402,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;microphone_mode_voice_recognition&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode_voice_recognition&quot;>Voice recognition&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;microphone_mode_voice_communication&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode_voice_communication&quot;>Voice communication (auto gain)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="37"
@@ -413,9 +413,9 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;microphone_mode_unprocessed&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
-        errorLine1="    &lt;string name=&quot;microphone_mode_unprocessed&quot;>Unprocessed (raw)&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="&quot;microphone_mode_voice_performance&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode_voice_performance&quot;>Voice performance (low-latency)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
             line="38"
@@ -424,12 +424,34 @@
 
     <issue
         id="MissingTranslation"
-        message="&quot;faq_1_title&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;en&quot; (English), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
+        message="&quot;microphone_mode_voice_recognition&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode_voice_recognition&quot;>Voice recognition&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="39"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;microphone_mode_unprocessed&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;nb&quot; (Norwegian Bokmål), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;fa&quot; (Persian), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;bqi&quot;, &quot;ckb&quot;"
+        errorLine1="    &lt;string name=&quot;microphone_mode_unprocessed&quot;>Unprocessed (raw)&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="40"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;faq_1_title&quot; is not translated in &quot;fil&quot; (Filipino; Pilipino), &quot;ia&quot; (Interlingua), &quot;mk&quot; (Macedonian), &quot;ms&quot; (Malay), &quot;is&quot; (Icelandic), &quot;my&quot; (Burmese), &quot;ne&quot; (Nepali), &quot;az&quot; (Azerbaijani), &quot;nn&quot; (Norwegian Nynorsk), &quot;bn&quot; (Bangla), &quot;kab&quot; (Kabyle), &quot;br&quot; (Breton), &quot;bs&quot; (Bosnian), &quot;si&quot; (Sinhala), &quot;zgh&quot; (Standard Moroccan Tamazight), &quot;ltg&quot;, &quot;kn&quot; (Kannada), &quot;or&quot; (Odia), &quot;kr&quot; (Kanuri), &quot;sat&quot; (Santali), &quot;ta&quot; (Tamil), &quot;cr&quot; (Cree), &quot;pa&quot; (Punjabi), &quot;te&quot; (Telugu), &quot;th&quot; (Thai), &quot;cy&quot; (Welsh), &quot;ckb&quot;"
         errorLine1="    &lt;string name=&quot;faq_1_title&quot;>Can I hide the notification icon during recording?&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="40"
+            line="42"
             column="13"/>
     </issue>
 
@@ -440,7 +462,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="41"
+            line="43"
             column="13"/>
     </issue>
 
@@ -476,7 +498,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="27"
+            line="29"
             column="13"/>
     </issue>
 
@@ -577,17 +599,6 @@
 
     <issue
         id="UseKtx"
-        message="Use the KTX function `createBitmap` instead?"
-        errorLine1="    val mutableBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/org/fossify/voicerecorder/extensions/Context.kt"
-            line="45"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="UseKtx"
         message="Use the KTX extension property `SparseArray.size` instead?"
         errorLine1="        for (i in 0 until fragments.size()) {"
         errorLine2="                          ~~~~~~~~~~~~~~~~">
@@ -606,17 +617,6 @@
             file="src/main/kotlin/org/fossify/voicerecorder/adapters/ViewPagerAdapter.kt"
             line="50"
             column="27"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/item_recording.xml"
-            line="76"
-            column="10"/>
     </issue>
 
     <issue
@@ -654,23 +654,12 @@
 
     <issue
         id="RtlSymmetry"
-        message="When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry"
-        errorLine1="        android:paddingStart=&quot;@dimen/activity_margin&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/item_recording.xml"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="RtlSymmetry"
         message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry"
         errorLine1="            android:paddingEnd=&quot;@dimen/activity_margin&quot;"
         errorLine2="            ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/item_recording.xml"
-            line="25"
+            line="26"
             column="13"/>
     </issue>
 
@@ -681,7 +670,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/layout/item_recording.xml"
-            line="42"
+            line="43"
             column="13"/>
     </issue>
 
