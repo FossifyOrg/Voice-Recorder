@@ -35,8 +35,8 @@
     <string name="sample_rate">Vzorkovacia frekvencia</string>
     <string name="keep_screen_on">Nezhasínať obrazovku počas nahrávania</string>
     <string name="bitrate">Bitrate</string>
-    <string name="change_microphone_mode_confirmation">Toto zmení ako vaše zariadenie funguje a procesuje zvuk. Výsledky sa líšia od zariadenia a môžu mať dopad na hlasitosť, zvuk and iné faktory.</string>
+    <string name="change_microphone_mode_confirmation">Toto zmení ako vaše zariadenie funguje a procesuje zvuk. Výsledky sa líšia od zariadenia a môžu mať dopad na hlasitosť, zvuk a iné faktory.</string>
     <string name="filename_pattern">Vzor názvu súboru</string>
-    <string name="filename_pattern_must_contain_all">Musí zahrnúť všetkých zástupcov pre jedinečné návzy súborov</string>
-    <string name="microphone_mode">Hlasový režim</string>
+    <string name="filename_pattern_must_contain_all">Musí zahrnúť všetkých zástupcov pre jedinečné návzy súborov (%Y, %M, %D, %h, %m, %s)</string>
+    <string name="microphone_mode">Režim mikrofónu</string>
 </resources>
