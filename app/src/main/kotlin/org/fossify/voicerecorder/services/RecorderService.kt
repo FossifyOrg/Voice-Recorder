@@ -23,7 +23,7 @@ import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
 import org.fossify.voicerecorder.recorder.Recorder
 import org.fossify.voicerecorder.store.RecordingFormat
-import org.fossify.voicerecorder.store.RecordingWriter
+import org.fossify.voicerecorder.store.RecordingStore
 import org.greenrobot.eventbus.EventBus
 import java.util.Timer
 import java.util.TimerTask
@@ -42,7 +42,7 @@ class RecorderService : Service() {
     private var durationTimer = Timer()
     private var amplitudeTimer = Timer()
     private var recorder: Recorder? = null
-    private var writer: RecordingWriter? = null
+    private var writer: RecordingStore.Writer? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 

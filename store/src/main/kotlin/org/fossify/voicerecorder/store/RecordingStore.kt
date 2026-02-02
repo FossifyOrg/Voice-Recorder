@@ -10,9 +10,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.webkit.MimeTypeMap
 import java.io.File
+import java.io.FileInputStream
 import kotlin.math.roundToInt
 
 val DEFAULT_MEDIA_URI: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
@@ -400,12 +403,111 @@ class RecordingStore(private val context: Context, val uri: Uri) {
      * Create a [RecordingWriter] for writing a new recording with the given name. The name should contain the file extension (ogg, mp3, ...) which is used to
      * select the format the recording will be stored in.
      */
-    fun createWriter(name: String): RecordingWriter = RecordingWriter.create(context, uri, name)
+    fun createWriter(name: String): Writer {
+        val extension = MimeTypeMap.getFileExtensionFromUrl(name)
+        val mimeType = extension?.let { MimeTypeMap.getSingleton().getMimeTypeFromExtension(it) } ?: "application/octet-stream"
+
+        val direct = Writer.DIRECT_EXTENSIONS.contains(extension) or Writer.DIRECT_AUTHORITIES.contains(uri.authority)
+
+        return if (direct) {
+            val fileUri = checkNotNull(createFile(context, uri, name, mimeType)) { "failed to create file '$name' in $uri" }
+            val fileDescriptor = checkNotNull(context.contentResolver.openFileDescriptor(fileUri, "w")) {
+                "failed to open file descriptor for $uri"
+            }
+
+            DirectWriter(fileUri, fileDescriptor)
+        } else {
+            WorkaroundWriter(name, mimeType)
+        }
+    }
 
     private val backend: Backend = Backend.of(uri)
 
     private val trashFolder: Uri?
         get() = findChildDocument(context.contentResolver, uri, TRASH_FOLDER_NAME)
+
+    /**
+     * Helper class to write recordings to the device.
+     *
+     * Note: Why not use [DocumentsContract.createDocument] directly? Because there is currently a [bug in `MediaRecorder`](https://issuetracker.google.com/issues/479420499)
+     * which causes crash when writing to some [android.provider.DocumentsProvider]s. Using this class works around the bug.
+     */
+    sealed class Writer {
+        companion object {
+            // Mime types not affected by the MediaStore bug
+            internal val DIRECT_EXTENSIONS = arrayOf("mp3")
+
+            // Document providers not affected by the MediaStore bug
+            internal val DIRECT_AUTHORITIES = arrayOf("com.android.externalstorage.documents", MediaStore.AUTHORITY)
+        }
+
+        /**
+         * File descriptor to write the recording data to.
+         */
+        abstract val fileDescriptor: ParcelFileDescriptor
+
+        abstract fun commit(): Uri
+
+        abstract fun cancel()
+    }
+
+    // Writes directly to the document at the given URI.
+    private inner class DirectWriter internal constructor(
+        private val uri: Uri,
+        override val fileDescriptor: ParcelFileDescriptor
+    ) : Writer() {
+        override fun commit(): Uri {
+            fileDescriptor.close()
+
+            if (uri.authority == MediaStore.AUTHORITY) {
+                completeMedia(context.contentResolver, uri)
+            }
+
+            return uri
+        }
+
+        override fun cancel() {
+            fileDescriptor.close()
+            deleteFile(context.contentResolver, uri)
+        }
+    }
+
+    // Writes to a temporary file first, then copies it into the destination document.
+    private inner class WorkaroundWriter internal constructor(
+        private val name: String, private val mimeType: String
+    ) : Writer() {
+        private val tempFile: File = File(context.cacheDir, "$name.tmp")
+
+        override val fileDescriptor: ParcelFileDescriptor
+            get() = ParcelFileDescriptor.open(
+                tempFile, ParcelFileDescriptor.MODE_WRITE_ONLY or ParcelFileDescriptor.MODE_CREATE or ParcelFileDescriptor.MODE_TRUNCATE
+            )
+
+        override fun commit(): Uri {
+            val dstUri = checkNotNull(createFile(context, uri, name, mimeType)) {
+                "failed to create file '$name' in $uri"
+            }
+            val dst = checkNotNull(context.contentResolver.openOutputStream(dstUri)) {
+                "failed to open output stream for $dstUri"
+            }
+
+            val src = FileInputStream(tempFile)
+
+            src.use { src ->
+                dst.use { dst ->
+                    src.copyTo(dst)
+                }
+            }
+
+            tempFile.delete()
+
+            return dstUri
+        }
+
+        override fun cancel() {
+            tempFile.delete()
+        }
+    }
 
 }
 
@@ -444,8 +546,13 @@ private fun getDuration(source: MetadataSource): Int = MediaMetadataRetriever().
     }
 }
 
+private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = if (parentUri.authority == MediaStore.AUTHORITY) {
+    createMedia(context, parentUri, name, mimeType)
+} else {
+    createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
+}
 
-internal fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = DocumentsContract.createDocument(
+private fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = DocumentsContract.createDocument(
     context.contentResolver,
     parentUri,
     mimeType,
@@ -453,7 +560,7 @@ internal fun createDocument(context: Context, parentUri: Uri, name: String, mime
 )
 
 
-internal fun createMedia(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
+private fun createMedia(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
     val values = ContentValues().apply {
         put(MediaStore.Audio.Media.DISPLAY_NAME, name)
         put(MediaStore.Audio.Media.MIME_TYPE, mimeType)
@@ -471,7 +578,7 @@ internal fun createMedia(context: Context, parentUri: Uri, name: String, mimeTyp
     return context.contentResolver.insert(parentUri, values)
 }
 
-internal fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
+private fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
         return
     }
@@ -483,7 +590,7 @@ internal fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
     contentResolver.update(uri, values, null, null)
 }
 
-internal fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Backend.of(uri)) {
+private fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Backend.of(uri)) {
     Backend.MEDIA -> contentResolver.delete(uri, null, null)
     Backend.DOCUMENT -> DocumentsContract.deleteDocument(contentResolver, uri)
 }
