@@ -65,7 +65,7 @@ class RecorderFragment(
         updateRecordingDuration(0)
         binding.toggleRecordingButton.setDebouncedClickListener {
             (context as? SimpleActivity)?.apply {
-                handleExternalStoragePermissions(ExternalStoragePermission.WRITE) { granted ->
+                handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
                     if (granted == true) {
                         handleNotificationPermission { granted ->
                             if (granted) {

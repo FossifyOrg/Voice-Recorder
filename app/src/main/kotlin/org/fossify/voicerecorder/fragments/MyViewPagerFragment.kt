@@ -22,10 +22,16 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
         onLoadingStart()
 
         (context as? SimpleActivity)?.apply {
-            handleExternalStoragePermissions(ExternalStoragePermission.READ) { granted ->
+            handleExternalStoragePermission(ExternalStoragePermission.READ) { granted ->
                 if (granted == true) {
                     ensureBackgroundThread {
-                        val recordings = recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
+                        val recordings = try {
+                            recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
+                        } catch (_: SecurityException) {
+                            // The access to the store has been revoked.
+                            // TODO: show an error dialog
+                            ArrayList()
+                        }
 
                         runOnUiThread {
                             onLoadingEnd(recordings)

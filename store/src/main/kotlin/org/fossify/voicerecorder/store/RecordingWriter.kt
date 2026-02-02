@@ -24,18 +24,17 @@ sealed class RecordingWriter {
 
             val direct = DIRECT_EXTENSIONS.contains(extension) or DIRECT_AUTHORITIES.contains(parentUri.authority)
 
-            if (direct) {
-                val uri = createFile(context, parentUri, name, mimeType)
+            return if (direct) {
+                val uri = checkNotNull(createFile(context, parentUri, name, mimeType)) { "failed to create file '$name' in $parentUri" }
                 val fileDescriptor = checkNotNull(context.contentResolver.openFileDescriptor(uri, "w")) {
-                    "failed to open file descriptor at $uri"
+                    "failed to open file descriptor for $uri"
                 }
 
-                return Direct(context.contentResolver, uri, fileDescriptor)
+                Direct(context.contentResolver, uri, fileDescriptor)
             } else {
-                return Workaround(context, parentUri, name, mimeType)
+                Workaround(context, parentUri, name, mimeType)
             }
         }
-
 
         // Mime types not affected by the MediaStore bug
         private val DIRECT_EXTENSIONS = arrayOf("mp3")
@@ -76,23 +75,21 @@ sealed class RecordingWriter {
 
     // Writes to a temporary file first, then copies it into the destination document.
     class Workaround internal constructor(
-        private val context: Context,
-        private val parentTreeUri: Uri,
-        private val name: String,
-        private val mimeType: String
+        private val context: Context, private val parentTreeUri: Uri, private val name: String, private val mimeType: String
     ) : RecordingWriter() {
         private val tempFile: File = File(context.cacheDir, "$name.tmp")
 
         override val fileDescriptor: ParcelFileDescriptor
             get() = ParcelFileDescriptor.open(
-                tempFile,
-                ParcelFileDescriptor.MODE_WRITE_ONLY or ParcelFileDescriptor.MODE_CREATE or ParcelFileDescriptor.MODE_TRUNCATE
+                tempFile, ParcelFileDescriptor.MODE_WRITE_ONLY or ParcelFileDescriptor.MODE_CREATE or ParcelFileDescriptor.MODE_TRUNCATE
             )
 
-        override fun commit(): Uri {
-            val dstUri = createFile(context, parentTreeUri, name, mimeType)
-            val dst = requireNotNull(context.contentResolver.openOutputStream(dstUri)) {
-                "failed to open output stream at $dstUri"
+        override fun commit(): Uri  {
+            val dstUri = checkNotNull(createFile(context, parentTreeUri, name, mimeType)) {
+                "failed to create file '$name' in $parentTreeUri"
+            }
+            val dst = checkNotNull(context.contentResolver.openOutputStream(dstUri)) {
+                "failed to open output stream for $dstUri"
             }
 
             val src = FileInputStream(tempFile)
@@ -114,14 +111,9 @@ sealed class RecordingWriter {
     }
 }
 
-private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri {
-    val uri = if (parentUri.authority == MediaStore.AUTHORITY) {
-        createMedia(context, parentUri, name, mimeType)
-    } else {
-        createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
-    }
-
-    return requireNotNull(uri) {
-        "failed to create file '$name' in $parentUri"
-    }
+private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = if (parentUri.authority == MediaStore.AUTHORITY) {
+    createMedia(context, parentUri, name, mimeType)
+} else {
+    createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
 }
+

@@ -42,7 +42,14 @@ class SettingsActivity : SimpleActivity() {
             )
 
             ensureBackgroundThread {
-                val hasRecordings = !recordingStore.isEmpty()
+                val hasRecordings = try {
+                    !recordingStore.isEmpty()
+                } catch (_: SecurityException) {
+                    // The permission to access the store has been revoked (perhaps the providing app has been reinstalled). Swallow this exception to allow the
+                    // user to select different store.
+                    false
+                }
+
                 runOnUiThread {
                     if (newUri != oldUri && hasRecordings) {
                         MoveRecordingsDialog(
