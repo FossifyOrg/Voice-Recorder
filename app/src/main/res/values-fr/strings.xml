@@ -37,4 +37,6 @@
     <string name="sample_rate">Fréquence d\'échantillonnage</string>
     <string name="change_microphone_mode_confirmation">Ceci change la façon dont votre appareil achemine et traite le son. Les résultats peuvent varier selon l\'appareil et peut impacter le volume, le bruit ainsi que d\'autres facteurs.</string>
     <string name="microphone_mode">Mode microphone</string>
+    <string name="filename_pattern_must_contain_all">Doit inclure tous les espaces réservés pour les noms de fichiers uniques (%Y, %M, %D, %h, %m, %s)</string>
+    <string name="filename_pattern">Modèle de nom de fichier</string>
 </resources>
