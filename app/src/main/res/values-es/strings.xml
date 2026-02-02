@@ -35,4 +35,6 @@
     <string name="sample_rate">Tasa de muestreo</string>
     <string name="change_microphone_mode_confirmation">Esto cambia la forma en que tu dispositivo enruta y procesa el audio. Los resultados varían según el dispositivo y pueden afectar al volumen, el ruido, y otros factores.</string>
     <string name="microphone_mode">Modo de micrófono</string>
+    <string name="filename_pattern">Patrón de nombre de archivo</string>
+    <string name="filename_pattern_must_contain_all">Debe incluir todos los marcadores necesarios para generar nombres de archivo únicos (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
