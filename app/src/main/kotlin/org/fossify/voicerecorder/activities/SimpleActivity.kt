@@ -41,7 +41,7 @@ open class SimpleActivity : BaseSimpleActivity() {
 
     // NOTE: Need this instead of using `BaseSimpleActivity.handlePermission` because it doesn't always work correctly (particularly on old SDKs). Possibly
     // because this app invokes the permission request from multiple places and `BaseSimpleActivity` doesn't handle it well?
-    fun handleExternalStoragePermissions(externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit) {
+    fun handleExternalStoragePermission(externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // External storage permissions to access MediaStore are no longer needed
             callback(true)

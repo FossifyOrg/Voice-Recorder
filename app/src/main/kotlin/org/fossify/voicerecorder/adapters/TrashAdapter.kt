@@ -128,9 +128,8 @@ class TrashAdapter(
         val positions = getSelectedItemPositions()
 
         ensureBackgroundThread {
-            if (activity.recordingStore.delete(recordingsToRemove)) {
-                doDeleteAnimation(recordingsToRemove, positions)
-            }
+            activity.recordingStore.delete(recordingsToRemove)
+            doDeleteAnimation(recordingsToRemove, positions)
         }
     }
 

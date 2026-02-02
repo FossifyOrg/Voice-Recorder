@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
 import android.util.Log
-import android.util.Log.e
 import androidx.core.app.NotificationCompat
 import org.fossify.commons.extensions.getLaunchIntent
 import org.fossify.commons.extensions.showErrorToast
@@ -141,13 +140,12 @@ class RecorderService : Service() {
                 try {
                     val uri = writer.commit()
 
-                    // TODO:
-                    // scanRecording()
-
                     recordingSavedSuccessfully(uri)
                     EventBus.getDefault().post(Events.RecordingCompleted())
                 } catch (e: Exception) {
                     Log.e(TAG, "failed to commit recording writer", e)
+
+                    // TODO: send the exception to the activity and show an error dialog there
                     showErrorToast(e)
                 }
             }
@@ -206,22 +204,6 @@ class RecorderService : Service() {
             showErrorToast(e)
         }
     }
-
-    // TODO: what is this for?
-//    private fun scanRecording() {
-//        MediaScannerConnection.scanFile(
-//            this,
-//            arrayOf(recordingPath),
-//            arrayOf(recordingPath.getMimeType())
-//        ) { _, uri ->
-//            if (uri == null) {
-//                toast(org.fossify.commons.R.string.unknown_error_occurred)
-//                return@scanFile
-//            }
-//
-//            recordingSavedSuccessfully(resultUri ?: uri)
-//        }
-//    }
 
     private fun recordingSavedSuccessfully(savedUri: Uri) {
         toast(R.string.recording_saved_successfully)

@@ -10,6 +10,7 @@ import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.ItemRecordingBinding
 import org.fossify.voicerecorder.dialogs.DeleteConfirmationDialog
@@ -161,13 +162,14 @@ class RecordingsAdapter(
             return
         }
 
-        val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
+        runWithWriteExternalStoragePermission() {
+            val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
+            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
-        val positions = getSelectedItemPositions()
+            val positions = getSelectedItemPositions()
 
-        ensureBackgroundThread {
-            if (activity.recordingStore.delete(recordingsToRemove)) {
+            ensureBackgroundThread {
+                activity.recordingStore.delete(recordingsToRemove)
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
             }
         }
@@ -178,16 +180,18 @@ class RecordingsAdapter(
             return
         }
 
-        val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
+        runWithWriteExternalStoragePermission() {
+            val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
+            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
-        val positions = getSelectedItemPositions()
+            val positions = getSelectedItemPositions()
 
-        ensureBackgroundThread {
-            activity.recordingStore.trash(recordingsToRemove)
+            ensureBackgroundThread {
+                activity.recordingStore.trash(recordingsToRemove)
 
-            doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
-            EventBus.getDefault().post(Events.RecordingTrashUpdated())
+                doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
+                EventBus.getDefault().post(Events.RecordingTrashUpdated())
+            }
         }
     }
 
@@ -245,4 +249,13 @@ class RecordingsAdapter(
     }
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
+
+    // Runs the callback only after the WRITE_STORAGE_PERMISSON has been granted or if running on a SDK that no longer requires it.
+    private fun runWithWriteExternalStoragePermission(callback: () -> Unit) = (activity as SimpleActivity?)?.run {
+        handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
+            if (granted == true) {
+                callback()
+            }
+        }
+    }
 }
