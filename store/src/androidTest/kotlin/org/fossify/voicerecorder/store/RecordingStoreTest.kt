@@ -28,7 +28,8 @@ import kotlin.math.roundToInt
 class RecordingStoreTest {
     companion object {
         private const val MOCK_PROVIDER_AUTHORITY = "org.fossify.voicerecorder.store.mock.provider"
-        private val DEFAULT_DOCUMENTS_URI = DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Recordings")
+        private const val DEFAULT_DOCUMENTS_FOLDER = "Recordings"
+        private val DEFAULT_DOCUMENTS_URI = DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, DEFAULT_DOCUMENTS_FOLDER)
         private const val TAG = "RecordingStoreTest"
     }
 
@@ -47,6 +48,8 @@ class RecordingStoreTest {
     fun setup() {
         tempDir = File(instrumentation.context.cacheDir, "temp-${System.currentTimeMillis()}")
         tempDir.mkdirs()
+
+        File(tempDir, DEFAULT_DOCUMENTS_FOLDER).mkdirs()
 
         val mockDocumentsProvider = context.contentResolver.acquireContentProviderClient(MOCK_PROVIDER_AUTHORITY)?.localContentProvider as MockDocumentsProvider
         mockDocumentsProvider.root = tempDir
@@ -170,10 +173,18 @@ class RecordingStoreTest {
     }
 
     @Test
-    fun migrate_SAF_to_SAF() = migrate(
-        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "Old audio"),
-        DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, "New audio"),
-    )
+    fun migrate_SAF_to_SAF() {
+        val oldDir = "Old audio"
+        val newDir = "New audio"
+
+        File(tempDir, oldDir).mkdirs()
+        File(tempDir, newDir).mkdirs()
+
+        migrate(
+            DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, oldDir),
+            DocumentsContract.buildTreeDocumentUri(MOCK_PROVIDER_AUTHORITY, newDir),
+        )
+    }
 
     @Test
     fun migrate_SAF_to_MediaStore() = migrate(DEFAULT_DOCUMENTS_URI, DEFAULT_MEDIA_URI)

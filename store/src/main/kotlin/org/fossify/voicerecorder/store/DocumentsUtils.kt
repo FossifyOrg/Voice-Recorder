@@ -42,13 +42,3 @@ internal fun findChildDocument(contentResolver: ContentResolver, treeUri: Uri, d
     return null
 }
 
-/**
- * Returns the child document with the given name or creates it if it doesn't exists.
- */
-fun getOrCreateDocument(contentResolver: ContentResolver, treeUri: Uri, mimeType: String, displayName: String): Uri? {
-    val uri = findChildDocument(contentResolver, treeUri, displayName)
-    if (uri != null) return uri
-
-    val parentDocumentUri = buildParentDocumentUri(treeUri)
-    return DocumentsContract.createDocument(contentResolver, parentDocumentUri, mimeType, displayName)
-}

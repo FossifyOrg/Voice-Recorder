@@ -28,6 +28,13 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
+    companion object  {
+        /**
+         * Set this extra to true in the [Intent] that starts this activity to focus (scroll to view) the save recordings folder field.
+         */
+        const val EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER = "focus_save_recordings_folder"
+    }
+
     private var recycleBinContentSize = 0
     private lateinit var binding: ActivitySettingsBinding
 
@@ -44,9 +51,8 @@ class SettingsActivity : SimpleActivity() {
             ensureBackgroundThread {
                 val hasRecordings = try {
                     !recordingStore.isEmpty()
-                } catch (_: SecurityException) {
-                    // The permission to access the store has been revoked (perhaps the providing app has been reinstalled). Swallow this exception to allow the
-                    // user to select different store.
+                } catch (_: Exception) {
+                    // Something went wrong accessing the current store. Swallow the exception to allow the user to select a different one.
                     false
                 }
 
@@ -74,6 +80,10 @@ class SettingsActivity : SimpleActivity() {
 
         setupEdgeToEdge(padBottomSystem = listOf(binding.settingsNestedScrollview))
         setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsAppbar)
+
+        if (intent.getBooleanExtra(EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER, false)) {
+            focusSaveRecordingsFolder()
+        }
     }
 
     override fun onResume() {
@@ -181,6 +191,10 @@ class SettingsActivity : SimpleActivity() {
             binding.settingsSaveRecordingsProviderIcon.visibility = View.GONE
         }
 
+    }
+
+    private fun focusSaveRecordingsFolder() = binding.settingsSaveRecordingsHolder.post {
+        binding.settingsNestedScrollview.smoothScrollTo(0, binding.settingsSaveRecordingsHolder.top)
     }
 
     private fun setupFilenamePattern() {

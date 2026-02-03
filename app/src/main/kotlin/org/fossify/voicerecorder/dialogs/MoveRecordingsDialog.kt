@@ -10,6 +10,7 @@ import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
+import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.store.RecordingStore
 
 class MoveRecordingsDialog(
@@ -28,7 +29,7 @@ class MoveRecordingsDialog(
                     view = binding.root, dialog = this, titleId = R.string.move_recordings
                 ) {
                     dialog = it
-                    dialog.setOnDismissListener { callback() }
+                    dialog.setOnCancelListener { callback() }
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
                         callback()
                         dialog.dismiss()
@@ -55,10 +56,12 @@ class MoveRecordingsDialog(
 
     private fun moveAllRecordings() = ensureBackgroundThread {
         RecordingStore(activity, oldFolder).let { store ->
-            store.migrate(newFolder)
-
-            activity.runOnUiThread {
-                callback()
+            try {
+                store.migrate(newFolder)
+                activity.runOnUiThread { callback() }
+            } catch (e: Exception) {
+                activity.handleRecordingStoreError(e)
+            } finally {
                 dialog.dismiss()
             }
         }

@@ -79,15 +79,20 @@ class RecorderService : Service() {
         val recordingFormat = config.recordingFormat
 
         try {
+            val recordingName = "${getFormattedFilename()}.${recordingFormat.getExtension(this)}"
+            val writer = try {
+                recordingStore.createWriter(recordingName)
+            } catch (e: Exception) {
+                cancelRecording()
+                EventBus.getDefault().post(Events.RecordingFailed(e))
+                return
+            }.also {
+                this.writer = it
+            }
+
             recorder = when (recordingFormat) {
                 RecordingFormat.M4A, RecordingFormat.OGG -> MediaRecorderWrapper(this)
                 RecordingFormat.MP3 -> Mp3Recorder(this)
-            }
-
-            val writer = recordingStore.createWriter(
-                "${getFormattedFilename()}.${recordingFormat.getExtension(this)}",
-            ).also {
-                this.writer = it
             }
 
             recorder?.setOutputFile(writer.fileDescriptor)
@@ -103,8 +108,6 @@ class RecorderService : Service() {
 
             startAmplitudeUpdates()
         } catch (e: Exception) {
-            Log.e(TAG, "failed to start recording", e)
-
             showErrorToast(e)
             stopRecording()
         }
@@ -122,14 +125,12 @@ class RecorderService : Service() {
             }
         } catch (
             @Suppress(
-                "TooGenericExceptionCaught",
-                "SwallowedException"
+                "TooGenericExceptionCaught", "SwallowedException"
             ) e: RuntimeException
         ) {
-            Log.e(TAG, "failed to stop recorder", e)
             toast(R.string.recording_too_short)
         } catch (e: Exception) {
-            Log.e(TAG, "failed to stop recorder", e)
+            Log.e(TAG, "failed to stop recording", e)
             showErrorToast(e)
         } finally {
             recorder = null
@@ -139,13 +140,10 @@ class RecorderService : Service() {
             ensureBackgroundThread {
                 try {
                     val uri = writer.commit()
-
                     recordingSavedSuccessfully(uri)
                     EventBus.getDefault().post(Events.RecordingCompleted())
                 } catch (e: Exception) {
                     Log.e(TAG, "failed to commit recording writer", e)
-
-                    // TODO: send the exception to the activity and show an error dialog there
                     showErrorToast(e)
                 }
             }
@@ -223,8 +221,7 @@ class RecorderService : Service() {
         override fun run() {
             if (recorder != null) {
                 try {
-                    EventBus.getDefault()
-                        .post(Events.RecordingAmplitude(recorder!!.getMaxAmplitude()))
+                    EventBus.getDefault().post(Events.RecordingAmplitude(recorder!!.getMaxAmplitude()))
                 } catch (_: Exception) {
                 }
             }
@@ -234,8 +231,7 @@ class RecorderService : Service() {
     private fun showNotification(): Notification {
         val channelId = "simple_recorder"
         val label = getString(R.string.app_name)
-        val notificationManager =
-            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         NotificationChannel(channelId, label, NotificationManager.IMPORTANCE_DEFAULT).apply {
             setSound(null, null)
@@ -249,16 +245,9 @@ class RecorderService : Service() {
             text += " (${getString(R.string.paused)})"
         }
 
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(label)
-            .setContentText(text)
-            .setSmallIcon(icon)
-            .setContentIntent(getOpenAppIntent())
-            .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
-            .setVisibility(visibility)
-            .setSound(null)
-            .setOngoing(true)
-            .setAutoCancel(true)
+        val builder =
+            NotificationCompat.Builder(this, channelId).setContentTitle(label).setContentText(text).setSmallIcon(icon).setContentIntent(getOpenAppIntent())
+                .setPriority(NotificationManager.IMPORTANCE_DEFAULT).setVisibility(visibility).setSound(null).setOngoing(true).setAutoCancel(true)
 
         return builder.build()
     }
@@ -266,10 +255,7 @@ class RecorderService : Service() {
     private fun getOpenAppIntent(): PendingIntent {
         val intent = getLaunchIntent() ?: Intent(this, SplashActivity::class.java)
         return PendingIntent.getActivity(
-            this,
-            RECORDER_RUNNING_NOTIF_ID,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            this, RECORDER_RUNNING_NOTIF_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
 
