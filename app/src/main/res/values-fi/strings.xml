@@ -36,4 +36,6 @@
     <string name="sample_rate">Näytteenottotaajuus</string>
     <string name="change_microphone_mode_confirmation">Tämä muuttaa laitteen äänen reititystä ja käsittelyä. Tulokset vaihtelevat laitteittain ja voivat vaikuttaa äänenvoimakkuuteen, kohinaan ja muihin tekijöihin.</string>
     <string name="microphone_mode">Mikrofonitila</string>
+    <string name="filename_pattern">Tiedostonimen muoto</string>
+    <string name="filename_pattern_must_contain_all">Täytyy sisältää kaikki seuraavat viitteet ainutkertaisia tiedostonimiä varten (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
