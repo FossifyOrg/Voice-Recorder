@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import kotlin.math.roundToInt
 
 val DEFAULT_MEDIA_URI: Uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
@@ -279,7 +280,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         }
 
         val dstParentUri = if (toTrash) {
-            getOrCreateTrashFolder(contentResolver, dstUri)
+            getOrCreateTrashFolder(buildParentDocumentUri(dstUri))
         } else {
             buildParentDocumentUri(dstUri)
         }
@@ -309,29 +310,18 @@ class RecordingStore(private val context: Context, val uri: Uri) {
         dstParentUri: Uri,
     ) {
         val contentResolver = context.contentResolver
-        val dstUri = checkNotNull(
-            DocumentsContract.createDocument(
-                contentResolver, dstParentUri, src.mimeType, src.title
-            )
-        ) {
-            "failed to create document '${src.title}' in $dstParentUri"
-        }
-
+        val dstUri = createDocument(
+            context, dstParentUri, src.title, src.mimeType
+        )
         copyFile(contentResolver, src.uri, dstUri)
-
         DocumentsContract.deleteDocument(contentResolver, src.uri)
     }
 
     private fun moveDocumentsToMedia(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
         for (recording in recordings) {
-            val dstUri = checkNotNull(createMedia(context, dstUri, recording.title, recording.mimeType)) {
-                "failed to create media '${recording.title}' in $dstUri"
-            }
-
+            val dstUri = createMedia(context, dstUri, recording.title, recording.mimeType)
             copyFile(context.contentResolver, recording.uri, dstUri)
-
             DocumentsContract.deleteDocument(context.contentResolver, recording.uri)
-
             completeMedia(context.contentResolver, dstUri)
 
             if (toTrash) {
@@ -343,15 +333,13 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     private fun moveMediaToDocuments(recordings: Collection<Recording>, dstUri: Uri, toTrash: Boolean) {
         val contentResolver = context.contentResolver
         val dstParentUri = if (toTrash) {
-            getOrCreateTrashFolder(contentResolver, dstUri)
+            getOrCreateTrashFolder(buildParentDocumentUri(dstUri))
         } else {
             buildParentDocumentUri(dstUri)
         }
 
         for (recording in recordings) {
-            val dstUri = checkNotNull(createDocument(context, dstParentUri, recording.title, recording.mimeType)) {
-                "failed to create document '${recording.title}' in $dstParentUri"
-            }
+            val dstUri = createDocument(context, dstParentUri, recording.title, recording.mimeType)
             copyFile(contentResolver, recording.uri, dstUri)
             contentResolver.delete(recording.uri, null, null)
         }
@@ -400,7 +388,8 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
     /**
-     * Create a [RecordingWriter] for writing a new recording with the given name. The name should contain the file extension (ogg, mp3, ...) which is used to
+     * Create a [RecordingStore.Writer] for writing a new recording with the given name. The name should contain the file extension (ogg, mp3, ...) which is
+     * used to
      * select the format the recording will be stored in.
      */
     fun createWriter(name: String): Writer {
@@ -409,16 +398,25 @@ class RecordingStore(private val context: Context, val uri: Uri) {
 
         val direct = Writer.DIRECT_EXTENSIONS.contains(extension) or Writer.DIRECT_AUTHORITIES.contains(uri.authority)
 
-        return if (direct) {
-            val fileUri = checkNotNull(createFile(context, uri, name, mimeType)) { "failed to create file '$name' in $uri" }
-            val fileDescriptor = checkNotNull(context.contentResolver.openFileDescriptor(fileUri, "w")) {
-                "failed to open file descriptor for $uri"
+        if (direct) {
+            val fileUri = createFile(context, uri, name, mimeType)
+            val fileDescriptor = context.contentResolver.openFileDescriptor(fileUri, "w") ?: throw FileNotFoundException("$fileUri not found")
+
+            return DirectWriter(fileUri, fileDescriptor)
+        } else {
+            if (backend == Backend.DOCUMENT) {
+                checkDocumentAccess(context, buildParentDocumentUri(uri))
             }
 
-            DirectWriter(fileUri, fileDescriptor)
-        } else {
-            WorkaroundWriter(name, mimeType)
+            return WorkaroundWriter(name, mimeType)
         }
+    }
+
+    private fun getOrCreateTrashFolder(parentUri: Uri): Uri {
+        val uri = findChildDocument(context.contentResolver, parentUri, TRASH_FOLDER_NAME)
+        if (uri != null) return uri
+
+        return createDocument(context, parentUri, TRASH_FOLDER_NAME, DocumentsContract.Document.MIME_TYPE_DIR)
     }
 
     private val backend: Backend = Backend.of(uri)
@@ -452,10 +450,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
     // Writes directly to the document at the given URI.
-    private inner class DirectWriter internal constructor(
-        private val uri: Uri,
-        override val fileDescriptor: ParcelFileDescriptor
-    ) : Writer() {
+    private inner class DirectWriter(private val uri: Uri, override val fileDescriptor: ParcelFileDescriptor) : Writer() {
         override fun commit(): Uri {
             fileDescriptor.close()
 
@@ -473,9 +468,7 @@ class RecordingStore(private val context: Context, val uri: Uri) {
     }
 
     // Writes to a temporary file first, then copies it into the destination document.
-    private inner class WorkaroundWriter internal constructor(
-        private val name: String, private val mimeType: String
-    ) : Writer() {
+    private inner class WorkaroundWriter(private val name: String, private val mimeType: String) : Writer() {
         private val tempFile: File = File(context.cacheDir, "$name.tmp")
 
         override val fileDescriptor: ParcelFileDescriptor
@@ -484,12 +477,8 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             )
 
         override fun commit(): Uri {
-            val dstUri = checkNotNull(createFile(context, uri, name, mimeType)) {
-                "failed to create file '$name' in $uri"
-            }
-            val dst = checkNotNull(context.contentResolver.openOutputStream(dstUri)) {
-                "failed to open output stream for $dstUri"
-            }
+            val dstUri = createFile(context, uri, name, mimeType)
+            val dst = context.contentResolver.openOutputStream(dstUri) ?: throw FileNotFoundException("$dstUri not found")
 
             val src = FileInputStream(tempFile)
 
@@ -508,7 +497,6 @@ class RecordingStore(private val context: Context, val uri: Uri) {
             tempFile.delete()
         }
     }
-
 }
 
 private const val TRASH_FOLDER_NAME = ".trash"
@@ -546,21 +534,47 @@ private fun getDuration(source: MetadataSource): Int = MediaMetadataRetriever().
     }
 }
 
-private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = if (parentUri.authority == MediaStore.AUTHORITY) {
+private fun createFile(context: Context, parentUri: Uri, name: String, mimeType: String): Uri = if (parentUri.authority == MediaStore.AUTHORITY) {
     createMedia(context, parentUri, name, mimeType)
 } else {
     createDocument(context, buildParentDocumentUri(parentUri), name, mimeType)
 }
 
-private fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? = DocumentsContract.createDocument(
-    context.contentResolver,
-    parentUri,
-    mimeType,
-    name,
-)
+private fun createDocument(context: Context, parentUri: Uri, name: String, mimeType: String): Uri {
+    val uri = DocumentsContract.createDocument(
+        context.contentResolver,
+        parentUri,
+        mimeType,
+        name,
+    )
 
+    if (uri != null) {
+        return uri
+    }
 
-private fun createMedia(context: Context, parentUri: Uri, name: String, mimeType: String): Uri? {
+    checkDocumentAccess(context, parentUri)
+
+    throw FileNotFoundException("$parentUri not found")
+}
+
+private fun checkDocumentAccess(context: Context, uri: Uri) {
+    val authority = requireNotNull(uri.authority) { "invalid URI: $uri" }
+    context.packageManager.resolveContentProvider(authority, 0) ?: throw FileNotFoundException("content provider $authority not found")
+
+    val projection = arrayOf(DocumentsContract.Document.COLUMN_FLAGS)
+    val cursor = context.contentResolver.query(uri, projection, null, null, null) ?: throw FileNotFoundException("$uri not found")
+    cursor.use { cursor ->
+        if (!cursor.moveToNext()) {
+            throw FileNotFoundException("$uri not found")
+        }
+
+        if (cursor.getInt(0) and DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE == 0) {
+            throw UnsupportedOperationException("$uri is not writable")
+        }
+    }
+}
+
+private fun createMedia(context: Context, parentUri: Uri, name: String, mimeType: String): Uri {
     val values = ContentValues().apply {
         put(MediaStore.Audio.Media.DISPLAY_NAME, name)
         put(MediaStore.Audio.Media.MIME_TYPE, mimeType)
@@ -575,7 +589,7 @@ private fun createMedia(context: Context, parentUri: Uri, name: String, mimeType
         }
     }
 
-    return context.contentResolver.insert(parentUri, values)
+    return context.contentResolver.insert(parentUri, values) ?: throw FileNotFoundException("$parentUri not found")
 }
 
 private fun completeMedia(contentResolver: ContentResolver, uri: Uri) {
@@ -596,8 +610,8 @@ private fun deleteFile(contentResolver: ContentResolver, uri: Uri) = when (Backe
 }
 
 private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri) {
-    val src = checkNotNull(contentResolver.openInputStream(srcUri)) { "failed to open input stream for $srcUri" }
-    val dst = checkNotNull(contentResolver.openOutputStream(dstUri)) { "failed to open output stream for $dstUri" }
+    val src = contentResolver.openInputStream(srcUri) ?: throw FileNotFoundException("failed to open $srcUri for reading")
+    val dst = contentResolver.openOutputStream(dstUri) ?: throw FileNotFoundException("failed to open $dstUri for writing")
 
     src.use { inputStream ->
         dst.use { outputStream ->
@@ -605,12 +619,6 @@ private fun copyFile(contentResolver: ContentResolver, srcUri: Uri, dstUri: Uri)
         }
     }
 }
-
-private fun getOrCreateTrashFolder(contentResolver: ContentResolver, parentUri: Uri): Uri = checkNotNull(
-    getOrCreateDocument(
-        contentResolver, parentUri, DocumentsContract.Document.MIME_TYPE_DIR, TRASH_FOLDER_NAME
-    )
-) { "failed to create the trash folder in $parentUri" }
 
 private fun Long.toSeconds(): Int = (this / 1000.toDouble()).roundToInt()
 

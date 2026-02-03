@@ -8,7 +8,6 @@ import android.os.ParcelFileDescriptor
 import com.naman14.androidlame.AndroidLame
 import com.naman14.androidlame.LameBuilder
 import org.fossify.commons.extensions.showErrorToast
-import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.extensions.config
 import java.io.FileOutputStream
 import java.io.IOException
@@ -38,6 +37,8 @@ class Mp3Recorder(val context: Context) : Recorder {
         minBufferSize * 2
     )
 
+    private var thread: Thread? = null
+
     override fun prepare() {}
 
     override fun start() {
@@ -54,12 +55,12 @@ class Mp3Recorder(val context: Context) : Recorder {
             .setOutChannels(1)
             .build()
 
-        ensureBackgroundThread {
+        thread = Thread {
             try {
                 audioRecord.startRecording()
             } catch (e: Exception) {
                 context.showErrorToast(e)
-                return@ensureBackgroundThread
+                return@Thread
             }
 
             outputStream.use { outputStream ->
@@ -81,13 +82,16 @@ class Mp3Recorder(val context: Context) : Recorder {
                     }
                 }
             }
-        }
+        }.apply { start() }
     }
 
     override fun stop() {
         isPaused.set(true)
         isStopped.set(true)
         audioRecord.stop()
+
+        thread?.join() // ensures the buffer is fully written to the output file before continuing
+        thread = null
     }
 
     override fun pause() {

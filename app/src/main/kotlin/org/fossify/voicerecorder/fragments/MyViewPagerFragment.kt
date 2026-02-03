@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
+import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.store.Recording
 
@@ -27,9 +28,8 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
                     ensureBackgroundThread {
                         val recordings = try {
                             recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
-                        } catch (_: SecurityException) {
-                            // The access to the store has been revoked.
-                            // TODO: show an error dialog
+                        } catch (e: Exception) {
+                            handleRecordingStoreError(e)
                             ArrayList()
                         }
 

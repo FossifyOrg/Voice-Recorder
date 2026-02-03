@@ -12,7 +12,8 @@ import java.net.URLConnection
 class MockDocumentsProvider() : DocumentsProvider() {
     companion object {
         val DEFAULT_DOCUMENT_PROJECTION = arrayOf(
-            DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_FLAGS
         )
 
         val DEFAULT_ROOT_PROJECTION = arrayOf(DocumentsContract.Root.COLUMN_ROOT_ID, DocumentsContract.Root.COLUMN_DOCUMENT_ID)
@@ -58,6 +59,7 @@ class MockDocumentsProvider() : DocumentsProvider() {
     private fun MatrixCursor.addFile(documentId: String, file: File) {
         val row = newRow()
 
+
         if (columnNames.contains(DocumentsContract.Document.COLUMN_DOCUMENT_ID)) {
             row.add(DocumentsContract.Document.COLUMN_DOCUMENT_ID, documentId)
         }
@@ -83,6 +85,12 @@ class MockDocumentsProvider() : DocumentsProvider() {
         if (columnNames.contains(DocumentsContract.Document.COLUMN_LAST_MODIFIED)) {
             row.add(DocumentsContract.Document.COLUMN_LAST_MODIFIED, file.lastModified())
         }
+
+        if (columnNames.contains(DocumentsContract.Document.COLUMN_FLAGS)) {
+            if (file.isDirectory) {
+                row.add(DocumentsContract.Document.COLUMN_FLAGS, DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE)
+            }
+        }
     }
 
     override fun isChildDocument(parentDocumentId: String, documentId: String): Boolean = documentId.startsWith("$parentDocumentId/")
@@ -98,8 +106,6 @@ class MockDocumentsProvider() : DocumentsProvider() {
         val root = requireNotNull(root)
         val documentId = "$parentDocumentId/$displayName"
         val file = File(root, documentId)
-
-        file.parentFile?.mkdirs()
 
         if (mimeType == DocumentsContract.Document.MIME_TYPE_DIR) {
             file.mkdir()

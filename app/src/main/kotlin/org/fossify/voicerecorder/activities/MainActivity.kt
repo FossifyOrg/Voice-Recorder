@@ -7,15 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
-import org.fossify.commons.extensions.appLaunched
-import org.fossify.commons.extensions.checkAppSideloading
-import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
-import org.fossify.commons.extensions.hideKeyboard
-import org.fossify.commons.extensions.launchMoreAppsFromUsIntent
-import org.fossify.commons.extensions.onPageChangeListener
-import org.fossify.commons.extensions.onTabSelectionChanged
-import org.fossify.commons.extensions.toast
-import org.fossify.commons.extensions.updateBottomTabItemColors
+import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.*
 import org.fossify.commons.models.FAQItem
 import org.fossify.voicerecorder.BuildConfig
@@ -24,6 +16,7 @@ import org.fossify.voicerecorder.adapters.ViewPagerAdapter
 import org.fossify.voicerecorder.databinding.ActivityMainBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
+import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -277,11 +270,17 @@ class MainActivity : SimpleActivity() {
     fun recordingSaved(event: Events.RecordingSaved) {
         if (isThirdPartyIntent()) {
             Intent().apply {
-                data = event.uri!!
+                data = event.uri
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 setResult(RESULT_OK, this)
             }
             finish()
         }
+    }
+
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun recordingFailed(event: Events.RecordingFailed) {
+        handleRecordingStoreError(event.exception)
     }
 }
