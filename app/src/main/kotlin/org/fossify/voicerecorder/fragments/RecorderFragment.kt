@@ -17,8 +17,6 @@ import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.handleRecordingStoreError
-import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
 import org.fossify.voicerecorder.helpers.*
 import org.fossify.voicerecorder.models.Events

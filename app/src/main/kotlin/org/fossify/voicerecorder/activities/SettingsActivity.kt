@@ -32,7 +32,7 @@ class SettingsActivity : SimpleActivity() {
         /**
          * Set this extra to true in the [Intent] that starts this activity to focus (scroll to view) the save recordings folder field.
          */
-        const val EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER = "focus_save_recordings_folder"
+        const val EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER = "org.fossify.voicerecorder.extra.FOCUS_SAVE_RECORDINGS_FOLDER"
     }
 
     private var recycleBinContentSize = 0

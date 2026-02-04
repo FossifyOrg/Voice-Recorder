@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
-import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.store.Recording
 

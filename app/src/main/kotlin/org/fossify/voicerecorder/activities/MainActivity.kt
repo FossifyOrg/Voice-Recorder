@@ -1,10 +1,13 @@
 package org.fossify.voicerecorder.activities
 
+import android.app.AuthenticationRequiredException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
 import org.fossify.commons.extensions.*
@@ -16,7 +19,6 @@ import org.fossify.voicerecorder.adapters.ViewPagerAdapter
 import org.fossify.voicerecorder.databinding.ActivityMainBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
-import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService

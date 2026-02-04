@@ -1,17 +1,27 @@
 package org.fossify.voicerecorder.activities
 
 import android.Manifest
+import android.app.AuthenticationRequiredException
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import org.fossify.commons.activities.BaseSimpleActivity
+import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.REPOSITORY_NAME
 
 open class SimpleActivity : BaseSimpleActivity() {
     private var permissionCallbacks = mutableMapOf<Int, (Boolean?) -> Unit>()
     private var permissionNextRequestCode: Int = 10000
+
+    private val authLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+        // TODO: retry the action that triggered this intent
+    }
 
     override fun getAppIconIDs() = arrayListOf(
         R.mipmap.ic_launcher_red,
@@ -77,6 +87,25 @@ open class SimpleActivity : BaseSimpleActivity() {
 
         callback?.invoke(result)
     }
+
+    open fun handleRecordingStoreError(exception: Exception) {
+        Log.w(this::class.simpleName, "recording store error", exception)
+
+        if (exception is AuthenticationRequiredException) {
+            authLauncher.launch(IntentSenderRequest.Builder(exception.userAction).build())
+            return
+        }
+
+        runOnUiThread {
+            getAlertDialogBuilder().setTitle(getString(R.string.recording_store_error_title)).setMessage(getString(R.string.recording_store_error_message))
+                .setPositiveButton(org.fossify.commons.R.string.go_to_settings) { _, _ ->
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java).apply {
+                        putExtra(SettingsActivity.EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER, true)
+                    })
+                }.setNegativeButton(org.fossify.commons.R.string.cancel, null).create().show()
+        }
+    }
+
 }
 
 enum class ExternalStoragePermission {
