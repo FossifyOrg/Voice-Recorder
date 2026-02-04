@@ -1,12 +1,16 @@
 package org.fossify.voicerecorder.adapters
 
 import android.annotation.SuppressLint
-import android.view.*
-import android.widget.PopupMenu
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.dialogs.ConfirmationDialog
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.formatDate
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.setupViewBackground
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.R

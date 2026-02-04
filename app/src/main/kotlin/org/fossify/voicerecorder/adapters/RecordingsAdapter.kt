@@ -1,8 +1,9 @@
 package org.fossify.voicerecorder.adapters
 
 import android.annotation.SuppressLint
-import android.view.*
-import android.widget.PopupMenu
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.extensions.*
@@ -162,7 +163,7 @@ class RecordingsAdapter(
             return
         }
 
-        runWithWriteExternalStoragePermission() {
+        runWithWriteExternalStoragePermission {
             val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
             val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
@@ -180,7 +181,7 @@ class RecordingsAdapter(
             return
         }
 
-        runWithWriteExternalStoragePermission() {
+        runWithWriteExternalStoragePermission {
             val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
             val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
