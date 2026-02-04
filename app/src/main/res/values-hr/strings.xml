@@ -37,4 +37,6 @@
     <string name="sample_rate">Stopa uzorka</string>
     <string name="change_microphone_mode_confirmation">Ovo mijenja način na koji vaš uređaj usmjerava i obrađuje zvuk. Rezultati se razlikuju ovisno o uređaju i mogu utjecati na glasnoću, buku i druge faktore.</string>
     <string name="microphone_mode">Modus mikrofona</string>
+    <string name="filename_pattern">Uzorak za ime datoteke</string>
+    <string name="filename_pattern_must_contain_all">Mora sadržati sva rezervirana mjesta za jedinstvena imena datoteka (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
