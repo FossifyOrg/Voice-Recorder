@@ -1,6 +1,5 @@
 package org.fossify.voicerecorder.activities
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -9,14 +8,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import org.fossify.commons.dialogs.ColorPickerDialog
 import org.fossify.commons.dialogs.FeatureLockedDialog
-import org.fossify.commons.extensions.adjustAlpha
-import org.fossify.commons.extensions.applyColorFilter
-import org.fossify.commons.extensions.getContrastColor
-import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.getProperTextColor
-import org.fossify.commons.extensions.isDynamicTheme
-import org.fossify.commons.extensions.isOrWasThankYouInstalled
-import org.fossify.commons.extensions.setFillWithStroke
+import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.WidgetRecordDisplayConfigBinding
@@ -34,7 +26,7 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
-        setResult(Activity.RESULT_CANCELED)
+        setResult(RESULT_CANCELED)
         binding = WidgetRecordDisplayConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupEdgeToEdge(padTopSystem = listOf(binding.configHolder), padBottomSystem = listOf(binding.root))
@@ -101,7 +93,7 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
 
         Intent().apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId)
-            setResult(Activity.RESULT_OK, this)
+            setResult(RESULT_OK, this)
         }
         finish()
     }

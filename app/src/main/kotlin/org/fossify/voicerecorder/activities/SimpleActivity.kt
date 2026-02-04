@@ -74,13 +74,13 @@ open class SimpleActivity : BaseSimpleActivity() {
 
         ActivityCompat.requestPermissions(
             this, arrayOf(permission), requestCode
-        );
+        )
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val callback = permissionCallbacks.remove(requestCode)
         val result = grantResults.firstOrNull()?.let { it == PackageManager.PERMISSION_GRANTED }

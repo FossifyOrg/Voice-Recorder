@@ -3,11 +3,7 @@ package org.fossify.voicerecorder.fragments
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
-import org.fossify.commons.extensions.areSystemAnimationsEnabled
-import org.fossify.commons.extensions.beVisibleIf
-import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.getProperTextColor
-import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.extensions.*
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.TrashAdapter
 import org.fossify.voicerecorder.databinding.FragmentTrashBinding
@@ -18,7 +14,6 @@ import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import kotlin.collections.isNotEmpty
 
 class TrashFragment(
     context: Context,

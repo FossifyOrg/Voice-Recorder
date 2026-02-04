@@ -1,13 +1,10 @@
 package org.fossify.voicerecorder.activities
 
-import android.app.AuthenticationRequiredException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
 import org.fossify.commons.extensions.*
