@@ -2,19 +2,18 @@ package org.fossify.voicerecorder.dialogs
 
 import android.net.Uri
 import androidx.appcompat.app.AlertDialog
-import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.setupDialogStuff
 import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
-import org.fossify.voicerecorder.extensions.handleRecordingStoreError
 import org.fossify.voicerecorder.store.RecordingStore
 
 class MoveRecordingsDialog(
-    private val activity: BaseSimpleActivity, private val oldFolder: Uri, private val newFolder: Uri, private val callback: () -> Unit
+    private val activity: SimpleActivity, private val oldFolder: Uri, private val newFolder: Uri, private val callback: () -> Unit
 ) {
     private lateinit var dialog: AlertDialog
     private val binding = DialogMoveRecordingsBinding.inflate(activity.layoutInflater).apply {
