@@ -37,4 +37,6 @@
     <string name="sample_rate">Taxa de amostragem</string>
     <string name="change_microphone_mode_confirmation">Isso altera a forma como seu dispositivo encaminha e processa o áudio. Os resultados variam de acordo com o dispositivo e podem afetar o volume, o ruído e outros fatores.</string>
     <string name="microphone_mode">Modo microfone</string>
+    <string name="filename_pattern">Padrão de nome de arquivo</string>
+    <string name="filename_pattern_must_contain_all">Deve incluir todos os espaços reservados para nomes de arquivos exclusivos (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
