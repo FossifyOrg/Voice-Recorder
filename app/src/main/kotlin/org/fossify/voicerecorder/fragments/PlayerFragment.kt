@@ -8,24 +8,13 @@ import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.util.AttributeSet
 import android.widget.SeekBar
-import androidx.core.net.toUri
-import org.fossify.commons.extensions.applyColorFilter
-import org.fossify.commons.extensions.areSystemAnimationsEnabled
-import org.fossify.commons.extensions.beVisibleIf
-import org.fossify.commons.extensions.copyToClipboard
-import org.fossify.commons.extensions.getColoredDrawableWithColor
-import org.fossify.commons.extensions.getContrastColor
-import org.fossify.commons.extensions.getFormattedDuration
-import org.fossify.commons.extensions.getProperPrimaryColor
-import org.fossify.commons.extensions.getProperTextColor
-import org.fossify.commons.extensions.showErrorToast
-import org.fossify.commons.extensions.updateTextColors
-import org.fossify.commons.extensions.value
+import org.fossify.commons.extensions.*
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.voicerecorder.R
@@ -35,8 +24,8 @@ import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
 import org.fossify.voicerecorder.receivers.BecomingNoisyReceiver
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -59,7 +48,7 @@ class PlayerFragment(
     private var itemsIgnoringSearch = ArrayList<Recording>()
     private var lastSearchQuery = ""
     private var bus: EventBus? = null
-    private var prevSavePath = ""
+    private var prevSaveFolder: Uri? = null
     private var prevRecycleBinState = context.config.useRecycleBin
     private var playOnPreparation = true
     private lateinit var binding: FragmentPlayerBinding
@@ -74,7 +63,7 @@ class PlayerFragment(
 
     override fun onResume() {
         setupColors()
-        if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath || context.config.useRecycleBin != prevRecycleBinState) {
+        if (prevSaveFolder != null && context!!.config.saveRecordingsFolder != prevSaveFolder || context.config.useRecycleBin != prevRecycleBinState) {
             loadRecordings()
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
@@ -253,7 +242,7 @@ class PlayerFragment(
             reset()
 
             try {
-                setDataSource(context, recording.path.toUri())
+                setDataSource(context, recording.uri)
             } catch (e: Exception) {
                 context?.showErrorToast(e)
                 return
@@ -378,7 +367,7 @@ class PlayerFragment(
     private fun getRecordingsAdapter() = binding.recordingsList.adapter as? RecordingsAdapter
 
     private fun storePrevState() {
-        prevSavePath = context!!.config.saveRecordingsFolder
+        prevSaveFolder = context!!.config.saveRecordingsFolder
         prevRecycleBinState = context.config.useRecycleBin
     }
 
@@ -433,7 +422,7 @@ class PlayerFragment(
         try {
             isReceiverRegistered = false
             context.unregisterReceiver(becomingNoisyReceiver)
-        } catch (ignored: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
     }
 }

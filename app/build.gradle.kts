@@ -1,13 +1,16 @@
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.FileInputStream
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
 
 plugins {
-    alias(libs.plugins.android)
+    alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
+
+
 }
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
@@ -144,4 +147,6 @@ dependencies {
     implementation(libs.tandroidlame)
     implementation(libs.autofittextview)
     detektPlugins(libs.compose.detekt)
+
+    implementation(project(":store"))
 }
