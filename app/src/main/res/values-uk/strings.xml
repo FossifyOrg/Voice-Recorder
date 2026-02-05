@@ -38,4 +38,6 @@
     <string name="sample_rate">Частота дискретизації</string>
     <string name="change_microphone_mode_confirmation">Це змінює спосіб направляння та обробки аудіо вашим пристроєм. Результати залежать від пристрою та можуть впливати на гучність, шум та інші фактори.</string>
     <string name="microphone_mode">Режим мікрофона</string>
+    <string name="filename_pattern">Шаблон назви файлу</string>
+    <string name="filename_pattern_must_contain_all">Має містити всі заповнювачі для унікальних імен файлів (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
