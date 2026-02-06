@@ -30,7 +30,7 @@
     <string name="move_recordings_to_new_folder_desc">Du hast bereits vorhandene Aufnahmen. Möchtest du diese in den neuen Ordner verschieben?</string>
     <string name="move_recordings">Aufnahmen verschieben</string>
     <string name="discard_recording">Aufnahme abbrechen</string>
-    <string name="discard_recording_confirmation">Soll die aktuelle Aufnahme wirklich verworfen werden? Dies kann nicht rückgängig gemacht werden.</string>
+    <string name="discard_recording_confirmation">Soll wirklich die aktuelle Aufnahme verworfen werden? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="sample_rate">Abtastrate</string>
     <string name="change_microphone_mode_confirmation">Dadurch ändert sich die Art und Weise, wie dein Gerät Audio weiterleitet und verarbeitet. Die Ergebnisse variieren je nach Gerät und können sich auf Lautstärke, Rauschen und andere Faktoren auswirken.</string>
     <string name="microphone_mode">Mikrofonmodus</string>
