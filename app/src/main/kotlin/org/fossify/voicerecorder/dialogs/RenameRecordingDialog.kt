@@ -3,7 +3,14 @@ package org.fossify.voicerecorder.dialogs
 import android.provider.DocumentsContract
 import androidx.appcompat.app.AlertDialog
 import org.fossify.commons.activities.BaseSimpleActivity
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.getAlertDialogBuilder
+import org.fossify.commons.extensions.getFilenameExtension
+import org.fossify.commons.extensions.isAValidFilename
+import org.fossify.commons.extensions.setupDialogStuff
+import org.fossify.commons.extensions.showErrorToast
+import org.fossify.commons.extensions.showKeyboard
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.databinding.DialogRenameRecordingBinding
 import org.fossify.voicerecorder.models.Events
@@ -11,9 +18,7 @@ import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 
 class RenameRecordingDialog(
-    val activity: BaseSimpleActivity,
-    val recording: Recording,
-    val callback: () -> Unit
+    val activity: BaseSimpleActivity, val recording: Recording, val callback: () -> Unit
 ) {
     init {
         val binding = DialogRenameRecordingBinding.inflate(activity.layoutInflater).apply {
@@ -21,14 +26,10 @@ class RenameRecordingDialog(
         }
         val view = binding.root
 
-        activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.ok, null)
-            .setNegativeButton(org.fossify.commons.R.string.cancel, null)
-            .apply {
+        activity.getAlertDialogBuilder().setPositiveButton(org.fossify.commons.R.string.ok, null)
+            .setNegativeButton(org.fossify.commons.R.string.cancel, null).apply {
                 activity.setupDialogStuff(
-                    view = view,
-                    dialog = this,
-                    titleId = org.fossify.commons.R.string.rename
+                    view = view, dialog = this, titleId = org.fossify.commons.R.string.rename
                 ) { alertDialog ->
                     alertDialog.showKeyboard(binding.renameRecordingTitle)
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {

@@ -14,7 +14,18 @@ import android.os.Looper
 import android.os.PowerManager
 import android.util.AttributeSet
 import android.widget.SeekBar
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.applyColorFilter
+import org.fossify.commons.extensions.areSystemAnimationsEnabled
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.copyToClipboard
+import org.fossify.commons.extensions.getColoredDrawableWithColor
+import org.fossify.commons.extensions.getContrastColor
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.showErrorToast
+import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.extensions.value
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.voicerecorder.R
@@ -34,8 +45,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class PlayerFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
 
     companion object {
@@ -138,8 +148,7 @@ class PlayerFragment(
             }
 
             val prevRecordingIndex = adapter.recordings.indexOfFirst { it.id == wantedRecordingID }
-            val prevRecording = adapter.recordings
-                .getOrNull(prevRecordingIndex) ?: return@setOnClickListener
+            val prevRecording = adapter.recordings.getOrNull(prevRecordingIndex) ?: return@setOnClickListener
             playRecording(prevRecording, true)
         }
 
@@ -156,11 +165,9 @@ class PlayerFragment(
                 return@setOnClickListener
             }
 
-            val oldRecordingIndex =
-                adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
+            val oldRecordingIndex = adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
             val newRecordingIndex = (oldRecordingIndex + 1) % adapter.recordings.size
-            val newRecording =
-                adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
+            val newRecording = adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
             playRecording(newRecording, true)
             playedRecordingIDs.push(newRecording.id)
         }
@@ -209,10 +216,8 @@ class PlayerFragment(
         player = MediaPlayer().apply {
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
             setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
+                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
             )
 
             setOnCompletionListener {
@@ -257,8 +262,7 @@ class PlayerFragment(
         }
 
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(playOnPreparation))
-        binding.playerProgressbar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        binding.playerProgressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser && !playedRecordingIDs.isEmpty()) {
                     player?.seekTo(progress * 1000)
@@ -306,9 +310,8 @@ class PlayerFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch
-            .filter { it.title.contains(text, true) }
-            .toMutableList() as ArrayList<Recording>
+        val filtered =
+            itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 
@@ -342,8 +345,7 @@ class PlayerFragment(
         }
 
         return resources.getColoredDrawableWithColor(
-            drawableId = drawable,
-            color = context.getProperPrimaryColor().getContrastColor()
+            drawableId = drawable, color = context.getProperPrimaryColor().getContrastColor()
         )
     }
 

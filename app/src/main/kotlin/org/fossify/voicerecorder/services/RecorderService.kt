@@ -1,7 +1,11 @@
 package org.fossify.voicerecorder.services
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
@@ -17,7 +21,14 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.getFormattedFilename
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.updateWidgets
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
+import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
+import org.fossify.voicerecorder.helpers.RECORDER_RUNNING_NOTIF_ID
+import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
+import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
+import org.fossify.voicerecorder.helpers.RECORDING_STOPPED
+import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
+import org.fossify.voicerecorder.helpers.TOGGLE_PAUSE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
@@ -246,8 +257,9 @@ class RecorderService : Service() {
         }
 
         val builder =
-            NotificationCompat.Builder(this, channelId).setContentTitle(label).setContentText(text).setSmallIcon(icon).setContentIntent(getOpenAppIntent())
-                .setPriority(NotificationManager.IMPORTANCE_DEFAULT).setVisibility(visibility).setSound(null).setOngoing(true).setAutoCancel(true)
+            NotificationCompat.Builder(this, channelId).setContentTitle(label).setContentText(text).setSmallIcon(icon)
+                .setContentIntent(getOpenAppIntent()).setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                .setVisibility(visibility).setSound(null).setOngoing(true).setAutoCancel(true)
 
         return builder.build()
     }

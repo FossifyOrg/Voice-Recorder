@@ -11,14 +11,27 @@ import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.compose.extensions.getActivity
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.PermissionRequiredDialog
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.applyColorFilter
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.getColoredDrawableWithColor
+import org.fossify.commons.extensions.getContrastColor
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.openNotificationSettings
+import org.fossify.commons.extensions.setDebouncedClickListener
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
+import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
+import org.fossify.voicerecorder.helpers.RECORDING_PAUSED
+import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
+import org.fossify.voicerecorder.helpers.RECORDING_STOPPED
+import org.fossify.voicerecorder.helpers.TOGGLE_PAUSE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
 import org.greenrobot.eventbus.EventBus
@@ -72,13 +85,13 @@ class RecorderFragment(
                                 cycleRecordingState()
                             } else {
                                 PermissionRequiredDialog(
-                                    activity = this, textId = org.fossify.commons.R.string.allow_notifications_voice_recorder, positiveActionCallback = {
+                                    activity = this,
+                                    textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
+                                    positiveActionCallback = {
                                         (context as BaseSimpleActivity).openNotificationSettings()
                                     })
                             }
                         }
-                    } else {
-                        // TODO: storage permission not granted. What should we do?
                     }
                 }
             }

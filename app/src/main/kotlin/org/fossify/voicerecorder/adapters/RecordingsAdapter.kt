@@ -6,7 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.formatDate
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getFormattedDuration
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.openPathIntent
+import org.fossify.commons.extensions.setupViewBackground
+import org.fossify.commons.extensions.sharePathsIntent
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
@@ -118,7 +124,10 @@ class RecordingsAdapter(
     private fun openRecordingWith() {
         val recording = getItemWithKey(selectedKeys.first()) ?: return
         activity.openPathIntent(
-            path = recording.uri.toString(), forceChooser = true, applicationId = BuildConfig.APPLICATION_ID, forceMimeType = "audio/*"
+            path = recording.uri.toString(),
+            forceChooser = true,
+            applicationId = BuildConfig.APPLICATION_ID,
+            forceMimeType = "audio/*"
         )
     }
 
@@ -251,7 +260,8 @@ class RecordingsAdapter(
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
 
-    // Runs the callback only after the WRITE_STORAGE_PERMISSON has been granted or if running on a SDK that no longer requires it.
+    // Runs the callback only after the WRITE_STORAGE_PERMISSON has been granted or if running on a SDK that no
+    // longer requires it.
     private fun runWithWriteExternalStoragePermission(callback: () -> Unit) = (activity as SimpleActivity?)?.run {
         handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
             if (granted == true) {

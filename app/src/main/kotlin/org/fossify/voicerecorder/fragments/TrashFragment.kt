@@ -3,7 +3,11 @@ package org.fossify.voicerecorder.fragments
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
-import org.fossify.commons.extensions.*
+import org.fossify.commons.extensions.areSystemAnimationsEnabled
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.getProperTextColor
+import org.fossify.commons.extensions.updateTextColors
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.TrashAdapter
 import org.fossify.voicerecorder.databinding.FragmentTrashBinding
@@ -16,8 +20,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class TrashFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
 
     private var itemsIgnoringSearch = ArrayList<Recording>()
@@ -103,8 +106,8 @@ class TrashFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }
-            .toMutableList() as ArrayList<Recording>
+        val filtered =
+            itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 

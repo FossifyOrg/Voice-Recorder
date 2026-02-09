@@ -13,7 +13,10 @@ import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
 import org.fossify.voicerecorder.store.RecordingStore
 
 class MoveRecordingsDialog(
-    private val activity: SimpleActivity, private val oldFolder: Uri, private val newFolder: Uri, private val callback: () -> Unit
+    private val activity: SimpleActivity,
+    private val oldFolder: Uri,
+    private val newFolder: Uri,
+    private val callback: () -> Unit
 ) {
     private lateinit var dialog: AlertDialog
     private val binding = DialogMoveRecordingsBinding.inflate(activity.layoutInflater).apply {
@@ -22,8 +25,8 @@ class MoveRecordingsDialog(
     }
 
     init {
-        activity.getAlertDialogBuilder().setPositiveButton(org.fossify.commons.R.string.yes, null).setNegativeButton(org.fossify.commons.R.string.no, null)
-            .apply {
+        activity.getAlertDialogBuilder().setPositiveButton(org.fossify.commons.R.string.yes, null)
+            .setNegativeButton(org.fossify.commons.R.string.no, null).apply {
                 activity.setupDialogStuff(
                     view = binding.root, dialog = this, titleId = R.string.move_recordings
                 ) {
@@ -40,7 +43,9 @@ class MoveRecordingsDialog(
                             setCancelable(false)
                             setCanceledOnTouchOutside(false)
                             arrayOf(
-                                binding.message, getButton(AlertDialog.BUTTON_POSITIVE), getButton(AlertDialog.BUTTON_NEGATIVE)
+                                binding.message,
+                                getButton(AlertDialog.BUTTON_POSITIVE),
+                                getButton(AlertDialog.BUTTON_NEGATIVE)
                             ).forEach { button ->
                                 button.isEnabled = false
                                 button.alpha = MEDIUM_ALPHA
@@ -58,7 +63,7 @@ class MoveRecordingsDialog(
             try {
                 store.migrate(newFolder)
                 activity.runOnUiThread { callback() }
-            } catch (e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
                 activity.handleRecordingStoreError(e)
             } finally {
                 dialog.dismiss()

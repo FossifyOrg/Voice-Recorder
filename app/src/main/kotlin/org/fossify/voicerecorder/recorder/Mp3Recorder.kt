@@ -65,7 +65,6 @@ class Mp3Recorder(val context: Context) : Recorder {
 
             outputStream.use { outputStream ->
                 while (!isStopped.get()) {
-                    // FIXME: does this busy-loop when `isPaused` is true?
                     if (!isPaused.get()) {
                         val count = audioRecord.read(rawData, 0, minBufferSize)
                         if (count > 0) {

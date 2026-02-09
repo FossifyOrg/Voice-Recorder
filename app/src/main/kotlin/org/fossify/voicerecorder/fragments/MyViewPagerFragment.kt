@@ -9,7 +9,10 @@ import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.store.Recording
 
-abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet) {
+abstract class MyViewPagerFragment(
+    context: Context,
+    attributeSet: AttributeSet
+) : ConstraintLayout(context, attributeSet) {
     abstract fun onResume()
 
     abstract fun onDestroy()
@@ -26,8 +29,12 @@ abstract class MyViewPagerFragment(context: Context, attributeSet: AttributeSet)
                 if (granted == true) {
                     ensureBackgroundThread {
                         val recordings = try {
-                            recordingStore.all(trashed).sortedByDescending { it.timestamp }.toCollection(ArrayList())
-                        } catch (e: Exception) {
+                            recordingStore.all(trashed)
+                                .sortedByDescending { it.timestamp }
+                                .toCollection(ArrayList())
+                        } catch (
+                            @Suppress("TooGenericExceptionCaught") e: Exception
+                        ) {
                             handleRecordingStoreError(e)
                             ArrayList()
                         }

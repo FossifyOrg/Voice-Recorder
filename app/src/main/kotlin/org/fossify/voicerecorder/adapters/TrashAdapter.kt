@@ -23,7 +23,10 @@ import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 
 class TrashAdapter(
-    activity: SimpleActivity, var recordings: ArrayList<Recording>, private val refreshListener: RefreshRecordingsListener, recyclerView: MyRecyclerView
+    activity: SimpleActivity,
+    var recordings: ArrayList<Recording>,
+    private val refreshListener: RefreshRecordingsListener,
+    recyclerView: MyRecyclerView
 ) : MyRecyclerViewAdapter(activity, recyclerView, {}), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     init {

@@ -7,8 +7,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import me.grantland.widget.AutofitHelper
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.*
+import org.fossify.commons.extensions.appLaunched
+import org.fossify.commons.extensions.checkAppSideloading
+import org.fossify.commons.extensions.getBottomNavigationBackgroundColor
+import org.fossify.commons.extensions.hideKeyboard
+import org.fossify.commons.extensions.launchMoreAppsFromUsIntent
+import org.fossify.commons.extensions.onPageChangeListener
+import org.fossify.commons.extensions.onTabSelectionChanged
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.updateBottomTabItemColors
+import org.fossify.commons.helpers.LICENSE_ANDROID_LAME
+import org.fossify.commons.helpers.LICENSE_AUDIO_RECORD_VIEW
+import org.fossify.commons.helpers.LICENSE_AUTOFITTEXTVIEW
+import org.fossify.commons.helpers.LICENSE_EVENT_BUS
+import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
 import org.fossify.commons.models.FAQItem
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
@@ -24,10 +36,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : SimpleActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
     private var bus: EventBus? = null
 
     override var isSearchBarEnabled = true
@@ -137,15 +145,16 @@ class MainActivity : SimpleActivity() {
             getPagerAdapter()?.searchTextChanged(text)
         }
 
-        binding.mainMenu.requireToolbar().setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
-                R.id.settings -> launchSettings()
-                R.id.about -> launchAbout()
-                else -> return@setOnMenuItemClickListener false
+        binding.mainMenu.requireToolbar()
+            .setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
+                    R.id.settings -> launchSettings()
+                    R.id.about -> launchAbout()
+                    else -> return@setOnMenuItemClickListener false
+                }
+                return@setOnMenuItemClickListener true
             }
-            return@setOnMenuItemClickListener true
-        }
     }
 
     private fun updateMenuColors() {
@@ -169,21 +178,25 @@ class MainActivity : SimpleActivity() {
         }
 
         tabDrawables.forEachIndexed { i, drawableId ->
-            binding.mainTabsHolder.newTab().setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item).apply {
-                customView?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)?.setImageDrawable(
-                    AppCompatResources.getDrawable(
-                        this@MainActivity, drawableId
+            binding.mainTabsHolder.newTab()
+                .setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item)
+                .apply {
+                    customView?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)
+                        ?.setImageDrawable(
+                            AppCompatResources.getDrawable(
+                                this@MainActivity, drawableId
+                            )
+                        )
+
+                    customView?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)
+                        ?.setText(tabLabels[i])
+
+                    AutofitHelper.create(
+                        customView?.findViewById(org.fossify.commons.R.id.tab_item_label)
                     )
-                )
 
-                customView?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)?.setText(tabLabels[i])
-
-                AutofitHelper.create(
-                    customView?.findViewById(org.fossify.commons.R.id.tab_item_label)
-                )
-
-                binding.mainTabsHolder.addTab(this)
-            }
+                    binding.mainTabsHolder.addTab(this)
+                }
         }
 
         binding.mainTabsHolder.onTabSelectionChanged(tabUnselectedAction = {
@@ -207,16 +220,19 @@ class MainActivity : SimpleActivity() {
             binding.viewPager.currentItem = 0
         } else {
             binding.viewPager.currentItem = config.lastUsedViewPagerPage
-            binding.mainTabsHolder.getTabAt(config.lastUsedViewPagerPage)?.select()
+            binding.mainTabsHolder.getTabAt(config.lastUsedViewPagerPage)
+                ?.select()
         }
     }
 
     private fun setupTabColors() {
-        val activeView = binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.customView
+        val activeView =
+            binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.customView
         updateBottomTabItemColors(activeView, true)
         for (i in 0 until binding.mainTabsHolder.tabCount) {
             if (i != binding.viewPager.currentItem) {
-                val inactiveView = binding.mainTabsHolder.getTabAt(i)?.customView
+                val inactiveView =
+                    binding.mainTabsHolder.getTabAt(i)?.customView
                 updateBottomTabItemColors(inactiveView, false)
             }
         }
@@ -226,7 +242,8 @@ class MainActivity : SimpleActivity() {
         binding.mainTabsHolder.setBackgroundColor(bottomBarColor)
     }
 
-    private fun getPagerAdapter() = (binding.viewPager.adapter as? ViewPagerAdapter)
+    private fun getPagerAdapter() =
+        (binding.viewPager.adapter as? ViewPagerAdapter)
 
     private fun launchSettings() {
         hideKeyboard()
@@ -234,35 +251,44 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or LICENSE_AUDIO_RECORD_VIEW or LICENSE_ANDROID_LAME or LICENSE_AUTOFITTEXTVIEW
+        val licenses =
+            LICENSE_EVENT_BUS or LICENSE_AUDIO_RECORD_VIEW or LICENSE_ANDROID_LAME or LICENSE_AUTOFITTEXTVIEW
 
         val faqItems = arrayListOf(
             FAQItem(
                 title = R.string.faq_1_title, text = R.string.faq_1_text
             ), FAQItem(
-                title = org.fossify.commons.R.string.faq_9_title_commons, text = org.fossify.commons.R.string.faq_9_text_commons
+                title = org.fossify.commons.R.string.faq_9_title_commons,
+                text = org.fossify.commons.R.string.faq_9_text_commons
             )
         )
 
         if (!resources.getBoolean(org.fossify.commons.R.bool.hide_google_relations)) {
             faqItems.add(
                 FAQItem(
-                    title = org.fossify.commons.R.string.faq_2_title_commons, text = org.fossify.commons.R.string.faq_2_text_commons
+                    title = org.fossify.commons.R.string.faq_2_title_commons,
+                    text = org.fossify.commons.R.string.faq_2_text_commons
                 )
             )
             faqItems.add(
                 FAQItem(
-                    title = org.fossify.commons.R.string.faq_6_title_commons, text = org.fossify.commons.R.string.faq_6_text_commons
+                    title = org.fossify.commons.R.string.faq_6_title_commons,
+                    text = org.fossify.commons.R.string.faq_6_text_commons
                 )
             )
         }
 
         startAboutActivity(
-            appNameId = R.string.app_name, licenseMask = licenses, versionName = BuildConfig.VERSION_NAME, faqItems = faqItems, showFAQBeforeMail = true
+            appNameId = R.string.app_name,
+            licenseMask = licenses,
+            versionName = BuildConfig.VERSION_NAME,
+            faqItems = faqItems,
+            showFAQBeforeMail = true
         )
     }
 
-    private fun isThirdPartyIntent() = intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
+    private fun isThirdPartyIntent() =
+        intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
 
     @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)

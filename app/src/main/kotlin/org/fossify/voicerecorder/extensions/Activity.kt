@@ -5,7 +5,11 @@ import android.os.Build
 import android.view.WindowManager
 import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.hasPermission
-import org.fossify.commons.helpers.*
+import org.fossify.commons.helpers.DAY_SECONDS
+import org.fossify.commons.helpers.MONTH_SECONDS
+import org.fossify.commons.helpers.PERMISSION_READ_STORAGE
+import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
+import org.fossify.commons.helpers.ensureBackgroundThread
 
 fun Activity.setKeepScreenAwake(keepScreenOn: Boolean) {
     if (keepScreenOn) {
@@ -27,7 +31,8 @@ fun BaseSimpleActivity.deleteExpiredTrashedRecordings() {
         ensureBackgroundThread {
             try {
                 val store = recordingStore
-                val recordingsToRemove = store.all(trashed = true).filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }.toList()
+                val recordingsToRemove = store.all(trashed = true)
+                    .filter { it.timestamp < System.currentTimeMillis() - MONTH_SECONDS * 1000L }.toList()
                 if (recordingsToRemove.isNotEmpty()) {
                     store.delete(recordingsToRemove)
                 }

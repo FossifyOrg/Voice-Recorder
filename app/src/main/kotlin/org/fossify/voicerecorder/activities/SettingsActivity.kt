@@ -9,8 +9,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
-import org.fossify.commons.extensions.*
-import org.fossify.commons.helpers.*
+import org.fossify.commons.extensions.addLockedLabelIfNeeded
+import org.fossify.commons.extensions.beGone
+import org.fossify.commons.extensions.beVisible
+import org.fossify.commons.extensions.beVisibleIf
+import org.fossify.commons.extensions.formatSize
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.toast
+import org.fossify.commons.extensions.updateTextColors
+import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
+import org.fossify.commons.helpers.NavigationIcon
+import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.isQPlus
+import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.commons.models.RadioItem
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
@@ -19,7 +30,11 @@ import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.recordingStoreFor
-import org.fossify.voicerecorder.helpers.*
+import org.fossify.voicerecorder.helpers.BITRATES
+import org.fossify.voicerecorder.helpers.DEFAULT_BITRATE
+import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
+import org.fossify.voicerecorder.helpers.SAMPLING_RATES
+import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.store.RecordingFormat
 import org.greenrobot.eventbus.EventBus
@@ -28,9 +43,10 @@ import kotlin.math.abs
 import kotlin.system.exitProcess
 
 class SettingsActivity : SimpleActivity() {
-    companion object  {
+    companion object {
         /**
-         * Set this extra to true in the [Intent] that starts this activity to focus (scroll to view) the save recordings folder field.
+         * Set this extra to true in the [Intent] that starts this activity to focus (scroll to view) the save
+         * recordings folder field.
          */
         const val EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER = "org.fossify.voicerecorder.extra.FOCUS_SAVE_RECORDINGS_FOLDER"
     }
@@ -52,7 +68,8 @@ class SettingsActivity : SimpleActivity() {
                 val hasRecordings = try {
                     !recordingStore.isEmpty()
                 } catch (_: Exception) {
-                    // Something went wrong accessing the current store. Swallow the exception to allow the user to select a different one.
+                    // Something went wrong accessing the current store. Swallow the exception to allow the user to
+                    // select a different one.
                     false
                 }
 
@@ -79,7 +96,9 @@ class SettingsActivity : SimpleActivity() {
         setContentView(binding.root)
 
         setupEdgeToEdge(padBottomSystem = listOf(binding.settingsNestedScrollview))
-        setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsAppbar)
+        setupMaterialScrollListener(
+            binding.settingsNestedScrollview, binding.settingsAppbar
+        )
 
         if (intent.getBooleanExtra(EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER, false)) {
             focusSaveRecordingsFolder()
@@ -126,7 +145,9 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupCustomizeWidgetColors() {
         binding.settingsWidgetColorCustomizationHolder.setOnClickListener {
-            Intent(this, WidgetRecordDisplayConfigureActivity::class.java).apply {
+            Intent(
+                this, WidgetRecordDisplayConfigureActivity::class.java
+            ).apply {
                 putExtra(IS_CUSTOMIZING_COLORS, true)
                 startActivity(this)
             }
@@ -194,7 +215,9 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun focusSaveRecordingsFolder() = binding.settingsSaveRecordingsHolder.post {
-        binding.settingsNestedScrollview.smoothScrollTo(0, binding.settingsSaveRecordingsHolder.top)
+        binding.settingsNestedScrollview.smoothScrollTo(
+            0, binding.settingsSaveRecordingsHolder.top
+        )
     }
 
     private fun setupFilenamePattern() {
@@ -209,9 +232,15 @@ class SettingsActivity : SimpleActivity() {
     private fun setupExtension() {
         binding.settingsExtension.text = config.recordingFormat.getDescription(this)
         binding.settingsExtensionHolder.setOnClickListener {
-            val items = RecordingFormat.entries.map { RadioItem(it.value, it.getDescription(this), it) }.let { ArrayList(it) }
+            val items = RecordingFormat.entries.map {
+                RadioItem(
+                    it.value, it.getDescription(this), it
+                )
+            }.let { ArrayList(it) }
 
-            RadioGroupDialog(this@SettingsActivity, items, config.recordingFormat.value) {
+            RadioGroupDialog(
+                this@SettingsActivity, items, config.recordingFormat.value
+            ) {
                 val checked = it as RecordingFormat
 
                 config.recordingFormat = checked
@@ -225,7 +254,11 @@ class SettingsActivity : SimpleActivity() {
     private fun setupBitrate() {
         binding.settingsBitrate.text = getBitrateText(config.bitrate)
         binding.settingsBitrateHolder.setOnClickListener {
-            val items = BITRATES[config.recordingFormat]!!.map { RadioItem(it, getBitrateText(it)) } as ArrayList
+            val items = BITRATES[config.recordingFormat]!!.map {
+                RadioItem(
+                    it, getBitrateText(it)
+                )
+            } as ArrayList
 
             RadioGroupDialog(this@SettingsActivity, items, config.bitrate) {
                 config.bitrate = it as Int
@@ -253,9 +286,15 @@ class SettingsActivity : SimpleActivity() {
     private fun setupSamplingRate() {
         binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
         binding.settingsSamplingRateHolder.setOnClickListener {
-            val items = getSamplingRatesArray().map { RadioItem(it, getSamplingRateText(it)) } as ArrayList
+            val items = getSamplingRatesArray().map {
+                RadioItem(
+                    it, getSamplingRateText(it)
+                )
+            } as ArrayList
 
-            RadioGroupDialog(this@SettingsActivity, items, config.samplingRate) {
+            RadioGroupDialog(
+                this@SettingsActivity, items, config.samplingRate
+            ) {
                 config.samplingRate = it as Int
                 binding.settingsSamplingRate.text = getSamplingRateText(config.samplingRate)
             }

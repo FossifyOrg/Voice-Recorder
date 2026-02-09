@@ -16,12 +16,14 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.helpers.REPOSITORY_NAME
 
 open class SimpleActivity : BaseSimpleActivity() {
-    private var permissionCallbacks = mutableMapOf<Int, (Boolean?) -> Unit>()
-    private var permissionNextRequestCode: Int = 10000
-
-    private val authLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-        // TODO: retry the action that triggered this intent
+    companion object {
+        private const val PERMISSION_FIRST_REQUEST_CODE = 10000
     }
+
+    private var permissionCallbacks = mutableMapOf<Int, (Boolean?) -> Unit>()
+    private var permissionNextRequestCode: Int = PERMISSION_FIRST_REQUEST_CODE
+
+    private val authLauncher = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
 
     override fun getAppIconIDs() = arrayListOf(
         R.mipmap.ic_launcher_red,
@@ -49,9 +51,12 @@ open class SimpleActivity : BaseSimpleActivity() {
 
     override fun getRepositoryName() = REPOSITORY_NAME
 
-    // NOTE: Need this instead of using `BaseSimpleActivity.handlePermission` because it doesn't always work correctly (particularly on old SDKs). Possibly
-    // because this app invokes the permission request from multiple places and `BaseSimpleActivity` doesn't handle it well?
-    fun handleExternalStoragePermission(externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit) {
+    // NOTE: Need this instead of using `BaseSimpleActivity.handlePermission` because it doesn't always work
+    // correctly (particularly on old SDKs). Possibly because this app invokes the permission request from multiple
+    // places and `BaseSimpleActivity` doesn't handle it well?
+    fun handleExternalStoragePermission(
+        externalStoragePermission: ExternalStoragePermission, callback: (Boolean?) -> Unit
+    ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // External storage permissions to access MediaStore are no longer needed
             callback(true)
@@ -97,7 +102,8 @@ open class SimpleActivity : BaseSimpleActivity() {
         }
 
         runOnUiThread {
-            getAlertDialogBuilder().setTitle(getString(R.string.recording_store_error_title)).setMessage(getString(R.string.recording_store_error_message))
+            getAlertDialogBuilder().setTitle(getString(R.string.recording_store_error_title))
+                .setMessage(getString(R.string.recording_store_error_message))
                 .setPositiveButton(org.fossify.commons.R.string.go_to_settings) { _, _ ->
                     startActivity(Intent(applicationContext, SettingsActivity::class.java).apply {
                         putExtra(SettingsActivity.EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER, true)
