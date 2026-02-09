@@ -36,4 +36,6 @@
     <string name="bitrate">Taxa de bits</string>
     <string name="keep_screen_on">Manter a pantalla acesa durante a gravación</string>
     <string name="sample_rate">Taxa de mostraxe</string>
+    <string name="filename_pattern">Patrón de nome de arquivo</string>
+    <string name="filename_pattern_must_contain_all">Debe incluir tódolos marcadores precisos para xerar nomes arquivo únicos (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
