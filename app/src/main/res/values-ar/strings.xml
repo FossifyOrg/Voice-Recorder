@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="recording_saved_successfully">حُفظ التسجيل بنجاح</string>
-    <string name="recording">جارِ التسجيل</string>
+    <string name="recording">يسجل</string>
     <string name="no_recordings_found">لا توجد تسجيلات أُنشئت بواسطة هذا التطبيق \nعُثور عليها</string>
     <string name="no_recordings_in_folder_found">لم يعثر على تسجيلات \nفي المجلد المحدد</string>
     <string name="paused">متوقف مؤقتًا</string>
@@ -18,24 +18,26 @@
     <string name="audio_source">مصدر الصوت</string>
     <string name="record_after_launch">ابدأ التسجيل تلقائيًا بعد تشغيل التطبيق</string>
     <string name="microphone_mode_camcorder">الكاميرا</string>
-    <string name="microphone_mode_unprocessed">غير معالج</string>
+    <string name="microphone_mode_unprocessed">غير معالج (خام)</string>
     <string name="microphone_mode_voice_recognition">التعرف على الصوت</string>
     <string name="microphone_mode_voice_communication">التواصل الصوتي</string>
-    <string name="microphone_mode_voice_performance">الأداء الصوتي</string>
+    <string name="microphone_mode_voice_performance">الأداء الصوتي (زمن وصول منخفض)</string>
     <string name="faq_1_title">هل يمكنني إخفاء رمز الإشعار أثناء التسجيل؟</string>
     <string name="faq_1_text">حسنًا، هذا يعتمد. أثناء استخدامك لجهازك، لم يعد من الممكن إخفاء إشعارات تطبيقات كهذه تمامًا. إذا قمت بالتحقق من عنصر الإعداد المناسب، فسيبذل التطبيق قصارى جهده لإخفائه. ومع ذلك، يمكنك إخفائه على شاشة القفل، إذا عطلت عرض الإشعارات الحساسة في إعدادات جهازك.</string>
     <string name="sample_rate">معدّل الإعتيان</string>
     <string name="discard_recording">أهمِل التسجيل</string>
-    <string name="discard_recording_confirmation">هل أنت متأكد أنك تريد التخلص من التسجيل الحالي؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="discard_recording_confirmation">أمتأكد أنك تريد التخلص من التسجيل الحالي؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="app_launcher_name">مسجل الصوت</string>
     <string name="recorder">المسجل</string>
     <string name="bitrate">معدّل البتات</string>
-    <string name="recording_too_short">كان التسجيل قصيراً جداً لتسجيله!</string>
+    <string name="recording_too_short">كان التسجيل قصيرًا جدًا لتسجيله!</string>
     <string name="keep_screen_on">أبقِ الشاشة قيد التشغيل أثناء التسجيل</string>
     <string name="delete_recordings_confirmation">احذف %s؟</string>
     <string name="move_recordings">انقل التسجيلات</string>
-    <string name="move_recordings_to_new_folder_desc">لديك تسجيلات حالية. هل تريد نقلها إلى مجلدك الجديد؟</string>
+    <string name="move_recordings_to_new_folder_desc">لديك تسجيلات حالية. أتريد نقلها إلى مجلدك الجديد؟</string>
     <string name="confirm_recording_folder">يجب عليك تأكيد المجلد الذي تريد حفظ تسجيلاتك فيه. يُرجى الضغط على موافق للمتابعة.</string>
     <string name="change_microphone_mode_confirmation">يُغيّر هذا من طريقة توجيه و معالجة جهازك للصوت. وتختلف النتائج باختلاف الجهاز، وقد تؤثر على مستوى الصوت والضوضاء وعوامل أخرى.</string>
     <string name="microphone_mode">وضع الميكروفون</string>
+    <string name="filename_pattern">نمط اسم الملف</string>
+    <string name="filename_pattern_must_contain_all">يجب تضمين كل العناصر النائبة لأسماء الملفات الفريدة (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
