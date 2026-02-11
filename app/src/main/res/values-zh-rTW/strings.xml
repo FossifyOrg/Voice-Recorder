@@ -35,4 +35,6 @@
     <string name="sample_rate">採樣率</string>
     <string name="change_microphone_mode_confirmation">此設定將改變裝置路由與處理音訊的方式。效果因裝置而異，可能影響音量、雜訊及其他因素。</string>
     <string name="microphone_mode">麥克風模式</string>
+    <string name="filename_pattern">檔案名稱模式</string>
+    <string name="filename_pattern_must_contain_all">必須包含所有用於生成唯一檔案名稱的佔位字串 (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
