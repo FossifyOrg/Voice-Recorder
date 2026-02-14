@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.7.1] - 2026-02-14
+### Changed
+- Updated translations
+
 ### Fixed
 - Fixed file size calculations to use SI decimal units (divide by 1000)
 
@@ -160,7 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#256]: https://github.com/FossifyOrg/Voice-Recorder/issues/256
 [#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
 
-[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.0...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.1...HEAD
+[1.7.1]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.6.0...1.7.0
 [1.6.0]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.5.1...1.6.0
 [1.5.1]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.5.0...1.5.1
