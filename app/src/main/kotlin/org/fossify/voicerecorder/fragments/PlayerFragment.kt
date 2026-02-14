@@ -8,12 +8,12 @@ import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.util.AttributeSet
 import android.widget.SeekBar
-import androidx.core.net.toUri
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.areSystemAnimationsEnabled
 import org.fossify.commons.extensions.beVisibleIf
@@ -35,8 +35,8 @@ import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
 import org.fossify.voicerecorder.receivers.BecomingNoisyReceiver
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -45,8 +45,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class PlayerFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
 
     companion object {
@@ -59,7 +58,7 @@ class PlayerFragment(
     private var itemsIgnoringSearch = ArrayList<Recording>()
     private var lastSearchQuery = ""
     private var bus: EventBus? = null
-    private var prevSavePath = ""
+    private var prevSaveFolder: Uri? = null
     private var prevRecycleBinState = context.config.useRecycleBin
     private var playOnPreparation = true
     private lateinit var binding: FragmentPlayerBinding
@@ -74,7 +73,7 @@ class PlayerFragment(
 
     override fun onResume() {
         setupColors()
-        if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath || context.config.useRecycleBin != prevRecycleBinState) {
+        if (prevSaveFolder != null && context!!.config.saveRecordingsFolder != prevSaveFolder || context.config.useRecycleBin != prevRecycleBinState) {
             loadRecordings()
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
@@ -149,8 +148,7 @@ class PlayerFragment(
             }
 
             val prevRecordingIndex = adapter.recordings.indexOfFirst { it.id == wantedRecordingID }
-            val prevRecording = adapter.recordings
-                .getOrNull(prevRecordingIndex) ?: return@setOnClickListener
+            val prevRecording = adapter.recordings.getOrNull(prevRecordingIndex) ?: return@setOnClickListener
             playRecording(prevRecording, true)
         }
 
@@ -167,11 +165,9 @@ class PlayerFragment(
                 return@setOnClickListener
             }
 
-            val oldRecordingIndex =
-                adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
+            val oldRecordingIndex = adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
             val newRecordingIndex = (oldRecordingIndex + 1) % adapter.recordings.size
-            val newRecording =
-                adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
+            val newRecording = adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
             playRecording(newRecording, true)
             playedRecordingIDs.push(newRecording.id)
         }
@@ -220,10 +216,8 @@ class PlayerFragment(
         player = MediaPlayer().apply {
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
             setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
+                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
             )
 
             setOnCompletionListener {
@@ -253,7 +247,7 @@ class PlayerFragment(
             reset()
 
             try {
-                setDataSource(context, recording.path.toUri())
+                setDataSource(context, recording.uri)
             } catch (e: Exception) {
                 context?.showErrorToast(e)
                 return
@@ -268,8 +262,7 @@ class PlayerFragment(
         }
 
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(playOnPreparation))
-        binding.playerProgressbar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        binding.playerProgressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser && !playedRecordingIDs.isEmpty()) {
                     player?.seekTo(progress * 1000)
@@ -317,9 +310,8 @@ class PlayerFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch
-            .filter { it.title.contains(text, true) }
-            .toMutableList() as ArrayList<Recording>
+        val filtered =
+            itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 
@@ -353,8 +345,7 @@ class PlayerFragment(
         }
 
         return resources.getColoredDrawableWithColor(
-            drawableId = drawable,
-            color = context.getProperPrimaryColor().getContrastColor()
+            drawableId = drawable, color = context.getProperPrimaryColor().getContrastColor()
         )
     }
 
@@ -378,7 +369,7 @@ class PlayerFragment(
     private fun getRecordingsAdapter() = binding.recordingsList.adapter as? RecordingsAdapter
 
     private fun storePrevState() {
-        prevSavePath = context!!.config.saveRecordingsFolder
+        prevSaveFolder = context!!.config.saveRecordingsFolder
         prevRecycleBinState = context.config.useRecycleBin
     }
 
@@ -433,7 +424,7 @@ class PlayerFragment(
         try {
             isReceiverRegistered = false
             context.unregisterReceiver(becomingNoisyReceiver)
-        } catch (ignored: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
     }
 }

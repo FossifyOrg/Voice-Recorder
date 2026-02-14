@@ -1,6 +1,5 @@
 package org.fossify.voicerecorder.activities
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -34,13 +33,17 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
-        setResult(Activity.RESULT_CANCELED)
+        setResult(RESULT_CANCELED)
         binding = WidgetRecordDisplayConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupEdgeToEdge(padTopSystem = listOf(binding.configHolder), padBottomSystem = listOf(binding.root))
+        setupEdgeToEdge(
+            padTopSystem = listOf(binding.configHolder),
+            padBottomSystem = listOf(binding.root)
+        )
         initVariables()
 
-        val isCustomizingColors = intent.extras?.getBoolean(IS_CUSTOMIZING_COLORS) ?: false
+        val isCustomizingColors =
+            intent.extras?.getBoolean(IS_CUSTOMIZING_COLORS) ?: false
         mWidgetId = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID)
             ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
@@ -52,7 +55,9 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         binding.configWidgetColor.setOnClickListener { pickBackgroundColor() }
 
         val primaryColor = getProperPrimaryColor()
-        binding.configWidgetSeekbar.setColors(getProperTextColor(), primaryColor, primaryColor)
+        binding.configWidgetSeekbar.setColors(
+            getProperTextColor(), primaryColor, primaryColor
+        )
 
         if (!isCustomizingColors && !isOrWasThankYouInstalled()) {
             mFeatureLockedDialog = FeatureLockedDialog(this) {
@@ -62,7 +67,8 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
             }
         }
 
-        binding.configSave.backgroundTintList = ColorStateList.valueOf(getProperPrimaryColor())
+        binding.configSave.backgroundTintList =
+            ColorStateList.valueOf(getProperPrimaryColor())
         binding.configSave.setTextColor(getProperPrimaryColor().getContrastColor())
     }
 
@@ -79,7 +85,9 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         mWidgetColor = config.widgetBgColor
         @Suppress("DEPRECATION")
         if (mWidgetColor == resources.getColor(R.color.default_widget_bg_color) && isDynamicTheme()) {
-            mWidgetColor = resources.getColor(org.fossify.commons.R.color.you_primary_color, theme)
+            mWidgetColor = resources.getColor(
+                org.fossify.commons.R.color.you_primary_color, theme
+            )
         }
 
         mWidgetAlpha = Color.alpha(mWidgetColor) / 255.toFloat()
@@ -90,7 +98,9 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
             Color.blue(mWidgetColor)
         )
 
-        binding.configWidgetSeekbar.setOnSeekBarChangeListener(seekbarChangeListener)
+        binding.configWidgetSeekbar.setOnSeekBarChangeListener(
+            seekbarChangeListener
+        )
         binding.configWidgetSeekbar.progress = (mWidgetAlpha * 100).toInt()
         updateColors()
     }
@@ -101,13 +111,15 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
 
         Intent().apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId)
-            setResult(Activity.RESULT_OK, this)
+            setResult(RESULT_OK, this)
         }
         finish()
     }
 
     private fun pickBackgroundColor() {
-        ColorPickerDialog(this, mWidgetColorWithoutTransparency) { wasPositivePressed, color ->
+        ColorPickerDialog(
+            this, mWidgetColorWithoutTransparency
+        ) { wasPositivePressed, color ->
             if (wasPositivePressed) {
                 mWidgetColorWithoutTransparency = color
                 updateColors()
@@ -122,7 +134,9 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
             this,
             MyWidgetRecordDisplayProvider::class.java
         ).apply {
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mWidgetId))
+            putExtra(
+                AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mWidgetId)
+            )
             sendBroadcast(this)
         }
     }
@@ -133,14 +147,17 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         binding.configImage.background.mutate().applyColorFilter(mWidgetColor)
     }
 
-    private val seekbarChangeListener = object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            mWidgetAlpha = progress.toFloat() / 100.toFloat()
-            updateColors()
+    private val seekbarChangeListener =
+        object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar, progress: Int, fromUser: Boolean
+            ) {
+                mWidgetAlpha = progress.toFloat() / 100.toFloat()
+                updateColors()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
         }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {}
-    }
 }
