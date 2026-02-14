@@ -25,7 +25,7 @@
     <string name="microphone_mode_voice_communication">Röstkommunikation</string>
     <string name="microphone_mode_voice_performance">Röstframförande</string>
     <string name="faq_1_title">Kan jag dölja aviseringsikonen under inspelningen\?</string>
-    <string name="faq_1_text">Det beror på. När du använder din enhet är det inte längre möjligt att helt dölja meddelanden från appar som dessa. Om du markerar rätt inställningsobjekt gör appen sitt bästa för att dölja den. Du kan dock dölja den på låsskärmen om du inaktiverar visning av känsliga meddelanden i enhetens inställningar.</string>
+    <string name="faq_1_text">Det beror på. När du använder din enhet är det inte längre möjligt att helt dölja aviseringar från appar som den här. Om du aktiverar rätt inställning gör appen sitt bästa för att dölja den. Du kan dock dölja den på låsskärmen om du inaktiverar visning av känsliga aviseringar i enhetens inställningar.</string>
     <string name="recording_too_short">Inspelningen var för kort för att spela in!</string>
     <string name="keep_screen_on">Låt skärmen vara på under inspelning</string>
     <string name="move_recordings_to_new_folder_desc">Du har befintliga inspelningar. Vill du flytta dem till den nya mappen?</string>
@@ -36,4 +36,6 @@
     <string name="sample_rate">Samplingsfrekvens</string>
     <string name="microphone_mode">Mikrofonläge</string>
     <string name="change_microphone_mode_confirmation">Detta ändrar hur enheten dirigerar och bearbetar ljud. Resultaten varierar beroende på enhet och kan påverka volym, brus och andra faktorer.</string>
+    <string name="filename_pattern">Filnamnsmönster</string>
+    <string name="filename_pattern_must_contain_all">Måste innehålla alla platshållare för unika filnamn (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
