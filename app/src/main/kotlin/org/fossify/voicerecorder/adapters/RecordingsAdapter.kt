@@ -17,27 +17,26 @@ import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.ExternalStoragePermission
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.ItemRecordingBinding
 import org.fossify.voicerecorder.dialogs.DeleteConfirmationDialog
 import org.fossify.voicerecorder.dialogs.RenameRecordingDialog
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.deleteRecordings
-import org.fossify.voicerecorder.extensions.trashRecordings
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import kotlin.math.min
 
 class RecordingsAdapter(
     activity: SimpleActivity,
-    var recordings: ArrayList<Recording>,
+    var recordings: MutableList<Recording>,
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView,
     itemClick: (Any) -> Unit
-) : MyRecyclerViewAdapter(activity, recyclerView, itemClick),
-    RecyclerViewFastScroller.OnPopupTextUpdate {
+) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     var currRecordingId = 0
 
@@ -93,9 +92,7 @@ class RecordingsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recording = recordings[position]
         holder.bindView(
-            any = recording,
-            allowSingleClick = true,
-            allowLongClick = true
+            any = recording, allowSingleClick = true, allowLongClick = true
         ) { itemView, _ ->
             setupView(itemView, recording)
         }
@@ -126,9 +123,8 @@ class RecordingsAdapter(
 
     private fun openRecordingWith() {
         val recording = getItemWithKey(selectedKeys.first()) ?: return
-        val path = recording.path
         activity.openPathIntent(
-            path = path,
+            path = recording.uri.toString(),
             forceChooser = true,
             applicationId = BuildConfig.APPLICATION_ID,
             forceMimeType = "audio/*"
@@ -137,7 +133,7 @@ class RecordingsAdapter(
 
     private fun shareRecordings() {
         val selectedItems = getSelectedItems()
-        val paths = selectedItems.map { it.path }
+        val paths = selectedItems.map { it.uri.toString() }
         activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 
@@ -158,9 +154,7 @@ class RecordingsAdapter(
         val question = String.format(resources.getString(baseString), items)
 
         DeleteConfirmationDialog(
-            activity = activity,
-            message = question,
-            showSkipRecycleBinOption = activity.config.useRecycleBin
+            activity = activity, message = question, showSkipRecycleBinOption = activity.config.useRecycleBin
         ) { skipRecycleBin ->
             ensureBackgroundThread {
                 val toRecycleBin = !skipRecycleBin && activity.config.useRecycleBin
@@ -178,14 +172,14 @@ class RecordingsAdapter(
             return
         }
 
-        val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        runWithWriteExternalStoragePermission {
+            val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
+            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
-        val positions = getSelectedItemPositions()
+            val positions = getSelectedItemPositions()
 
-        activity.deleteRecordings(recordingsToRemove) { success ->
-            if (success) {
+            ensureBackgroundThread {
+                activity.recordingStore.delete(recordingsToRemove)
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
             }
         }
@@ -196,14 +190,15 @@ class RecordingsAdapter(
             return
         }
 
-        val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-        val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        runWithWriteExternalStoragePermission {
+            val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
+            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
-        val positions = getSelectedItemPositions()
+            val positions = getSelectedItemPositions()
 
-        activity.trashRecordings(recordingsToRemove) { success ->
-            if (success) {
+            ensureBackgroundThread {
+                activity.recordingStore.trash(recordingsToRemove)
+
                 doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())
             }
@@ -211,9 +206,7 @@ class RecordingsAdapter(
     }
 
     private fun doDeleteAnimation(
-        oldRecordingIndex: Int,
-        recordingsToRemove: ArrayList<Recording>,
-        positions: ArrayList<Int>
+        oldRecordingIndex: Int, recordingsToRemove: List<Recording>, positions: ArrayList<Int>
     ) {
         recordings.removeAll(recordingsToRemove.toSet())
         activity.runOnUiThread {
@@ -249,10 +242,7 @@ class RecordingsAdapter(
             recordingFrame.isSelected = selectedKeys.contains(recording.id)
 
             arrayListOf(
-                recordingTitle,
-                recordingDate,
-                recordingDuration,
-                recordingSize
+                recordingTitle, recordingDate, recordingDuration, recordingSize
             ).forEach {
                 it.setTextColor(textColor)
             }
@@ -269,4 +259,14 @@ class RecordingsAdapter(
     }
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
+
+    // Runs the callback only after the WRITE_STORAGE_PERMISSON has been granted or if running on a SDK that no
+    // longer requires it.
+    private fun runWithWriteExternalStoragePermission(callback: () -> Unit) = (activity as SimpleActivity?)?.run {
+        handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
+            if (granted == true) {
+                callback()
+            }
+        }
+    }
 }
