@@ -35,5 +35,5 @@
     <string name="delete_recordings_confirmation">Delete %s?</string>
     <string name="save_recordings_in">Save recordings in</string>
     <string name="filename_pattern">Filename pattern</string>
-    <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
+    <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this. If you tick the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
 </resources>
