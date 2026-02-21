@@ -25,4 +25,16 @@
     <string name="faq_1_title">녹음 중에 알림 아이콘을 숨길 수 있나요?</string>
     <string name="faq_1_text">글쎄요, 상황에 따라 다릅니다. 기기를 사용하는 도중에 앱의 알림을 완전히 숨길 수 없습니다. 설정에서 적절한 항목을 선택하면 앱이 알림을 최대한 숨길 것입니다. 기기 설정에서 알림 내용 숨기기를 설정하면 적어도 잠금 화면에서 숨길 수 있습니다.</string>
     <string name="microphone_mode_voice_communication">음성 통신</string>
+    <string name="confirm_recording_folder">녹음 파일을 저장할 폴더를 골라야 합니다. 확인을 눌러 계속하세요.</string>
+    <string name="move_recordings">녹음 파일 옮기기</string>
+    <string name="move_recordings_to_new_folder_desc">이미 존재하는 녹음 파일이 있습니다. 새 폴더로 옮기시겠습니까?</string>
+    <string name="recording_too_short">녹음하기에 너무 짧았습니다!</string>
+    <string name="discard_recording">녹음 파일 저장 안 함</string>
+    <string name="discard_recording_confirmation">현재 녹음을 저장하지 않을까요? 이 작업은 실행 취소될 수 없습니다.</string>
+    <string name="change_microphone_mode_confirmation">이 기능은 기기의 오디오 라우팅 및 처리 방식을 변경합니다. 결과는 기기에 따라 다를 수 있으며 볼륨, 소음 및 기타 요소에 영향을 미칠 수 있습니다.</string>
+    <string name="filename_pattern">파일 이름 패턴</string>
+    <string name="filename_pattern_must_contain_all">고유 파일 이름에 대한 모든 자리 표시자(%Y, %M, %D, %h, %m, %s)를 포함해야 합니다</string>
+    <string name="microphone_mode">마이크 모드</string>
+    <string name="keep_screen_on">녹음하는 동안 화면 켜짐 유지</string>
+    <string name="sample_rate">샘플 레이트</string>
 </resources>
