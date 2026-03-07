@@ -27,6 +27,8 @@
     <ID>TooManyFunctions:Activity.kt$org.fossify.voicerecorder.extensions.Activity.kt</ID>
     <ID>TooManyFunctions:Context.kt$org.fossify.voicerecorder.extensions.Context.kt</ID>
     <ID>TooManyFunctions:MainActivity.kt$MainActivity : SimpleActivity</ID>
+    <ID>TooManyFunctions:MediaRecorderWrapper.kt$MediaRecorderWrapper : Recorder</ID>
+    <ID>TooManyFunctions:Mp3Recorder.kt$Mp3Recorder : Recorder</ID>
     <ID>TooManyFunctions:PlayerFragment.kt$PlayerFragment : MyViewPagerFragmentRefreshRecordingsListener</ID>
     <ID>TooManyFunctions:RecorderFragment.kt$RecorderFragment : MyViewPagerFragment</ID>
     <ID>TooManyFunctions:RecorderService.kt$RecorderService : Service</ID>
