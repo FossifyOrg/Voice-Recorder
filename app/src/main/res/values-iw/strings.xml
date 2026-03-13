@@ -35,4 +35,6 @@
     <string name="sample_rate">קצב דגימה</string>
     <string name="change_microphone_mode_confirmation">זה משנה את האופן שבו המכשיר שלך מנתב ומעבד אודיו. התוצאות משתנות בהתאם למכשיר ויכולות להשפיע על עוצמת הקול, הרעש וגורמים אחרים.</string>
     <string name="microphone_mode">מצב מיקרופון</string>
+    <string name="filename_pattern">תבנית שם הקובץ</string>
+    <string name="filename_pattern_must_contain_all">חייבת לכלול את כל ממלאי המקום עבור שמות קובץ ייחודיים (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
