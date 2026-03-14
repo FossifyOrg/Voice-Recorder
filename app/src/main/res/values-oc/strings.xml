@@ -34,4 +34,6 @@
     <string name="sample_rate">Taus d\'escandalhatge</string>
     <string name="microphone_mode_voice_communication">Comunicacion vocala</string>
     <string name="microphone_mode_voice_recognition">Reconeissença vocala</string>
+    <string name="filename_pattern">Motiu de nom de fichièr</string>
+    <string name="filename_pattern_must_contain_all">Deu inclure totes los substituts de tèxte per de noms de fichièrs unics (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
