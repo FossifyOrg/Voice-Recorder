@@ -36,4 +36,6 @@
     <string name="change_microphone_mode_confirmation">Honek zure gailuak audioa nola bideratzen eta prozesatzen duen aldatzen du. Emaitzak gailuaren arabera aldatzen dira eta bolumena, zarata eta beste faktore batzuk eragin ditzakete.</string>
     <string name="microphone_mode">Mikrofonoaren modua</string>
     <string name="sample_rate">Laginketa-maiztasuna</string>
+    <string name="filename_pattern">Fitxategi-izenaren txantiloia</string>
+    <string name="filename_pattern_must_contain_all">Fitxategi-izen esklusiboetarako marka guztiak sartu behar dira(%Y, %M, %D, %h, %m, %s)</string>
 </resources>
