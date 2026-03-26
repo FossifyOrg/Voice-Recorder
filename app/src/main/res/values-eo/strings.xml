@@ -36,4 +36,6 @@
     <string name="sample_rate">Specimenrapido</string>
     <string name="change_microphone_mode_confirmation">Tio ĉi ŝanĝas kiel via aparato enkursigas kaj traktas sonon. La rezultoj dependas de la aparato kaj povas afekti la sonfortecon, bruon kaj aliajn detalojn.</string>
     <string name="microphone_mode">Mikrofona reĝimo</string>
+    <string name="filename_pattern">Dosiernoma ŝablono</string>
+    <string name="filename_pattern_must_contain_all">Devas inkludi ĉiujn lokokupilojn por unikaj dosiernomoj (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
