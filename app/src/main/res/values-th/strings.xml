@@ -7,4 +7,24 @@
     <plurals name="delete_recordings">
         <item quantity="other">%d recording</item>
     </plurals>
-    </resources>
+    <string name="microphone_mode_unprocessed">ไม่ประมวลผล (ดิบ)</string>
+    <string name="microphone_mode_voice_performance">ประสิทธิภาพเสียง (เวลาแฝงต่ำ)</string>
+    <string name="microphone_mode">โหมดไมโครโฟน</string>
+    <string name="audio_source">แหล่งกำเนิดเสียง</string>
+    <string name="save_recordings_in">บันทึกการบันทึกใน</string>
+    <string name="delete_recordings_confirmation">ลบ %s?</string>
+    <string name="discard_recording_confirmation">คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการบันทึกปัจจุบัน สิ่งนี้ไม่สามารถยกเลิกได้</string>
+    <string name="discard_recording">ยกเลิกการบันทึก</string>
+    <string name="app_launcher_name">เครื่องบันทึกเสียง</string>
+    <string name="confirm_recording_folder">คุณต้องยืนยันโฟลเดอร์ที่คุณต้องการบันทึกการบันทึกของคุณ กรุณากดตกลงเพื่อดำเนินการต่อ</string>
+    <string name="move_recordings">ย้ายการบันทึก</string>
+    <string name="move_recordings_to_new_folder_desc">คุณมีการบันทึกที่มีอยู่ คุณต้องการย้ายไปยังโฟลเดอร์ใหม่ของคุณหรือไม่?</string>
+    <string name="recording_saved_successfully">บันทึกการบันทึกเรียบร้อยแล้ว</string>
+    <string name="recording_too_short">การบันทึกสั้นเกินกว่าจะบันทึกได้!</string>
+    <string name="paused">หยุดชั่วคราว</string>
+    <string name="faq_1_title">ฉันสามารถซ่อนไอคอนการแจ้งเตือนระหว่างการบันทึกได้หรือไม่?</string>
+    <string name="microphone_mode_camcorder">กล้อง (วิดีโอ)</string>
+    <string name="keep_screen_on">เปิดหน้าจอไว้ระหว่างการบันทึก</string>
+    <string name="filename_pattern">รูปแบบชื่อไฟล์</string>
+    <string name="change_microphone_mode_confirmation">สิ่งนี้จะเปลี่ยนวิธีที่อุปกรณ์ของคุณกำหนดเส้นทางและประมวลผลเสียง ผลลัพธ์จะแตกต่างกันไปตามอุปกรณ์และอาจส่งผลต่อระดับเสียง เสียงรบกวน และปัจจัยอื่นๆ</string>
+</resources>
