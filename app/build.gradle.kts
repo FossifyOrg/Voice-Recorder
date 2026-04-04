@@ -147,4 +147,6 @@ dependencies {
     implementation(libs.tandroidlame)
     implementation(libs.autofittextview)
     detektPlugins(libs.compose.detekt)
+    implementation(files("libs/oacp-android-release.aar"))
+    implementation("androidx.annotation:annotation:1.7.1")
 }

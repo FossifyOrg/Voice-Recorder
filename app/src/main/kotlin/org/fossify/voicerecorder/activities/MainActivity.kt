@@ -76,12 +76,38 @@ class MainActivity : SimpleActivity() {
 
         bus = EventBus.getDefault()
         bus!!.register(this)
-        if (config.recordAfterLaunch && !RecorderService.isRunning) {
+
+        val shouldAutoRecord = config.recordAfterLaunch ||
+            intent?.action?.endsWith(".oacp.ACTION_START_RECORDING") == true
+
+        if (shouldAutoRecord && !RecorderService.isRunning) {
             Intent(this@MainActivity, RecorderService::class.java).apply {
                 try {
                     startService(this)
-                } catch (ignored: Exception) {
+                } catch (_: Exception) {
                 }
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleOacpIntent()
+    }
+
+    private fun handleOacpIntent() {
+        if (intent?.action?.endsWith(".oacp.ACTION_START_RECORDING") != true) return
+
+        intent?.action = null // consume it so it doesn't re-trigger
+        binding.viewPager.currentItem = 0 // switch to recorder tab
+
+        if (RecorderService.isRunning) return
+
+        Intent(this, RecorderService::class.java).apply {
+            try {
+                startService(this)
+            } catch (_: Exception) {
             }
         }
     }

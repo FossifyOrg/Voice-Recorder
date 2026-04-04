@@ -1,0 +1,178 @@
+{
+  "oacpVersion": "0.3",
+  "appId": "__APPLICATION_ID__",
+  "displayName": "Fossify Voice Recorder",
+  "appDomains": ["audio", "recording", "voice"],
+  "appKeywords": ["record", "recording", "voice", "audio", "mic", "microphone", "sound", "memo"],
+  "appAliases": ["voice recorder", "recorder", "fossify recorder", "audio recorder", "sound recorder"],
+  "capabilities": [
+    {
+      "id": "start_recording",
+      "description": "Open Fossify Voice Recorder and start a new audio recording.",
+      "domain": "audio",
+      "aliases": [
+        "start recording", "begin recording", "record audio", "voice recording",
+        "start voice recording", "record my voice", "audio memo", "record a memo",
+        "record sound", "start audio recording"
+      ],
+      "examples": [
+        "start recording with Voice Recorder",
+        "open Voice Recorder and begin recording",
+        "record audio",
+        "start a voice recording",
+        "record my voice",
+        "take an audio memo",
+        "open voice recorder"
+      ],
+      "keywords": ["record", "recording", "voice", "audio", "memo", "microphone", "sound", "start", "begin"],
+      "disambiguationHints": [
+        "Use this when the user wants to begin a new voice recording.",
+        "Use this when the user says audio, voice, memo, microphone, or sound.",
+        "Do not use this for video recording requests — that is Libre Camera.",
+        "Prefer this over camera apps when the user says record audio or record voice.",
+        "Prefer pause_recording, resume_recording, or stop_recording when the user refers to an already active recording."
+      ],
+      "parameters": [],
+      "confirmation": "never",
+      "executionMessage": "Starting a new recording in Voice Recorder.",
+      "visibility": "public",
+      "requiresForeground": true,
+      "completionMode": "foreground_handoff",
+      "sensitivity": "low",
+      "sideEffects": "Starts a new recording session in the foreground.",
+      "idempotent": false,
+      "supportsCancellation": true,
+      "cancelCapabilityId": "stop_recording",
+      "invoke": {
+        "android": {
+          "type": "activity",
+          "action": "__APPLICATION_ID__.oacp.ACTION_START_RECORDING"
+        }
+      }
+    },
+    {
+      "id": "pause_recording",
+      "description": "Pause the current active recording in Fossify Voice Recorder.",
+      "domain": "audio",
+      "aliases": ["pause recording", "pause recorder", "hold recording", "pause audio"],
+      "examples": [
+        "pause recording in Voice Recorder",
+        "pause the current recording",
+        "hold the recording"
+      ],
+      "keywords": ["pause", "hold", "recording", "audio"],
+      "disambiguationHints": [
+        "Use this only when a recording is already active.",
+        "Do not use this to stop or finish a recording — use stop_recording for that."
+      ],
+      "parameters": [],
+      "confirmation": "never",
+      "executionMessage": "Pausing the current recording.",
+      "visibility": "public",
+      "completionMode": "fire_and_forget",
+      "sensitivity": "low",
+      "sideEffects": "Pauses the active recording session without saving it.",
+      "idempotent": true,
+      "invoke": {
+        "android": {
+          "type": "broadcast",
+          "action": "__APPLICATION_ID__.oacp.ACTION_PAUSE_RECORDING"
+        }
+      }
+    },
+    {
+      "id": "resume_recording",
+      "description": "Resume a paused recording in Fossify Voice Recorder.",
+      "domain": "audio",
+      "aliases": ["resume recording", "continue recording", "unpause recording"],
+      "examples": [
+        "resume recording in Voice Recorder",
+        "continue the paused recording",
+        "unpause the recording"
+      ],
+      "keywords": ["resume", "continue", "unpause", "recording", "audio"],
+      "disambiguationHints": [
+        "Use this only when a paused recording should continue.",
+        "Do not use this to start a new recording — use start_recording for that."
+      ],
+      "parameters": [],
+      "confirmation": "never",
+      "executionMessage": "Resuming the recording.",
+      "visibility": "public",
+      "completionMode": "fire_and_forget",
+      "sensitivity": "low",
+      "sideEffects": "Continues a paused recording session.",
+      "idempotent": true,
+      "invoke": {
+        "android": {
+          "type": "broadcast",
+          "action": "__APPLICATION_ID__.oacp.ACTION_RESUME_RECORDING"
+        }
+      }
+    },
+    {
+      "id": "stop_recording",
+      "description": "Stop the active recording in Fossify Voice Recorder and save it.",
+      "domain": "audio",
+      "aliases": ["stop recording", "finish recording", "save recording", "end recording"],
+      "examples": [
+        "stop recording in Voice Recorder",
+        "finish the current recording",
+        "save the recording",
+        "end the recording"
+      ],
+      "keywords": ["stop", "finish", "save", "end", "recording", "audio"],
+      "disambiguationHints": [
+        "Use this when the user wants to finish and save the active recording.",
+        "This both stops and saves — the recording file is kept."
+      ],
+      "parameters": [],
+      "confirmation": "never",
+      "executionMessage": "Stopping and saving the recording.",
+      "visibility": "public",
+      "completionMode": "fire_and_forget",
+      "sensitivity": "medium",
+      "sideEffects": "Stops the current recording and saves it as a file.",
+      "idempotent": false,
+      "invoke": {
+        "android": {
+          "type": "broadcast",
+          "action": "__APPLICATION_ID__.oacp.ACTION_STOP_RECORDING"
+        }
+      }
+    },
+    {
+      "id": "discard_recording",
+      "description": "Discard the current recording in Fossify Voice Recorder without saving it.",
+      "domain": "audio",
+      "aliases": ["discard recording", "delete current recording", "cancel recording", "throw away recording"],
+      "examples": [
+        "discard the current recording in Voice Recorder",
+        "cancel this recording without saving it",
+        "throw away the recording",
+        "delete the current recording"
+      ],
+      "keywords": ["discard", "delete", "cancel", "throw away", "recording", "audio"],
+      "disambiguationHints": [
+        "Use this only when the user explicitly wants to throw away the active recording.",
+        "This is destructive — the recording is lost permanently."
+      ],
+      "parameters": [],
+      "confirmation": "if_destructive",
+      "confirmationMessage": "Discard the current recording without saving it?",
+      "executionMessage": "Discarding the current recording.",
+      "visibility": "public",
+      "completionMode": "fire_and_forget",
+      "sensitivity": "high",
+      "sideEffects": "Deletes the active unsaved recording permanently.",
+      "idempotent": false,
+      "requiresUnlock": true,
+      "invoke": {
+        "android": {
+          "type": "broadcast",
+          "action": "__APPLICATION_ID__.oacp.ACTION_DISCARD_RECORDING"
+        }
+      }
+    }
+  ]
+}

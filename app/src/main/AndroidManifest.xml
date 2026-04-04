@@ -77,6 +77,11 @@
                 <action android:name="android.provider.MediaStore.RECORD_SOUND" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- OACP foreground action: Hark launches this directly via startActivity() -->
+            <intent-filter>
+                <action android:name="${applicationId}.oacp.ACTION_START_RECORDING" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -381,6 +386,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+
+        <receiver android:name=".oacp.OacpActionReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.oacp.ACTION_PAUSE_RECORDING" />
+                <action android:name="${applicationId}.oacp.ACTION_RESUME_RECORDING" />
+                <action android:name="${applicationId}.oacp.ACTION_STOP_RECORDING" />
+                <action android:name="${applicationId}.oacp.ACTION_DISCARD_RECORDING" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"
