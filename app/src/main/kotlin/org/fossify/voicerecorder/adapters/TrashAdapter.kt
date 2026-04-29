@@ -16,11 +16,10 @@ import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.ItemRecordingBinding
-import org.fossify.voicerecorder.extensions.deleteRecordings
-import org.fossify.voicerecorder.extensions.restoreRecordings
+import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 
 class TrashAdapter(
@@ -28,8 +27,7 @@ class TrashAdapter(
     var recordings: ArrayList<Recording>,
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView
-) :
-    MyRecyclerViewAdapter(activity, recyclerView, {}), RecyclerViewFastScroller.OnPopupTextUpdate {
+) : MyRecyclerViewAdapter(activity, recyclerView, {}), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     init {
         setupDragListener(true)
@@ -72,9 +70,7 @@ class TrashAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recording = recordings[position]
         holder.bindView(
-            any = recording,
-            allowSingleClick = true,
-            allowLongClick = true
+            any = recording, allowSingleClick = true, allowLongClick = true
         ) { itemView, _ ->
             setupView(itemView, recording)
         }
@@ -98,16 +94,15 @@ class TrashAdapter(
             return
         }
 
-        val recordingsToRestore = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        val recordingsToRestore = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.restoreRecordings(recordingsToRestore) { success ->
-            if (success) {
-                doDeleteAnimation(recordingsToRestore, positions)
-                EventBus.getDefault().post(Events.RecordingTrashUpdated())
-            }
+        ensureBackgroundThread {
+            activity.recordingStore.restore(recordingsToRestore)
+
+            doDeleteAnimation(recordingsToRestore, positions)
+            EventBus.getDefault().post(Events.RecordingTrashUpdated())
         }
     }
 
@@ -135,21 +130,18 @@ class TrashAdapter(
             return
         }
 
-        val recordingsToRemove = recordings
-            .filter { selectedKeys.contains(it.id) } as ArrayList<Recording>
+        val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
 
         val positions = getSelectedItemPositions()
 
-        activity.deleteRecordings(recordingsToRemove) { success ->
-            if (success) {
-                doDeleteAnimation(recordingsToRemove, positions)
-            }
+        ensureBackgroundThread {
+            activity.recordingStore.delete(recordingsToRemove)
+            doDeleteAnimation(recordingsToRemove, positions)
         }
     }
 
     private fun doDeleteAnimation(
-        recordingsToRemove: ArrayList<Recording>,
-        positions: ArrayList<Int>
+        recordingsToRemove: List<Recording>, positions: ArrayList<Int>
     ) {
         recordings.removeAll(recordingsToRemove.toSet())
         activity.runOnUiThread {
@@ -173,10 +165,7 @@ class TrashAdapter(
             recordingFrame.isSelected = selectedKeys.contains(recording.id)
 
             arrayListOf(
-                recordingTitle,
-                recordingDate,
-                recordingDuration,
-                recordingSize
+                recordingTitle, recordingDate, recordingDuration, recordingSize
             ).forEach {
                 it.setTextColor(textColor)
             }

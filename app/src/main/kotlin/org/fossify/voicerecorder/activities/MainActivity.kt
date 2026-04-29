@@ -1,6 +1,5 @@
 package org.fossify.voicerecorder.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,8 +21,6 @@ import org.fossify.commons.helpers.LICENSE_AUDIO_RECORD_VIEW
 import org.fossify.commons.helpers.LICENSE_AUTOFITTEXTVIEW
 import org.fossify.commons.helpers.LICENSE_EVENT_BUS
 import org.fossify.commons.helpers.PERMISSION_RECORD_AUDIO
-import org.fossify.commons.helpers.PERMISSION_WRITE_STORAGE
-import org.fossify.commons.helpers.isRPlus
 import org.fossify.commons.models.FAQItem
 import org.fossify.voicerecorder.BuildConfig
 import org.fossify.voicerecorder.R
@@ -31,7 +28,6 @@ import org.fossify.voicerecorder.adapters.ViewPagerAdapter
 import org.fossify.voicerecorder.databinding.ActivityMainBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
-import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
@@ -40,7 +36,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : SimpleActivity() {
-
     private var bus: EventBus? = null
 
     override var isSearchBarEnabled = true
@@ -80,7 +75,7 @@ class MainActivity : SimpleActivity() {
             Intent(this@MainActivity, RecorderService::class.java).apply {
                 try {
                     startService(this)
-                } catch (ignored: Exception) {
+                } catch (_: Exception) {
                 }
             }
         }
@@ -110,7 +105,7 @@ class MainActivity : SimpleActivity() {
             action = STOP_AMPLITUDE_UPDATE
             try {
                 startService(this)
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -120,7 +115,7 @@ class MainActivity : SimpleActivity() {
             binding.mainMenu.closeSearch()
             true
         } else if (isThirdPartyIntent()) {
-            setResult(Activity.RESULT_CANCELED, null)
+            setResult(RESULT_CANCELED, null)
             false
         } else {
             false
@@ -150,15 +145,16 @@ class MainActivity : SimpleActivity() {
             getPagerAdapter()?.searchTextChanged(text)
         }
 
-        binding.mainMenu.requireToolbar().setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
-                R.id.settings -> launchSettings()
-                R.id.about -> launchAbout()
-                else -> return@setOnMenuItemClickListener false
+        binding.mainMenu.requireToolbar()
+            .setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.more_apps_from_us -> launchMoreAppsFromUsIntent()
+                    R.id.settings -> launchSettings()
+                    R.id.about -> launchAbout()
+                    else -> return@setOnMenuItemClickListener false
+                }
+                return@setOnMenuItemClickListener true
             }
-            return@setOnMenuItemClickListener true
-        }
     }
 
     private fun updateMenuColors() {
@@ -166,25 +162,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun tryInitVoiceRecorder() {
-        if (isRPlus()) {
-            ensureStoragePermission { granted ->
-                if (granted) {
-                    setupViewPager()
-                } else {
-                    toast(org.fossify.commons.R.string.no_storage_permissions)
-                    finish()
-                }
-            }
-        } else {
-            handlePermission(PERMISSION_WRITE_STORAGE) {
-                if (it) {
-                    setupViewPager()
-                } else {
-                    toast(org.fossify.commons.R.string.no_storage_permissions)
-                    finish()
-                }
-            }
-        }
+        setupViewPager()
     }
 
     private fun setupViewPager() {
@@ -201,18 +179,16 @@ class MainActivity : SimpleActivity() {
 
         tabDrawables.forEachIndexed { i, drawableId ->
             binding.mainTabsHolder.newTab()
-                .setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item).apply {
-                    customView
-                        ?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)
+                .setCustomView(org.fossify.commons.R.layout.bottom_tablayout_item)
+                .apply {
+                    customView?.findViewById<ImageView>(org.fossify.commons.R.id.tab_item_icon)
                         ?.setImageDrawable(
                             AppCompatResources.getDrawable(
-                                this@MainActivity,
-                                drawableId
+                                this@MainActivity, drawableId
                             )
                         )
 
-                    customView
-                        ?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)
+                    customView?.findViewById<TextView>(org.fossify.commons.R.id.tab_item_label)
                         ?.setText(tabLabels[i])
 
                     AutofitHelper.create(
@@ -223,18 +199,15 @@ class MainActivity : SimpleActivity() {
                 }
         }
 
-        binding.mainTabsHolder.onTabSelectionChanged(
-            tabUnselectedAction = {
-                updateBottomTabItemColors(it.customView, false)
-                if (it.position == 1 || it.position == 2) {
-                    binding.mainMenu.closeSearch()
-                }
-            },
-            tabSelectedAction = {
-                binding.viewPager.currentItem = it.position
-                updateBottomTabItemColors(it.customView, true)
+        binding.mainTabsHolder.onTabSelectionChanged(tabUnselectedAction = {
+            updateBottomTabItemColors(it.customView, false)
+            if (it.position == 1 || it.position == 2) {
+                binding.mainMenu.closeSearch()
             }
-        )
+        }, tabSelectedAction = {
+            binding.viewPager.currentItem = it.position
+            updateBottomTabItemColors(it.customView, true)
+        })
 
         binding.viewPager.adapter = ViewPagerAdapter(this, config.useRecycleBin)
         binding.viewPager.offscreenPageLimit = 2
@@ -247,16 +220,19 @@ class MainActivity : SimpleActivity() {
             binding.viewPager.currentItem = 0
         } else {
             binding.viewPager.currentItem = config.lastUsedViewPagerPage
-            binding.mainTabsHolder.getTabAt(config.lastUsedViewPagerPage)?.select()
+            binding.mainTabsHolder.getTabAt(config.lastUsedViewPagerPage)
+                ?.select()
         }
     }
 
     private fun setupTabColors() {
-        val activeView = binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.customView
+        val activeView =
+            binding.mainTabsHolder.getTabAt(binding.viewPager.currentItem)?.customView
         updateBottomTabItemColors(activeView, true)
         for (i in 0 until binding.mainTabsHolder.tabCount) {
             if (i != binding.viewPager.currentItem) {
-                val inactiveView = binding.mainTabsHolder.getTabAt(i)?.customView
+                val inactiveView =
+                    binding.mainTabsHolder.getTabAt(i)?.customView
                 updateBottomTabItemColors(inactiveView, false)
             }
         }
@@ -266,7 +242,8 @@ class MainActivity : SimpleActivity() {
         binding.mainTabsHolder.setBackgroundColor(bottomBarColor)
     }
 
-    private fun getPagerAdapter() = (binding.viewPager.adapter as? ViewPagerAdapter)
+    private fun getPagerAdapter() =
+        (binding.viewPager.adapter as? ViewPagerAdapter)
 
     private fun launchSettings() {
         hideKeyboard()
@@ -274,17 +251,13 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun launchAbout() {
-        val licenses = LICENSE_EVENT_BUS or
-                LICENSE_AUDIO_RECORD_VIEW or
-                LICENSE_ANDROID_LAME or
-                LICENSE_AUTOFITTEXTVIEW
+        val licenses =
+            LICENSE_EVENT_BUS or LICENSE_AUDIO_RECORD_VIEW or LICENSE_ANDROID_LAME or LICENSE_AUTOFITTEXTVIEW
 
         val faqItems = arrayListOf(
             FAQItem(
-                title = R.string.faq_1_title,
-                text = R.string.faq_1_text
-            ),
-            FAQItem(
+                title = R.string.faq_1_title, text = R.string.faq_1_text
+            ), FAQItem(
                 title = org.fossify.commons.R.string.faq_9_title_commons,
                 text = org.fossify.commons.R.string.faq_9_text_commons
             )
@@ -314,18 +287,25 @@ class MainActivity : SimpleActivity() {
         )
     }
 
-    private fun isThirdPartyIntent() = intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
+    private fun isThirdPartyIntent() =
+        intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
 
     @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun recordingSaved(event: Events.RecordingSaved) {
         if (isThirdPartyIntent()) {
             Intent().apply {
-                data = event.uri!!
+                data = event.uri
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                setResult(Activity.RESULT_OK, this)
+                setResult(RESULT_OK, this)
             }
             finish()
         }
+    }
+
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun recordingFailed(event: Events.RecordingFailed) {
+        handleRecordingStoreError(event.exception)
     }
 }

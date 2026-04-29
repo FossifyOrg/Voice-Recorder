@@ -1,21 +1,21 @@
 package org.fossify.voicerecorder.dialogs
 
+import android.net.Uri
 import androidx.appcompat.app.AlertDialog
-import org.fossify.commons.activities.BaseSimpleActivity
 import org.fossify.commons.extensions.getAlertDialogBuilder
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.setupDialogStuff
 import org.fossify.commons.helpers.MEDIUM_ALPHA
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.DialogMoveRecordingsBinding
-import org.fossify.voicerecorder.extensions.getAllRecordings
-import org.fossify.voicerecorder.extensions.moveRecordings
+import org.fossify.voicerecorder.store.RecordingStore
 
 class MoveRecordingsDialog(
-    private val activity: BaseSimpleActivity,
-    private val previousFolder: String,
-    private val newFolder: String,
+    private val activity: SimpleActivity,
+    private val oldFolder: Uri,
+    private val newFolder: Uri,
     private val callback: () -> Unit
 ) {
     private lateinit var dialog: AlertDialog
@@ -25,17 +25,13 @@ class MoveRecordingsDialog(
     }
 
     init {
-        activity.getAlertDialogBuilder()
-            .setPositiveButton(org.fossify.commons.R.string.yes, null)
-            .setNegativeButton(org.fossify.commons.R.string.no, null)
-            .apply {
+        activity.getAlertDialogBuilder().setPositiveButton(org.fossify.commons.R.string.yes, null)
+            .setNegativeButton(org.fossify.commons.R.string.no, null).apply {
                 activity.setupDialogStuff(
-                    view = binding.root,
-                    dialog = this,
-                    titleId = R.string.move_recordings
+                    view = binding.root, dialog = this, titleId = R.string.move_recordings
                 ) {
                     dialog = it
-                    dialog.setOnDismissListener { callback() }
+                    dialog.setOnCancelListener { callback() }
                     dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
                         callback()
                         dialog.dismiss()
@@ -62,17 +58,15 @@ class MoveRecordingsDialog(
             }
     }
 
-    private fun moveAllRecordings() {
-        ensureBackgroundThread {
-            activity.moveRecordings(
-                recordingsToMove = activity.getAllRecordings(),
-                sourceParent = previousFolder,
-                destinationParent = newFolder
-            ) {
-                activity.runOnUiThread {
-                    callback()
-                    dialog.dismiss()
-                }
+    private fun moveAllRecordings() = ensureBackgroundThread {
+        RecordingStore(activity, oldFolder).let { store ->
+            try {
+                store.migrate(newFolder)
+                activity.runOnUiThread { callback() }
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+                activity.handleRecordingStoreError(e)
+            } finally {
+                dialog.dismiss()
             }
         }
     }
