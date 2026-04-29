@@ -29,7 +29,7 @@
     <string name="keep_screen_on">Tartsa bekapcsolva a képernyőt felvétel közben</string>
     <string name="recording_too_short">A felvétel túl rövid volt a felvételhez!</string>
     <string name="confirm_recording_folder">A felvételek mentéséhez a mappa megerősítése szükséges. A folytatáshoz nyomjon az OK-ra.</string>
-    <string name="move_recordings_to_new_folder_desc">Meglévő felvételek. Szeretné őket áthelyezni az új mappába?</string>
+    <string name="move_recordings_to_new_folder_desc">Vannak meglévő felvételei. Kívánja őket áthelyezni az új mappába?</string>
     <string name="move_recordings">Felvételek áthelyezése</string>
     <string name="discard_recording">Felvétel visszavonása</string>
     <string name="discard_recording_confirmation">Biztos, hogy visszavonod a felvételt? Visszafordíthatatlan művelet.</string>
