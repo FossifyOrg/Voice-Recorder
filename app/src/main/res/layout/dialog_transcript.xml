@@ -80,9 +80,18 @@
             android:id="@+id/transcript_ready_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
             android:textSize="@dimen/smaller_text_size"
             tools:text="Language: en · 14 segments" />
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/transcript_ready_processing_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:textSize="@dimen/smaller_text_size"
+            android:visibility="gone"
+            tools:text="Processed in 12.4s"
+            tools:visibility="visible" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -96,5 +105,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/transcript_retranscribe_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_margin"
+            android:text="@string/re_transcribe"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 </LinearLayout>

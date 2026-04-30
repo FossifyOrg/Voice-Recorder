@@ -19,6 +19,7 @@ data class Transcript(
     val languageAutoDetected: Boolean,
     val createdAtIso: String,
     val durationMs: Long,
+    val processingMs: Long?,
     val segments: List<TranscriptSegment>,
 )
 

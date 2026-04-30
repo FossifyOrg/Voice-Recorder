@@ -27,6 +27,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
 import org.fossify.voicerecorder.dialogs.FilenamePatternDialog
 import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
+import org.fossify.voicerecorder.dialogs.TranscriptionModelsDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.recordingStoreFor
@@ -37,6 +38,7 @@ import org.fossify.voicerecorder.helpers.SAMPLING_RATES
 import org.fossify.voicerecorder.helpers.SAMPLING_RATE_BITRATE_LIMITS
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.store.RecordingFormat
+import org.fossify.voicerecorder.transcribe.model.ModelCatalog
 import org.greenrobot.eventbus.EventBus
 import java.util.Locale
 import kotlin.math.abs
@@ -49,6 +51,19 @@ class SettingsActivity : SimpleActivity() {
          * recordings folder field.
          */
         const val EXTRA_FOCUS_SAVE_RECORDINGS_FOLDER = "org.fossify.voicerecorder.extra.FOCUS_SAVE_RECORDINGS_FOLDER"
+
+        // (Whisper language code, label string-id). Empty code = auto-detect.
+        private val TRANSCRIBE_LANGUAGES: List<Pair<String, Int>> = listOf(
+            "" to R.string.transcribe_auto_detect,
+            "en" to R.string.transcribe_lang_english,
+            "es" to R.string.transcribe_lang_spanish,
+            "fr" to R.string.transcribe_lang_french,
+            "de" to R.string.transcribe_lang_german,
+            "it" to R.string.transcribe_lang_italian,
+            "pt" to R.string.transcribe_lang_portuguese,
+            "zh" to R.string.transcribe_lang_chinese,
+            "ja" to R.string.transcribe_lang_japanese,
+        )
     }
 
     private var recycleBinContentSize = 0
@@ -122,6 +137,8 @@ class SettingsActivity : SimpleActivity() {
         setupMicrophoneMode()
         setupRecordAfterLaunch()
         setupKeepScreenOn()
+        setupTranscribeModel()
+        setupTranscribeLanguage()
         setupUseRecycleBin()
         setupEmptyRecycleBin()
         updateTextColors(binding.settingsNestedScrollview)
@@ -131,6 +148,7 @@ class SettingsActivity : SimpleActivity() {
             binding.settingsGeneralSettingsLabel,
             binding.settingsRecordingSectionLabel,
             binding.settingsAudioSectionLabel,
+            binding.settingsTranscribeSectionLabel,
             binding.settingsRecycleBinLabel
         ).forEach {
             it.setTextColor(getProperPrimaryColor())
@@ -425,6 +443,41 @@ class SettingsActivity : SimpleActivity() {
             config.microphoneMode = it as Int
             binding.settingsMicrophoneMode.text = config.getMicrophoneModeText(config.microphoneMode)
         }
+    }
+
+    private fun setupTranscribeModel() {
+        updateTranscribeModelLabel()
+        binding.settingsTranscribeModelHolder.setOnClickListener {
+            TranscriptionModelsDialog(this) { updateTranscribeModelLabel() }
+        }
+    }
+
+    private fun updateTranscribeModelLabel() {
+        val activeId = config.transcribeModelId ?: ModelCatalog.DEFAULT.id
+        val active = ModelCatalog.byId(activeId) ?: ModelCatalog.DEFAULT
+        binding.settingsTranscribeModel.text = active.displayName
+    }
+
+    private fun setupTranscribeLanguage() {
+        binding.settingsTranscribeLanguage.text = transcribeLanguageLabel(config.transcribeLanguage)
+        binding.settingsTranscribeLanguageHolder.setOnClickListener {
+            val items = TRANSCRIBE_LANGUAGES.map { (code, labelRes) ->
+                RadioItem(id = code.hashCode(), title = getString(labelRes), value = code)
+            } as ArrayList<RadioItem>
+
+            val checkedHash = config.transcribeLanguage.hashCode()
+            RadioGroupDialog(this@SettingsActivity, items, checkedHash) {
+                val code = it as String
+                config.transcribeLanguage = code
+                binding.settingsTranscribeLanguage.text = transcribeLanguageLabel(code)
+            }
+        }
+    }
+
+    private fun transcribeLanguageLabel(code: String): String {
+        val labelRes = TRANSCRIBE_LANGUAGES.firstOrNull { it.first == code }?.second
+            ?: R.string.transcribe_auto_detect
+        return getString(labelRes)
     }
 
     private fun getMediaRecorderAudioSources(): List<Int> {

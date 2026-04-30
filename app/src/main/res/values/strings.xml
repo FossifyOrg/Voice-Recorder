@@ -68,6 +68,23 @@
     <string name="model_size_mb">~%1$d MB on disk</string>
     <string name="model_not_installed">Not installed</string>
     <string name="model_installed">Installed</string>
+    <string name="re_transcribe">Re-transcribe</string>
+    <string name="transcript_processing_time">Processed in %1$s</string>
+    <string name="transcript_processing_time_seconds">%1$.1fs</string>
+    <string name="transcript_processing_time_minutes">%1$dm %2$ds</string>
+    <string name="model_active">Active</string>
+    <string name="model_download_in_progress">Downloading… %1$d%%</string>
+    <string name="model_delete_confirmation">Delete this downloaded model? You can re-download it any time.</string>
+    <string name="model_active_set">Active model: %1$s</string>
+    <string name="manage_models">Manage models</string>
+    <string name="transcribe_lang_english">English</string>
+    <string name="transcribe_lang_spanish">Spanish</string>
+    <string name="transcribe_lang_french">French</string>
+    <string name="transcribe_lang_german">German</string>
+    <string name="transcribe_lang_italian">Italian</string>
+    <string name="transcribe_lang_portuguese">Portuguese</string>
+    <string name="transcribe_lang_chinese">Chinese</string>
+    <string name="transcribe_lang_japanese">Japanese</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res

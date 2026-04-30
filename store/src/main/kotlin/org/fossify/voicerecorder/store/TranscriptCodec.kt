@@ -32,6 +32,7 @@ internal object TranscriptCodec {
             .put("duration_ms", t.durationMs)
             .put("segments", segmentsArray)
         if (t.modelSha256 != null) obj.put("model_sha256", t.modelSha256)
+        if (t.processingMs != null) obj.put("processing_ms", t.processingMs)
         return obj.toString(2)
     }
 
@@ -59,6 +60,7 @@ internal object TranscriptCodec {
             languageAutoDetected = obj.optBoolean("language_auto_detected", false),
             createdAtIso = obj.getString("created_at"),
             durationMs = obj.getLong("duration_ms"),
+            processingMs = if (obj.has("processing_ms")) obj.getLong("processing_ms") else null,
             segments = segments,
         )
     }

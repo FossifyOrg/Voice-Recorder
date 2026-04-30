@@ -23,7 +23,9 @@ import org.fossify.commons.helpers.isQPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.helpers.ACTION_CANCEL_MODEL_DOWNLOAD
 import org.fossify.voicerecorder.helpers.ACTION_CANCEL_TRANSCRIPTION
+import org.fossify.voicerecorder.helpers.ACTION_DOWNLOAD_MODEL
 import org.fossify.voicerecorder.helpers.EXTRA_LANGUAGE
 import org.fossify.voicerecorder.helpers.EXTRA_MODEL_ID
 import org.fossify.voicerecorder.helpers.EXTRA_RECORDING_URI
@@ -59,6 +61,8 @@ class TranscriptionService : Service() {
     companion object {
         var isRunning: Boolean = false
             private set
+        var downloadingModelId: String? = null
+            private set
 
         private const val TAG = "TranscriptionService"
         private const val CHANNEL_ID = "voice_recorder_transcription"
@@ -71,13 +75,15 @@ class TranscriptionService : Service() {
     private val isCancelled = AtomicBoolean(false)
     private var currentJob: Job? = null
     private var currentRecordingUri: Uri? = null
+    private var currentDownloadModelId: String? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         when (intent?.action) {
-            ACTION_CANCEL_TRANSCRIPTION -> handleCancel()
+            ACTION_CANCEL_TRANSCRIPTION, ACTION_CANCEL_MODEL_DOWNLOAD -> handleCancel()
+            ACTION_DOWNLOAD_MODEL -> handleDownloadModel(intent)
             else -> handleStart(intent)
         }
         return START_NOT_STICKY
@@ -136,7 +142,63 @@ class TranscriptionService : Service() {
         currentJob?.cancel()
     }
 
+    private fun handleDownloadModel(intent: Intent) {
+        if (currentJob?.isActive == true) {
+            Log.w(TAG, "another job is running; ignoring model download request")
+            return
+        }
+        val modelId = intent.getStringExtra(EXTRA_MODEL_ID) ?: run {
+            stopSelf(); return
+        }
+        val spec = ModelCatalog.byId(modelId) ?: run {
+            stopSelf(); return
+        }
+
+        currentDownloadModelId = modelId
+        downloadingModelId = modelId
+        isCancelled.set(false)
+        isRunning = true
+        startForegroundCompat(buildNotification(getString(R.string.downloading_model), 0, indeterminate = true))
+        EventBus.getDefault().post(Events.ModelDownloadStarted(modelId))
+
+        currentJob = scope.launch {
+            try {
+                val modelManager = ModelManager(this@TranscriptionService)
+                modelManager.downloadModel(spec, isCancelled) { downloaded, total ->
+                    throwIfCancelled()
+                    val frac = if (total > 0L) downloaded.toFloat() / total else 0f
+                    EventBus.getDefault().post(Events.ModelDownloadProgress(modelId, frac))
+                    val pct = (frac * PCT_MAX).toInt().coerceIn(0, PCT_MAX)
+                    startForegroundCompat(
+                        buildNotification(getString(R.string.downloading_model), pct, indeterminate = false)
+                    )
+                }
+                EventBus.getDefault().post(Events.ModelDownloadCompleted(modelId))
+            } catch (@Suppress("SwallowedException") _: TranscriptionCancelledException) {
+                Log.i(TAG, "model download cancelled for $modelId")
+                EventBus.getDefault().post(Events.ModelDownloadCancelled(modelId))
+            } catch (@Suppress("TooGenericExceptionCaught") t: Throwable) {
+                // Fail-safe: any failure must surface so UI can leave the busy state.
+                // ModelManager throws IOException("cancelled") on cancel — treat that as Cancelled, not Failed.
+                if (isCancelled.get()) {
+                    Log.i(TAG, "model download cancelled for $modelId")
+                    EventBus.getDefault().post(Events.ModelDownloadCancelled(modelId))
+                } else {
+                    Log.e(TAG, "model download failed for $modelId", t)
+                    EventBus.getDefault().post(Events.ModelDownloadFailed(modelId, t))
+                }
+            } finally {
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                isRunning = false
+                downloadingModelId = null
+                currentDownloadModelId = null
+                stopSelf()
+            }
+        }
+    }
+
     private fun runPipeline(recordingUri: Uri, modelId: String, language: String) {
+        val pipelineStartMs = System.currentTimeMillis()
         val spec = ModelCatalog.byId(modelId) ?: ModelCatalog.DEFAULT
         val modelManager = ModelManager(this)
 
@@ -197,6 +259,7 @@ class TranscriptionService : Service() {
                 languageAutoDetected = languageWasAuto,
                 createdAtIso = nowIso(),
                 durationMs = totalDurationMs,
+                processingMs = System.currentTimeMillis() - pipelineStartMs,
                 segments = segments,
             )
             transcriptStore.write(recording, transcript)

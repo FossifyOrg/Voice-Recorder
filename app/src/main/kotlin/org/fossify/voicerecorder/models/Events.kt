@@ -20,6 +20,12 @@ class Events {
     class TranscriptionCompleted internal constructor(val recordingUri: Uri)
     class TranscriptionFailed internal constructor(val recordingUri: Uri, val cause: Throwable)
     class TranscriptionCancelled internal constructor(val recordingUri: Uri)
+
+    class ModelDownloadStarted internal constructor(val modelId: String)
+    class ModelDownloadProgress internal constructor(val modelId: String, val fraction: Float)
+    class ModelDownloadCompleted internal constructor(val modelId: String)
+    class ModelDownloadFailed internal constructor(val modelId: String, val cause: Throwable)
+    class ModelDownloadCancelled internal constructor(val modelId: String)
 }
 
 enum class TranscriptionPhase { DOWNLOADING_MODEL, DECODING, TRANSCRIBING, WRITING }

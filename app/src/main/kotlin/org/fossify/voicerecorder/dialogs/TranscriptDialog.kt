@@ -68,6 +68,7 @@ class TranscriptDialog(
 
         binding.transcriptStartBtn.setOnClickListener { startTranscription() }
         binding.transcriptCancelBtn.setOnClickListener { cancelTranscription() }
+        binding.transcriptRetranscribeBtn.setOnClickListener { startTranscription() }
 
         // Load initial state on a background thread (sidecar I/O can hit ContentResolver).
         ensureBackgroundThread {
@@ -121,6 +122,15 @@ class TranscriptDialog(
         val langLabel = transcript.language.ifBlank { "?" }
         binding.transcriptReadySubtitle.text =
             "Language: $langLabel · ${transcript.segments.size} segments"
+
+        val processingMs = transcript.processingMs
+        if (processingMs != null && processingMs > 0L) {
+            binding.transcriptReadyProcessingTime.visibility = View.VISIBLE
+            binding.transcriptReadyProcessingTime.text =
+                activity.getString(R.string.transcript_processing_time, formatProcessingTime(processingMs))
+        } else {
+            binding.transcriptReadyProcessingTime.visibility = View.GONE
+        }
 
         val container = binding.transcriptSegmentsContainer
         container.removeAllViews()
@@ -176,6 +186,17 @@ class TranscriptDialog(
         val mm = totalSec / SEC_PER_MIN
         val ss = totalSec % SEC_PER_MIN
         return String.format(Locale.ROOT, "%02d:%02d", mm, ss)
+    }
+
+    private fun formatProcessingTime(ms: Long): String {
+        val totalSec = ms / MS_PER_SECOND
+        return if (totalSec >= SEC_PER_MIN) {
+            val minutes = totalSec / SEC_PER_MIN
+            val seconds = totalSec % SEC_PER_MIN
+            activity.getString(R.string.transcript_processing_time_minutes, minutes, seconds)
+        } else {
+            activity.getString(R.string.transcript_processing_time_seconds, ms / MS_PER_SECOND.toFloat())
+        }
     }
 
     @Suppress("unused")
