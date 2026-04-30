@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingTop="@dimen/small_margin"
     android:paddingBottom="@dimen/small_margin">
 
-    <org.fossify.commons.views.MyCompatRadioButton
-        android:id="@+id/model_radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false" />
-
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <org.fossify.commons.views.MyTextView
-            android:id="@+id/model_name"
-            android:layout_width="match_parent"
+        <org.fossify.commons.views.MyCompatRadioButton
+            android:id="@+id/model_radio"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="Whisper tiny (multilingual, int8)" />
+            android:clickable="false"
+            android:focusable="false" />
 
-        <org.fossify.commons.views.MyTextView
-            android:id="@+id/model_subtitle"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/smaller_text_size"
-            tools:text="~120 MB · Installed" />
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <org.fossify.commons.views.MyTextView
+                android:id="@+id/model_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                tools:text="Whisper tiny (multilingual, int8)" />
+
+            <org.fossify.commons.views.MyTextView
+                android:id="@+id/model_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/smaller_text_size"
+                tools:text="~120 MB · Installed" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/model_progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:indeterminate="false"
+            android:max="100"
+            android:visibility="gone"
+            app:indicatorSize="24dp"
+            app:trackThickness="3dp"
+            tools:visibility="visible" />
     </LinearLayout>
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/model_progress"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="@dimen/small_margin"
-        android:indeterminate="false"
-        android:max="100"
-        android:visibility="gone"
-        app:indicatorSize="24dp"
-        app:trackThickness="3dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:visibility="visible" />
 
     <Button
         android:id="@+id/model_action_btn"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_margin"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/tiny_margin"
         android:minWidth="0dp"
         android:paddingStart="@dimen/normal_margin"
         android:paddingEnd="@dimen/normal_margin"
-        style="?android:attr/buttonBarButtonStyle"
         tools:text="Download" />
 </LinearLayout>

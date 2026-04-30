@@ -117,7 +117,11 @@ class TranscriptionModelsDialog(
         }
     }
 
-    private fun renderRow(spec: ModelSpec, downloadingFraction: Float? = null) {
+    private fun renderRow(
+        spec: ModelSpec,
+        downloadingFraction: Float? = null,
+        forceFinished: Boolean = false,
+    ) {
         val item = rowBindings[spec.id] ?: return
         val isInstalled = modelManager.isModelInstalled(spec)
         val isActive = (activity.config.transcribeModelId ?: ModelCatalog.DEFAULT.id) == spec.id
@@ -126,7 +130,8 @@ class TranscriptionModelsDialog(
         item.modelRadio.isChecked = isActive
 
         val downloadingId = TranscriptionService.downloadingModelId
-        val isDownloading = downloadingFraction != null || downloadingId == spec.id
+        val isDownloading = !forceFinished &&
+            (downloadingFraction != null || downloadingId == spec.id)
 
         when {
             isDownloading -> {
@@ -163,7 +168,7 @@ class TranscriptionModelsDialog(
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDownloadCompleted(e: Events.ModelDownloadCompleted) {
         val spec = ModelCatalog.byId(e.modelId) ?: return
-        renderRow(spec)
+        renderRow(spec, forceFinished = true)
     }
 
     @Suppress("unused")
@@ -171,14 +176,14 @@ class TranscriptionModelsDialog(
     fun onDownloadFailed(e: Events.ModelDownloadFailed) {
         val spec = ModelCatalog.byId(e.modelId) ?: return
         activity.toast(activity.getString(R.string.transcript_failed, e.cause.message ?: "?"))
-        renderRow(spec)
+        renderRow(spec, forceFinished = true)
     }
 
     @Suppress("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDownloadCancelled(e: Events.ModelDownloadCancelled) {
         val spec = ModelCatalog.byId(e.modelId) ?: return
-        renderRow(spec)
+        renderRow(spec, forceFinished = true)
     }
 
     private companion object {
