@@ -41,6 +41,8 @@
     <!-- Microphone selector -->
     <string name="device_mic">Device Mic</string>
     <string name="mic_type_bluetooth">Bluetooth</string>
+    <string name="mic_type_bluetooth_not_connected">Bluetooth · Not connected</string>
+    <string name="mic_type_bluetooth_named">Bluetooth · %1$s</string>
     <!-- FAQ -->
     <string name="faq_1_title">Can I hide the notification icon during recording?</string>
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this.

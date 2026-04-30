@@ -14,7 +14,6 @@
         android:background="@drawable/tab_selector_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

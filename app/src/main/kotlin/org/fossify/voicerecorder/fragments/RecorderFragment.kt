@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.media.AudioDeviceCallback
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.os.Build
@@ -58,6 +59,7 @@ class RecorderFragment(
     private var pauseBlinkTimer = Timer()
     private var bus: EventBus? = null
     private var bluetoothSelected = false
+    private var audioDeviceCallback: AudioDeviceCallback? = null
     private lateinit var binding: FragmentRecorderBinding
 
     override fun onFinishInflate() {
@@ -89,6 +91,7 @@ class RecorderFragment(
     override fun onDestroy() {
         bus?.unregister(this)
         pauseBlinkTimer.cancel()
+        unregisterAudioDeviceCallback()
     }
 
     override fun onAttachedToWindow() {
@@ -99,6 +102,7 @@ class RecorderFragment(
         bus!!.register(this)
 
         setupTabSelector()
+        registerAudioDeviceCallback()
         updateRecordingDuration(0)
         binding.toggleRecordingButton.setDebouncedClickListener {
             (context as? SimpleActivity)?.apply {
@@ -151,8 +155,14 @@ class RecorderFragment(
         val properTextColor = context.getProperTextColor()
         val properPrimaryColor = context.getProperPrimaryColor()
         val contrastColor = properPrimaryColor.getContrastColor()
+        val btDevice = findBluetoothInputDevice()
+        val btAvailable = btDevice != null
 
-        if (bluetoothSelected) {
+        binding.tabBluetooth.text = bluetoothTabLabel(btDevice)
+        binding.tabBluetooth.alpha = if (btAvailable) 1f else BT_DISABLED_ALPHA
+        binding.tabBluetooth.isEnabled = btAvailable
+
+        if (bluetoothSelected && btAvailable) {
             binding.tabDefault.setBackgroundResource(android.R.color.transparent)
             binding.tabDefault.setTextColor(properTextColor)
             binding.tabBluetooth.setBackgroundResource(R.drawable.tab_selector_selected)
@@ -164,6 +174,22 @@ class RecorderFragment(
             binding.tabDefault.setTextColor(contrastColor)
             binding.tabBluetooth.setBackgroundResource(android.R.color.transparent)
             binding.tabBluetooth.setTextColor(properTextColor)
+        }
+    }
+
+    private fun bluetoothTabLabel(device: AudioDeviceInfo?): String {
+        if (device == null) {
+            return context.getString(R.string.mic_type_bluetooth_not_connected)
+        }
+        val name = if (hasBluetoothPermission()) {
+            device.productName?.toString()?.takeIf { it.isNotBlank() }
+        } else {
+            null
+        }
+        return if (name != null) {
+            context.getString(R.string.mic_type_bluetooth_named, name)
+        } else {
+            context.getString(R.string.mic_type_bluetooth)
         }
     }
 
@@ -228,6 +254,7 @@ class RecorderFragment(
         }
 
         binding.tabBluetooth.setDebouncedClickListener {
+            if (findBluetoothInputDevice() == null) return@setDebouncedClickListener
             if (!bluetoothSelected) {
                 ensureBluetoothPermission {
                     bluetoothSelected = true
@@ -239,11 +266,34 @@ class RecorderFragment(
 
     private fun refreshBluetoothVisibility() {
         val hasBtDevice = findBluetoothInputDevice() != null
-        binding.microphoneSelectorHolder.beVisibleIf(hasBtDevice)
         if (!hasBtDevice && bluetoothSelected) {
             bluetoothSelected = false
-            refreshDeviceSelectorStatus()
         }
+        refreshDeviceSelectorStatus()
+        binding.microphoneSelectorHolder.beVisibleIf(status == RECORDING_STOPPED)
+    }
+
+    private fun registerAudioDeviceCallback() {
+        if (audioDeviceCallback != null) return
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val callback = object : AudioDeviceCallback() {
+            override fun onAudioDevicesAdded(addedDevices: Array<out AudioDeviceInfo>?) {
+                refreshBluetoothVisibility()
+            }
+
+            override fun onAudioDevicesRemoved(removedDevices: Array<out AudioDeviceInfo>?) {
+                refreshBluetoothVisibility()
+            }
+        }
+        audioManager.registerAudioDeviceCallback(callback, Handler(Looper.getMainLooper()))
+        audioDeviceCallback = callback
+    }
+
+    private fun unregisterAudioDeviceCallback() {
+        val callback = audioDeviceCallback ?: return
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.unregisterAudioDeviceCallback(callback)
+        audioDeviceCallback = null
     }
 
     private fun hasBluetoothPermission(): Boolean {
@@ -379,5 +429,6 @@ class RecorderFragment(
 
     companion object {
         private const val BLUETOOTH_PERMISSION_REQUEST_CODE = 100
+        private const val BT_DISABLED_ALPHA = 0.4f
     }
 }
