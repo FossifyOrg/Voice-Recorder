@@ -42,11 +42,17 @@ import org.fossify.voicerecorder.transcribe.engine.SherpaTranscriber
 import org.fossify.voicerecorder.transcribe.model.ModelCatalog
 import org.fossify.voicerecorder.transcribe.model.ModelManager
 import org.greenrobot.eventbus.EventBus
+import org.fossify.voicerecorder.transcribe.audio.PcmChunk
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
+import java.util.concurrent.atomic.AtomicReference
+import kotlin.concurrent.thread
 
 /**
  * Foreground service that runs Whisper transcription end-to-end:
@@ -63,12 +69,19 @@ class TranscriptionService : Service() {
             private set
         var downloadingModelId: String? = null
             private set
+        /** Wall-clock ms when the current transcription started, or null if none is running. */
+        var transcriptionStartMs: Long? = null
+            private set
 
         private const val TAG = "TranscriptionService"
         private const val CHANNEL_ID = "voice_recorder_transcription"
         private const val ENGINE_NAME = "sherpa-onnx"
         private const val ENGINE_VERSION = "1.12.40"
         private const val PCT_MAX = 100
+        private const val MS_PER_SECOND = 1000L
+        private const val CHUNK_QUEUE_CAPACITY = 2
+        private const val QUEUE_OFFER_TIMEOUT_MS = 100L
+        private val EOF_SENTINEL = Any()
     }
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -113,6 +126,7 @@ class TranscriptionService : Service() {
         currentRecordingUri = recordingUri
         isCancelled.set(false)
         isRunning = true
+        transcriptionStartMs = System.currentTimeMillis()
         startForegroundCompat(buildNotification(getString(R.string.transcribing), 0, indeterminate = true))
         EventBus.getDefault().post(Events.TranscriptionStarted(recordingUri))
 
@@ -131,6 +145,7 @@ class TranscriptionService : Service() {
             } finally {
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 isRunning = false
+                transcriptionStartMs = null
                 currentRecordingUri = null
                 stopSelf()
             }
@@ -230,20 +245,17 @@ class TranscriptionService : Service() {
 
         try {
             postProgress(recordingUri, TranscriptionPhase.DECODING, 0f, R.string.transcribing)
-            val totalDurationMs = decoder.decodeChunks(
-                isCancelled = isCancelled,
-                onProgress = { f ->
-                    postProgress(recordingUri, TranscriptionPhase.TRANSCRIBING, f, R.string.transcribing)
-                },
-            ) { chunk ->
-                if (isCancelled.get()) return@decodeChunks false
-                val result = transcriber.transcribeChunk(chunk)
-                if (detectedLanguage.isBlank() && result.language.isNotBlank()) {
-                    detectedLanguage = result.language
-                }
-                segments += result.segments
-                true
+            val expectedDurationMs = recording.duration.toLong() * MS_PER_SECOND
+            val pipelineResult = runPipelinedTranscribe(
+                decoder = decoder,
+                transcriber = transcriber,
+                recordingUri = recordingUri,
+                expectedDurationMs = expectedDurationMs,
+                segments = segments,
+            ) { language ->
+                if (detectedLanguage.isBlank() && language.isNotBlank()) detectedLanguage = language
             }
+            val totalDurationMs = pipelineResult
 
             throwIfCancelled()
             postProgress(recordingUri, TranscriptionPhase.WRITING, 1f, R.string.transcribing)
@@ -265,6 +277,94 @@ class TranscriptionService : Service() {
             transcriptStore.write(recording, transcript)
         } finally {
             transcriber.release()
+        }
+    }
+
+    /**
+     * Runs the decoder on a worker thread and the recognizer on this coroutine, connected by a
+     * small bounded queue. The decoder hides its I/O / MediaCodec wait behind whatever the
+     * recognizer is currently doing on a previously emitted chunk.
+     *
+     * Progress is posted from the *consumer* side (chunkEndMs / expectedDurationMs) so the bar
+     * reflects audio actually transcribed, not audio merely decoded ahead.
+     *
+     * Returns the total decoded duration in ms (from MediaExtractor metadata).
+     */
+    private fun runPipelinedTranscribe(
+        decoder: AudioDecoder,
+        transcriber: SherpaTranscriber,
+        recordingUri: Uri,
+        expectedDurationMs: Long,
+        segments: MutableList<TranscriptSegment>,
+        onLanguageDetected: (String) -> Unit,
+    ): Long {
+        val queue = ArrayBlockingQueue<Any>(CHUNK_QUEUE_CAPACITY)
+        val decoderError = AtomicReference<Throwable?>()
+        val totalDurationMsRef = AtomicLong()
+
+        val decoderThread = thread(
+            start = true, name = "TranscriptionDecoder", isDaemon = true,
+        ) {
+            try {
+                val total = decoder.decodeChunks(isCancelled = isCancelled) { chunk ->
+                    pollOfferUntilCancelled(queue, chunk)
+                }
+                totalDurationMsRef.set(total)
+            } catch (@Suppress("TooGenericExceptionCaught") t: Throwable) {
+                decoderError.set(t)
+            } finally {
+                runCatching { queue.put(EOF_SENTINEL) }
+            }
+        }
+
+        try {
+            drainAndTranscribe(
+                queue = queue,
+                transcriber = transcriber,
+                recordingUri = recordingUri,
+                expectedDurationMs = expectedDurationMs,
+                segments = segments,
+                onLanguageDetected = onLanguageDetected,
+            )
+        } catch (@Suppress("TooGenericExceptionCaught") t: Throwable) {
+            isCancelled.set(true)
+            throw t
+        } finally {
+            decoderThread.join()
+        }
+
+        decoderError.get()?.let { throw it }
+        return totalDurationMsRef.get()
+    }
+
+    private fun pollOfferUntilCancelled(queue: ArrayBlockingQueue<Any>, chunk: PcmChunk): Boolean {
+        while (!isCancelled.get()) {
+            if (queue.offer(chunk, QUEUE_OFFER_TIMEOUT_MS, TimeUnit.MILLISECONDS)) return true
+        }
+        return false
+    }
+
+    private fun drainAndTranscribe(
+        queue: ArrayBlockingQueue<Any>,
+        transcriber: SherpaTranscriber,
+        recordingUri: Uri,
+        expectedDurationMs: Long,
+        segments: MutableList<TranscriptSegment>,
+        onLanguageDetected: (String) -> Unit,
+    ) {
+        while (true) {
+            val item = queue.take()
+            if (item === EOF_SENTINEL) return
+            if (isCancelled.get()) return
+            val chunk = item as PcmChunk
+            val result = transcriber.transcribeChunk(chunk)
+            onLanguageDetected(result.language)
+            segments += result.segments
+
+            if (expectedDurationMs > 0L) {
+                val fraction = (chunk.endMs.toFloat() / expectedDurationMs).coerceIn(0f, 1f)
+                postProgress(recordingUri, TranscriptionPhase.TRANSCRIBING, fraction, R.string.transcribing)
+            }
         }
     }
 

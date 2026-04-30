@@ -76,6 +76,7 @@ class TranscriptActivity : SimpleActivity() {
         private const val PLAYHEAD_TINT_ALPHA = 0x33000000.toInt()
         private const val RGB_MASK = 0x00FFFFFF
         private const val PLAYHEAD_TICK_MS = 200L
+        private const val ETA_MIN_FRACTION = 0.05f
     }
 
     private lateinit var binding: ActivityTranscriptBinding
@@ -85,6 +86,7 @@ class TranscriptActivity : SimpleActivity() {
 
     private var player: MediaPlayer? = null
     private var progressTimer = Timer()
+    private var busyElapsedTimer = Timer()
     private var pendingSeekMs: Int = -1
     private var playOnPreparation = false
 
@@ -92,6 +94,8 @@ class TranscriptActivity : SimpleActivity() {
     private val matches = mutableListOf<Match>()
     private var currentMatchIndex = 0
     private var playheadSegmentIndex: Int = -1
+    private var latestPhase: TranscriptionPhase? = null
+    private var latestFraction: Float = 0f
 
     private data class Match(val segmentIndex: Int, val start: Int, val end: Int)
 
@@ -119,6 +123,7 @@ class TranscriptActivity : SimpleActivity() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
         progressTimer.cancel()
+        busyElapsedTimer.cancel()
         player?.release()
         player = null
     }
@@ -236,6 +241,7 @@ class TranscriptActivity : SimpleActivity() {
     }
 
     private fun renderIdle() {
+        stopBusyElapsedTimer()
         binding.transcriptIdle.visibility = View.VISIBLE
         binding.transcriptBusy.visibility = View.GONE
         binding.transcriptReady.visibility = View.GONE
@@ -258,9 +264,15 @@ class TranscriptActivity : SimpleActivity() {
         if (!indeterminate) {
             binding.transcriptBusyProgress.setProgressCompat(progress, true)
         }
+        startBusyElapsedTimer()
     }
 
     private fun renderReady(transcript: Transcript) {
+        stopBusyElapsedTimer()
+        renderReadyInner(transcript)
+    }
+
+    private fun renderReadyInner(transcript: Transcript) {
         binding.transcriptIdle.visibility = View.GONE
         binding.transcriptBusy.visibility = View.GONE
         binding.transcriptReady.visibility = View.VISIBLE
@@ -386,6 +398,51 @@ class TranscriptActivity : SimpleActivity() {
             }
         }
         return span
+    }
+
+    private fun startBusyElapsedTimer() {
+        busyElapsedTimer.cancel()
+        busyElapsedTimer = Timer()
+        busyElapsedTimer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                Handler(Looper.getMainLooper()).post { updateBusyElapsedLabel() }
+            }
+        }, 0L, MS_PER_SECOND)
+    }
+
+    private fun stopBusyElapsedTimer() {
+        busyElapsedTimer.cancel()
+    }
+
+    private fun updateBusyElapsedLabel() {
+        val startMs = TranscriptionService.transcriptionStartMs
+        if (startMs == null) {
+            binding.transcriptBusyElapsed.text = ""
+            return
+        }
+        val elapsed = (System.currentTimeMillis() - startMs).coerceAtLeast(0L)
+        val elapsedStr = formatMmSs(elapsed)
+        val etaStr = computeEtaLabel(elapsed)
+        binding.transcriptBusyElapsed.text = if (etaStr != null) {
+            getString(R.string.transcript_elapsed_with_eta, elapsedStr, etaStr)
+        } else {
+            getString(R.string.transcript_elapsed, elapsedStr)
+        }
+    }
+
+    private fun computeEtaLabel(elapsedMs: Long): String? {
+        if (latestPhase != TranscriptionPhase.TRANSCRIBING) return null
+        if (latestFraction < ETA_MIN_FRACTION) return null
+        val remainingMs = (elapsedMs * (1f - latestFraction) / latestFraction).toLong()
+        if (remainingMs <= 0L) return null
+        return formatMmSs(remainingMs)
+    }
+
+    private fun formatMmSs(ms: Long): String {
+        val totalSec = ms / MS_PER_SECOND
+        val mm = totalSec / SEC_PER_MIN
+        val ss = totalSec % SEC_PER_MIN
+        return String.format(Locale.ROOT, "%02d:%02d", mm, ss)
     }
 
     private fun goToMatch(index: Int) {
@@ -656,6 +713,8 @@ class TranscriptActivity : SimpleActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTranscriptionProgress(e: Events.TranscriptionProgress) {
         if (!isOurs(e.recordingUri)) return
+        latestPhase = e.phase
+        latestFraction = e.fraction
         val labelRes = when (e.phase) {
             TranscriptionPhase.DOWNLOADING_MODEL -> R.string.downloading_model
             TranscriptionPhase.DECODING -> R.string.decoding_audio

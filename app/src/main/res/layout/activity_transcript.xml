@@ -85,6 +85,16 @@
                 android:indeterminate="false"
                 android:max="100" />
 
+            <org.fossify.commons.views.MyTextView
+                android:id="@+id/transcript_busy_elapsed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textSize="@dimen/smaller_text_size"
+                tools:text="Elapsed: 00:42" />
+
             <Button
                 android:id="@+id/transcript_cancel_btn"
                 style="?android:attr/buttonBarButtonStyle"
