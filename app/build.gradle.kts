@@ -152,4 +152,5 @@ dependencies {
     detektPlugins(libs.compose.detekt)
 
     implementation(project(":store"))
+    implementation(project(":transcribe"))
 }

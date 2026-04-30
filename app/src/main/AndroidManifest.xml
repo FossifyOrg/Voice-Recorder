@@ -7,9 +7,11 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -122,6 +124,11 @@
                 <action android:name="org.fossify.voicerecorder.action.TOGGLE_PAUSE" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".services.TranscriptionService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <activity-alias
             android:name=".activities.SplashActivity.Red"

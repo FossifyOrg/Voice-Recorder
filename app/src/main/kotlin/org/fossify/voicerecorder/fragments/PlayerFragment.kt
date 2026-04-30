@@ -32,6 +32,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
+import org.fossify.voicerecorder.dialogs.TranscriptDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
@@ -61,6 +62,8 @@ class PlayerFragment(
     private var prevSaveFolder: Uri? = null
     private var prevRecycleBinState = context.config.useRecycleBin
     private var playOnPreparation = true
+    private var currentRecording: Recording? = null
+    private var pendingSeekMs: Int = -1
     private lateinit var binding: FragmentPlayerBinding
 
     private var becomingNoisyReceiver: BecomingNoisyReceiver? = null
@@ -171,6 +174,31 @@ class PlayerFragment(
             playRecording(newRecording, true)
             playedRecordingIDs.push(newRecording.id)
         }
+
+        binding.transcriptBtn.setOnClickListener {
+            val recording = currentRecording ?: return@setOnClickListener
+            TranscriptDialog(context as SimpleActivity, recording) { positionMs ->
+                seekToAndPlay(positionMs)
+            }
+        }
+    }
+
+    /**
+     * Seek the currently-playing recording to [positionMs] and start playback.
+     * If the player hasn't finished preparing yet, the seek is queued and applied
+     * once `onPrepared` fires.
+     */
+    fun seekToAndPlay(positionMs: Long) {
+        val target = positionMs.toInt()
+        val mediaPlayer = player ?: return
+        try {
+            mediaPlayer.seekTo(target)
+            resumePlayback()
+            binding.playerProgressbar.progress = target / 1000
+        } catch (_: IllegalStateException) {
+            pendingSeekMs = target
+            playOnPreparation = true
+        }
     }
 
     override fun refreshRecordings() = loadRecordings()
@@ -229,6 +257,14 @@ class PlayerFragment(
             }
 
             setOnPreparedListener {
+                if (pendingSeekMs >= 0) {
+                    try {
+                        seekTo(pendingSeekMs)
+                        binding.playerProgressbar.progress = pendingSeekMs / 1000
+                    } catch (_: IllegalStateException) {
+                    }
+                    pendingSeekMs = -1
+                }
                 if (playOnPreparation) {
                     resumePlayback()
                 }
@@ -240,6 +276,8 @@ class PlayerFragment(
 
     override fun playRecording(recording: Recording, playOnPrepared: Boolean) {
         resetProgress(recording)
+        currentRecording = recording
+        binding.transcriptBtn.visibility = android.view.View.VISIBLE
         (binding.recordingsList.adapter as RecordingsAdapter).updateCurrentRecording(recording.id)
         playOnPreparation = playOnPrepared
 

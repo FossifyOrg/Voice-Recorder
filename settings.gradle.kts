@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Voice-Recorder"
 include(":app")
 include(":store")
+include(":transcribe")

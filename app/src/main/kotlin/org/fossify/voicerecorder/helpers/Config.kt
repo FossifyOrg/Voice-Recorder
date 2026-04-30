@@ -78,4 +78,12 @@ class Config(context: Context) : BaseConfig(context) {
     var filenamePattern: String
         get() = prefs.getString(FILENAME_PATTERN, DEFAULT_FILENAME_PATTERN)!!
         set(filenamePattern) = prefs.edit { putString(FILENAME_PATTERN, filenamePattern) }
+
+    var transcribeModelId: String?
+        get() = prefs.getString(TRANSCRIBE_MODEL_ID, null)
+        set(value) = prefs.edit { putString(TRANSCRIBE_MODEL_ID, value) }
+
+    var transcribeLanguage: String
+        get() = prefs.getString(TRANSCRIBE_LANGUAGE, DEFAULT_TRANSCRIBE_LANGUAGE)!!
+        set(value) = prefs.edit { putString(TRANSCRIBE_LANGUAGE, value) }
 }

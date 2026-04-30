@@ -69,12 +69,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
+            android:layout_toStartOf="@+id/transcript_btn"
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"
             android:padding="@dimen/activity_margin"
             android:textSize="@dimen/big_text_size"
             tools:text="Recording title" />
+
+        <ImageView
+            android:id="@+id/transcript_btn"
+            android:layout_width="@dimen/normal_icon_size"
+            android:layout_height="@dimen/normal_icon_size"
+            android:layout_alignTop="@+id/player_title"
+            android:layout_alignBottom="@+id/player_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/transcript"
+            android:padding="@dimen/small_margin"
+            android:src="@drawable/ic_transcript_vector"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <org.fossify.commons.views.MyTextView
             android:id="@+id/player_progress_current"

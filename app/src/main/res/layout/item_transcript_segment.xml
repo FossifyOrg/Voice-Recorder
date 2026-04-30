@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/small_margin"
+    android:paddingBottom="@dimen/small_margin">
+
+    <org.fossify.commons.views.MyTextView
+        android:id="@+id/segment_timestamp"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:textSize="@dimen/smaller_text_size"
+        tools:text="00:42" />
+
+    <org.fossify.commons.views.MyTextView
+        android:id="@+id/segment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_margin"
+        tools:text="Hello world, this is a test segment of the transcript." />
+</LinearLayout>

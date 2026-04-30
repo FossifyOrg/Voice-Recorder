@@ -47,6 +47,27 @@
         If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
     <string name="recording_store_error_title">Failed to access the recordings folder</string>
     <string name="recording_store_error_message">Please make sure the recordings folder exists and this app has the necessary permissions to access it</string>
+    <!-- Transcription -->
+    <string name="transcribe">Transcribe</string>
+    <string name="transcript">Transcript</string>
+    <string name="transcribing">Transcribing…</string>
+    <string name="downloading_model">Downloading speech model…</string>
+    <string name="decoding_audio">Decoding audio…</string>
+    <string name="cancel_transcription">Cancel</string>
+    <string name="transcript_failed">Transcription failed: %1$s</string>
+    <string name="transcript_cancelled">Transcription cancelled</string>
+    <string name="delete_transcript">Delete transcript</string>
+    <string name="copy_transcript">Copy transcript</string>
+    <string name="transcript_copied">Transcript copied to clipboard</string>
+    <string name="transcribe_settings">Transcription</string>
+    <string name="transcribe_model">Speech recognition model</string>
+    <string name="transcribe_language">Language</string>
+    <string name="transcribe_auto_detect">Auto-detect</string>
+    <string name="download_model">Download</string>
+    <string name="delete_downloaded_model">Delete downloaded model</string>
+    <string name="model_size_mb">~%1$d MB on disk</string>
+    <string name="model_not_installed">Not installed</string>
+    <string name="model_installed">Installed</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res

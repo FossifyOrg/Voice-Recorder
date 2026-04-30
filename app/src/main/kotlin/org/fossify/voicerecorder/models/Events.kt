@@ -10,5 +10,17 @@ class Events {
     class RecordingTrashUpdated internal constructor()
     class RecordingSaved internal constructor(val uri: Uri)
     class RecordingFailed internal constructor(val exception: Exception)
+
+    class TranscriptionStarted internal constructor(val recordingUri: Uri)
+    class TranscriptionProgress internal constructor(
+        val recordingUri: Uri,
+        val phase: TranscriptionPhase,
+        val fraction: Float,
+    )
+    class TranscriptionCompleted internal constructor(val recordingUri: Uri)
+    class TranscriptionFailed internal constructor(val recordingUri: Uri, val cause: Throwable)
+    class TranscriptionCancelled internal constructor(val recordingUri: Uri)
 }
+
+enum class TranscriptionPhase { DOWNLOADING_MODEL, DECODING, TRANSCRIBING, WRITING }
 

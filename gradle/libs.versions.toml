@@ -22,6 +22,14 @@ audiorecordview = "1.0.5"
 tandroidlame = "1.1"
 #AutofitTextView
 autofittextview = "0.2.1"
+#sherpa-onnx (on-device ASR via ONNX Runtime). JitPack-built AAR (group com.github.k2-fsa).
+sherpaOnnx = "v1.12.40"
+#OkHttp (model download with progress)
+okhttp = "4.12.0"
+#Apache Commons Compress (tar.bz2 extraction for model archives)
+commonsCompress = "1.27.1"
+#kotlinx coroutines
+kotlinxCoroutines = "1.10.2"
 #Gradle
 gradlePlugins-agp = "9.2.0"
 #build
@@ -50,6 +58,14 @@ tandroidlame = { module = "com.github.naman14:TAndroidLame", version.ref = "tand
 #AutofitTextView
 autofittextview = { module = "me.grantland:autofittextview", version.ref = "autofittextview" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
+#sherpa-onnx
+sherpa-onnx = { module = "com.github.k2-fsa:sherpa-onnx", version.ref = "sherpaOnnx" }
+#OkHttp
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+#Apache Commons Compress
+commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
+#kotlinx coroutines
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
 androidLibrary = { id = "com.android.library", version.ref = "gradlePlugins-agp" }
