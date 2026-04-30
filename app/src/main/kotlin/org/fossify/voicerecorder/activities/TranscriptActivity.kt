@@ -17,6 +17,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
 import android.widget.SeekBar
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.extensions.applyColorFilter
@@ -74,6 +75,7 @@ class TranscriptActivity : SimpleActivity() {
         private const val BYTES_PER_MB = 1_000_000L
         private const val PASSIVE_HIGHLIGHT_ALPHA = 0x55000000.toInt()
         private const val PLAYHEAD_TINT_ALPHA = 0x33000000.toInt()
+        private const val SELECTED_TINT_ALPHA = 0x66000000.toInt()
         private const val RGB_MASK = 0x00FFFFFF
         private const val PLAYHEAD_TICK_MS = 200L
         private const val ETA_MIN_FRACTION = 0.05f
@@ -97,6 +99,14 @@ class TranscriptActivity : SimpleActivity() {
     private var latestPhase: TranscriptionPhase? = null
     private var latestFraction: Float = 0f
 
+    private var isSelectionMode: Boolean = false
+    private val selectedSegmentIndices: java.util.TreeSet<Int> = java.util.TreeSet()
+    private val selectionBackCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            exitSelectionMode()
+        }
+    }
+
     private data class Match(val segmentIndex: Int, val start: Int, val end: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,6 +116,7 @@ class TranscriptActivity : SimpleActivity() {
         setupEdgeToEdge(padBottomSystem = listOf(binding.transcriptContent))
 
         EventBus.getDefault().register(this)
+        onBackPressedDispatcher.addCallback(this, selectionBackCallback)
         setupToolbarMenu()
         initMediaPlayer()
         wireControls()
@@ -273,6 +284,7 @@ class TranscriptActivity : SimpleActivity() {
     }
 
     private fun renderReadyInner(transcript: Transcript) {
+        if (isSelectionMode) exitSelectionMode()
         binding.transcriptIdle.visibility = View.GONE
         binding.transcriptBusy.visibility = View.GONE
         binding.transcriptReady.visibility = View.VISIBLE
@@ -293,13 +305,15 @@ class TranscriptActivity : SimpleActivity() {
         playheadSegmentIndex = -1
 
         val inflater = layoutInflater
-        for (segment in transcript.segments) {
+        transcript.segments.forEachIndexed { idx, segment ->
             val itemBinding = ItemTranscriptSegmentBinding.inflate(inflater, container, false)
             itemBinding.segmentTimestamp.text = formatTimestamp(segment.startMs)
             itemBinding.segmentText.text = segment.text
-            itemBinding.root.setOnClickListener { seekToAndPlay(segment.startMs) }
+            itemBinding.root.setOnClickListener {
+                if (isSelectionMode) toggleSegmentSelection(idx) else seekToAndPlay(segment.startMs)
+            }
             itemBinding.root.setOnLongClickListener {
-                copyToClipboard(segment.text)
+                if (isSelectionMode) toggleSegmentSelection(idx) else enterSelectionMode(idx)
                 true
             }
             container.addView(itemBinding.root)
@@ -567,27 +581,33 @@ class TranscriptActivity : SimpleActivity() {
         val newIndex = segments.indexOfFirst { positionMs in it.startMs until it.endMs }
         if (newIndex == playheadSegmentIndex) return
 
-        // Restore previous row's default look.
-        segmentBindings.getOrNull(playheadSegmentIndex)?.let { restorePlayheadStyle(it) }
-
+        val previous = playheadSegmentIndex
         playheadSegmentIndex = newIndex
-        val itemBinding = segmentBindings.getOrNull(newIndex) ?: return
-        applyPlayheadStyle(itemBinding)
-        autoScrollToCurrentSegment(itemBinding)
+        if (previous >= 0) applyRowStyle(previous)
+        if (newIndex < 0) return
+        applyRowStyle(newIndex)
+        segmentBindings.getOrNull(newIndex)?.let { autoScrollToCurrentSegment(it) }
     }
 
-    private fun applyPlayheadStyle(itemBinding: ItemTranscriptSegmentBinding) {
+    /**
+     * Compute the row's visual state from selection > playhead > none. Selection wins
+     * because it's user-initiated; the playhead can pass through silently underneath.
+     */
+    private fun applyRowStyle(segmentIdx: Int) {
+        val itemBinding = segmentBindings.getOrNull(segmentIdx) ?: return
+        val isSelected = segmentIdx in selectedSegmentIndices
+        val isPlayhead = segmentIdx == playheadSegmentIndex
         val primary = getProperPrimaryColor()
-        val tint = (primary and RGB_MASK) or PLAYHEAD_TINT_ALPHA
-        itemBinding.root.setBackgroundColor(tint)
-        itemBinding.segmentTimestamp.setTextColor(primary)
-        itemBinding.segmentTimestamp.setTypeface(null, Typeface.BOLD)
-    }
-
-    private fun restorePlayheadStyle(itemBinding: ItemTranscriptSegmentBinding) {
-        itemBinding.root.setBackgroundColor(Color.TRANSPARENT)
-        itemBinding.segmentTimestamp.setTextColor(getProperTextColor())
-        itemBinding.segmentTimestamp.setTypeface(null, Typeface.NORMAL)
+        val bg = when {
+            isSelected -> (primary and RGB_MASK) or SELECTED_TINT_ALPHA
+            isPlayhead -> (primary and RGB_MASK) or PLAYHEAD_TINT_ALPHA
+            else -> Color.TRANSPARENT
+        }
+        itemBinding.root.setBackgroundColor(bg)
+        val timestampColor = if (isPlayhead && !isSelected) primary else getProperTextColor()
+        val timestampStyle = if (isPlayhead) Typeface.BOLD else Typeface.NORMAL
+        itemBinding.segmentTimestamp.setTextColor(timestampColor)
+        itemBinding.segmentTimestamp.setTypeface(null, timestampStyle)
     }
 
     private fun autoScrollToCurrentSegment(itemBinding: ItemTranscriptSegmentBinding) {
@@ -676,6 +696,109 @@ class TranscriptActivity : SimpleActivity() {
                 }
             }
         }
+    }
+
+    // ---- multi-segment selection ----
+
+    private fun enterSelectionMode(initialIdx: Int) {
+        if (isSelectionMode) return
+        isSelectionMode = true
+        selectedSegmentIndices.clear()
+        selectedSegmentIndices.add(initialIdx)
+        selectionBackCallback.isEnabled = true
+        swapToSelectionToolbar()
+        applyRowStyle(initialIdx)
+        updateSelectionTitle()
+    }
+
+    private fun exitSelectionMode() {
+        if (!isSelectionMode) return
+        val previouslySelected = selectedSegmentIndices.toList()
+        isSelectionMode = false
+        selectedSegmentIndices.clear()
+        selectionBackCallback.isEnabled = false
+        previouslySelected.forEach { applyRowStyle(it) }
+        restoreNormalToolbar()
+    }
+
+    private fun toggleSegmentSelection(idx: Int) {
+        if (idx in selectedSegmentIndices) {
+            selectedSegmentIndices.remove(idx)
+            if (selectedSegmentIndices.isEmpty()) {
+                exitSelectionMode()
+                return
+            }
+        } else {
+            selectedSegmentIndices.add(idx)
+        }
+        applyRowStyle(idx)
+        updateSelectionTitle()
+    }
+
+    private fun selectAllSegments() {
+        val transcript = currentTranscript ?: return
+        if (transcript.segments.isEmpty()) return
+        val newlySelected = transcript.segments.indices.filter { it !in selectedSegmentIndices }
+        selectedSegmentIndices.addAll(transcript.segments.indices.toList())
+        newlySelected.forEach { applyRowStyle(it) }
+        updateSelectionTitle()
+    }
+
+    private fun copySelectedSegments() {
+        val text = selectionAsText() ?: return
+        copyToClipboard(text)
+        toast(R.string.transcript_copied)
+        exitSelectionMode()
+    }
+
+    private fun shareSelectedSegments() {
+        val text = selectionAsText() ?: return
+        val rec = recording ?: return
+        startActivity(buildShareTranscriptTextIntent(text, rec.title))
+    }
+
+    private fun selectionAsText(): String? {
+        val transcript = currentTranscript ?: return null
+        if (selectedSegmentIndices.isEmpty()) return null
+        return selectedSegmentIndices.joinToString("\n") { idx ->
+            val seg = transcript.segments[idx]
+            "[${formatTimestamp(seg.startMs)}] ${seg.text}"
+        }
+    }
+
+    private fun swapToSelectionToolbar() {
+        val toolbar = binding.transcriptToolbar
+        val contrast = getProperPrimaryColor().getContrastColor()
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.menu_transcript_selection)
+        tintToolbarMenuIcons()
+        toolbar.navigationIcon = resources.getColoredDrawableWithColor(
+            org.fossify.commons.R.drawable.ic_cross_vector, contrast
+        )
+        toolbar.setNavigationOnClickListener { exitSelectionMode() }
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.transcript_sel_copy -> { copySelectedSegments(); true }
+                R.id.transcript_sel_share -> { shareSelectedSegments(); true }
+                R.id.transcript_sel_select_all -> { selectAllSegments(); true }
+                else -> false
+            }
+        }
+    }
+
+    private fun restoreNormalToolbar() {
+        val toolbar = binding.transcriptToolbar
+        toolbar.menu.clear()
+        toolbar.title = recording?.title ?: getString(R.string.transcript)
+        setupToolbarMenu()
+        setupTopAppBar(binding.transcriptAppbar, NavigationIcon.Arrow)
+        applyColors()
+    }
+
+    private fun updateSelectionTitle() {
+        binding.transcriptToolbar.title = getString(
+            R.string.transcript_selected_count, selectedSegmentIndices.size
+        )
     }
 
     // ---- formatting ----

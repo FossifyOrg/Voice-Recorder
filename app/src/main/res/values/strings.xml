@@ -70,6 +70,7 @@
     <string name="transcript_search_next">Next match</string>
     <string name="transcript_elapsed">Elapsed: %1$s</string>
     <string name="transcript_elapsed_with_eta">Elapsed: %1$s · ETA: %2$s</string>
+    <string name="transcript_selected_count">%1$d selected</string>
     <string name="recordings_tab_audio">Audio</string>
     <string name="recordings_tab_transcripts">Transcripts</string>
     <string name="no_transcripts_found">No transcripts yet\nLong-press a recording to transcribe it</string>
