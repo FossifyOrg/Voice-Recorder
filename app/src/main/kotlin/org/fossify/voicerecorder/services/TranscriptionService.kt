@@ -82,6 +82,20 @@ class TranscriptionService : Service() {
         private const val CHUNK_QUEUE_CAPACITY = 2
         private const val QUEUE_OFFER_TIMEOUT_MS = 100L
         private val EOF_SENTINEL = Any()
+
+        /** Smooth-progress ticker cadence; the bar updates this often during a chunk. */
+        private const val PROGRESS_TICK_MS = 400L
+
+        /** Cap interpolation inside a chunk so the bar can't reach the chunk's end fraction
+         *  before the chunk has actually finished — that would cause a visible reversal. */
+        private const val INTERP_MAX_RATIO = 0.95f
+
+        /** Seed for the rolling avg until the first chunk completes. ~Whisper-tiny on a
+         *  midrange phone; the EMA converges to the real value within 1–2 chunks. */
+        private const val INITIAL_CHUNK_WALL_MS = 6_000L
+
+        /** Higher = faster adaptation, more jitter; lower = smoother but slower to track. */
+        private const val EMA_ALPHA = 0.4f
     }
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
@@ -301,6 +315,14 @@ class TranscriptionService : Service() {
         val queue = ArrayBlockingQueue<Any>(CHUNK_QUEUE_CAPACITY)
         val decoderError = AtomicReference<Throwable?>()
         val totalDurationMsRef = AtomicLong()
+        val progress = ChunkProgress()
+        val tickerStop = AtomicBoolean(false)
+
+        val tickerThread = thread(
+            start = true, name = "TranscriptionProgressTicker", isDaemon = true,
+        ) {
+            runProgressTicker(recordingUri, progress, tickerStop)
+        }
 
         val decoderThread = thread(
             start = true, name = "TranscriptionDecoder", isDaemon = true,
@@ -321,20 +343,91 @@ class TranscriptionService : Service() {
             drainAndTranscribe(
                 queue = queue,
                 transcriber = transcriber,
-                recordingUri = recordingUri,
                 expectedDurationMs = expectedDurationMs,
                 segments = segments,
                 onLanguageDetected = onLanguageDetected,
+                progress = progress,
             )
         } catch (@Suppress("TooGenericExceptionCaught") t: Throwable) {
             isCancelled.set(true)
             throw t
         } finally {
+            tickerStop.set(true)
+            tickerThread.interrupt()
             decoderThread.join()
+            tickerThread.join()
         }
 
         decoderError.get()?.let { throw it }
         return totalDurationMsRef.get()
+    }
+
+    /**
+     * Small bag of state shared between [drainAndTranscribe] (writer) and the progress
+     * ticker (reader). All fields are atomic so the reader sees consistent snapshots.
+     */
+    private class ChunkProgress {
+        val chunkStartFraction = AtomicReference(0f)
+        val chunkEndFraction = AtomicReference(0f)
+        val chunkStartedAtMs = AtomicLong(0L)
+        val avgChunkWallMs = AtomicLong(INITIAL_CHUNK_WALL_MS)
+        val transcribing = AtomicBoolean(false)
+    }
+
+    private fun runProgressTicker(
+        recordingUri: Uri,
+        progress: ChunkProgress,
+        stop: AtomicBoolean,
+    ) {
+        var lastPostedPct = -1
+        var keepRunning = true
+        while (keepRunning && !stop.get() && !isCancelled.get()) {
+            keepRunning = sleepInterruptibly(PROGRESS_TICK_MS)
+            if (keepRunning && !stop.get() && !isCancelled.get()) {
+                lastPostedPct = postInterpolatedProgress(recordingUri, progress, lastPostedPct)
+            }
+        }
+    }
+
+    private fun sleepInterruptibly(durationMs: Long): Boolean {
+        return try {
+            Thread.sleep(durationMs)
+            true
+        } catch (@Suppress("SwallowedException") _: InterruptedException) {
+            false
+        }
+    }
+
+    private fun postInterpolatedProgress(
+        recordingUri: Uri,
+        progress: ChunkProgress,
+        lastPostedPct: Int,
+    ): Int {
+        val fraction = computeInterpolatedFraction(progress).coerceIn(0f, 1f)
+        val pct = (fraction * PCT_MAX).toInt().coerceIn(0, PCT_MAX)
+        // Always emit the EventBus event so the activity's bar moves smoothly,
+        // but only refresh the foreground notification when the rounded % changes —
+        // calling startForeground multiple times per second is needlessly expensive.
+        EventBus.getDefault().post(
+            Events.TranscriptionProgress(recordingUri, TranscriptionPhase.TRANSCRIBING, fraction)
+        )
+        if (pct == lastPostedPct) return lastPostedPct
+        startForegroundCompat(
+            buildNotification(getString(R.string.transcribing), pct, indeterminate = false)
+        )
+        return pct
+    }
+
+    private fun computeInterpolatedFraction(progress: ChunkProgress): Float {
+        val startF = progress.chunkStartFraction.get()
+        val endF = progress.chunkEndFraction.get()
+        if (!progress.transcribing.get()) return endF
+        val startedAt = progress.chunkStartedAtMs.get()
+        if (startedAt <= 0L) return startF
+        val avgMs = progress.avgChunkWallMs.get().coerceAtLeast(1L)
+        val elapsed = System.currentTimeMillis() - startedAt
+        val ratio = (elapsed.toFloat() / avgMs).coerceIn(0f, INTERP_MAX_RATIO)
+        return startF + ratio * (endF - startF)
     }
 
     private fun pollOfferUntilCancelled(queue: ArrayBlockingQueue<Any>, chunk: PcmChunk): Boolean {
@@ -347,24 +440,37 @@ class TranscriptionService : Service() {
     private fun drainAndTranscribe(
         queue: ArrayBlockingQueue<Any>,
         transcriber: SherpaTranscriber,
-        recordingUri: Uri,
         expectedDurationMs: Long,
         segments: MutableList<TranscriptSegment>,
         onLanguageDetected: (String) -> Unit,
+        progress: ChunkProgress,
     ) {
         while (true) {
             val item = queue.take()
             if (item === EOF_SENTINEL) return
             if (isCancelled.get()) return
             val chunk = item as PcmChunk
+
+            if (expectedDurationMs > 0L) {
+                progress.chunkStartFraction.set(
+                    (chunk.startMs.toFloat() / expectedDurationMs).coerceIn(0f, 1f)
+                )
+                progress.chunkEndFraction.set(
+                    (chunk.endMs.toFloat() / expectedDurationMs).coerceIn(0f, 1f)
+                )
+            }
+            progress.chunkStartedAtMs.set(System.currentTimeMillis())
+            progress.transcribing.set(true)
+
             val result = transcriber.transcribeChunk(chunk)
             onLanguageDetected(result.language)
             segments += result.segments
 
-            if (expectedDurationMs > 0L) {
-                val fraction = (chunk.endMs.toFloat() / expectedDurationMs).coerceIn(0f, 1f)
-                postProgress(recordingUri, TranscriptionPhase.TRANSCRIBING, fraction, R.string.transcribing)
-            }
+            val wallMs = System.currentTimeMillis() - progress.chunkStartedAtMs.get()
+            val prevAvg = progress.avgChunkWallMs.get()
+            val newAvg = (EMA_ALPHA * wallMs + (1f - EMA_ALPHA) * prevAvg).toLong().coerceAtLeast(1L)
+            progress.avgChunkWallMs.set(newAvg)
+            progress.transcribing.set(false)
         }
     }
 
