@@ -101,6 +101,13 @@
         </activity>
 
         <activity
+            android:name=".activities.TranscriptActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/transcript"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
             android:name="org.fossify.commons.activities.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"

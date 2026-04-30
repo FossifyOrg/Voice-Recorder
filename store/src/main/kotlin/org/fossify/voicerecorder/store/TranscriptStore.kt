@@ -28,6 +28,9 @@ class TranscriptStore(
 
     fun hasTranscript(recording: Recording): Boolean = locateSidecar(recording) != null
 
+    /** Public accessor for the sidecar JSON URI (e.g. for `ACTION_SEND` sharing). */
+    fun sidecarUri(recording: Recording): Uri? = locateSidecar(recording)
+
     fun read(recording: Recording): Transcript? {
         cache.get(recording.uri.toString())?.let { return it }
         val uri = locateSidecar(recording) ?: return null

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
+import org.fossify.commons.dialogs.ConfirmationDialog
+import org.fossify.commons.extensions.copyToClipboard
 import org.fossify.commons.extensions.formatDate
 import org.fossify.commons.extensions.formatSize
 import org.fossify.commons.extensions.getFormattedDuration
@@ -13,6 +15,7 @@ import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.openPathIntent
 import org.fossify.commons.extensions.setupViewBackground
 import org.fossify.commons.extensions.sharePathsIntent
+import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.views.MyRecyclerView
 import org.fossify.voicerecorder.BuildConfig
@@ -22,19 +25,26 @@ import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.ItemRecordingBinding
 import org.fossify.voicerecorder.dialogs.DeleteConfirmationDialog
 import org.fossify.voicerecorder.dialogs.RenameRecordingDialog
+import org.fossify.voicerecorder.extensions.buildShareTranscriptJsonIntent
+import org.fossify.voicerecorder.extensions.buildShareTranscriptTextIntent
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.extensions.toShareableText
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.store.Recording
+import org.fossify.voicerecorder.store.TranscriptStore
 import org.greenrobot.eventbus.EventBus
 import kotlin.math.min
+
+enum class RecordingsListMode { AUDIO, TRANSCRIPTS }
 
 class RecordingsAdapter(
     activity: SimpleActivity,
     var recordings: MutableList<Recording>,
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView,
+    var mode: RecordingsListMode = RecordingsListMode.AUDIO,
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
@@ -47,9 +57,17 @@ class RecordingsAdapter(
     override fun getActionMenuId() = R.menu.cab_recordings
 
     override fun prepareActionMode(menu: Menu) {
+        val isAudio = mode == RecordingsListMode.AUDIO
         menu.apply {
-            findItem(R.id.cab_rename).isVisible = isOneItemSelected()
-            findItem(R.id.cab_open_with).isVisible = isOneItemSelected()
+            findItem(R.id.cab_rename).isVisible = isAudio && isOneItemSelected()
+            findItem(R.id.cab_share).isVisible = isAudio
+            findItem(R.id.cab_delete).isVisible = isAudio
+            findItem(R.id.cab_open_with).isVisible = isAudio && isOneItemSelected()
+
+            findItem(R.id.cab_share_transcript_text).isVisible = !isAudio && isOneItemSelected()
+            findItem(R.id.cab_share_transcript_json).isVisible = !isAudio && isOneItemSelected()
+            findItem(R.id.cab_copy_transcript).isVisible = !isAudio && isOneItemSelected()
+            findItem(R.id.cab_delete_transcript).isVisible = !isAudio
         }
     }
 
@@ -64,6 +82,10 @@ class RecordingsAdapter(
             R.id.cab_delete -> askConfirmDelete()
             R.id.cab_select_all -> selectAll()
             R.id.cab_open_with -> openRecordingWith()
+            R.id.cab_share_transcript_text -> shareTranscriptAsText()
+            R.id.cab_share_transcript_json -> shareTranscriptAsJson()
+            R.id.cab_copy_transcript -> copyTranscript()
+            R.id.cab_delete_transcript -> askConfirmDeleteTranscripts()
         }
     }
 
@@ -266,6 +288,79 @@ class RecordingsAdapter(
         handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
             if (granted == true) {
                 callback()
+            }
+        }
+    }
+
+    private fun transcriptStore() = TranscriptStore(activity, activity.config.saveRecordingsFolder)
+
+    private fun shareTranscriptAsText() {
+        val recording = getSelectedItems().firstOrNull() ?: return
+        ensureBackgroundThread {
+            val transcript = transcriptStore().read(recording)
+            activity.runOnUiThread {
+                if (transcript == null) {
+                    activity.toast(R.string.transcript_failed)
+                    return@runOnUiThread
+                }
+                val text = transcript.toShareableText(recording)
+                activity.startActivity(
+                    activity.buildShareTranscriptTextIntent(text, recording.title)
+                )
+                finishActMode()
+            }
+        }
+    }
+
+    private fun shareTranscriptAsJson() {
+        val recording = getSelectedItems().firstOrNull() ?: return
+        ensureBackgroundThread {
+            val uri = transcriptStore().sidecarUri(recording)
+            activity.runOnUiThread {
+                if (uri == null) {
+                    activity.toast(R.string.transcript_failed)
+                    return@runOnUiThread
+                }
+                activity.startActivity(
+                    activity.buildShareTranscriptJsonIntent(uri, recording.title)
+                )
+                finishActMode()
+            }
+        }
+    }
+
+    private fun copyTranscript() {
+        val recording = getSelectedItems().firstOrNull() ?: return
+        ensureBackgroundThread {
+            val transcript = transcriptStore().read(recording)
+            activity.runOnUiThread {
+                if (transcript == null) {
+                    activity.toast(R.string.transcript_failed)
+                    return@runOnUiThread
+                }
+                activity.copyToClipboard(transcript.toShareableText(recording))
+                activity.toast(R.string.transcript_copied)
+                finishActMode()
+            }
+        }
+    }
+
+    private fun askConfirmDeleteTranscripts() {
+        val items = getSelectedItems()
+        if (items.isEmpty()) return
+        ConfirmationDialog(
+            activity = activity,
+            message = activity.getString(R.string.delete_transcript) + "?",
+            positive = org.fossify.commons.R.string.yes,
+            negative = org.fossify.commons.R.string.no,
+        ) {
+            ensureBackgroundThread {
+                val store = transcriptStore()
+                items.forEach { store.delete(it) }
+                activity.runOnUiThread {
+                    finishActMode()
+                    refreshListener.refreshRecordings()
+                }
             }
         }
     }

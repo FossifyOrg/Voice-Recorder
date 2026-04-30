@@ -26,18 +26,21 @@ import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.updateTextColors
 import org.fossify.commons.extensions.value
+import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
+import org.fossify.voicerecorder.activities.TranscriptActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
+import org.fossify.voicerecorder.adapters.RecordingsListMode
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
-import org.fossify.voicerecorder.dialogs.TranscriptDialog
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.receivers.BecomingNoisyReceiver
 import org.fossify.voicerecorder.store.Recording
+import org.fossify.voicerecorder.store.TranscriptStore
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -64,6 +67,8 @@ class PlayerFragment(
     private var playOnPreparation = true
     private var currentRecording: Recording? = null
     private var pendingSeekMs: Int = -1
+    private var listMode: RecordingsListMode = RecordingsListMode.AUDIO
+    private var transcriptIds: Set<Int> = emptySet()
     private lateinit var binding: FragmentPlayerBinding
 
     private var becomingNoisyReceiver: BecomingNoisyReceiver? = null
@@ -117,9 +122,12 @@ class PlayerFragment(
 
     override fun onLoadingEnd(recordings: ArrayList<Recording>) {
         binding.loadingIndicator.hide()
-        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
         itemsIgnoringSearch = recordings
-        setupAdapter(itemsIgnoringSearch)
+        if (listMode == RecordingsListMode.TRANSCRIPTS) {
+            recomputeTranscriptIds { setupAdapter(filteredForCurrentMode()) }
+        } else {
+            setupAdapter(filteredForCurrentMode())
+        }
     }
 
     private fun setupViews() {
@@ -177,8 +185,91 @@ class PlayerFragment(
 
         binding.transcriptBtn.setOnClickListener {
             val recording = currentRecording ?: return@setOnClickListener
-            TranscriptDialog(context as SimpleActivity, recording) { positionMs ->
-                seekToAndPlay(positionMs)
+            openTranscriptActivity(recording)
+        }
+
+        setupListModeSelector()
+    }
+
+    private fun openTranscriptActivity(recording: Recording) {
+        pausePlayback()
+        val intent = android.content.Intent(context, TranscriptActivity::class.java).apply {
+            putExtra(TranscriptActivity.EXTRA_RECORDING_URI_STRING, recording.uri.toString())
+        }
+        context.startActivity(intent)
+    }
+
+    private fun setupListModeSelector() {
+        binding.listModeAudio.setOnClickListener {
+            if (listMode != RecordingsListMode.AUDIO) {
+                listMode = RecordingsListMode.AUDIO
+                refreshListModeSelectorStatus()
+                applyListMode()
+            }
+        }
+        binding.listModeTranscripts.setOnClickListener {
+            if (listMode != RecordingsListMode.TRANSCRIPTS) {
+                listMode = RecordingsListMode.TRANSCRIPTS
+                refreshListModeSelectorStatus()
+                applyListMode()
+            }
+        }
+        refreshListModeSelectorStatus()
+    }
+
+    private fun refreshListModeSelectorStatus() {
+        val properTextColor = context.getProperTextColor()
+        val properPrimaryColor = context.getProperPrimaryColor()
+        val contrastColor = properPrimaryColor.getContrastColor()
+        val audioSelected = listMode == RecordingsListMode.AUDIO
+        if (audioSelected) {
+            binding.listModeAudio.setBackgroundResource(R.drawable.tab_selector_selected)
+            binding.listModeAudio.background.applyColorFilter(properPrimaryColor)
+            binding.listModeAudio.setTextColor(contrastColor)
+            binding.listModeTranscripts.setBackgroundResource(android.R.color.transparent)
+            binding.listModeTranscripts.setTextColor(properTextColor)
+        } else {
+            binding.listModeAudio.setBackgroundResource(android.R.color.transparent)
+            binding.listModeAudio.setTextColor(properTextColor)
+            binding.listModeTranscripts.setBackgroundResource(R.drawable.tab_selector_selected)
+            binding.listModeTranscripts.background.applyColorFilter(properPrimaryColor)
+            binding.listModeTranscripts.setTextColor(contrastColor)
+        }
+    }
+
+    private fun applyListMode() {
+        getRecordingsAdapter()?.let { adapter ->
+            adapter.mode = listMode
+            adapter.finishActMode()
+        }
+        if (listMode == RecordingsListMode.TRANSCRIPTS) {
+            recomputeTranscriptIds {
+                setupAdapter(filteredForCurrentMode())
+            }
+        } else {
+            setupAdapter(filteredForCurrentMode())
+        }
+    }
+
+    private fun filteredForCurrentMode(): ArrayList<Recording> {
+        val base = if (lastSearchQuery.isEmpty()) {
+            itemsIgnoringSearch
+        } else {
+            itemsIgnoringSearch.filter { it.title.contains(lastSearchQuery, true) }
+        }
+        return when (listMode) {
+            RecordingsListMode.AUDIO -> ArrayList(base)
+            RecordingsListMode.TRANSCRIPTS -> ArrayList(base.filter { it.id in transcriptIds })
+        }
+    }
+
+    private fun recomputeTranscriptIds(then: () -> Unit) {
+        ensureBackgroundThread {
+            val store = TranscriptStore(context, context.config.saveRecordingsFolder)
+            val ids = itemsIgnoringSearch.filter { store.hasTranscript(it) }.map { it.id }.toSet()
+            (context as? SimpleActivity)?.runOnUiThread {
+                transcriptIds = ids
+                then()
             }
         }
     }
@@ -205,29 +296,32 @@ class PlayerFragment(
 
     private fun setupAdapter(recordings: ArrayList<Recording>) {
         binding.recordingsFastscroller.beVisibleIf(recordings.isNotEmpty())
+        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
         if (recordings.isEmpty()) {
-            val stringId = if (lastSearchQuery.isEmpty()) {
-                if (isQPlus()) {
-                    R.string.no_recordings_found
-                } else {
-                    R.string.no_recordings_in_folder_found
-                }
-            } else {
-                org.fossify.commons.R.string.no_items_found
+            val stringId = when {
+                lastSearchQuery.isNotEmpty() -> org.fossify.commons.R.string.no_items_found
+                listMode == RecordingsListMode.TRANSCRIPTS -> R.string.no_transcripts_found
+                isQPlus() -> R.string.no_recordings_found
+                else -> R.string.no_recordings_in_folder_found
             }
 
             binding.recordingsPlaceholder.text = context.getString(stringId)
-            resetProgress(null)
-            player?.stop()
+            if (listMode == RecordingsListMode.AUDIO) {
+                resetProgress(null)
+                player?.stop()
+            }
         }
 
         val adapter = getRecordingsAdapter()
         if (adapter == null) {
-            RecordingsAdapter(context as SimpleActivity, recordings, this, binding.recordingsList) {
-                playRecording(it as Recording, true)
-                if (playedRecordingIDs.isEmpty() || playedRecordingIDs.peek() != it.id) {
-                    playedRecordingIDs.push(it.id)
-                }
+            RecordingsAdapter(
+                activity = context as SimpleActivity,
+                recordings = recordings,
+                refreshListener = this,
+                recyclerView = binding.recordingsList,
+                mode = listMode,
+            ) {
+                onRecordingTapped(it as Recording)
             }.apply {
                 binding.recordingsList.adapter = this
             }
@@ -236,7 +330,19 @@ class PlayerFragment(
                 binding.recordingsList.scheduleLayoutAnimation()
             }
         } else {
+            adapter.mode = listMode
             adapter.updateItems(recordings)
+        }
+    }
+
+    private fun onRecordingTapped(recording: Recording) {
+        if (listMode == RecordingsListMode.TRANSCRIPTS) {
+            openTranscriptActivity(recording)
+            return
+        }
+        playRecording(recording, true)
+        if (playedRecordingIDs.isEmpty() || playedRecordingIDs.peek() != recording.id) {
+            playedRecordingIDs.push(recording.id)
         }
     }
 
@@ -348,9 +454,7 @@ class PlayerFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered =
-            itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
-        setupAdapter(filtered)
+        setupAdapter(filteredForCurrentMode())
     }
 
     private fun togglePlayPause() {
@@ -425,6 +529,7 @@ class PlayerFragment(
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(getIsPlaying()))
 
         binding.loadingIndicator.setIndicatorColor(properPrimaryColor)
+        refreshListModeSelectorStatus()
     }
 
     fun finishActMode() = getRecordingsAdapter()?.finishActMode()

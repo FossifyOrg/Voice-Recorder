@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="AppCompatResource,AlwaysShowAction">
+    tools:ignore="AppCompatResource,AlwaysShowAction"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/cab_rename"
         android:icon="@drawable/ic_rename_vector"
@@ -14,10 +14,28 @@
         android:showAsAction="always"
         android:title="@string/share" />
     <item
+        android:id="@+id/cab_share_transcript_text"
+        android:icon="@drawable/ic_share_vector"
+        android:showAsAction="always"
+        android:title="@string/share_transcript" />
+    <item
         android:id="@+id/cab_delete"
         android:icon="@drawable/ic_delete_vector"
         android:showAsAction="always"
         android:title="@string/delete" />
+    <item
+        android:id="@+id/cab_delete_transcript"
+        android:icon="@drawable/ic_delete_vector"
+        android:showAsAction="always"
+        android:title="@string/delete_transcript" />
+    <item
+        android:id="@+id/cab_share_transcript_json"
+        android:title="@string/share_transcript_json"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/cab_copy_transcript"
+        android:title="@string/copy_transcript"
+        app:showAsAction="never" />
     <item
         android:id="@+id/cab_open_with"
         android:showAsAction="never"

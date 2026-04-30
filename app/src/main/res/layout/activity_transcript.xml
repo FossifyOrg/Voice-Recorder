@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transcript_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.fossify.commons.views.MyAppBarLayout
+        android:id="@+id/transcript_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/transcript_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_primary"
+            app:title="@string/transcript"
+            app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
+    </org.fossify.commons.views.MyAppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/transcript_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/transcript_idle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_margin"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <org.fossify.commons.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:gravity="center"
+                android:text="@string/transcribe"
+                android:textSize="@dimen/big_text_size"
+                android:textStyle="bold" />
+
+            <org.fossify.commons.views.MyTextView
+                android:id="@+id/transcript_idle_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/normal_margin"
+                android:gravity="center"
+                tools:text="Speech model not installed (~120 MB will be downloaded)." />
+
+            <Button
+                android:id="@+id/transcript_start_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/transcribe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/transcript_busy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_margin"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <org.fossify.commons.views.MyTextView
+                android:id="@+id/transcript_busy_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:gravity="center"
+                tools:text="Transcribing… 42%" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/transcript_busy_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:max="100" />
+
+            <Button
+                android:id="@+id/transcript_cancel_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_margin"
+                android:text="@string/cancel_transcription" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/transcript_ready"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/transcript_meta_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingEnd="@dimen/activity_margin"
+                android:paddingBottom="@dimen/small_margin">
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/transcript_ready_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/smaller_text_size"
+                    tools:text="Language: en · 14 segments · Processed in 12.4s" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/transcript_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/divider_grey"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/activity_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:paddingBottom="@dimen/small_margin"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/transcript_search_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/smaller_text_size"
+                    tools:text="3 / 12 matches" />
+
+                <ImageView
+                    android:id="@+id/transcript_search_prev"
+                    android:layout_width="@dimen/normal_icon_size"
+                    android:layout_height="@dimen/normal_icon_size"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/transcript_search_prev"
+                    android:padding="@dimen/small_margin"
+                    android:src="@drawable/ic_chevron_up_vector" />
+
+                <ImageView
+                    android:id="@+id/transcript_search_next"
+                    android:layout_width="@dimen/normal_icon_size"
+                    android:layout_height="@dimen/normal_icon_size"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/transcript_search_next"
+                    android:padding="@dimen/small_margin"
+                    android:src="@drawable/ic_chevron_down_vector" />
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/transcript_segments_scroller"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/transcript_segments_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_margin" />
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/transcript_player_controls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/divider_grey"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin">
+
+                <ImageView
+                    android:id="@+id/transcript_play_pause_btn"
+                    android:layout_width="@dimen/normal_icon_size"
+                    android:layout_height="@dimen/normal_icon_size"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/playpause"
+                    android:padding="@dimen/small_margin"
+                    android:src="@drawable/ic_play_vector" />
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/transcript_player_current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:paddingStart="@dimen/small_margin"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:text="00:00"
+                    android:textSize="@dimen/smaller_text_size" />
+
+                <org.fossify.commons.views.MySeekBar
+                    android:id="@+id/transcript_player_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="0" />
+
+                <org.fossify.commons.views.MyTextView
+                    android:id="@+id/transcript_player_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:paddingStart="@dimen/small_margin"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:text="00:00"
+                    android:textSize="@dimen/smaller_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

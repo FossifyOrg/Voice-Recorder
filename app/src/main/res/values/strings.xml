@@ -61,6 +61,16 @@
     <string name="delete_transcript">Delete transcript</string>
     <string name="copy_transcript">Copy transcript</string>
     <string name="transcript_copied">Transcript copied to clipboard</string>
+    <string name="share_transcript">Share transcript</string>
+    <string name="share_transcript_json">Share transcript JSON</string>
+    <string name="transcript_search_hint">Search transcript</string>
+    <string name="transcript_search_count">%1$d / %2$d matches</string>
+    <string name="transcript_search_no_match">No matches</string>
+    <string name="transcript_search_prev">Previous match</string>
+    <string name="transcript_search_next">Next match</string>
+    <string name="recordings_tab_audio">Audio</string>
+    <string name="recordings_tab_transcripts">Transcripts</string>
+    <string name="no_transcripts_found">No transcripts yet\nLong-press a recording to transcribe it</string>
     <string name="transcribe_settings">Transcription</string>
     <string name="transcribe_model">Speech recognition model</string>
     <string name="transcribe_language">Language</string>
