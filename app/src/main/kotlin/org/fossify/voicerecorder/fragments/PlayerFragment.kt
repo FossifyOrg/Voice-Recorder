@@ -33,7 +33,6 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.activities.TranscriptActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
-import org.fossify.voicerecorder.adapters.RecordingsListMode
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
@@ -65,10 +64,8 @@ class PlayerFragment(
     private var prevSaveFolder: Uri? = null
     private var prevRecycleBinState = context.config.useRecycleBin
     private var playOnPreparation = true
-    private var currentRecording: Recording? = null
     private var pendingSeekMs: Int = -1
-    private var listMode: RecordingsListMode = RecordingsListMode.AUDIO
-    private var transcriptIds: Set<Int> = emptySet()
+    private var transcriptPreviews: Map<Int, String> = emptyMap()
     private lateinit var binding: FragmentPlayerBinding
 
     private var becomingNoisyReceiver: BecomingNoisyReceiver? = null
@@ -123,10 +120,10 @@ class PlayerFragment(
     override fun onLoadingEnd(recordings: ArrayList<Recording>) {
         binding.loadingIndicator.hide()
         itemsIgnoringSearch = recordings
-        if (listMode == RecordingsListMode.TRANSCRIPTS) {
-            recomputeTranscriptIds { setupAdapter(filteredForCurrentMode()) }
-        } else {
-            setupAdapter(filteredForCurrentMode())
+        setupAdapter(filteredItems())
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
         }
     }
 
@@ -183,12 +180,6 @@ class PlayerFragment(
             playedRecordingIDs.push(newRecording.id)
         }
 
-        binding.transcriptBtn.setOnClickListener {
-            val recording = currentRecording ?: return@setOnClickListener
-            openTranscriptActivity(recording)
-        }
-
-        setupListModeSelector()
     }
 
     private fun openTranscriptActivity(recording: Recording) {
@@ -199,79 +190,37 @@ class PlayerFragment(
         context.startActivity(intent)
     }
 
-    private fun setupListModeSelector() {
-        binding.listModeAudio.setOnClickListener {
-            if (listMode != RecordingsListMode.AUDIO) {
-                listMode = RecordingsListMode.AUDIO
-                refreshListModeSelectorStatus()
-                applyListMode()
-            }
-        }
-        binding.listModeTranscripts.setOnClickListener {
-            if (listMode != RecordingsListMode.TRANSCRIPTS) {
-                listMode = RecordingsListMode.TRANSCRIPTS
-                refreshListModeSelectorStatus()
-                applyListMode()
-            }
-        }
-        refreshListModeSelectorStatus()
-    }
-
-    private fun refreshListModeSelectorStatus() {
-        val properTextColor = context.getProperTextColor()
-        val properPrimaryColor = context.getProperPrimaryColor()
-        val contrastColor = properPrimaryColor.getContrastColor()
-        val audioSelected = listMode == RecordingsListMode.AUDIO
-        if (audioSelected) {
-            binding.listModeAudio.setBackgroundResource(R.drawable.tab_selector_selected)
-            binding.listModeAudio.background.applyColorFilter(properPrimaryColor)
-            binding.listModeAudio.setTextColor(contrastColor)
-            binding.listModeTranscripts.setBackgroundResource(android.R.color.transparent)
-            binding.listModeTranscripts.setTextColor(properTextColor)
-        } else {
-            binding.listModeAudio.setBackgroundResource(android.R.color.transparent)
-            binding.listModeAudio.setTextColor(properTextColor)
-            binding.listModeTranscripts.setBackgroundResource(R.drawable.tab_selector_selected)
-            binding.listModeTranscripts.background.applyColorFilter(properPrimaryColor)
-            binding.listModeTranscripts.setTextColor(contrastColor)
-        }
-    }
-
-    private fun applyListMode() {
-        getRecordingsAdapter()?.let { adapter ->
-            adapter.mode = listMode
-            adapter.finishActMode()
-        }
-        if (listMode == RecordingsListMode.TRANSCRIPTS) {
-            recomputeTranscriptIds {
-                setupAdapter(filteredForCurrentMode())
-            }
-        } else {
-            setupAdapter(filteredForCurrentMode())
-        }
-    }
-
-    private fun filteredForCurrentMode(): ArrayList<Recording> {
+    private fun filteredItems(): ArrayList<Recording> {
         val base = if (lastSearchQuery.isEmpty()) {
             itemsIgnoringSearch
         } else {
             itemsIgnoringSearch.filter { it.title.contains(lastSearchQuery, true) }
         }
-        return when (listMode) {
-            RecordingsListMode.AUDIO -> ArrayList(base)
-            RecordingsListMode.TRANSCRIPTS -> ArrayList(base.filter { it.id in transcriptIds })
+        return ArrayList(base)
+    }
+
+    /**
+     * Reads each recording's sidecar transcript on a background thread and produces a
+     * map of recording id → first-line preview snippet. Recordings with no transcript
+     * are absent from the resulting map; callers can use `id in map` as the
+     * has-transcript check.
+     */
+    private fun recomputeTranscriptPreviews(then: (Map<Int, String>) -> Unit) {
+        val snapshot = itemsIgnoringSearch.toList()
+        ensureBackgroundThread {
+            val store = TranscriptStore(context, context.config.saveRecordingsFolder)
+            val previews = snapshot.mapNotNull { recording ->
+                loadTranscriptPreview(store, recording)?.let { recording.id to it }
+            }.toMap()
+            (context as? SimpleActivity)?.runOnUiThread { then(previews) }
         }
     }
 
-    private fun recomputeTranscriptIds(then: () -> Unit) {
-        ensureBackgroundThread {
-            val store = TranscriptStore(context, context.config.saveRecordingsFolder)
-            val ids = itemsIgnoringSearch.filter { store.hasTranscript(it) }.map { it.id }.toSet()
-            (context as? SimpleActivity)?.runOnUiThread {
-                transcriptIds = ids
-                then()
-            }
-        }
+    private fun loadTranscriptPreview(store: TranscriptStore, recording: Recording): String? {
+        if (!store.hasTranscript(recording)) return null
+        val transcript = store.read(recording) ?: return null
+        val firstSegmentText = transcript.segments.firstOrNull()?.text?.trim().orEmpty()
+        return firstSegmentText.takeIf { it.isNotEmpty() }
     }
 
     /**
@@ -300,16 +249,13 @@ class PlayerFragment(
         if (recordings.isEmpty()) {
             val stringId = when {
                 lastSearchQuery.isNotEmpty() -> org.fossify.commons.R.string.no_items_found
-                listMode == RecordingsListMode.TRANSCRIPTS -> R.string.no_transcripts_found
                 isQPlus() -> R.string.no_recordings_found
                 else -> R.string.no_recordings_in_folder_found
             }
 
             binding.recordingsPlaceholder.text = context.getString(stringId)
-            if (listMode == RecordingsListMode.AUDIO) {
-                resetProgress(null)
-                player?.stop()
-            }
+            resetProgress(null)
+            player?.stop()
         }
 
         val adapter = getRecordingsAdapter()
@@ -319,10 +265,11 @@ class PlayerFragment(
                 recordings = recordings,
                 refreshListener = this,
                 recyclerView = binding.recordingsList,
-                mode = listMode,
+                onTranscriptIndicatorClick = { openTranscriptActivity(it) },
             ) {
                 onRecordingTapped(it as Recording)
             }.apply {
+                transcriptPreviews = this@PlayerFragment.transcriptPreviews
                 binding.recordingsList.adapter = this
             }
 
@@ -330,16 +277,11 @@ class PlayerFragment(
                 binding.recordingsList.scheduleLayoutAnimation()
             }
         } else {
-            adapter.mode = listMode
             adapter.updateItems(recordings)
         }
     }
 
     private fun onRecordingTapped(recording: Recording) {
-        if (listMode == RecordingsListMode.TRANSCRIPTS) {
-            openTranscriptActivity(recording)
-            return
-        }
         playRecording(recording, true)
         if (playedRecordingIDs.isEmpty() || playedRecordingIDs.peek() != recording.id) {
             playedRecordingIDs.push(recording.id)
@@ -382,8 +324,6 @@ class PlayerFragment(
 
     override fun playRecording(recording: Recording, playOnPrepared: Boolean) {
         resetProgress(recording)
-        currentRecording = recording
-        binding.transcriptBtn.visibility = android.view.View.VISIBLE
         (binding.recordingsList.adapter as RecordingsAdapter).updateCurrentRecording(recording.id)
         playOnPreparation = playOnPrepared
 
@@ -454,7 +394,7 @@ class PlayerFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        setupAdapter(filteredForCurrentMode())
+        setupAdapter(filteredItems())
     }
 
     private fun togglePlayPause() {
@@ -529,7 +469,6 @@ class PlayerFragment(
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(getIsPlaying()))
 
         binding.loadingIndicator.setIndicatorColor(properPrimaryColor)
-        refreshListModeSelectorStatus()
     }
 
     fun finishActMode() = getRecordingsAdapter()?.finishActMode()
@@ -544,6 +483,17 @@ class PlayerFragment(
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun recordingMovedToRecycleBin(@Suppress("UNUSED_PARAMETER") event: Events.RecordingTrashUpdated) {
         refreshRecordings()
+    }
+
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun transcriptionCompleted(@Suppress("UNUSED_PARAMETER") event: Events.TranscriptionCompleted) {
+        // A new sidecar JSON now exists on disk — re-read previews so the affected row's
+        // indicator flips from "Transcribe" to its first-segment snippet without a manual refresh.
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
+        }
     }
 
     private fun registerNoisyAudioReceiver() {

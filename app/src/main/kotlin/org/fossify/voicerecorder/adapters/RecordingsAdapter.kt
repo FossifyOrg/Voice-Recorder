@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import org.fossify.commons.adapters.MyRecyclerViewAdapter
 import org.fossify.commons.dialogs.ConfirmationDialog
@@ -37,18 +38,24 @@ import org.fossify.voicerecorder.store.TranscriptStore
 import org.greenrobot.eventbus.EventBus
 import kotlin.math.min
 
-enum class RecordingsListMode { AUDIO, TRANSCRIPTS }
-
 class RecordingsAdapter(
     activity: SimpleActivity,
     var recordings: MutableList<Recording>,
     private val refreshListener: RefreshRecordingsListener,
     recyclerView: MyRecyclerView,
-    var mode: RecordingsListMode = RecordingsListMode.AUDIO,
+    private val onTranscriptIndicatorClick: (Recording) -> Unit,
     itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick), RecyclerViewFastScroller.OnPopupTextUpdate {
 
     var currRecordingId = 0
+
+    /** Map of recording id → first-line transcript preview. Recordings absent from this map have no transcript. */
+    var transcriptPreviews: Map<Int, String> = emptyMap()
+        set(value) {
+            field = value
+            @SuppressLint("NotifyDataSetChanged")
+            notifyDataSetChanged()
+        }
 
     init {
         setupDragListener(true)
@@ -57,35 +64,20 @@ class RecordingsAdapter(
     override fun getActionMenuId() = R.menu.cab_recordings
 
     override fun prepareActionMode(menu: Menu) {
-        val isAudio = mode == RecordingsListMode.AUDIO
-        menu.apply {
-            findItem(R.id.cab_rename).isVisible = isAudio && isOneItemSelected()
-            findItem(R.id.cab_share).isVisible = isAudio
-            findItem(R.id.cab_delete).isVisible = isAudio
-            findItem(R.id.cab_open_with).isVisible = isAudio && isOneItemSelected()
-
-            findItem(R.id.cab_share_transcript_text).isVisible = !isAudio && isOneItemSelected()
-            findItem(R.id.cab_share_transcript_json).isVisible = !isAudio && isOneItemSelected()
-            findItem(R.id.cab_copy_transcript).isVisible = !isAudio && isOneItemSelected()
-            findItem(R.id.cab_delete_transcript).isVisible = !isAudio
-        }
+        val selected = getSelectedItems()
+        val anyHasTranscript = selected.any { it.id in transcriptPreviews }
+        menu.findItem(R.id.cab_delete_transcript).isVisible = anyHasTranscript
     }
 
     override fun actionItemPressed(id: Int) {
-        if (selectedKeys.isEmpty()) {
-            return
-        }
-
+        if (selectedKeys.isEmpty()) return
         when (id) {
-            R.id.cab_rename -> renameRecording()
-            R.id.cab_share -> shareRecordings()
-            R.id.cab_delete -> askConfirmDelete()
+            R.id.cab_share -> shareRecordings(getSelectedItems())
+            R.id.cab_delete -> askConfirmDelete(getSelectedItems())
             R.id.cab_select_all -> selectAll()
-            R.id.cab_open_with -> openRecordingWith()
-            R.id.cab_share_transcript_text -> shareTranscriptAsText()
-            R.id.cab_share_transcript_json -> shareTranscriptAsJson()
-            R.id.cab_copy_transcript -> copyTranscript()
-            R.id.cab_delete_transcript -> askConfirmDeleteTranscripts()
+            R.id.cab_delete_transcript -> askConfirmDeleteTranscripts(
+                getSelectedItems().filter { it.id in transcriptPreviews }
+            )
         }
     }
 
@@ -124,8 +116,6 @@ class RecordingsAdapter(
 
     override fun getItemCount() = recordings.size
 
-    private fun getItemWithKey(key: Int): Recording? = recordings.firstOrNull { it.id == key }
-
     @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: ArrayList<Recording>) {
         if (newItems.hashCode() != recordings.hashCode()) {
@@ -135,16 +125,14 @@ class RecordingsAdapter(
         }
     }
 
-    private fun renameRecording() {
-        val recording = getItemWithKey(selectedKeys.first()) ?: return
+    private fun renameRecording(recording: Recording) {
         RenameRecordingDialog(activity, recording) {
             finishActMode()
             refreshListener.refreshRecordings()
         }
     }
 
-    private fun openRecordingWith() {
-        val recording = getItemWithKey(selectedKeys.first()) ?: return
+    private fun openRecordingWith(recording: Recording) {
         activity.openPathIntent(
             path = recording.uri.toString(),
             forceChooser = true,
@@ -153,19 +141,18 @@ class RecordingsAdapter(
         )
     }
 
-    private fun shareRecordings() {
-        val selectedItems = getSelectedItems()
-        val paths = selectedItems.map { it.uri.toString() }
+    private fun shareRecordings(items: List<Recording>) {
+        if (items.isEmpty()) return
+        val paths = items.map { it.uri.toString() }
         activity.sharePathsIntent(paths, BuildConfig.APPLICATION_ID)
     }
 
-    private fun askConfirmDelete() {
-        val itemsCnt = selectedKeys.size
-        val firstItem = getSelectedItems().firstOrNull() ?: return
-        val items = if (itemsCnt == 1) {
-            "\"${firstItem.title}\""
+    private fun askConfirmDelete(items: List<Recording>) {
+        if (items.isEmpty()) return
+        val displayName = if (items.size == 1) {
+            "\"${items.first().title}\""
         } else {
-            resources.getQuantityString(R.plurals.delete_recordings, itemsCnt, itemsCnt)
+            resources.getQuantityString(R.plurals.delete_recordings, items.size, items.size)
         }
 
         val baseString = if (activity.config.useRecycleBin) {
@@ -173,7 +160,7 @@ class RecordingsAdapter(
         } else {
             R.string.delete_recordings_confirmation
         }
-        val question = String.format(resources.getString(baseString), items)
+        val question = String.format(resources.getString(baseString), displayName)
 
         DeleteConfirmationDialog(
             activity = activity, message = question, showSkipRecycleBinOption = activity.config.useRecycleBin
@@ -181,47 +168,38 @@ class RecordingsAdapter(
             ensureBackgroundThread {
                 val toRecycleBin = !skipRecycleBin && activity.config.useRecycleBin
                 if (toRecycleBin) {
-                    trashRecordings()
+                    trashRecordings(items)
                 } else {
-                    deleteRecordings()
+                    deleteRecordings(items)
                 }
             }
         }
     }
 
-    private fun deleteRecordings() {
-        if (selectedKeys.isEmpty()) {
-            return
-        }
-
+    private fun deleteRecordings(items: List<Recording>) {
+        if (items.isEmpty()) return
         runWithWriteExternalStoragePermission {
             val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
-
-            val positions = getSelectedItemPositions()
-
+            val positions = items.mapNotNull { item ->
+                recordings.indexOfFirst { it.id == item.id }.takeIf { it >= 0 }
+            }
             ensureBackgroundThread {
-                activity.recordingStore.delete(recordingsToRemove)
-                doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
+                activity.recordingStore.delete(items)
+                doDeleteAnimation(oldRecordingIndex, items, ArrayList(positions))
             }
         }
     }
 
-    private fun trashRecordings() {
-        if (selectedKeys.isEmpty()) {
-            return
-        }
-
+    private fun trashRecordings(items: List<Recording>) {
+        if (items.isEmpty()) return
         runWithWriteExternalStoragePermission {
             val oldRecordingIndex = recordings.indexOfFirst { it.id == currRecordingId }
-            val recordingsToRemove = recordings.filter { selectedKeys.contains(it.id) }.toList()
-
-            val positions = getSelectedItemPositions()
-
+            val positions = items.mapNotNull { item ->
+                recordings.indexOfFirst { it.id == item.id }.takeIf { it >= 0 }
+            }
             ensureBackgroundThread {
-                activity.recordingStore.trash(recordingsToRemove)
-
-                doDeleteAnimation(oldRecordingIndex, recordingsToRemove, positions)
+                activity.recordingStore.trash(items)
+                doDeleteAnimation(oldRecordingIndex, items, ArrayList(positions))
                 EventBus.getDefault().post(Events.RecordingTrashUpdated())
             }
         }
@@ -264,7 +242,7 @@ class RecordingsAdapter(
             recordingFrame.isSelected = selectedKeys.contains(recording.id)
 
             arrayListOf(
-                recordingTitle, recordingDate, recordingDuration, recordingSize
+                recordingTitle, recordingDate, recordingDuration, recordingSize, transcriptPreview
             ).forEach {
                 it.setTextColor(textColor)
             }
@@ -277,7 +255,36 @@ class RecordingsAdapter(
             recordingDate.text = recording.timestamp.formatDate(root.context)
             recordingDuration.text = recording.duration.getFormattedDuration()
             recordingSize.text = recording.size.formatSize()
+
+            transcriptIndicator.visibility = View.VISIBLE
+            val preview = transcriptPreviews[recording.id]
+            if (preview != null) {
+                transcriptPreview.text = preview
+                transcriptPreview.setTypeface(null, android.graphics.Typeface.ITALIC)
+                transcriptPreview.alpha = TRANSCRIPT_PREVIEW_ALPHA
+                transcriptIndicatorIcon.alpha = 1f
+                transcriptIndicatorIcon.setColorFilter(root.context.getProperPrimaryColor())
+            } else {
+                transcriptPreview.text = activity.getString(R.string.transcribe)
+                transcriptPreview.setTypeface(null, android.graphics.Typeface.NORMAL)
+                transcriptPreview.alpha = TRANSCRIBE_PROMPT_ALPHA
+                transcriptIndicatorIcon.alpha = TRANSCRIBE_PROMPT_ALPHA
+                transcriptIndicatorIcon.clearColorFilter()
+            }
+            transcriptIndicator.setOnClickListener { onTranscriptIndicatorClick(recording) }
+            transcriptIndicator.setOnLongClickListener {
+                // Forward long-press to the row so it triggers selection mode like the rest.
+                view.performLongClick()
+            }
+
+            recordingOverflow.setColorFilter(textColor)
+            recordingOverflow.setOnClickListener { showRowOverflowMenu(it, recording) }
         }
+    }
+
+    companion object {
+        private const val TRANSCRIPT_PREVIEW_ALPHA = 0.7f
+        private const val TRANSCRIBE_PROMPT_ALPHA = 0.5f
     }
 
     override fun onChange(position: Int) = recordings.getOrNull(position)?.title ?: ""
@@ -294,8 +301,7 @@ class RecordingsAdapter(
 
     private fun transcriptStore() = TranscriptStore(activity, activity.config.saveRecordingsFolder)
 
-    private fun shareTranscriptAsText() {
-        val recording = getSelectedItems().firstOrNull() ?: return
+    private fun shareTranscriptAsText(recording: Recording) {
         ensureBackgroundThread {
             val transcript = transcriptStore().read(recording)
             activity.runOnUiThread {
@@ -307,13 +313,11 @@ class RecordingsAdapter(
                 activity.startActivity(
                     activity.buildShareTranscriptTextIntent(text, recording.title)
                 )
-                finishActMode()
             }
         }
     }
 
-    private fun shareTranscriptAsJson() {
-        val recording = getSelectedItems().firstOrNull() ?: return
+    private fun shareTranscriptAsJson(recording: Recording) {
         ensureBackgroundThread {
             val uri = transcriptStore().sidecarUri(recording)
             activity.runOnUiThread {
@@ -324,13 +328,11 @@ class RecordingsAdapter(
                 activity.startActivity(
                     activity.buildShareTranscriptJsonIntent(uri, recording.title)
                 )
-                finishActMode()
             }
         }
     }
 
-    private fun copyTranscript() {
-        val recording = getSelectedItems().firstOrNull() ?: return
+    private fun copyTranscript(recording: Recording) {
         ensureBackgroundThread {
             val transcript = transcriptStore().read(recording)
             activity.runOnUiThread {
@@ -340,13 +342,11 @@ class RecordingsAdapter(
                 }
                 activity.copyToClipboard(transcript.toShareableText(recording))
                 activity.toast(R.string.transcript_copied)
-                finishActMode()
             }
         }
     }
 
-    private fun askConfirmDeleteTranscripts() {
-        val items = getSelectedItems()
+    private fun askConfirmDeleteTranscripts(items: List<Recording>) {
         if (items.isEmpty()) return
         ConfirmationDialog(
             activity = activity,
@@ -363,5 +363,33 @@ class RecordingsAdapter(
                 }
             }
         }
+    }
+
+    /**
+     * Inflates the per-row 3-dot popup, hides transcript-related items if the recording
+     * has none, and routes selections to the matching single-item action.
+     */
+    private fun showRowOverflowMenu(anchor: View, recording: Recording) {
+        val hasTranscript = recording.id in transcriptPreviews
+        val popup = PopupMenu(activity, anchor)
+        popup.menuInflater.inflate(R.menu.menu_recording_row, popup.menu)
+        popup.menu.findItem(R.id.row_copy_transcript).isVisible = hasTranscript
+        popup.menu.findItem(R.id.row_share_transcript_text).isVisible = hasTranscript
+        popup.menu.findItem(R.id.row_share_transcript_json).isVisible = hasTranscript
+        popup.menu.findItem(R.id.row_delete_transcript).isVisible = hasTranscript
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.row_rename -> { renameRecording(recording); true }
+                R.id.row_open_with -> { openRecordingWith(recording); true }
+                R.id.row_share_audio -> { shareRecordings(listOf(recording)); true }
+                R.id.row_delete_audio -> { askConfirmDelete(listOf(recording)); true }
+                R.id.row_copy_transcript -> { copyTranscript(recording); true }
+                R.id.row_share_transcript_text -> { shareTranscriptAsText(recording); true }
+                R.id.row_share_transcript_json -> { shareTranscriptAsJson(recording); true }
+                R.id.row_delete_transcript -> { askConfirmDeleteTranscripts(listOf(recording)); true }
+                else -> false
+            }
+        }
+        popup.show()
     }
 }
