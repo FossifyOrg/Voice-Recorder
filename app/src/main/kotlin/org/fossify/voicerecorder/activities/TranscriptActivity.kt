@@ -690,6 +690,7 @@ class TranscriptActivity : SimpleActivity() {
         ) {
             ensureBackgroundThread {
                 TranscriptStore(this, config.saveRecordingsFolder).delete(rec)
+                EventBus.getDefault().post(Events.TranscriptDeleted(rec.uri))
                 runOnUiThread {
                     currentTranscript = null
                     renderIdle()

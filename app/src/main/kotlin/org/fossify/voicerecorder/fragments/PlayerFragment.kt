@@ -496,6 +496,15 @@ class PlayerFragment(
         }
     }
 
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun transcriptDeleted(@Suppress("UNUSED_PARAMETER") event: Events.TranscriptDeleted) {
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
+        }
+    }
+
     private fun registerNoisyAudioReceiver() {
         if (isReceiverRegistered) return
         if (becomingNoisyReceiver == null) {

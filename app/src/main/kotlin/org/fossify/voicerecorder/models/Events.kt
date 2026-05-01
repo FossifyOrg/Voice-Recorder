@@ -20,6 +20,7 @@ class Events {
     class TranscriptionCompleted internal constructor(val recordingUri: Uri)
     class TranscriptionFailed internal constructor(val recordingUri: Uri, val cause: Throwable)
     class TranscriptionCancelled internal constructor(val recordingUri: Uri)
+    class TranscriptDeleted internal constructor(val recordingUri: Uri)
 
     class ModelDownloadStarted internal constructor(val modelId: String)
     class ModelDownloadProgress internal constructor(val modelId: String, val fraction: Float)
