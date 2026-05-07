@@ -35,4 +35,7 @@
     <string name="discard_recording_confirmation">Biztos, hogy visszavonod a felvételt? Visszafordíthatatlan művelet.</string>
     <string name="sample_rate">Mintavételezési gyakoriság</string>
     <string name="microphone_mode">Mikrofon mód</string>
+    <string name="filename_pattern_must_contain_all">Minden helykitöltőnek benne kell lennie a teljesen egyéni fájlnévhez (%Y, %M, %D, %h, %m, %s)</string>
+    <string name="filename_pattern">Fájlnév minta</string>
+    <string name="change_microphone_mode_confirmation">Itt állíthatja át milyen úton hogyan dolgozza fel készüléke a hangot. A végeredmény eltérő lehet eszközönként, és hatással lehet a hangerőre, alapzajra, és más tényezőkre.</string>
 </resources>
