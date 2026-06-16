@@ -28,7 +28,7 @@
     <string name="discard_recording_confirmation">Vai tiešām vēlies atmest pašreizējo ierakstu? Tas ir neatgriezeniski.</string>
     <string name="audio_source">Skaņas avots</string>
     <string name="keep_screen_on">Ierakstīšanas laikā paturēt ekrānu ieslēgtu</string>
-    <string name="recording_too_short">Ieraksts bija pārāk īss.</string>
+    <string name="recording_too_short">Ieraksts bija pārāk īss!</string>
     <string name="recording">Ieraksta</string>
     <string name="move_recordings">Pārvietot ierakstus</string>
     <string name="move_recordings_to_new_folder_desc">Tev ir esoši ieraksti. Vai vēlies pārvietot tos uz jauno mapi?</string>
