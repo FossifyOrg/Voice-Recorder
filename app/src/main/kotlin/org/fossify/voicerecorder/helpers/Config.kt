@@ -1,26 +1,32 @@
 package org.fossify.voicerecorder.helpers
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaRecorder
+import android.net.Uri
 import androidx.core.content.edit
+import androidx.core.net.toUri
+import org.fossify.commons.extensions.createFirstParentTreeUri
 import org.fossify.commons.helpers.BaseConfig
 import org.fossify.voicerecorder.R
-import org.fossify.voicerecorder.extensions.getDefaultRecordingsFolder
+import org.fossify.voicerecorder.store.DEFAULT_MEDIA_URI
+import org.fossify.voicerecorder.store.RecordingFormat
 
 class Config(context: Context) : BaseConfig(context) {
     companion object {
         fun newInstance(context: Context) = Config(context)
     }
 
-    var saveRecordingsFolder: String
-        get() = prefs.getString(SAVE_RECORDINGS, context.getDefaultRecordingsFolder())!!
-        set(saveRecordingsFolder) = prefs.edit().putString(SAVE_RECORDINGS, saveRecordingsFolder)
-            .apply()
+    var saveRecordingsFolder: Uri
+        get() = when (val value = prefs.getString(SAVE_RECORDINGS, null)) {
+            is String if value.startsWith("content:") -> value.toUri()
+            is String -> context.createFirstParentTreeUri(value)
+            null -> DEFAULT_MEDIA_URI
+        }
+        set(uri) = prefs.edit { putString(SAVE_RECORDINGS, uri.toString()) }
 
-    var extension: Int
-        get() = prefs.getInt(EXTENSION, EXTENSION_M4A)
-        set(extension) = prefs.edit().putInt(EXTENSION, extension).apply()
+    var recordingFormat: RecordingFormat
+        get() = prefs.getInt(EXTENSION, -1).let(RecordingFormat::fromInt) ?: RecordingFormat.M4A
+        set(format) = prefs.edit { putInt(EXTENSION, format.value) }
 
     var microphoneMode: Int
         get() = prefs.getInt(MICROPHONE_MODE, MediaRecorder.AudioSource.DEFAULT)
@@ -50,34 +56,6 @@ class Config(context: Context) : BaseConfig(context) {
         set(recordAfterLaunch) = prefs.edit().putBoolean(RECORD_AFTER_LAUNCH, recordAfterLaunch)
             .apply()
 
-    fun getExtensionText() = context.getString(
-        when (extension) {
-            EXTENSION_M4A -> R.string.m4a
-            EXTENSION_OGG -> R.string.ogg_opus
-            else -> R.string.mp3_experimental
-        }
-    )
-
-    fun getExtension() = context.getString(
-        when (extension) {
-            EXTENSION_M4A -> R.string.m4a
-            EXTENSION_OGG -> R.string.ogg
-            else -> R.string.mp3
-        }
-    )
-
-    @SuppressLint("InlinedApi")
-    fun getOutputFormat() = when (extension) {
-        EXTENSION_OGG -> MediaRecorder.OutputFormat.OGG
-        else -> MediaRecorder.OutputFormat.MPEG_4
-    }
-
-    @SuppressLint("InlinedApi")
-    fun getAudioEncoder() = when (extension) {
-        EXTENSION_OGG -> MediaRecorder.AudioEncoder.OPUS
-        else -> MediaRecorder.AudioEncoder.AAC
-    }
-
     var useRecycleBin: Boolean
         get() = prefs.getBoolean(USE_RECYCLE_BIN, true)
         set(useRecycleBin) = prefs.edit().putBoolean(USE_RECYCLE_BIN, useRecycleBin).apply()
@@ -100,4 +78,12 @@ class Config(context: Context) : BaseConfig(context) {
     var filenamePattern: String
         get() = prefs.getString(FILENAME_PATTERN, DEFAULT_FILENAME_PATTERN)!!
         set(filenamePattern) = prefs.edit { putString(FILENAME_PATTERN, filenamePattern) }
+
+    var transcribeModelId: String?
+        get() = prefs.getString(TRANSCRIBE_MODEL_ID, null)
+        set(value) = prefs.edit { putString(TRANSCRIBE_MODEL_ID, value) }
+
+    var transcribeLanguage: String
+        get() = prefs.getString(TRANSCRIBE_LANGUAGE, DEFAULT_TRANSCRIBE_LANGUAGE)!!
+        set(value) = prefs.edit { putString(TRANSCRIBE_LANGUAGE, value) }
 }

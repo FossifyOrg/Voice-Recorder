@@ -2,9 +2,12 @@
 
 package org.fossify.voicerecorder.helpers
 
+import org.fossify.voicerecorder.store.RecordingFormat
+
 const val REPOSITORY_NAME = "Voice-Recorder"
 
 const val RECORDER_RUNNING_NOTIF_ID = 10000
+const val TRANSCRIPTION_NOTIF_ID = 10001
 
 private const val PATH = "com.fossify.voicerecorder.action."
 const val GET_RECORDER_INFO = PATH + "GET_RECORDER_INFO"
@@ -12,9 +15,16 @@ const val STOP_AMPLITUDE_UPDATE = PATH + "STOP_AMPLITUDE_UPDATE"
 const val TOGGLE_PAUSE = PATH + "TOGGLE_PAUSE"
 const val CANCEL_RECORDING = PATH + "CANCEL_RECORDING"
 
-const val EXTENSION_M4A = 0
-const val EXTENSION_MP3 = 1
-const val EXTENSION_OGG = 2
+const val ACTION_START_TRANSCRIPTION = PATH + "START_TRANSCRIPTION"
+const val ACTION_CANCEL_TRANSCRIPTION = PATH + "CANCEL_TRANSCRIPTION"
+const val ACTION_DOWNLOAD_MODEL = PATH + "DOWNLOAD_MODEL"
+const val ACTION_CANCEL_MODEL_DOWNLOAD = PATH + "CANCEL_MODEL_DOWNLOAD"
+
+const val EXTRA_PREFERRED_AUDIO_DEVICE_ID = "preferred_audio_device_id"
+const val EXTRA_BT_OUTPUT_DEVICE_ID = "bt_output_device_id"
+const val EXTRA_RECORDING_URI = "recording_uri"
+const val EXTRA_MODEL_ID = "model_id"
+const val EXTRA_LANGUAGE = "language"
 
 val BITRATES_MP3 = arrayListOf(
     8000, 16000, 24000, 32000, 64000, 96000, 128000, 160000, 192000, 256000, 320000
@@ -26,9 +36,9 @@ val BITRATES_OPUS = arrayListOf(
     8000, 16000, 24000, 32000, 64000, 96000, 128000, 160000, 192000, 256000, 320000
 )
 val BITRATES = mapOf(
-    EXTENSION_M4A to BITRATES_M4A,
-    EXTENSION_MP3 to BITRATES_MP3,
-    EXTENSION_OGG to BITRATES_OPUS
+    RecordingFormat.M4A to BITRATES_M4A,
+    RecordingFormat.MP3 to BITRATES_MP3,
+    RecordingFormat.OGG to BITRATES_OPUS
 )
 const val DEFAULT_BITRATE = 96000
 
@@ -36,9 +46,9 @@ val SAMPLING_RATES_MP3 = arrayListOf(8000, 11025, 12000, 16000, 22050, 24000, 32
 val SAMPLING_RATES_M4A = arrayListOf(11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000)
 val SAMPLING_RATES_OPUS = arrayListOf(8000, 12000, 16000, 24000, 48000)
 val SAMPLING_RATES = mapOf(
-    EXTENSION_M4A to SAMPLING_RATES_M4A,
-    EXTENSION_MP3 to SAMPLING_RATES_MP3,
-    EXTENSION_OGG to SAMPLING_RATES_OPUS
+    RecordingFormat.M4A to SAMPLING_RATES_M4A,
+    RecordingFormat.MP3 to SAMPLING_RATES_MP3,
+    RecordingFormat.OGG to SAMPLING_RATES_OPUS
 )
 const val DEFAULT_SAMPLING_RATE = 48000
 
@@ -79,9 +89,9 @@ val SAMPLING_RATE_BITRATE_LIMITS_OPUS = mapOf(
 )
 
 val SAMPLING_RATE_BITRATE_LIMITS = mapOf(
-    EXTENSION_M4A to SAMPLING_RATE_BITRATE_LIMITS_M4A,
-    EXTENSION_MP3 to SAMPLING_RATE_BITRATE_LIMITS_MP3,
-    EXTENSION_OGG to SAMPLING_RATE_BITRATE_LIMITS_OPUS
+    RecordingFormat.M4A to SAMPLING_RATE_BITRATE_LIMITS_M4A,
+    RecordingFormat.MP3 to SAMPLING_RATE_BITRATE_LIMITS_MP3,
+    RecordingFormat.OGG to SAMPLING_RATE_BITRATE_LIMITS_OPUS
 )
 
 const val RECORDING_RUNNING = 0
@@ -103,6 +113,8 @@ const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
 const val KEEP_SCREEN_ON = "keep_screen_on"
 const val WAS_MIC_MODE_WARNING_SHOWN = "was_mic_mode_warning_shown"
 const val FILENAME_PATTERN = "filename_pattern"
+const val TRANSCRIBE_MODEL_ID = "transcribe_model_id"
+const val TRANSCRIBE_LANGUAGE = "transcribe_language"
 
-const val DEFAULT_RECORDINGS_FOLDER = "Recordings"
 const val DEFAULT_FILENAME_PATTERN = "%Y%M%D_%h%m%s"
+const val DEFAULT_TRANSCRIBE_LANGUAGE = ""

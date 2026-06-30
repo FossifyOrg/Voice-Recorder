@@ -7,10 +7,18 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29" />
+        android:maxSdkVersion="28" />
 
     <uses-feature
         android:name="android.hardware.faketouch"
@@ -93,6 +101,13 @@
         </activity>
 
         <activity
+            android:name=".activities.TranscriptActivity"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:label="@string/transcript"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
             android:name="org.fossify.commons.activities.AboutActivity"
             android:configChanges="orientation"
             android:exported="false"
@@ -116,6 +131,11 @@
                 <action android:name="org.fossify.voicerecorder.action.TOGGLE_PAUSE" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".services.TranscriptionService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
 
         <activity-alias
             android:name=".activities.SplashActivity.Red"
