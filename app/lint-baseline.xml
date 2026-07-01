@@ -36,7 +36,7 @@
 
     <issue
         id="NewerVersionAvailable"
-        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.28 is available: 0.5.9"
+        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.28 is available: 0.6.2"
         errorLine1="detektCompose = &quot;0.4.28&quot;"
         errorLine2="                ~~~~~~~~">
         <location
@@ -49,14 +49,14 @@
         id="Aligned16KB"
         message="The native library `x86_64/libandroidlame.so` (from `com.github.naman14:TAndroidLame:1.1`) is not 16 KB aligned">
         <location
-            file="$GRADLE_USER_HOME/caches/9.5.1/transforms/b2ce5f1aed99f6a27ccf853da8b335a6/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
+            file="$GRADLE_USER_HOME/caches/9.6.1/transforms/97524bdd6ca1ad93f26fcc17d48440b6/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
     </issue>
 
     <issue
         id="Aligned16KB"
         message="The native library `x86_64/libandroidlame.so` (from `com.github.naman14:TAndroidLame:1.1`) is not 16 KB aligned">
         <location
-            file="$GRADLE_USER_HOME/caches/9.5.1/transforms/b2ce5f1aed99f6a27ccf853da8b335a6/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
+            file="$GRADLE_USER_HOME/caches/9.6.1/transforms/97524bdd6ca1ad93f26fcc17d48440b6/transformed/jetified-TAndroidLame-1.1/jni/x86_64/libandroidlame.so"/>
     </issue>
 
     <issue
