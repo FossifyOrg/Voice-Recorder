@@ -22,6 +22,7 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var mp3buffer: ByteArray = ByteArray(0)
     private var isPaused = AtomicBoolean(false)
     private var isStopped = AtomicBoolean(false)
+    private val pauseLock = Object()
     private var amplitude = AtomicInteger(0)
     private var outputPath: String? = null
     private var androidLame: AndroidLame? = null
@@ -92,6 +93,16 @@ class Mp3Recorder(val context: Context) : Recorder {
                             }
                         }
                     }
+                } else {
+                    synchronized(pauseLock) {
+                        while (isPaused.get() && !isStopped.get()) {
+                            try {
+                                pauseLock.wait()
+                            } catch (e: InterruptedException) {
+                                Thread.currentThread().interrupt()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -100,6 +111,9 @@ class Mp3Recorder(val context: Context) : Recorder {
     override fun stop() {
         isPaused.set(true)
         isStopped.set(true)
+        synchronized(pauseLock) {
+            pauseLock.notifyAll()
+        }
         audioRecord.stop()
     }
 
@@ -109,6 +123,9 @@ class Mp3Recorder(val context: Context) : Recorder {
 
     override fun resume() {
         isPaused.set(false)
+        synchronized(pauseLock) {
+            pauseLock.notifyAll()
+        }
     }
 
     override fun release() {
