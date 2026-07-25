@@ -34,4 +34,6 @@
     <string name="sample_rate">Samplingfrekvens</string>
     <string name="microphone_mode">Mikrofontilstand</string>
     <string name="change_microphone_mode_confirmation">Dette ændrer, hvordan din enhed dirigerer og behandler lyd. Resultaterne varierer fra enhed til enhed og kan påvirke lydstyrke, støj og andre faktorer.</string>
+    <string name="filename_pattern">Filnavnsskabelon</string>
+    <string name="filename_pattern_must_contain_all">Skal indeholde alle pladsholdere for unikke filnavne (%Y, %M, %D, %h, %m, %s)</string>
 </resources>
