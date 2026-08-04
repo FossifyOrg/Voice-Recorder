@@ -8,12 +8,12 @@ import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.util.AttributeSet
 import android.widget.SeekBar
-import androidx.core.net.toUri
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.areSystemAnimationsEnabled
 import org.fossify.commons.extensions.beVisibleIf
@@ -26,17 +26,20 @@ import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.updateTextColors
 import org.fossify.commons.extensions.value
+import org.fossify.commons.helpers.ensureBackgroundThread
 import org.fossify.commons.helpers.isQPlus
 import org.fossify.commons.helpers.isTiramisuPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
+import org.fossify.voicerecorder.activities.TranscriptActivity
 import org.fossify.voicerecorder.adapters.RecordingsAdapter
 import org.fossify.voicerecorder.databinding.FragmentPlayerBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
 import org.fossify.voicerecorder.receivers.BecomingNoisyReceiver
+import org.fossify.voicerecorder.store.Recording
+import org.fossify.voicerecorder.store.TranscriptStore
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -45,8 +48,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class PlayerFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
 
     companion object {
@@ -59,9 +61,11 @@ class PlayerFragment(
     private var itemsIgnoringSearch = ArrayList<Recording>()
     private var lastSearchQuery = ""
     private var bus: EventBus? = null
-    private var prevSavePath = ""
+    private var prevSaveFolder: Uri? = null
     private var prevRecycleBinState = context.config.useRecycleBin
     private var playOnPreparation = true
+    private var pendingSeekMs: Int = -1
+    private var transcriptPreviews: Map<Int, String> = emptyMap()
     private lateinit var binding: FragmentPlayerBinding
 
     private var becomingNoisyReceiver: BecomingNoisyReceiver? = null
@@ -74,7 +78,7 @@ class PlayerFragment(
 
     override fun onResume() {
         setupColors()
-        if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath || context.config.useRecycleBin != prevRecycleBinState) {
+        if (prevSaveFolder != null && context!!.config.saveRecordingsFolder != prevSaveFolder || context.config.useRecycleBin != prevRecycleBinState) {
             loadRecordings()
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
@@ -115,9 +119,12 @@ class PlayerFragment(
 
     override fun onLoadingEnd(recordings: ArrayList<Recording>) {
         binding.loadingIndicator.hide()
-        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
         itemsIgnoringSearch = recordings
-        setupAdapter(itemsIgnoringSearch)
+        setupAdapter(filteredItems())
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
+        }
     }
 
     private fun setupViews() {
@@ -149,8 +156,7 @@ class PlayerFragment(
             }
 
             val prevRecordingIndex = adapter.recordings.indexOfFirst { it.id == wantedRecordingID }
-            val prevRecording = adapter.recordings
-                .getOrNull(prevRecordingIndex) ?: return@setOnClickListener
+            val prevRecording = adapter.recordings.getOrNull(prevRecordingIndex) ?: return@setOnClickListener
             playRecording(prevRecording, true)
         }
 
@@ -167,13 +173,71 @@ class PlayerFragment(
                 return@setOnClickListener
             }
 
-            val oldRecordingIndex =
-                adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
+            val oldRecordingIndex = adapter.recordings.indexOfFirst { it.id == adapter.currRecordingId }
             val newRecordingIndex = (oldRecordingIndex + 1) % adapter.recordings.size
-            val newRecording =
-                adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
+            val newRecording = adapter.recordings.getOrNull(newRecordingIndex) ?: return@setOnClickListener
             playRecording(newRecording, true)
             playedRecordingIDs.push(newRecording.id)
+        }
+
+    }
+
+    private fun openTranscriptActivity(recording: Recording) {
+        pausePlayback()
+        val intent = android.content.Intent(context, TranscriptActivity::class.java).apply {
+            putExtra(TranscriptActivity.EXTRA_RECORDING_URI_STRING, recording.uri.toString())
+        }
+        context.startActivity(intent)
+    }
+
+    private fun filteredItems(): ArrayList<Recording> {
+        val base = if (lastSearchQuery.isEmpty()) {
+            itemsIgnoringSearch
+        } else {
+            itemsIgnoringSearch.filter { it.title.contains(lastSearchQuery, true) }
+        }
+        return ArrayList(base)
+    }
+
+    /**
+     * Reads each recording's sidecar transcript on a background thread and produces a
+     * map of recording id → first-line preview snippet. Recordings with no transcript
+     * are absent from the resulting map; callers can use `id in map` as the
+     * has-transcript check.
+     */
+    private fun recomputeTranscriptPreviews(then: (Map<Int, String>) -> Unit) {
+        val snapshot = itemsIgnoringSearch.toList()
+        ensureBackgroundThread {
+            val store = TranscriptStore(context, context.config.saveRecordingsFolder)
+            val previews = snapshot.mapNotNull { recording ->
+                loadTranscriptPreview(store, recording)?.let { recording.id to it }
+            }.toMap()
+            (context as? SimpleActivity)?.runOnUiThread { then(previews) }
+        }
+    }
+
+    private fun loadTranscriptPreview(store: TranscriptStore, recording: Recording): String? {
+        if (!store.hasTranscript(recording)) return null
+        val transcript = store.read(recording) ?: return null
+        val firstSegmentText = transcript.segments.firstOrNull()?.text?.trim().orEmpty()
+        return firstSegmentText.takeIf { it.isNotEmpty() }
+    }
+
+    /**
+     * Seek the currently-playing recording to [positionMs] and start playback.
+     * If the player hasn't finished preparing yet, the seek is queued and applied
+     * once `onPrepared` fires.
+     */
+    fun seekToAndPlay(positionMs: Long) {
+        val target = positionMs.toInt()
+        val mediaPlayer = player ?: return
+        try {
+            mediaPlayer.seekTo(target)
+            resumePlayback()
+            binding.playerProgressbar.progress = target / 1000
+        } catch (_: IllegalStateException) {
+            pendingSeekMs = target
+            playOnPreparation = true
         }
     }
 
@@ -181,15 +245,12 @@ class PlayerFragment(
 
     private fun setupAdapter(recordings: ArrayList<Recording>) {
         binding.recordingsFastscroller.beVisibleIf(recordings.isNotEmpty())
+        binding.recordingsPlaceholder.beVisibleIf(recordings.isEmpty())
         if (recordings.isEmpty()) {
-            val stringId = if (lastSearchQuery.isEmpty()) {
-                if (isQPlus()) {
-                    R.string.no_recordings_found
-                } else {
-                    R.string.no_recordings_in_folder_found
-                }
-            } else {
-                org.fossify.commons.R.string.no_items_found
+            val stringId = when {
+                lastSearchQuery.isNotEmpty() -> org.fossify.commons.R.string.no_items_found
+                isQPlus() -> R.string.no_recordings_found
+                else -> R.string.no_recordings_in_folder_found
             }
 
             binding.recordingsPlaceholder.text = context.getString(stringId)
@@ -199,12 +260,16 @@ class PlayerFragment(
 
         val adapter = getRecordingsAdapter()
         if (adapter == null) {
-            RecordingsAdapter(context as SimpleActivity, recordings, this, binding.recordingsList) {
-                playRecording(it as Recording, true)
-                if (playedRecordingIDs.isEmpty() || playedRecordingIDs.peek() != it.id) {
-                    playedRecordingIDs.push(it.id)
-                }
+            RecordingsAdapter(
+                activity = context as SimpleActivity,
+                recordings = recordings,
+                refreshListener = this,
+                recyclerView = binding.recordingsList,
+                onTranscriptIndicatorClick = { openTranscriptActivity(it) },
+            ) {
+                onRecordingTapped(it as Recording)
             }.apply {
+                transcriptPreviews = this@PlayerFragment.transcriptPreviews
                 binding.recordingsList.adapter = this
             }
 
@@ -216,14 +281,19 @@ class PlayerFragment(
         }
     }
 
+    private fun onRecordingTapped(recording: Recording) {
+        playRecording(recording, true)
+        if (playedRecordingIDs.isEmpty() || playedRecordingIDs.peek() != recording.id) {
+            playedRecordingIDs.push(recording.id)
+        }
+    }
+
     private fun initMediaPlayer() {
         player = MediaPlayer().apply {
             setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK)
             setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
+                AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
             )
 
             setOnCompletionListener {
@@ -235,6 +305,14 @@ class PlayerFragment(
             }
 
             setOnPreparedListener {
+                if (pendingSeekMs >= 0) {
+                    try {
+                        seekTo(pendingSeekMs)
+                        binding.playerProgressbar.progress = pendingSeekMs / 1000
+                    } catch (_: IllegalStateException) {
+                    }
+                    pendingSeekMs = -1
+                }
                 if (playOnPreparation) {
                     resumePlayback()
                 }
@@ -253,7 +331,7 @@ class PlayerFragment(
             reset()
 
             try {
-                setDataSource(context, recording.path.toUri())
+                setDataSource(context, recording.uri)
             } catch (e: Exception) {
                 context?.showErrorToast(e)
                 return
@@ -268,8 +346,7 @@ class PlayerFragment(
         }
 
         binding.playPauseBtn.setImageDrawable(getToggleButtonIcon(playOnPreparation))
-        binding.playerProgressbar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
+        binding.playerProgressbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser && !playedRecordingIDs.isEmpty()) {
                     player?.seekTo(progress * 1000)
@@ -317,10 +394,7 @@ class PlayerFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch
-            .filter { it.title.contains(text, true) }
-            .toMutableList() as ArrayList<Recording>
-        setupAdapter(filtered)
+        setupAdapter(filteredItems())
     }
 
     private fun togglePlayPause() {
@@ -353,8 +427,7 @@ class PlayerFragment(
         }
 
         return resources.getColoredDrawableWithColor(
-            drawableId = drawable,
-            color = context.getProperPrimaryColor().getContrastColor()
+            drawableId = drawable, color = context.getProperPrimaryColor().getContrastColor()
         )
     }
 
@@ -378,7 +451,7 @@ class PlayerFragment(
     private fun getRecordingsAdapter() = binding.recordingsList.adapter as? RecordingsAdapter
 
     private fun storePrevState() {
-        prevSavePath = context!!.config.saveRecordingsFolder
+        prevSaveFolder = context!!.config.saveRecordingsFolder
         prevRecycleBinState = context.config.useRecycleBin
     }
 
@@ -412,6 +485,26 @@ class PlayerFragment(
         refreshRecordings()
     }
 
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun transcriptionCompleted(@Suppress("UNUSED_PARAMETER") event: Events.TranscriptionCompleted) {
+        // A new sidecar JSON now exists on disk — re-read previews so the affected row's
+        // indicator flips from "Transcribe" to its first-segment snippet without a manual refresh.
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
+        }
+    }
+
+    @Suppress("unused")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun transcriptDeleted(@Suppress("UNUSED_PARAMETER") event: Events.TranscriptDeleted) {
+        recomputeTranscriptPreviews { previews ->
+            transcriptPreviews = previews
+            getRecordingsAdapter()?.transcriptPreviews = previews
+        }
+    }
+
     private fun registerNoisyAudioReceiver() {
         if (isReceiverRegistered) return
         if (becomingNoisyReceiver == null) {
@@ -433,7 +526,7 @@ class PlayerFragment(
         try {
             isReceiverRegistered = false
             context.unregisterReceiver(becomingNoisyReceiver)
-        } catch (ignored: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
     }
 }

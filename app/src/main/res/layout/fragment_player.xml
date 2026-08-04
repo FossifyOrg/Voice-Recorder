@@ -17,7 +17,8 @@
         android:text="@string/no_recordings_found"
         android:textSize="@dimen/bigger_text_size"
         android:textStyle="italic"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
         android:id="@+id/recordings_fastscroller"
