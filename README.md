@@ -4,42 +4,20 @@
 
 <a href="https://play.google.com/store/apps/details?id=org.fossify.voicerecorder"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height=80/></a> <a href="https://f-droid.org/packages/org.fossify.voicerecorder/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on-en.svg" alt="Get it on F-Droid" height=80/></a> <a href="https://apt.izzysoft.de/fdroid/index/apk/org.fossify.voicerecorder"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height=80/></a>
 
-Introducing Fossify Voice Recorder – where capturing crystal-clear audio and preserving precious moments is effortless and enjoyable. Seamlessly blend
-simplicity with functionality as you embark on a journey of seamless recording experiences tailored to your needs.
+Introducing Fossify Voice Recorder, an intuitive and customizable audio recording app.
 
-**🔊 HIGH-QUALITY AUDIO CAPTURE:**  
-Remember every word, every note, and every emotion with pristine audio quality. Fossify Voice Recorder empowers you to capture high-fidelity recordings
-effortlessly, ensuring that every detail is preserved with clarity and precision.
+**🎙️ Versatile Recording Options:**  
+Fossify Voice Recorder supports a range of audio formats, allowing for both storage-efficient and high-fidelity recordings, with customizable filename formatting.
+Currently supports AAC, Opus, and MP3 (experimental).
 
-**🎙️ VERSATILE RECORDING OPTIONS:**  
-From voice memos to musical inspirations, this intuitive app transforms your device into a versatile recording studio. Explore the freedom to document your
-surroundings and unleash your creativity with ease.
+**🚀 Clean Interface:**  
+Enjoy a streamlined and ad-free experience, with real-time sound volume visualization, a widget for quick recordings, and configurable colors and themes.
 
-**🚀 NO-FUSS FUNCTIONALITY:**  
-Enjoy a clutter-free experience with Fossify Voice Recorder. Say goodbye to unnecessary features and hello to a streamlined interface designed for intuitive
-navigation and seamless recording.
+**🔒 Private & Offline:**  
+Fossify Voice Recorder operates completely offline, and does not collect any user data, ensuring all your recordings remain on your device and under your control at all times.
 
-**📊 INTUITIVE VISUALIZATION:**  
-Immerse yourself in the recording process with real-time sound volume visualization. Experience the thrill of monitoring your recordings with a sleek,
-interactive display that enhances your recording experience.
-
-**🔒 PRIVACY-FIRST APPROACH:**  
-Rest easy knowing that your privacy is our priority. Fossify Voice Recorder operates offline, ensuring maximum privacy, security, and stability without the need
-for internet access. Your recordings remain confidential and under your control at all times.
-
-**🎨 CUSTOMIZABLE INTERFACE:**  
-Personalize your recording experience with customizable colors and themes. Embrace the sleek elegance of material design and dark theme options, offering a
-visually stunning experience tailored to your preferences.
-
-**🤝 USER-FRIENDLY FEATURES:**  
-Discover intuitive functionalities like customizable filename formats and practical widgets for quick recordings. With Fossify Voice Recorder, the power to
-record is in your hands.
-
-**🌐 AD-FREE & OPEN-SOURCE:**  
-Say goodbye to intrusive ads and unnecessary permissions. Fossify Voice Recorder is ad-free, fully open-source, and grants you the freedom to use the app as you
-please, without compromise.
-
-Capture moments, preserve memories, and unleash your creativity with Fossify Voice Recorder. Download now and experience recording like never before.
+**🌐 Free & Open-Source:**  
+Fossify Voice Recorder is fully free and open-source, granting you the freedom to use the app as you please, without compromise.
 
 ➡️ Explore more Fossify apps: https://www.fossify.org<br>
 ➡️ Open-Source Code: https://www.github.com/FossifyOrg<br>
