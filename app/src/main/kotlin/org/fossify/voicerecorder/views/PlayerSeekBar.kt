@@ -21,6 +21,10 @@ class PlayerSeekBar : MySeekBar {
         }
 
         val handled = super.onTouchEvent(event)
+        if (action == MotionEvent.ACTION_UP && handled) {
+            performClick()
+        }
+
         if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL || !handled) {
             setParentInterceptionDisallowed(false)
         }
