@@ -38,10 +38,65 @@
     <string name="microphone_mode_voice_performance">Voice performance (low-latency)</string>
     <string name="microphone_mode_voice_recognition">Voice recognition</string>
     <string name="microphone_mode_unprocessed">Unprocessed (raw)</string>
+    <!-- Microphone selector -->
+    <string name="device_mic">Device Mic</string>
+    <string name="mic_type_bluetooth">Bluetooth</string>
+    <string name="mic_type_bluetooth_not_connected">Bluetooth · Not connected</string>
+    <string name="mic_type_bluetooth_named">Bluetooth · %1$s</string>
     <!-- FAQ -->
     <string name="faq_1_title">Can I hide the notification icon during recording?</string>
     <string name="faq_1_text">Well, it depends. While you use your device it is no longer possible to fully hide the notifications of apps like this.
         If you check the proper setting item, the app will do its best to hide it. You can hide it on the lockscreen though, if you disable the displaying of sensitive notifications in your device settings.</string>
+    <string name="recording_store_error_title">Failed to access the recordings folder</string>
+    <string name="recording_store_error_message">Please make sure the recordings folder exists and this app has the necessary permissions to access it</string>
+    <!-- Transcription -->
+    <string name="transcribe">Transcribe</string>
+    <string name="transcript">Transcript</string>
+    <string name="transcribing">Transcribing…</string>
+    <string name="downloading_model">Downloading speech model…</string>
+    <string name="decoding_audio">Decoding audio…</string>
+    <string name="cancel_transcription">Cancel</string>
+    <string name="transcript_failed">Transcription failed: %1$s</string>
+    <string name="transcript_cancelled">Transcription cancelled</string>
+    <string name="delete_transcript">Delete transcript</string>
+    <string name="copy_transcript">Copy transcript</string>
+    <string name="transcript_copied">Transcript copied to clipboard</string>
+    <string name="share_transcript">Share transcript</string>
+    <string name="share_transcript_json">Share transcript JSON</string>
+    <string name="transcript_search_hint">Search transcript</string>
+    <string name="transcript_search_count">%1$d / %2$d matches</string>
+    <string name="transcript_search_no_match">No matches</string>
+    <string name="transcript_search_prev">Previous match</string>
+    <string name="transcript_search_next">Next match</string>
+    <string name="transcript_elapsed">Elapsed: %1$s</string>
+    <string name="transcript_elapsed_with_eta">Elapsed: %1$s · ETA: %2$s</string>
+    <string name="transcript_selected_count">%1$d selected</string>
+    <string name="transcribe_settings">Transcription</string>
+    <string name="transcribe_model">Speech recognition model</string>
+    <string name="transcribe_language">Language</string>
+    <string name="transcribe_auto_detect">Auto-detect</string>
+    <string name="download_model">Download</string>
+    <string name="delete_downloaded_model">Delete downloaded model</string>
+    <string name="model_size_mb">~%1$d MB on disk</string>
+    <string name="model_not_installed">Not installed</string>
+    <string name="model_installed">Installed</string>
+    <string name="re_transcribe">Re-transcribe</string>
+    <string name="transcript_processing_time">Processed in %1$s</string>
+    <string name="transcript_processing_time_seconds">%1$.1fs</string>
+    <string name="transcript_processing_time_minutes">%1$dm %2$ds</string>
+    <string name="model_active">Active</string>
+    <string name="model_download_in_progress">Downloading… %1$d%%</string>
+    <string name="model_delete_confirmation">Delete this downloaded model? You can re-download it any time.</string>
+    <string name="model_active_set">Active model: %1$s</string>
+    <string name="manage_models">Manage models</string>
+    <string name="transcribe_lang_english">English</string>
+    <string name="transcribe_lang_spanish">Spanish</string>
+    <string name="transcribe_lang_french">French</string>
+    <string name="transcribe_lang_german">German</string>
+    <string name="transcribe_lang_italian">Italian</string>
+    <string name="transcribe_lang_portuguese">Portuguese</string>
+    <string name="transcribe_lang_chinese">Chinese</string>
+    <string name="transcribe_lang_japanese">Japanese</string>
     <!--
         Haven't found some strings? There's more at
         https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res
