@@ -96,6 +96,11 @@ class MainActivity : SimpleActivity() {
         getPagerAdapter()?.onResume()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        getPagerAdapter()?.onPermissionResult(requestCode, grantResults)
+    }
+
     override fun onPause() {
         super.onPause()
         config.lastUsedViewPagerPage = binding.viewPager.currentItem
