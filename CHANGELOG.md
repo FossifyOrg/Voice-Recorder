@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added "Toggle recording" app shortcut for starting/stopping recording from external tools ([#98])
 
 ## [1.7.1] - 2026-02-14
 ### Changed
@@ -163,6 +165,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#229]: https://github.com/FossifyOrg/Voice-Recorder/issues/229
 [#247]: https://github.com/FossifyOrg/Voice-Recorder/issues/247
 [#256]: https://github.com/FossifyOrg/Voice-Recorder/issues/256
+[#98]: https://github.com/FossifyOrg/Voice-Recorder/issues/98
 [#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
 
 [Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.1...HEAD
