@@ -20,7 +20,7 @@
             android:id="@+id/rename_recording_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapWords"
+            android:inputType="text"
             android:singleLine="true"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/bigger_text_size" />
