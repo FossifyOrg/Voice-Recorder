@@ -8,6 +8,7 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.fragments.MyViewPagerFragment
 import org.fossify.voicerecorder.fragments.PlayerFragment
+import org.fossify.voicerecorder.fragments.RecorderFragment
 import org.fossify.voicerecorder.fragments.TrashFragment
 
 class ViewPagerAdapter(
@@ -57,6 +58,10 @@ class ViewPagerAdapter(
         if (showRecycleBin) {
             (fragments[2] as? TrashFragment)?.finishActMode()
         }
+    }
+
+    fun onPermissionResult(requestCode: Int, grantResults: IntArray) {
+        (fragments[0] as? RecorderFragment)?.onPermissionResult(requestCode, grantResults)
     }
 
     fun searchTextChanged(text: String) {

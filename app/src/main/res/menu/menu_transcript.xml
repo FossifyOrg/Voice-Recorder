@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/transcript_menu_search"
+        android:icon="@drawable/ic_search_vector"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/transcript_menu_share_text"
+        android:icon="@drawable/ic_share_vector"
+        android:title="@string/share_transcript"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/transcript_menu_re_transcribe"
+        android:title="@string/re_transcribe"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/transcript_menu_copy"
+        android:title="@string/copy_transcript"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/transcript_menu_share_json"
+        android:title="@string/share_transcript_json"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/transcript_menu_delete"
+        android:title="@string/delete_transcript"
+        app:showAsAction="never" />
+</menu>
