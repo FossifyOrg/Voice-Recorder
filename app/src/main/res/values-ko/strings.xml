@@ -12,7 +12,7 @@
     <string name="player">재생</string>
     <string name="delete_recordings_confirmation">%s를 삭제하시겠습니까?</string>
     <plurals name="delete_recordings">
-        <item quantity="other">%d 개</item>
+        <item quantity="other">%d개의 녹음 파일</item>
     </plurals>
     <string name="save_recordings_in">녹음 저장 위치</string>
     <string name="audio_source">오디오 소스</string>
