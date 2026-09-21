@@ -238,6 +238,8 @@ class MainActivity : SimpleActivity() {
 
         binding.viewPager.adapter = ViewPagerAdapter(this, config.useRecycleBin)
         binding.viewPager.offscreenPageLimit = 2
+        // Avoid accidental horizontal swipes while interacting with the player UI (#82)
+        binding.viewPager.isUserInputEnabled = false
         binding.viewPager.onPageChangeListener {
             binding.mainTabsHolder.getTabAt(it)?.select()
             (binding.viewPager.adapter as ViewPagerAdapter).finishActMode()
