@@ -1,6 +1,7 @@
 package org.fossify.voicerecorder.fragments
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
 import org.fossify.commons.extensions.areSystemAnimationsEnabled
 import org.fossify.commons.extensions.beVisibleIf
@@ -13,20 +14,19 @@ import org.fossify.voicerecorder.databinding.FragmentTrashBinding
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.interfaces.RefreshRecordingsListener
 import org.fossify.voicerecorder.models.Events
-import org.fossify.voicerecorder.models.Recording
+import org.fossify.voicerecorder.store.Recording
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class TrashFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet), RefreshRecordingsListener {
 
     private var itemsIgnoringSearch = ArrayList<Recording>()
     private var lastSearchQuery = ""
     private var bus: EventBus? = null
-    private var prevSavePath = ""
+    private var prevSaveFolder: Uri? = null
     private lateinit var binding: FragmentTrashBinding
 
     override fun onFinishInflate() {
@@ -36,7 +36,7 @@ class TrashFragment(
 
     override fun onResume() {
         setupColors()
-        if (prevSavePath.isNotEmpty() && context!!.config.saveRecordingsFolder != prevSavePath) {
+        if (prevSaveFolder != null && context!!.config.saveRecordingsFolder != prevSaveFolder) {
             loadRecordings(trashed = true)
         } else {
             getRecordingsAdapter()?.updateTextColor(context.getProperTextColor())
@@ -106,15 +106,15 @@ class TrashFragment(
 
     fun onSearchTextChanged(text: String) {
         lastSearchQuery = text
-        val filtered = itemsIgnoringSearch.filter { it.title.contains(text, true) }
-            .toMutableList() as ArrayList<Recording>
+        val filtered =
+            itemsIgnoringSearch.filter { it.title.contains(text, true) }.toMutableList() as ArrayList<Recording>
         setupAdapter(filtered)
     }
 
     private fun getRecordingsAdapter() = binding.trashList.adapter as? TrashAdapter
 
     private fun storePrevPath() {
-        prevSavePath = context!!.config.saveRecordingsFolder
+        prevSaveFolder = context!!.config.saveRecordingsFolder
     }
 
     private fun setupColors() {

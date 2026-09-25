@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/transcript_sel_copy"
+        android:icon="@drawable/ic_copy_vector"
+        android:title="@string/copy_transcript"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/transcript_sel_share"
+        android:icon="@drawable/ic_share_vector"
+        android:title="@string/share_transcript"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/transcript_sel_select_all"
+        android:title="@string/select_all"
+        app:showAsAction="never" />
+</menu>
