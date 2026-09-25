@@ -2,6 +2,7 @@ package org.fossify.voicerecorder.recorder
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.media.AudioDeviceInfo
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.os.ParcelFileDescriptor
@@ -18,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
 
-class Mp3Recorder(val context: Context) : Recorder {
+class Mp3Recorder(val context: Context, audioSourceOverride: Int? = null) : Recorder {
     private var mp3buffer: ByteArray = ByteArray(0)
     private var isPaused = AtomicBoolean(false)
     private var isStopped = AtomicBoolean(false)
@@ -35,7 +36,7 @@ class Mp3Recorder(val context: Context) : Recorder {
 
     @SuppressLint("MissingPermission")
     private val audioRecord = AudioRecord(
-        context.config.microphoneMode,
+        audioSourceOverride ?: context.config.microphoneMode,
         context.config.samplingRate,
         AudioFormat.CHANNEL_IN_MONO,
         AudioFormat.ENCODING_PCM_16BIT,
@@ -44,6 +45,10 @@ class Mp3Recorder(val context: Context) : Recorder {
 
     override fun setOutputFile(path: String) {
         outputPath = path
+    }
+
+    override fun setPreferredDevice(device: AudioDeviceInfo?) {
+        audioRecord.setPreferredDevice(device)
     }
 
     override fun prepare() {}
