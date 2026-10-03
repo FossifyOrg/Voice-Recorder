@@ -12,6 +12,9 @@ const val STOP_AMPLITUDE_UPDATE = PATH + "STOP_AMPLITUDE_UPDATE"
 const val TOGGLE_PAUSE = PATH + "TOGGLE_PAUSE"
 const val CANCEL_RECORDING = PATH + "CANCEL_RECORDING"
 
+const val EXTRA_PREFERRED_AUDIO_DEVICE_ID = "preferred_audio_device_id"
+const val EXTRA_BT_OUTPUT_DEVICE_ID = "bt_output_device_id"
+
 const val EXTENSION_M4A = 0
 const val EXTENSION_MP3 = 1
 const val EXTENSION_OGG = 2
