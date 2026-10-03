@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Fixed automatic word capitalization when renaming recordings ([#397])
 
 ## [1.7.1] - 2026-02-14
 ### Changed
@@ -164,6 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#247]: https://github.com/FossifyOrg/Voice-Recorder/issues/247
 [#256]: https://github.com/FossifyOrg/Voice-Recorder/issues/256
 [#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
+[#397]: https://github.com/FossifyOrg/Voice-Recorder/issues/397
 
 [Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.1...HEAD
 [1.7.1]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.0...1.7.1
