@@ -64,6 +64,17 @@
             android:theme="@style/AppTheme.NoDisplay" />
 
         <activity
+            android:name=".activities.ToggleRecordActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoDisplay">
+            <intent-filter>
+                <action android:name="com.fossify.voicerecorder.action.TOGGLE_RECORD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="false"
             android:theme="@style/SplashTheme" />

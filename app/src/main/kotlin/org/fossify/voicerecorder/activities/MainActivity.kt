@@ -7,6 +7,9 @@ import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import me.grantland.widget.AutofitHelper
 import org.fossify.commons.extensions.appLaunched
 import org.fossify.commons.extensions.checkAppSideloading
@@ -33,6 +36,7 @@ import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.deleteExpiredTrashedRecordings
 import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
+import org.fossify.voicerecorder.helpers.TOGGLE_RECORD
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.services.RecorderService
 import org.greenrobot.eventbus.EventBus
@@ -73,6 +77,8 @@ class MainActivity : SimpleActivity() {
                 finish()
             }
         }
+
+        setupShortcuts()
 
         bus = EventBus.getDefault()
         bus!!.register(this)
@@ -312,6 +318,16 @@ class MainActivity : SimpleActivity() {
             faqItems = faqItems,
             showFAQBeforeMail = true
         )
+    }
+
+    private fun setupShortcuts() {
+        val shortcut = ShortcutInfoCompat.Builder(this, "toggle_recording")
+            .setShortLabel(getString(R.string.toggle_recording))
+            .setLongLabel(getString(R.string.toggle_recording))
+            .setIcon(IconCompat.createWithResource(this, R.drawable.ic_shortcut_toggle_recording))
+            .setIntent(Intent(TOGGLE_RECORD).setClass(this, ToggleRecordActivity::class.java))
+            .build()
+        ShortcutManagerCompat.setDynamicShortcuts(this, listOf(shortcut))
     }
 
     private fun isThirdPartyIntent() = intent?.action == MediaStore.Audio.Media.RECORD_SOUND_ACTION
