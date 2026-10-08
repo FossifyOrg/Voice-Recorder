@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changes
-- Compatibility with newer Android devices (16KB pages)
+- Compatibility with newer Android devices using 16KB pages
 
 ### Fixed
 - Fixed automatic word capitalization when renaming recordings ([#397])
