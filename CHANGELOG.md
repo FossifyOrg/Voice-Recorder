@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Fixed automatic word capitalization when renaming recordings ([#397])
+- Fixed accidental page changes while seeking through recordings ([#82])
 
 ## [1.7.1] - 2026-02-14
 ### Changed
@@ -155,6 +156,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#57]: https://github.com/FossifyOrg/Voice-Recorder/issues/57
 [#67]: https://github.com/FossifyOrg/Voice-Recorder/issues/67
 [#81]: https://github.com/FossifyOrg/Voice-Recorder/issues/81
+[#82]: https://github.com/FossifyOrg/Voice-Recorder/issues/82
 [#96]: https://github.com/FossifyOrg/Voice-Recorder/issues/96
 [#106]: https://github.com/FossifyOrg/Voice-Recorder/issues/106
 [#141]: https://github.com/FossifyOrg/Voice-Recorder/issues/141

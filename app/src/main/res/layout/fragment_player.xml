@@ -90,7 +90,7 @@
             android:paddingEnd="@dimen/medium_margin"
             android:text="00:00" />
 
-        <org.fossify.commons.views.MySeekBar
+        <org.fossify.voicerecorder.views.PlayerSeekBar
             android:id="@+id/player_progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
