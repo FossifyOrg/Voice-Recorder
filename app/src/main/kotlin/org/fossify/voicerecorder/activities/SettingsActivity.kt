@@ -6,7 +6,6 @@ import android.os.Bundle
 import org.fossify.commons.dialogs.ChangeDateTimeFormatDialog
 import org.fossify.commons.dialogs.ConfirmationDialog
 import org.fossify.commons.dialogs.RadioGroupDialog
-import org.fossify.commons.extensions.addLockedLabelIfNeeded
 import org.fossify.commons.extensions.beGone
 import org.fossify.commons.extensions.beVisible
 import org.fossify.commons.extensions.beVisibleIf
@@ -138,7 +137,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupSaveRecordingsFolder() {
         binding.settingsSaveRecordingsLabel.text =
-            addLockedLabelIfNeeded(R.string.save_recordings_in)
+            getString(R.string.save_recordings_in)
         binding.settingsSaveRecordings.text = humanizePath(config.saveRecordingsFolder)
         binding.settingsSaveRecordingsHolder.setOnClickListener {
             val currentFolder = config.saveRecordingsFolder

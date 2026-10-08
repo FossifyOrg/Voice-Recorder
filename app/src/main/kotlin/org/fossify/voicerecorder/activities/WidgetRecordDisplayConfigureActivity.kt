@@ -8,14 +8,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import org.fossify.commons.dialogs.ColorPickerDialog
-import org.fossify.commons.dialogs.FeatureLockedDialog
 import org.fossify.commons.extensions.adjustAlpha
 import org.fossify.commons.extensions.applyColorFilter
 import org.fossify.commons.extensions.getContrastColor
 import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.isDynamicTheme
-import org.fossify.commons.extensions.isOrWasThankYouInstalled
 import org.fossify.commons.extensions.setFillWithStroke
 import org.fossify.commons.helpers.IS_CUSTOMIZING_COLORS
 import org.fossify.voicerecorder.R
@@ -28,7 +26,6 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     private var mWidgetId = 0
     private var mWidgetColor = 0
     private var mWidgetColorWithoutTransparency = 0
-    private var mFeatureLockedDialog: FeatureLockedDialog? = null
     private lateinit var binding: WidgetRecordDisplayConfigBinding
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,14 +51,6 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
         val primaryColor = getProperPrimaryColor()
         binding.configWidgetSeekbar.setColors(getProperTextColor(), primaryColor, primaryColor)
 
-        if (!isCustomizingColors && !isOrWasThankYouInstalled()) {
-            mFeatureLockedDialog = FeatureLockedDialog(this) {
-                if (!isOrWasThankYouInstalled()) {
-                    finish()
-                }
-            }
-        }
-
         binding.configSave.backgroundTintList = ColorStateList.valueOf(getProperPrimaryColor())
         binding.configSave.setTextColor(getProperPrimaryColor().getContrastColor())
     }
@@ -69,10 +58,6 @@ class WidgetRecordDisplayConfigureActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
         window.decorView.setBackgroundColor(0)
-
-        if (mFeatureLockedDialog != null && isOrWasThankYouInstalled()) {
-            mFeatureLockedDialog?.dismissDialog()
-        }
     }
 
     private fun initVariables() {
