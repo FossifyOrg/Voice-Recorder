@@ -10,6 +10,7 @@
     <string name="no_recordings_found">No recordings created by this app\nhave been found</string>
     <string name="no_recordings_in_folder_found">No recordings have been found\nin the selected folder</string>
     <string name="paused">Paused</string>
+    <string name="toggle_recording">Toggle recording</string>
     <string name="recorder">Recorder</string>
     <string name="player">Player</string>
     <!-- Confirmation dialog -->
