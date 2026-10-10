@@ -1,4 +1,10 @@
+Changed:
+
+• Compatibility with newer Android devices using 16KB pages
+• Updated translations
+
 Fixed:
 
-• Fixed startup crash on Android 11 and below
+• Fixed automatic word capitalization when renaming recordings 
+• Fixed accidental page changes while seeking through recordings 
 
