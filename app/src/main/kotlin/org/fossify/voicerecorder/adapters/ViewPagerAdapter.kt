@@ -59,6 +59,10 @@ class ViewPagerAdapter(
         }
     }
 
+    fun onEnterPressed() {
+        (fragments[0] as? RecorderFragment)?.onEnterPressed()
+    }
+
     fun searchTextChanged(text: String) {
         (fragments[1] as? PlayerFragment)?.onSearchTextChanged(text)
         if (showRecycleBin) {

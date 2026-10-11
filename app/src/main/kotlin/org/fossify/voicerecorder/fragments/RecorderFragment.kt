@@ -129,6 +129,10 @@ class RecorderFragment(
         binding.recordingDuration.text = duration.getFormattedDuration()
     }
 
+    fun onEnterPressed() {
+        binding.toggleRecordingButton.performClick()
+    }
+
     private fun getToggleButtonIcon(): Drawable {
         val drawable = if (status == RECORDING_RUNNING || status == RECORDING_PAUSED) {
             R.drawable.ic_pause_recording_vector

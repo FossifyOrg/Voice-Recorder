@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.KeyEvent
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
@@ -99,6 +101,32 @@ class MainActivity : SimpleActivity() {
     override fun onPause() {
         super.onPause()
         config.lastUsedViewPagerPage = binding.viewPager.currentItem
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.keyCode == KeyEvent.KEYCODE_ENTER && binding.viewPager.currentItem == 0) {
+            if (hasTextEditorFocus()) {
+                return super.dispatchKeyEvent(event)
+            }
+
+            if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                (binding.viewPager.adapter as? ViewPagerAdapter)?.onEnterPressed()
+            }
+            return true
+        }
+
+        return super.dispatchKeyEvent(event)
+    }
+
+    private fun hasTextEditorFocus(): Boolean {
+        var focusedView = currentFocus
+        while (focusedView != null) {
+            if (focusedView.onCheckIsTextEditor()) {
+                return true
+            }
+            focusedView = focusedView.parent as? View
+        }
+        return false
     }
 
     override fun onDestroy() {
