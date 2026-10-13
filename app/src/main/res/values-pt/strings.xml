@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_launcher_name">Gravador de sons</string>
-    <string name="recording_saved_successfully">Gravação guardada com êxito</string>
+    <string name="recording_saved_successfully">Gravação guardada com sucesso</string>
     <string name="recording">Gravação</string>
     <string name="no_recordings_found">Não foram encontradas gravações
 \ncriadas por esta aplicação</string>
@@ -10,7 +10,7 @@
     <string name="paused">Em pausa</string>
     <string name="recorder">Gravador</string>
     <string name="player">Reprodutor</string>
-    <string name="delete_recordings_confirmation">Apagar %s\?</string>
+    <string name="delete_recordings_confirmation">Eliminar %s?</string>
     <plurals name="delete_recordings">
         <item quantity="one">%d gravação</item>
         <item quantity="many">%d gravações</item>
