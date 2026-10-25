@@ -141,7 +141,7 @@ class RecorderService : Service() {
                     scoManager.start(outputDevice ?: inputDevice) {
                         try {
                             createAndStartRecorder(
-                                audioSourceOverride = MediaRecorder.AudioSource.VOICE_COMMUNICATION,
+                                audioSourceOverride = getBluetoothAudioSource(),
                                 preferredDevice = inputDevice
                             )
                         } catch (e: Exception) {
@@ -396,6 +396,13 @@ class RecorderService : Service() {
 
     private fun broadcastStatus() {
         EventBus.getDefault().post(Events.RecordingStatus(status))
+    }
+
+    // VOICE_COMMUNICATION routes through the call-capture (VoIP) path, which records noticeably
+    // quieter than a regular source, so use the user's microphone mode and fall back to MIC
+    private fun getBluetoothAudioSource(): Int {
+        val mode = config.microphoneMode
+        return if (mode == MediaRecorder.AudioSource.DEFAULT) MediaRecorder.AudioSource.MIC else mode
     }
 
     private fun recordMp3(): Boolean {

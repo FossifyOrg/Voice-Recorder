@@ -26,14 +26,15 @@ class BluetoothScoManager(private val audioManager: AudioManager) {
             return
         }
 
-        previousAudioMode = audioManager.mode
-        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // No MODE_IN_COMMUNICATION here: setCommunicationDevice routes the SCO mic on its own,
+            // and call mode would push recording onto the quieter VoIP capture path
             if (device != null) {
                 audioManager.setCommunicationDevice(device)
             }
         } else {
+            previousAudioMode = audioManager.mode
+            audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
             @Suppress("DEPRECATION")
             audioManager.startBluetoothSco()
             @Suppress("DEPRECATION")
@@ -52,8 +53,8 @@ class BluetoothScoManager(private val audioManager: AudioManager) {
             audioManager.isBluetoothScoOn = false
             @Suppress("DEPRECATION")
             audioManager.stopBluetoothSco()
+            audioManager.mode = previousAudioMode
         }
-        audioManager.mode = previousAudioMode
         isActive = false
     }
 }
