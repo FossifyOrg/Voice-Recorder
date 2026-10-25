@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.androidLibrary)
 }
@@ -17,8 +20,10 @@ android {
         targetCompatibility = currentJavaVersionFromLibs
     }
 
-    kotlin {
-        jvmToolchain(project.libs.versions.app.build.kotlinJVMTarget.get().toInt())
+    tasks.withType<KotlinCompile> {
+        compilerOptions.jvmTarget.set(
+            JvmTarget.fromTarget(project.libs.versions.app.build.kotlinJVMTarget.get())
+        )
     }
 }
 
