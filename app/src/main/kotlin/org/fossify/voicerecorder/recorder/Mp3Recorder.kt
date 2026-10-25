@@ -16,14 +16,12 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.concurrent.atomic.AtomicInteger
-import kotlin.math.abs
 
 class Mp3Recorder(val context: Context, audioSourceOverride: Int? = null) : Recorder {
     private var mp3buffer: ByteArray = ByteArray(0)
     private var isPaused = AtomicBoolean(false)
     private var isStopped = AtomicBoolean(false)
-    private var amplitude = AtomicInteger(0)
+    private val gainProcessor = GainProcessor(context.config.samplingRate)
     private var outputPath: String? = null
     private var androidLame: AndroidLame? = null
     private var fileDescriptor: ParcelFileDescriptor? = null
@@ -49,6 +47,10 @@ class Mp3Recorder(val context: Context, audioSourceOverride: Int? = null) : Reco
 
     override fun setPreferredDevice(device: AudioDeviceInfo?) {
         audioRecord.setPreferredDevice(device)
+    }
+
+    override fun setGainDb(gainDb: Float) {
+        gainProcessor.setGainDb(gainDb)
     }
 
     override fun prepare() {}
@@ -87,10 +89,10 @@ class Mp3Recorder(val context: Context, audioSourceOverride: Int? = null) : Reco
                 if (!isPaused.get()) {
                     val count = audioRecord.read(rawData, 0, minBufferSize)
                     if (count > 0) {
+                        gainProcessor.process(rawData, count)
                         val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
                         if (encoded > 0) {
                             try {
-                                updateAmplitude(rawData)
                                 outputStream!!.write(mp3buffer, 0, encoded)
                             } catch (e: IOException) {
                                 e.printStackTrace()
@@ -123,18 +125,10 @@ class Mp3Recorder(val context: Context, audioSourceOverride: Int? = null) : Reco
     }
 
     override fun getMaxAmplitude(): Int {
-        return amplitude.get()
+        return gainProcessor.getAndResetPeak()
     }
 
     override fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor) {
         this.fileDescriptor = ParcelFileDescriptor.dup(parcelFileDescriptor.fileDescriptor)
-    }
-
-    private fun updateAmplitude(data: ShortArray) {
-        var sum = 0L
-        for (i in 0 until minBufferSize step 2) {
-            sum += abs(data[i].toInt())
-        }
-        amplitude.set((sum / (minBufferSize / 8)).toInt())
     }
 }

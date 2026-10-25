@@ -100,4 +100,17 @@ class Config(context: Context) : BaseConfig(context) {
     var filenamePattern: String
         get() = prefs.getString(FILENAME_PATTERN, DEFAULT_FILENAME_PATTERN)!!
         set(filenamePattern) = prefs.edit { putString(FILENAME_PATTERN, filenamePattern) }
+
+    // in dB, 0..MAX_RECORDING_GAIN_DB
+    var recordingGain: Int
+        get() = prefs.getInt(RECORDING_GAIN, 0)
+        set(recordingGain) = prefs.edit { putInt(RECORDING_GAIN, recordingGain) }
+
+    // VOICE_COMMUNICATION routes through the call-capture (VoIP) path, which records noticeably
+    // quieter than a regular source, so use the user's microphone mode and fall back to MIC
+    fun getBluetoothMicrophoneMode() = if (microphoneMode == MediaRecorder.AudioSource.DEFAULT) {
+        MediaRecorder.AudioSource.MIC
+    } else {
+        microphoneMode
+    }
 }

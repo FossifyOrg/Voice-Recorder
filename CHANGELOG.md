@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Added Bluetooth audio recording support
+- Added adjustable input gain with a live level meter
 
 ### Changed
 - Improved Android 12+ compatibility

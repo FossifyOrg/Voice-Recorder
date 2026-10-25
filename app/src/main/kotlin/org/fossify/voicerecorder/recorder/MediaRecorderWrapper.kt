@@ -37,6 +37,9 @@ class MediaRecorderWrapper(val context: Context, audioSourceOverride: Int? = nul
         }
     }
 
+    // MediaRecorder gives no access to the samples; only used as a fallback when PcmEncoderRecorder fails
+    override fun setGainDb(gainDb: Float) {}
+
     override fun prepare() {
         recorder.prepare()
     }

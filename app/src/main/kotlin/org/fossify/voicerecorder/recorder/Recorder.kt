@@ -7,6 +7,7 @@ interface Recorder {
     fun setOutputFile(path: String)
     fun setOutputFile(parcelFileDescriptor: ParcelFileDescriptor)
     fun setPreferredDevice(device: AudioDeviceInfo?)
+    fun setGainDb(gainDb: Float)
     fun prepare()
     fun start()
     fun stop()

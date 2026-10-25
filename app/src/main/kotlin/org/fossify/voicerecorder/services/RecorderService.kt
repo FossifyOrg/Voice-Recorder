@@ -49,12 +49,15 @@ import org.fossify.voicerecorder.helpers.RECORDING_RUNNING
 import org.fossify.voicerecorder.helpers.RECORDING_STOPPED
 import org.fossify.voicerecorder.helpers.STOP_AMPLITUDE_UPDATE
 import org.fossify.voicerecorder.helpers.TOGGLE_PAUSE
+import org.fossify.voicerecorder.helpers.UPDATE_GAIN
 import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
+import org.fossify.voicerecorder.recorder.PcmEncoderRecorder
 import org.fossify.voicerecorder.recorder.Recorder
 import org.greenrobot.eventbus.EventBus
 import java.io.File
+import java.io.IOException
 import java.util.Timer
 import java.util.TimerTask
 
@@ -86,6 +89,7 @@ class RecorderService : Service() {
             STOP_AMPLITUDE_UPDATE -> amplitudeTimer.cancel()
             TOGGLE_PAUSE -> togglePause()
             CANCEL_RECORDING -> cancelRecording()
+            UPDATE_GAIN -> recorder?.setGainDb(config.recordingGain.toFloat())
             else -> startRecording(intent)
         }
 
@@ -141,7 +145,7 @@ class RecorderService : Service() {
                     scoManager.start(outputDevice ?: inputDevice) {
                         try {
                             createAndStartRecorder(
-                                audioSourceOverride = getBluetoothAudioSource(),
+                                audioSourceOverride = config.getBluetoothMicrophoneMode(),
                                 preferredDevice = inputDevice
                             )
                         } catch (e: Exception) {
@@ -164,9 +168,10 @@ class RecorderService : Service() {
         recorder = if (recordMp3()) {
             Mp3Recorder(this, audioSourceOverride)
         } else {
-            MediaRecorderWrapper(this, audioSourceOverride)
+            createEncoderRecorder(audioSourceOverride)
         }
         recorder?.setPreferredDevice(preferredDevice)
+        recorder?.setGainDb(config.recordingGain.toFloat())
 
         if (isRPlus()) {
             val fileUri = createDocumentUriUsingFirstParentTreeUri(recordingPath)
@@ -398,11 +403,20 @@ class RecorderService : Service() {
         EventBus.getDefault().post(Events.RecordingStatus(status))
     }
 
-    // VOICE_COMMUNICATION routes through the call-capture (VoIP) path, which records noticeably
-    // quieter than a regular source, so use the user's microphone mode and fall back to MIC
-    private fun getBluetoothAudioSource(): Int {
-        val mode = config.microphoneMode
-        return if (mode == MediaRecorder.AudioSource.DEFAULT) MediaRecorder.AudioSource.MIC else mode
+    // MediaRecorder can't apply gain, so it is only used if the device has no usable encoder
+    private fun createEncoderRecorder(audioSourceOverride: Int?): Recorder {
+        return try {
+            PcmEncoderRecorder(this, audioSourceOverride)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            MediaRecorderWrapper(this, audioSourceOverride)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+            MediaRecorderWrapper(this, audioSourceOverride)
+        } catch (e: IllegalStateException) {
+            e.printStackTrace()
+            MediaRecorderWrapper(this, audioSourceOverride)
+        }
     }
 
     private fun recordMp3(): Boolean {

@@ -44,6 +44,58 @@
 
     </LinearLayout>
 
+    <org.fossify.voicerecorder.views.LevelMeterView
+        android:id="@+id/level_meter"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="@dimen/big_margin"
+        android:layout_marginTop="@dimen/big_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:contentDescription="@string/input_level"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/microphone_selector_holder" />
+
+    <LinearLayout
+        android:id="@+id/gain_holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/big_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/big_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/level_meter">
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/gain_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@+id/gain_seekbar"
+            android:text="@string/gain"
+            android:textSize="@dimen/normal_text_size" />
+
+        <org.fossify.commons.views.MySeekBar
+            android:id="@+id/gain_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingEnd="@dimen/activity_margin" />
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/gain_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="3"
+            android:gravity="end"
+            android:textSize="@dimen/normal_text_size"
+            tools:text="+6 dB" />
+
+    </LinearLayout>
+
     <com.visualizer.amplitude.AudioRecordView
         android:id="@+id/recorder_visualizer"
         android:layout_width="match_parent"
@@ -58,7 +110,7 @@
         app:chunkSpace="1dp"
         app:chunkWidth="3dp"
         app:layout_constraintBottom_toTopOf="@+id/recording_duration"
-        app:layout_constraintTop_toBottomOf="@+id/microphone_selector_holder" />
+        app:layout_constraintTop_toBottomOf="@+id/gain_holder" />
 
     <org.fossify.commons.views.MyTextView
         android:id="@+id/recording_duration"
