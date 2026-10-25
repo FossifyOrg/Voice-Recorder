@@ -6,6 +6,8 @@
     <string name="move_recordings_to_new_folder_desc">You have existing recordings. Do you want to move them to your new folder?</string>
     <string name="recording_saved_successfully">Recording saved successfully</string>
     <string name="recording_too_short">Recording was too short to record!</string>
+    <!-- %s is the name of a folder on the device, e.g. "Recordings" -->
+    <string name="recordings_folder_unavailable_fallback">The storage with your recordings folder is not available. This recording is saved to \"%s\" on this device instead.</string>
     <string name="recording_stopped_storage_removed">Recording stopped and saved because the storage it was being saved to is being removed</string>
     <string name="recording">Recording</string>
     <string name="no_recordings_found">No recordings created by this app\nhave been found</string>

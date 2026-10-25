@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Environment
+import android.os.storage.StorageManager
 import androidx.core.graphics.createBitmap
 import org.fossify.voicerecorder.helpers.Config
 import org.fossify.voicerecorder.helpers.IS_RECORDING
@@ -22,6 +24,12 @@ val Context.config: Config get() = Config.newInstance(applicationContext)
 val Context.recordingStore: RecordingStore get() = recordingStoreFor(config.saveRecordingsFolder)
 
 fun Context.recordingStoreFor(uri: Uri): RecordingStore = RecordingStore(this, uri)
+
+fun Context.isStorageVolumeMounted(volumeId: String): Boolean {
+    return getSystemService(StorageManager::class.java).storageVolumes.any {
+        it.uuid.equals(volumeId, ignoreCase = true) && it.state == Environment.MEDIA_MOUNTED
+    }
+}
 
 fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
     val size = (60 * resources.displayMetrics.density).toInt()

@@ -17,6 +17,7 @@ import android.os.IBinder
 import android.os.storage.StorageManager
 import android.os.storage.StorageVolume
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -30,7 +31,9 @@ import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.getFormattedFilename
+import org.fossify.voicerecorder.extensions.isStorageVolumeMounted
 import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.extensions.recordingStoreFor
 import org.fossify.voicerecorder.extensions.removableVolumeId
 import org.fossify.voicerecorder.extensions.updateWidgets
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
@@ -45,6 +48,7 @@ import org.fossify.voicerecorder.models.Events
 import org.fossify.voicerecorder.recorder.MediaRecorderWrapper
 import org.fossify.voicerecorder.recorder.Mp3Recorder
 import org.fossify.voicerecorder.recorder.Recorder
+import org.fossify.voicerecorder.store.DEFAULT_MEDIA_URI
 import org.fossify.voicerecorder.store.RecordingFormat
 import org.fossify.voicerecorder.store.RecordingStore
 import org.greenrobot.eventbus.EventBus
@@ -124,15 +128,14 @@ class RecorderService : Service() {
 
         try {
             val recordingName = "${getFormattedFilename()}.${recordingFormat.getExtension(this)}"
-            val writer = try {
-                recordingStore.createWriter(recordingName)
+            val (store, writer) = try {
+                createWriter(recordingName)
             } catch (e: Exception) {
                 cancelRecording()
                 EventBus.getDefault().post(Events.RecordingFailed(e))
                 return
-            }.also {
-                this.writer = it
             }
+            this.writer = writer
 
             recorder = when (recordingFormat) {
                 RecordingFormat.M4A, RecordingFormat.OGG -> MediaRecorderWrapper(this)
@@ -142,7 +145,7 @@ class RecorderService : Service() {
             recorder?.setOutputFile(writer.fileDescriptor)
             recorder?.prepare()
             recorder?.start()
-            recordingVolumeId = recordingStore.uri.removableVolumeId
+            recordingVolumeId = store.uri.removableVolumeId
             registerStorageListener()
             duration = 0
             status = RECORDING_RUNNING
@@ -156,6 +159,29 @@ class RecorderService : Service() {
         } catch (e: Exception) {
             showErrorToast(e)
             stopRecording()
+        }
+    }
+
+    // Creates the writer in the configured recordings folder. If that folder is on a removable
+    // volume that isn't mounted (e.g. the USB drive was unplugged), falls back to the default
+    // media folder on the device instead of failing.
+    private fun createWriter(name: String): Pair<RecordingStore, RecordingStore.Writer> {
+        val store = recordingStore
+        return try {
+            store to store.createWriter(name)
+        } catch (e: Exception) {
+            val volumeId = store.uri.removableVolumeId
+            if (volumeId == null || isStorageVolumeMounted(volumeId)) {
+                throw e
+            }
+
+            val fallbackStore = recordingStoreFor(DEFAULT_MEDIA_URI)
+            val writer = fallbackStore.createWriter(name)
+            toast(
+                getString(R.string.recordings_folder_unavailable_fallback, fallbackStore.shortName),
+                Toast.LENGTH_LONG
+            )
+            fallbackStore to writer
         }
     }
 
