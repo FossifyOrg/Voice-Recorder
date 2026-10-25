@@ -20,11 +20,11 @@ import org.fossify.commons.extensions.getProperPrimaryColor
 import org.fossify.commons.extensions.getProperTextColor
 import org.fossify.commons.extensions.openNotificationSettings
 import org.fossify.commons.extensions.setDebouncedClickListener
-import org.fossify.commons.extensions.toast
 import org.fossify.voicerecorder.R
+import org.fossify.voicerecorder.activities.ExternalStoragePermission
+import org.fossify.voicerecorder.activities.SimpleActivity
 import org.fossify.voicerecorder.databinding.FragmentRecorderBinding
 import org.fossify.voicerecorder.extensions.config
-import org.fossify.voicerecorder.extensions.ensureStoragePermission
 import org.fossify.voicerecorder.extensions.setKeepScreenAwake
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
@@ -41,8 +41,7 @@ import java.util.Timer
 import java.util.TimerTask
 
 class RecorderFragment(
-    context: Context,
-    attributeSet: AttributeSet
+    context: Context, attributeSet: AttributeSet
 ) : MyViewPagerFragment(context, attributeSet) {
 
     private var status = RECORDING_STOPPED
@@ -78,24 +77,22 @@ class RecorderFragment(
 
         updateRecordingDuration(0)
         binding.toggleRecordingButton.setDebouncedClickListener {
-            val activity = context as? BaseSimpleActivity
-            activity?.ensureStoragePermission {
-                if (it) {
-                    activity.handleNotificationPermission { granted ->
-                        if (granted) {
-                            cycleRecordingState()
-                        } else {
-                            PermissionRequiredDialog(
-                                activity = context as BaseSimpleActivity,
-                                textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
-                                positiveActionCallback = {
-                                    (context as BaseSimpleActivity).openNotificationSettings()
-                                }
-                            )
+            (context as? SimpleActivity)?.apply {
+                handleExternalStoragePermission(ExternalStoragePermission.WRITE) { granted ->
+                    if (granted == true) {
+                        handleNotificationPermission { granted ->
+                            if (granted) {
+                                cycleRecordingState()
+                            } else {
+                                PermissionRequiredDialog(
+                                    activity = this,
+                                    textId = org.fossify.commons.R.string.allow_notifications_voice_recorder,
+                                    positiveActionCallback = {
+                                        (context as BaseSimpleActivity).openNotificationSettings()
+                                    })
+                            }
                         }
                     }
-                } else {
-                    activity.toast(org.fossify.commons.R.string.no_storage_permissions)
                 }
             }
         }
@@ -106,7 +103,7 @@ class RecorderFragment(
             action = GET_RECORDER_INFO
             try {
                 context.startService(this)
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
             }
         }
     }
@@ -137,15 +134,13 @@ class RecorderFragment(
         }
 
         return resources.getColoredDrawableWithColor(
-            drawableId = drawable,
-            color = context.getProperPrimaryColor().getContrastColor()
+            drawableId = drawable, color = context.getProperPrimaryColor().getContrastColor()
         )
     }
 
     private fun cycleRecordingState() {
         when (status) {
-            RECORDING_PAUSED,
-            RECORDING_RUNNING -> {
+            RECORDING_PAUSED, RECORDING_RUNNING -> {
                 Intent(context, RecorderService::class.java).apply {
                     action = TOGGLE_PAUSE
                     context.startService(this)
@@ -200,8 +195,7 @@ class RecorderFragment(
             if (status == RECORDING_PAUSED) {
                 // update just the alpha so that it will always be clickable
                 Handler(Looper.getMainLooper()).post {
-                    binding.toggleRecordingButton.alpha =
-                        if (binding.toggleRecordingButton.alpha == 0f) 1f else 0f
+                    binding.toggleRecordingButton.alpha = if (binding.toggleRecordingButton.alpha == 0f) 1f else 0f
                 }
             }
         }
