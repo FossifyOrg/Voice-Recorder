@@ -6,20 +6,32 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.os.IBinder
+import android.os.storage.StorageManager
+import android.os.storage.StorageVolume
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import org.fossify.commons.extensions.getLaunchIntent
 import org.fossify.commons.extensions.showErrorToast
 import org.fossify.commons.extensions.toast
 import org.fossify.commons.helpers.ensureBackgroundThread
+import org.fossify.commons.helpers.isRPlus
 import org.fossify.voicerecorder.R
 import org.fossify.voicerecorder.activities.SplashActivity
 import org.fossify.voicerecorder.extensions.config
 import org.fossify.voicerecorder.extensions.getFormattedFilename
 import org.fossify.voicerecorder.extensions.recordingStore
+import org.fossify.voicerecorder.extensions.removableVolumeId
 import org.fossify.voicerecorder.extensions.updateWidgets
 import org.fossify.voicerecorder.helpers.CANCEL_RECORDING
 import org.fossify.voicerecorder.helpers.GET_RECORDER_INFO
@@ -54,6 +66,27 @@ class RecorderService : Service() {
     private var amplitudeTimer = Timer()
     private var recorder: Recorder? = null
     private var writer: RecordingStore.Writer? = null
+
+    // UUID of the removable volume being recorded to, null when recording to internal storage
+    private var recordingVolumeId: String? = null
+
+    // Android kills processes that still have files open on a volume within a second of starting
+    // to eject it, so the recording has to be finalized as soon as the eject is announced. On
+    // Android 11+ this uses a StorageVolumeCallback, since the ACTION_MEDIA_EJECT broadcast
+    // usually arrives after the process has already been killed.
+    private var storageVolumeCallback: Any? = null
+    private var isStorageReceiverRegistered = false
+
+    private val storageRemovedReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val volume = IntentCompat.getParcelableExtra(
+                intent, StorageVolume.EXTRA_STORAGE_VOLUME, StorageVolume::class.java
+            )
+
+            // The intent data is the volume's mount point, e.g. file:///storage/1234-ABCD
+            onStorageVolumeRemoved(volume?.uuid ?: intent.data?.lastPathSegment)
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -109,6 +142,8 @@ class RecorderService : Service() {
             recorder?.setOutputFile(writer.fileDescriptor)
             recorder?.prepare()
             recorder?.start()
+            recordingVolumeId = recordingStore.uri.removableVolumeId
+            registerStorageListener()
             duration = 0
             status = RECORDING_RUNNING
             broadcastRecorderInfo()
@@ -124,9 +159,10 @@ class RecorderService : Service() {
         }
     }
 
-    private fun stopRecording() {
+    private fun stopRecording(commitInBackground: Boolean = true) {
         durationTimer.cancel()
         amplitudeTimer.cancel()
+        unregisterStorageListener()
         status = RECORDING_STOPPED
 
         try {
@@ -148,23 +184,30 @@ class RecorderService : Service() {
         }
 
         writer?.let { writer ->
-            ensureBackgroundThread {
-                try {
-                    val uri = writer.commit()
-                    recordingSavedSuccessfully(uri)
-                    EventBus.getDefault().post(Events.RecordingCompleted())
-                } catch (e: Exception) {
-                    Log.e(TAG, "failed to commit recording writer", e)
-                    showErrorToast(e)
-                }
+            if (commitInBackground) {
+                ensureBackgroundThread { commitRecording(writer) }
+            } else {
+                commitRecording(writer)
             }
         }
         writer = null
     }
 
+    private fun commitRecording(writer: RecordingStore.Writer) {
+        try {
+            val uri = writer.commit()
+            recordingSavedSuccessfully(uri)
+            EventBus.getDefault().post(Events.RecordingCompleted())
+        } catch (e: Exception) {
+            Log.e(TAG, "failed to commit recording writer", e)
+            showErrorToast(e)
+        }
+    }
+
     private fun cancelRecording() {
         durationTimer.cancel()
         amplitudeTimer.cancel()
+        unregisterStorageListener()
         status = RECORDING_STOPPED
 
         try {
@@ -212,6 +255,74 @@ class RecorderService : Service() {
         } catch (e: Exception) {
             showErrorToast(e)
         }
+    }
+
+    private fun registerStorageListener() {
+        if (recordingVolumeId == null) {
+            return
+        }
+
+        if (isRPlus()) {
+            registerStorageVolumeCallback()
+        } else if (!isStorageReceiverRegistered) {
+            val filter = IntentFilter().apply {
+                addAction(Intent.ACTION_MEDIA_EJECT)
+                addAction(Intent.ACTION_MEDIA_UNMOUNTED)
+                addAction(Intent.ACTION_MEDIA_BAD_REMOVAL)
+                addDataScheme("file")
+            }
+
+            ContextCompat.registerReceiver(
+                this, storageRemovedReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+            isStorageReceiverRegistered = true
+        }
+    }
+
+    private fun unregisterStorageListener() {
+        if (isRPlus()) {
+            unregisterStorageVolumeCallback()
+        } else if (isStorageReceiverRegistered) {
+            unregisterReceiver(storageRemovedReceiver)
+            isStorageReceiverRegistered = false
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun registerStorageVolumeCallback() {
+        if (storageVolumeCallback != null) {
+            return
+        }
+
+        val callback = object : StorageManager.StorageVolumeCallback() {
+            override fun onStateChanged(volume: StorageVolume) {
+                if (volume.state != Environment.MEDIA_MOUNTED) {
+                    onStorageVolumeRemoved(volume.uuid)
+                }
+            }
+        }
+
+        getSystemService(StorageManager::class.java)
+            .registerStorageVolumeCallback(mainExecutor, callback)
+        storageVolumeCallback = callback
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun unregisterStorageVolumeCallback() {
+        val callback = storageVolumeCallback as? StorageManager.StorageVolumeCallback ?: return
+        getSystemService(StorageManager::class.java).unregisterStorageVolumeCallback(callback)
+        storageVolumeCallback = null
+    }
+
+    private fun onStorageVolumeRemoved(volumeId: String?) {
+        if (status == RECORDING_STOPPED || !recordingVolumeId.equals(volumeId, ignoreCase = true)) {
+            return
+        }
+
+        stopRecording(commitInBackground = false)
+        broadcastStatus()
+        toast(R.string.recording_stopped_storage_removed)
+        stopSelf()
     }
 
     private fun recordingSavedSuccessfully(savedUri: Uri) {

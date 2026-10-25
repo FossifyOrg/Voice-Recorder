@@ -6,6 +6,7 @@
     <string name="move_recordings_to_new_folder_desc">You have existing recordings. Do you want to move them to your new folder?</string>
     <string name="recording_saved_successfully">Recording saved successfully</string>
     <string name="recording_too_short">Recording was too short to record!</string>
+    <string name="recording_stopped_storage_removed">Recording stopped and saved because the storage it was being saved to is being removed</string>
     <string name="recording">Recording</string>
     <string name="no_recordings_found">No recordings created by this app\nhave been found</string>
     <string name="no_recordings_in_folder_found">No recordings have been found\nin the selected folder</string>
