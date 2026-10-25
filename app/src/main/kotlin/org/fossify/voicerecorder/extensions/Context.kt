@@ -31,6 +31,16 @@ fun Context.isStorageVolumeMounted(volumeId: String): Boolean {
     }
 }
 
+/**
+ * Returns the user-visible name of the storage volume with the given UUID, e.g. "SanDisk USB
+ * drive", or null if the volume is not known to the system (e.g. it was unplugged).
+ */
+fun Context.getStorageVolumeDescription(volumeId: String): String? {
+    return getSystemService(StorageManager::class.java).storageVolumes
+        .firstOrNull { it.uuid.equals(volumeId, ignoreCase = true) }
+        ?.getDescription(this)
+}
+
 fun Context.drawableToBitmap(drawable: Drawable): Bitmap {
     val size = (60 * resources.displayMetrics.density).toInt()
     val mutableBitmap = createBitmap(size, size)

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Recordings are saved to the device when the USB drive or SD card with the recordings folder is not available
+- The recordings folder setting now shows which USB drive or SD card the folder is on
 
 ### Fixed
 - Recordings are now saved when the USB drive or SD card they are recorded to is ejected

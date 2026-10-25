@@ -27,8 +27,10 @@ import org.fossify.voicerecorder.databinding.ActivitySettingsBinding
 import org.fossify.voicerecorder.dialogs.FilenamePatternDialog
 import org.fossify.voicerecorder.dialogs.MoveRecordingsDialog
 import org.fossify.voicerecorder.extensions.config
+import org.fossify.voicerecorder.extensions.getStorageVolumeDescription
 import org.fossify.voicerecorder.extensions.recordingStore
 import org.fossify.voicerecorder.extensions.recordingStoreFor
+import org.fossify.voicerecorder.extensions.removableVolumeId
 import org.fossify.voicerecorder.helpers.BITRATES
 import org.fossify.voicerecorder.helpers.DEFAULT_BITRATE
 import org.fossify.voicerecorder.helpers.DEFAULT_SAMPLING_RATE
@@ -195,7 +197,13 @@ class SettingsActivity : SimpleActivity() {
 
     private fun updateSaveRecordingsFolder(uri: Uri) {
         val store = recordingStoreFor(uri)
-        binding.settingsSaveRecordings.text = store.shortName
+        // Name the drive for folders on removable storage, which otherwise look like internal ones
+        val volumeName = uri.removableVolumeId?.let { getStorageVolumeDescription(it) ?: it }
+        binding.settingsSaveRecordings.text = if (volumeName != null) {
+            "$volumeName/${store.shortName}"
+        } else {
+            store.shortName
+        }
 
         val providerInfo = store.providerInfo
 
