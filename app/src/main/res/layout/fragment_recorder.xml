@@ -6,6 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/microphone_selector_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/big_margin"
+        android:background="@drawable/tab_selector_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/tab_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/tab_selector_selected"
+            android:gravity="center"
+            android:paddingStart="@dimen/big_margin"
+            android:paddingEnd="@dimen/big_margin"
+            android:text="@string/device_mic"
+            android:textSize="@dimen/normal_text_size" />
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/tab_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:paddingStart="@dimen/big_margin"
+            android:paddingEnd="@dimen/big_margin"
+            android:text="@string/mic_type_bluetooth"
+            android:textSize="@dimen/normal_text_size" />
+
+    </LinearLayout>
+
     <com.visualizer.amplitude.AudioRecordView
         android:id="@+id/recorder_visualizer"
         android:layout_width="match_parent"
@@ -20,7 +58,7 @@
         app:chunkSpace="1dp"
         app:chunkWidth="3dp"
         app:layout_constraintBottom_toTopOf="@+id/recording_duration"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/microphone_selector_holder" />
 
     <org.fossify.commons.views.MyTextView
         android:id="@+id/recording_duration"
