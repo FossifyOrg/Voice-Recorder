@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_launcher_name">Enroller Mouezh</string>
+    <string name="move_recordings">Dilec\'hiañ an enrolladennoù</string>
+    <string name="recording_saved_successfully">Enrolladenn enrollet gant berzh</string>
+    <string name="recording_too_short">Re verr eo an enrolladenn !</string>
+    <string name="recording">Oc\'h enrollañ</string>
+</resources>
