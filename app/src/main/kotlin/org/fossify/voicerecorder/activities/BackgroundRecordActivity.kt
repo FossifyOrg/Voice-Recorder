@@ -20,7 +20,7 @@ class BackgroundRecordActivity : SimpleActivity() {
                             if (RecorderService.isRunning) {
                                 stopService(this)
                             } else {
-                                startService(this)
+                                startForegroundService(this)
                             }
                         } catch (ignored: Exception) {
                         }
