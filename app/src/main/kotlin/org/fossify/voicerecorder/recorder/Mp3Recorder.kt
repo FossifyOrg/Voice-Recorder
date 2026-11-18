@@ -16,6 +16,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 import kotlin.math.abs
 
 class Mp3Recorder(val context: Context) : Recorder {
@@ -23,6 +25,8 @@ class Mp3Recorder(val context: Context) : Recorder {
     private var isPaused = AtomicBoolean(false)
     private var isStopped = AtomicBoolean(false)
     private var amplitude = AtomicInteger(0)
+    private val pauseLock = ReentrantLock()
+    private val pauseCondition = pauseLock.newCondition()
     private var outputPath: String? = null
     private var androidLame: AndroidLame? = null
     private var fileDescriptor: ParcelFileDescriptor? = null
@@ -79,17 +83,31 @@ class Mp3Recorder(val context: Context) : Recorder {
             }
 
             while (!isStopped.get()) {
-                if (!isPaused.get()) {
-                    val count = audioRecord.read(rawData, 0, minBufferSize)
-                    if (count > 0) {
-                        val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
-                        if (encoded > 0) {
-                            try {
-                                updateAmplitude(rawData)
-                                outputStream!!.write(mp3buffer, 0, encoded)
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                            }
+                pauseLock.withLock {
+                    while (isPaused.get() && !isStopped.get()) {
+                        amplitude.set(0)
+                        try {
+                            pauseCondition.await()
+                        } catch (ignored: InterruptedException) {
+                            Thread.currentThread().interrupt()
+                            return@ensureBackgroundThread
+                        }
+                    }
+                }
+
+                if (isStopped.get()) {
+                    break
+                }
+
+                val count = audioRecord.read(rawData, 0, minBufferSize)
+                if (count > 0) {
+                    val encoded = androidLame!!.encode(rawData, rawData, count, mp3buffer)
+                    if (encoded > 0) {
+                        try {
+                            updateAmplitude(rawData)
+                            outputStream!!.write(mp3buffer, 0, encoded)
+                        } catch (e: IOException) {
+                            e.printStackTrace()
                         }
                     }
                 }
@@ -98,20 +116,33 @@ class Mp3Recorder(val context: Context) : Recorder {
     }
 
     override fun stop() {
-        isPaused.set(true)
-        isStopped.set(true)
+        pauseLock.withLock {
+            isPaused.set(true)
+            isStopped.set(true)
+            pauseCondition.signalAll()
+        }
         audioRecord.stop()
     }
 
     override fun pause() {
-        isPaused.set(true)
+        pauseLock.withLock {
+            isPaused.set(true)
+            amplitude.set(0)
+        }
     }
 
     override fun resume() {
-        isPaused.set(false)
+        pauseLock.withLock {
+            isPaused.set(false)
+            pauseCondition.signalAll()
+        }
     }
 
     override fun release() {
+        pauseLock.withLock {
+            isStopped.set(true)
+            pauseCondition.signalAll()
+        }
         androidLame?.flush(mp3buffer)
         outputStream?.close()
         audioRecord.release()
