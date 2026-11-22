@@ -2,7 +2,7 @@
 <resources>
     <string name="app_launcher_name">Voicerecorder</string>
     <string name="recording_saved_successfully">Opname succesvol opgeslagen</string>
-    <string name="recording">Opnemen</string>
+    <string name="recording">Aan het opnemen</string>
     <string name="no_recordings_found">Geen opnames gevonden
 \ndie zijn gemaakt door deze app</string>
     <string name="no_recordings_in_folder_found">Geen opnames gevonden
