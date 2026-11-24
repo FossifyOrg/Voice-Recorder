@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.6] - 2026-11-24
+### Changed
+- Updated translations
+
 ## [1.7.5] - 2026-11-18
 ### Changed
 - Updated translations
@@ -188,7 +192,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#273]: https://github.com/FossifyOrg/Voice-Recorder/issues/273
 [#397]: https://github.com/FossifyOrg/Voice-Recorder/issues/397
 
-[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.5...HEAD
+[Unreleased]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.6...HEAD
+[1.7.6]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.5...1.7.6
 [1.7.5]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.4...1.7.5
 [1.7.4]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.3...1.7.4
 [1.7.3]: https://github.com/FossifyOrg/Voice-Recorder/compare/1.7.2...1.7.3
